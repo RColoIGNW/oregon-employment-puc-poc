@@ -5,4 +5,4 @@ RUN apk --update add git less openssh && \
     rm /var/cache/apk/*
 
 WORKDIR /app
-COPY . .
+COPY oed-client/*.* .

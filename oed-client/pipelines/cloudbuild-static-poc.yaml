@@ -3,10 +3,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', './oed-client/docker/Client.Dockerfile', '-t', 'gatsby-build', '.']
 
-  # Working directory?
-  - name: 'gatsby-build'
-    args: ['cd', 'oed-client']
-
   # install
   - name: 'gatsby-build'
     args: ['npm', 'ci']
