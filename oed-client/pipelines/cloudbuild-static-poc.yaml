@@ -5,6 +5,11 @@ steps:
 
   # install
   - name: 'gatsby-build'
+    entrypoint: "bash"
+    args: [ '-c', 'ls -la']
+
+  # install
+  - name: 'gatsby-build'
     args: ['npm', 'ci']
 
   # build the gatsby site generate typedefs (use envs from prod)
