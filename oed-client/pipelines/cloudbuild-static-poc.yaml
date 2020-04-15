@@ -4,7 +4,7 @@ steps:
     args: ['build', '-f', './oed-client/docker/Client.Dockerfile', '-t', 'gatsby-build', '.']
 
   # Working directory?
-  - name: 'change-directory'
+  - name: 'gatsby-build'
     args: ['cd', 'oed-client']
 
   # install
