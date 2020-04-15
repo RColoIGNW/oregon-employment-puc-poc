@@ -1,7 +1,7 @@
 steps:
   # build container with node deps
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', './docker/DockerfileForClientBuild', '-t', 'gatsby-build', '.']
+    args: ['build', '-f', './oed-client/docker/DockerfileForClientBuild', '-t', 'gatsby-build', '.']
 
   # Working directory?
   - name: 'change-directory'
