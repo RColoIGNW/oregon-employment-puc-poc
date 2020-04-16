@@ -17,3 +17,6 @@ WORKDIR /app/oed-client
 RUN npm ci
 
 COPY oed-client/. .
+RUN npm run build
+
+RUN firebase deploy --only hosting --token $FIREBASE_TOKEN

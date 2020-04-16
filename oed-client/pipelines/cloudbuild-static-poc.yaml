@@ -6,6 +6,19 @@ steps:
       - --destination=gcr.io/$PROJECT_ID/image
       - --cache=true
       - --cache-ttl=2h
+    env:
+      - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
+      - REACT_APP_API_KEY=AIzaSyAmfP-LG4RTfDu_wxOcTnFTqJHnf-Cy_KY
+      - REACT_APP_AUTH_DOMAIN=pge-$PROJECT_ID.firebaseapp.com
+      - REACT_APP_DATABASE_URL=https://$PROJECT_ID.firebaseio.com
+      - REACT_APP_PROJECT_ID=$PROJECT_ID
+      - REACT_APP_STORAGE_BUCKET=$PROJECT_ID.appspot.com
+      - REACT_APP_MESSAGING_SENDER_ID=690133752883
+      - REACT_APP_APP_ID=1:690133752883:web:a25a371feea0d50ae55746
+      - REACT_APP_MEASUREMENT_ID=G-F8GJ8QV4VS
+      - GATSBY_IS_STATIC_PREVIEW=true
+      - GATSBY_SITE_DOMAIN=https://$PROJECT_ID.web.app/
+      - FIREBASE_TOKEN=$_FIREBASE_TOKEN
   #- name: 'gcr.io/cloud-builders/docker'
   #  args: ['build', '-f', './oed-client/docker/Client.Dockerfile', '-t', 'gatsby-build', '.']
 
@@ -26,21 +39,21 @@ steps:
   #  args: ['npm', 'i', '-g', 'firebase-tools']
 
   # build the gatsby site generate typedefs (use envs from prod)
-  - name: 'gatsby-build'
+  #- name: 'gatsby-build'
     #dir: 'oed-client'
-    args: ['npm', 'run', 'build']
-    env:
-      - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
-      - REACT_APP_API_KEY=AIzaSyAmfP-LG4RTfDu_wxOcTnFTqJHnf-Cy_KY
-      - REACT_APP_AUTH_DOMAIN=pge-$PROJECT_ID.firebaseapp.com
-      - REACT_APP_DATABASE_URL=https://$PROJECT_ID.firebaseio.com
-      - REACT_APP_PROJECT_ID=$PROJECT_ID
-      - REACT_APP_STORAGE_BUCKET=$PROJECT_ID.appspot.com
-      - REACT_APP_MESSAGING_SENDER_ID=690133752883
-      - REACT_APP_APP_ID=1:690133752883:web:a25a371feea0d50ae55746
-      - REACT_APP_MEASUREMENT_ID=G-F8GJ8QV4VS
-      - GATSBY_IS_STATIC_PREVIEW=true
-      - GATSBY_SITE_DOMAIN=https://$PROJECT_ID.web.app/
+  #  args: ['npm', 'run', 'build']
+  #  env:
+  #    - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
+  #    - REACT_APP_API_KEY=AIzaSyAmfP-LG4RTfDu_wxOcTnFTqJHnf-Cy_KY
+  #    - REACT_APP_AUTH_DOMAIN=pge-$PROJECT_ID.firebaseapp.com
+  #    - REACT_APP_DATABASE_URL=https://$PROJECT_ID.firebaseio.com
+  #    - REACT_APP_PROJECT_ID=$PROJECT_ID
+  #    - REACT_APP_STORAGE_BUCKET=$PROJECT_ID.appspot.com
+  #    - REACT_APP_MESSAGING_SENDER_ID=690133752883
+  #    - REACT_APP_APP_ID=1:690133752883:web:a25a371feea0d50ae55746
+  #    - REACT_APP_MEASUREMENT_ID=G-F8GJ8QV4VS
+  #    - GATSBY_IS_STATIC_PREVIEW=true
+  #    - GATSBY_SITE_DOMAIN=https://$PROJECT_ID.web.app/
 
   # run unit tests
   #- name: 'gatsby-build'
@@ -52,6 +65,6 @@ steps:
   #   args: ['npm', 'run', 'storybook:build']
 
   # deploy static build
-  - name: 'gatsby-build'
-    #dir: 'oed-client'
-    args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
+  #- name: 'gatsby-build'
+  #  #dir: 'oed-client'
+  #  args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
