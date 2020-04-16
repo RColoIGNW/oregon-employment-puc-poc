@@ -18,7 +18,8 @@ steps:
       - REACT_APP_MEASUREMENT_ID=G-F8GJ8QV4VS
       - GATSBY_IS_STATIC_PREVIEW=true
       - GATSBY_SITE_DOMAIN=https://$PROJECT_ID.web.app/
-      - FIREBASE_TOKEN=$_FIREBASE_TOKEN
+      - _FIREBASE_TOKEN=$_FIREBASE_TOKEN
+    timeout: 1200s
   #- name: 'gcr.io/cloud-builders/docker'
   #  args: ['build', '-f', './oed-client/docker/Client.Dockerfile', '-t', 'gatsby-build', '.']
 

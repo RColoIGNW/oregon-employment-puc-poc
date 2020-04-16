@@ -24,7 +24,7 @@
     "clean": "gatsby clean",
     "build": "gatsby build",
     "build:storybook": "build-storybook",
-    "deploy": "firebase deploy --only hosting --token $FIREBASE_TOKEN",
+    "deploy": "firebase deploy --only hosting --token $_FIREBASE_TOKEN",
     "update": "ncu -u"
   },
   "dependencies": {
