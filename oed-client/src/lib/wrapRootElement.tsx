@@ -11,7 +11,7 @@ const WrapRootElement:React.FC<{ element: ReactNode }> = ({element}) => {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
         <link
           href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap"
-          rel="stylesheet"
+          rel="preconnect"
         />
       </Helmet>
     <ThemeProvider theme={theme}>

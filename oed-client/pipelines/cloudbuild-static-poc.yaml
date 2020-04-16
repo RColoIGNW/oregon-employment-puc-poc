@@ -1,7 +1,13 @@
 steps:
   # build container with node deps
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', './oed-client/docker/Client.Dockerfile', '-t', 'gatsby-build', '.']
+  - name: 'gcr.io/kaniko-project/executor:latest'
+    args:
+      - ----dockerfile=./oed-client/docker/Client.Dockerfile
+      - --destination=gcr.io/$PROJECT_ID/image
+      - --cache=true
+      - --cache-ttl=2h
+  #- name: 'gcr.io/cloud-builders/docker'
+  #  args: ['build', '-f', './oed-client/docker/Client.Dockerfile', '-t', 'gatsby-build', '.']
 
   # View Directory
   #- name: 'gatsby-build'
@@ -10,18 +16,18 @@ steps:
   #  args: [ '-c', 'ls -la']
 
   # install
-  - name: 'gatsby-build'
-    dir: 'oed-client'
-    args: ['npm', 'ci']
+  # - name: 'gatsby-build'
+  #  dir: 'oed-client'
+  #  args: ['npm', 'ci']
 
   # install firebase tools
-  - name: 'gatsby-build'
-    dir: 'oed-client'
-    args: ['npm', 'i', '-g', 'firebase-tools']
+  # - name: 'gatsby-build'
+  #  dir: 'oed-client'
+  #  args: ['npm', 'i', '-g', 'firebase-tools']
 
   # build the gatsby site generate typedefs (use envs from prod)
   - name: 'gatsby-build'
-    dir: 'oed-client'
+    #dir: 'oed-client'
     args: ['npm', 'run', 'build']
     env:
       - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
@@ -47,5 +53,5 @@ steps:
 
   # deploy static build
   - name: 'gatsby-build'
-    dir: 'oed-client'
+    #dir: 'oed-client'
     args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']

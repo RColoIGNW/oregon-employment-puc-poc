@@ -5,5 +5,13 @@ FROM node:12.16.2
 #    rm -rf /var/lib/apt/lists/* && \
 #    rm /var/cache/apk/*
 
+RUN npm i -g firebase-tools
+ADD firebase.bash /usr/bin
+RUN chmod +x /usr/bin/firebase.bash
+
 WORKDIR /app
-COPY . .
+COPY oed-client/package*.json oed-client/.
+WORKDIR /app/oed-client
+RUN npm ci
+
+COPY oed-client/. .
