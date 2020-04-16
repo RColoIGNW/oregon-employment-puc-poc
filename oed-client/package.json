@@ -24,7 +24,7 @@
     "clean": "gatsby clean",
     "build": "gatsby build",
     "build:storybook": "build-storybook",
-    "deploy": "firebase deploy --only hosting",
+    "deploy": "firebase deploy --only hosting --token $FIREBASE_TOKEN",
     "update": "ncu -u"
   },
   "dependencies": {
@@ -94,6 +94,7 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^3.0.0",
     "eslint-watch": "^6.0.1",
+    "firebase-tools": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.3.0",
     "jest-styled-components": "^7.0.2",
