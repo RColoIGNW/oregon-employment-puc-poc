@@ -15,5 +15,5 @@ WORKDIR /app
 COPY oed-client/package*.json ./
 RUN npm install
 COPY oed-client/. .
-RUN npm run build
-RUN npm run deploy
+#RUN npm run build
+#RUN npm run deploy
