@@ -16,4 +16,4 @@ COPY oed-client/package*.json ./
 RUN npm install
 COPY oed-client/. .
 RUN npm run build
-RUN npn run deploy
+RUN npm run deploy
