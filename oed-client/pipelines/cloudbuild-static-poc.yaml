@@ -3,7 +3,12 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', './oed-client/docker/Client.Dockerfile', '-t', 'gatsby-build', '.']
 
-  # install
+  # Change Directory
+  - name: 'gatsby-build'
+    entrypoint: "bash"
+    args: [ '-c', 'cd oed-client']
+
+  # View Directory
   - name: 'gatsby-build'
     entrypoint: "bash"
     args: [ '-c', 'ls -la']

@@ -6,4 +6,4 @@ FROM node:12.16.2
 #    rm /var/cache/apk/*
 
 WORKDIR /app
-COPY oed-client/ ./
+COPY . .
