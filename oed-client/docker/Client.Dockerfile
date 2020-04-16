@@ -12,13 +12,8 @@ FROM node:12.16.2
 WORKDIR /app
 # RUN mkdir oed-client
 # WORKDIR /app/oed-client
-RUN echo ">>>>>>> Coping package info to container <<<<<<<"
 COPY oed-client/package*.json ./
-RUN echo ">>>>>>> Running NPM Install <<<<<<<"
 RUN npm install
-RUN echo ">>>>>>> Copying Client contents to folder <<<<<<<"
 COPY oed-client/ .
-RUN echo ">>>>>>> Building Gatsby static files <<<<<<<"
 RUN npm run build
-RUN echo ">>>>>>> Deploying build to Firebase Hosting <<<<<<<"
 RUN npn run deploy
