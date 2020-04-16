@@ -2,7 +2,7 @@ steps:
   # build container with node deps
   - name: 'gcr.io/kaniko-project/executor:latest'
     args:
-      - ----dockerfile=./oed-client/docker/Client.Dockerfile
+      - --dockerfile=./oed-client/docker/Client.Dockerfile
       - --destination=gcr.io/$PROJECT_ID/image
       - --cache=true
       - --cache-ttl=2h
