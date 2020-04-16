@@ -3,22 +3,20 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', './oed-client/docker/Client.Dockerfile', '-t', 'gatsby-build', '.']
 
-  # Change Directory
-  - name: 'gatsby-build'
-    entrypoint: "bash"
-    args: [ '-c', 'cd oed-client']
-
   # View Directory
   - name: 'gatsby-build'
+    dir: 'oed-client'
     entrypoint: "bash"
     args: [ '-c', 'ls -la']
 
   # install
   - name: 'gatsby-build'
+    dir: 'oed-client'
     args: ['npm', 'ci']
 
   # build the gatsby site generate typedefs (use envs from prod)
   - name: 'gatsby-build'
+    dir: 'oed-client'
     args: ['npm', 'run', 'build']
     env:
       - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
@@ -44,4 +42,5 @@ steps:
 
   # deploy static build
   - name: 'gatsby-build'
+    dir: 'oed-client'
     args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
