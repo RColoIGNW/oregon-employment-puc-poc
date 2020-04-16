@@ -4,15 +4,20 @@ steps:
     args: ['build', '-f', './oed-client/docker/Client.Dockerfile', '-t', 'gatsby-build', '.']
 
   # View Directory
-  - name: 'gatsby-build'
-    dir: 'oed-client'
-    entrypoint: "bash"
-    args: [ '-c', 'ls -la']
+  #- name: 'gatsby-build'
+  #  dir: 'oed-client'
+  #  entrypoint: "bash"
+  #  args: [ '-c', 'ls -la']
 
   # install
   - name: 'gatsby-build'
     dir: 'oed-client'
     args: ['npm', 'ci']
+
+  # install firebase tools
+  - name: 'gatsby-build'
+    dir: 'oed-client'
+    args: ['npm', 'i', '-g', 'firebase-tools']
 
   # build the gatsby site generate typedefs (use envs from prod)
   - name: 'gatsby-build'
