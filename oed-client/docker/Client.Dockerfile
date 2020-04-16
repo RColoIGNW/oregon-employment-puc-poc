@@ -11,7 +11,8 @@ FROM node:12.16.2
 
 WORKDIR /app
 RUN npm i -g firebase-tools
-COPY oed-client/package*.json oed-client/.
+RUN mkdir oed-client
+COPY oed-client/package*.json oed-client/
 WORKDIR /app/oed-client
 RUN npm ci
 
