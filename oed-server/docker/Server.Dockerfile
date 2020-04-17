@@ -7,10 +7,12 @@
 
 FROM node:12.16.2-alpine3.11
 
-COPY ./dist/ ./dist
-COPY ./node_modules/ ./node_modules
-COPY ./package.json ./package.json
-COPY ./.env .env
-COPY ./sa.json ./sa.json
+WORKDIR /app
+
+COPY dist/ ./
+COPY node_modules/ ./
+COPY package.json .package.json
+COPY .env .env
+COPY sa.json sa.json
 
 CMD [ "node", "dist/server.js" ]
