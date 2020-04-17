@@ -14,7 +14,7 @@ steps:
   # build container
   - name: 'gcr.io/cloud-builders/docker'
     dir: 'oed-server'
-    args: ['build', '-f', './oed-server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA', '.']
+    args: ['build', '-f', './docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA', '.']
 
   # push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
