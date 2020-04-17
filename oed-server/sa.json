@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "oregon-pua-poc",
+  "private_key_id": "0c5195d9c7419c1fdf6f46a6e3e59ceea5922281",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDN3uq9MPBKndzQ\nbh4vrL7CxBZzP6PD4hdV02SFMjrqVCdVi3glOthhfEoVYZPTVH9jkvgC3ELnjdu+\nv3LU+OihERZ0nAlln84NvBrrDzMri9FseJ9rsWWGUnNiG4QNOKTE6QwNcTk+8EaU\nQLBAGLvtyKZve6gteRazQr77cFLBvsy8Ys2lXjsA0/xq+mKQ1QpejlIvWW3nCErb\ni3PRqP9HIhwHfC5nNWAq2+4IhSrlUa4AZAEbMXTMkoNfrj3w0m2CDa9ZmW/Wnx6z\nNlVVQXgSjnMzHrZ72WstzZshj8k5BHL5RThgRS7DKC+iNrdDphhx18CX95D0fJ+p\nkZ/padqDAgMBAAECggEAAcyFh0Ba49axS+5KZpGUhnspfw76orGNEVDsO0W5whEY\n2Y8tw5WEt9qwLbOmk7LUp3gXTAnEro/3cEPtVZ2/L/kdlciZ7xYQZN+p6eKTczlL\ni9kZ+4TspYR+7Eff8DBN2vKhClUHnQctzAnXVcK25wMD1qGL/Km8NbYgQ8OIKu04\niwJk5wUFw+V6f7f64TSeZuNxK9+CIZYn5V2Sk8tSutyWUG1qa95Xkft2TZfPvXaU\ne1nCBVm1VwQYp0JE6ph2KfEGEad+/saSnRLIW9vnA+FCdeO3ZRg8HMQT7p1J0t1U\nASwLc9iHe+IVab/kXTA3NrOBohfEYBTmAUkB09D70QKBgQDl7LDB2fB9Pc4244jM\nQaKq4F7vRgAkNcfIS82W5CNp3AegGAcPdlxycxbeqTvCbezfMyFFj3rihecaxGyE\niihb1svh4mga4HBHMexJXytzEBKvMQY6HY6FuaxeRxNv21ZbUhYMKJbg8A3COeK/\nlReNIPVhahsFRKJHEHUFWnCNTwKBgQDlN+HE1GchyLmZe5tXMeq5ty1GAvkGcj3C\n2ZclVPrFBOO3+ucudbix9/qThRWNcnt7Yw7cIXDS67oo0fprOyIhSK1iLEkuZT1r\ne0z7lNB86VOtvSx5nyDuiv4OphWiUA1eW8NO1jx2K88LbuWmIx8z4ktseKKFMrXy\n5A7+U04ajQKBgQDfAK5/li4WiveTbSSlV5O6QFxTnoVMmYzny/3fN+7RIcOTlzph\n2N7Zcp7f3yxC6/MumJzQptT9F/qKj7Dg7E8wpCijMcDfMIg1xUnz8AZoV1KH8Pil\nLT2qned8mVtUxlv/vqH7sPKFwM7XbuVqA+UP0MOudAc5GNR8MI4PXySDKQKBgCvC\n33eUlZv9lnGXB7E99nI+ZoZXSvPQG7p3kEOwVbAHnvIhFMHp97kCfvRrFBJNKQYF\ng3DDcabTGldwvz55q6pvFasIiXAyI+fBQpFFeAhhA3jIBRWzK7ZfEuH5E2hJoEPD\ngSYsAJ8O/hhQs8dkLTDao0uyPFTxuYsFv1cO0HqBAoGBALwLd7zEF2CF/t9q281K\nfZ5+Mrh7J+QFpBxXH5w1uOzMueGanaUfkQ1AalkvdZ64fF5eAljKHzx4KdTckDCg\nHAoffrUJqQYSUSSKt7LkJB10A04fDjd1nIyJTQO9hqtrs42ArDsmha/GYMKcelf8\n1XHFzxRAgTbMbG7xuagl2c7D\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ko6ir@oregon-pua-poc.iam.gserviceaccount.com",
+  "client_id": "115356949851547365308",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ko6ir%40oregon-pua-poc.iam.gserviceaccount.com"
+}
