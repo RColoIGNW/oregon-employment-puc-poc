@@ -11,6 +11,12 @@ steps:
     entrypoint: npm
     args: ['run', 'build']
 
+  # Run Prune
+  - name: node:12.16.2-alpine3.11
+    dir: 'oed-server'
+    entrypoint: npm
+    args: ['prune', '--production']
+
   # View Directory
 #  - name: node:12.16.2-alpine3.11
 #    dir: 'oed-server'
