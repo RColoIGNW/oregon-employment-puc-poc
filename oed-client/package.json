@@ -25,7 +25,8 @@
     "build": "gatsby build",
     "build:storybook": "build-storybook",
     "deploy": "firebase deploy --only hosting",
-    "update": "ncu -u"
+    "update": "ncu -u",
+    "start": "npm run dev"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.10",
