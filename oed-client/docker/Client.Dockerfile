@@ -1,4 +1,4 @@
- FROM node:12.16.2
+FROM node:12.16.2
 #FROM node:12.16.2-alpine3.11
 
 #RUN apk --no-cache add shadow \
