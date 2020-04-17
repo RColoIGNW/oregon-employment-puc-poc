@@ -10,13 +10,6 @@
       ],
       "rewrites": [
         {
-          "source": "/api/**",
-          "run": {
-            "serviceId": "oed-poc-server",
-            "region": "us-west1"
-          }
-        },
-        {
           "source": "**",
           "destination": "/index.html"
         }
