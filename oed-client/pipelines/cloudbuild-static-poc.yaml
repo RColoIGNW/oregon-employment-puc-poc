@@ -103,7 +103,7 @@ steps:
   #deploy static build
   - name: 'gcr.io/$PROJECT_ID/static.build'
     dir: '/app'
-    volumes:
-      - name: 'vol1'
-        path: '/app'
+#    volumes:
+#      - name: 'vol1'
+#        path: '/app'
     args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
