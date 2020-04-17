@@ -5,19 +5,18 @@ steps:
         path: '/app'
     args:
       - --dockerfile=./oed-client/docker/Client.Dockerfile
-      - --context=dir://WORKSPACE
       - --destination=gcr.io/$PROJECT_ID/static.build
       - --cache=true
       - --cache-ttl=24h
 
   # View Directory
-  - name: 'node:12.16.2'
-    dir: '/app'
-    volumes:
-      - name: 'vol1'
-        path: '/app'
-    entrypoint: "bash"
-    args: [ '-c', 'ls -la']
+#  - name: 'node:12.16.2'
+#    dir: '/app'
+#    volumes:
+#      - name: 'vol1'
+#        path: '/app'
+#    entrypoint: "bash"
+#    args: [ '-c', 'ls -la']
 
   #  timeout: 1200s
   # build container with node deps
@@ -59,7 +58,7 @@ steps:
   #  args: ['npm', 'i', '-g', 'firebase-tools']
 
   # build the gatsby site generate typedefs (use envs from prod)
-  - name: 'node:12.16.2'
+  - name: 'gcr.io/$PROJECT_ID/static.build'
     dir: '/app'
     volumes:
       - name: 'vol1'
@@ -102,7 +101,7 @@ steps:
 #    args: [ '-c', 'ls -la']
 
   #deploy static build
-  - name: 'node:12.16.2'
+  - name: 'gcr.io/$PROJECT_ID/static.build'
     dir: '/app'
     volumes:
       - name: 'vol1'
