@@ -12,5 +12,8 @@
     "npm-check-updates": "^4.0.4",
     "prettier": "^2.0.4",
     "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "start": "lerna run start"
   }
 }

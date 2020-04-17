@@ -1,0 +1,22 @@
+FROM node:10.19.0-alpine3.11 as build-image
+
+RUN apk --update add git less openssh && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm /var/cache/apk/*
+
+COPY . .
+
+RUN npm install -g typescript
+RUN npm install
+RUN tsc
+RUN npm prune --production
+
+FROM alpine
+
+COPY --from=build-image ./dist ./dist
+COPY --from=build-image ./node_modules ./node_modules
+COPY package.json ./package.json
+COPY .env .env
+RUN apk add --update nodejs
+
+CMD [ "node", "dist/server.js" ]
