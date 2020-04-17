@@ -1,6 +1,6 @@
-import { Request, Response } from 'express'
+import { Request, Response } from "express";
 
-import firebase from './firebase'
+import firebase from "./firebase";
 
 const firebaseAuth = async (req: Request, res: Response) => {
   try {
@@ -9,8 +9,11 @@ const firebaseAuth = async (req: Request, res: Response) => {
 
     // req.body the payload coming from the client to authenticate the user
     // uid is the firebase uid generated when a user is authenticated on the firebase client
-    const { uid }  = req.body
-    const userRequest = await firebase.database().ref(`users/${uid}`).once('value');
+    const { uid } = req.body;
+    const userRequest = await firebase
+      .database()
+      .ref(`users/${uid}`)
+      .once("value");
     const userPayload = userRequest.val();
 
     if (userPayload) {
@@ -18,20 +21,20 @@ const firebaseAuth = async (req: Request, res: Response) => {
       const tokenClaims = {
         roleId: userPayload.roleId,
         // ...more claims for type of user?
-      }
+      };
 
       // use firebase admin auth to set token claimsm which will be decoded for additional authentication
       await firebase.auth().setCustomUserClaims(uid, tokenClaims);
 
-      return res.status(200).json({data: tokenClaims});
+      return res.status(200).json({ data: tokenClaims });
     } else {
-      return res.status(404).json({error: {message: 'No user found'}});
+      return res.status(404).json({ error: { message: "No user found" } });
     }
   } catch (error) {
     return res.status(500).json({
-      error: { message: 'could not complete auth request'}
-    })
+      error: { message: "could not complete auth request" },
+    });
   }
-}
+};
 
-export default firebaseAuth
+export default firebaseAuth;
