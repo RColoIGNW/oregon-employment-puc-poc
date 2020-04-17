@@ -33,5 +33,3 @@ steps:
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
-  images:
-  - 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA'
