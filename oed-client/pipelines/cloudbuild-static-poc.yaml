@@ -1,22 +1,13 @@
 steps:
   - name: 'gcr.io/kaniko-project/executor:latest'
     volumes:
-      - name: 'node_modules'
-        path: '/app/node_modules'
+      - name: 'vol1'
+        path: '/app'
     args:
       - --dockerfile=./oed-client/docker/Client.Dockerfile
       - --destination=gcr.io/$PROJECT_ID/static.build
       - --cache=true
       - --cache-ttl=24h
-
-  # View Directory
-#  - name: 'node:12.16.2'
-#    dir: '/app'
-#    volumes:
-#      - name: 'vol1'
-#        path: '/app'
-#    entrypoint: "bash"
-#    args: [ '-c', 'ls -la']
 
   #  timeout: 1200s
   # build container with node deps
@@ -61,10 +52,8 @@ steps:
   - name: 'gcr.io/$PROJECT_ID/static.build'
     dir: '/app'
     volumes:
-      - name: 'node_modules'
-        path: '/app/node_modules'
-      - name: 'build_volume'
-        path: '/app/build'
+      - name: 'vol1'
+        path: '/app'
     args: ['npm', 'run', 'build']
     env:
       - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
@@ -89,25 +78,23 @@ steps:
   #   args: ['npm', 'run', 'storybook:build']
 
   # View Directory
-#  - name: 'gcr.io/$PROJECT_ID/static.build'
-#    dir: '/app'
-#    volumes:
-#      - name: 'vol1'
-#        path: '/app'
-#    entrypoint: "bash"
-#    args: [ '-c', 'ls -la']
+  - name: 'gcr.io/$PROJECT_ID/static.build'
+    dir: '/app'
+    volumes:
+      - name: 'vol1'
+        path: '/app'
+    entrypoint: "bash"
+    args: [ '-c', 'ls -la']
 
-#  - name: 'gcr.io/$PROJECT_ID/static.build'
-#    dir: 'oed-client'
-#    entrypoint: "bash"
-#    args: [ '-c', 'ls -la']
+  #  - name: 'gcr.io/$PROJECT_ID/static.build'
+  #    dir: 'oed-client'
+  #    entrypoint: "bash"
+  #    args: [ '-c', 'ls -la']
 
   #deploy static build
   - name: 'gcr.io/$PROJECT_ID/static.build'
     dir: '/app'
     volumes:
-      - name: 'node_modules'
-        path: '/app/node_modules'
-      - name: 'build_volume'
-        path: '/app/build'
+      - name: 'vol1'
+        path: '/app/public'
     args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
