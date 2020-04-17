@@ -22,7 +22,9 @@
     "firebase-admin": "^8.10.0"
   },
   "scripts": {
-    "prerestart": "export GOOGLE_APPLICATION_CREDENTIALS='./sa.json'",
-    "start": "ts-node-dev ./src/server.ts"
+    "start": "make up",
+    "test": "make test",
+    "tdd": "make tdd",
+    "build": "make build"
   }
 }
