@@ -4,4 +4,4 @@ export const firebaseApp = firebase.initializeApp({
 })
 export const auth = firebase.auth
 
-export default firebaseApp
+export default firebase

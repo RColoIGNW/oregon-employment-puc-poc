@@ -1,4 +1,6 @@
-export const testService = (req, res) => {
+import { Request, Response } from 'express'
+
+export const testService = (req: Request, res: Response) => {
   return res.send(req.body)
 }
 

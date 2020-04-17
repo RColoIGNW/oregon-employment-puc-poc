@@ -35,7 +35,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // Use express backend routes
-// routes(router)
 const clientHeaderOrigin = process.env.CLIENT_URL
 app.use(cors(corsOptionsDelegate))
 
@@ -68,7 +67,7 @@ routes(router)
 
 app.get('*', (_, res: Response) => {
   return res.status(404).json({
-    statusCode: '404',
+    statusCode: 404,
     message: 'Not Found',
   })
 })
