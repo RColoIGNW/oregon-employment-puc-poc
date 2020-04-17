@@ -26,7 +26,7 @@ steps:
 
   # View Directory
   - name: 'gcr.io/$PROJECT_ID/static.build'
-    #dir: 'oed-client'
+    dir: '/app'
     entrypoint: "bash"
     args: [ '-c', 'ls -la']
 
