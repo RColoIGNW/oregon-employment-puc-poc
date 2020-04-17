@@ -32,5 +32,6 @@ steps:
       - 'us-west1'
       - '--platform'
       - 'managed'
-    images:
-      - 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA'
+      - '--allow-unauthenticated'
+  images:
+  - 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA'
