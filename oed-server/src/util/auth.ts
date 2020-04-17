@@ -1,7 +1,12 @@
-import firebase from './firebase';
+import { Request, Response } from 'express'
 
-const firebaseAuth = async (req, res) => {
+import firebase from './firebase'
+
+const firebaseAuth = async (req: Request, res: Response) => {
   try {
+    // TODO: get UID from auth headers instead and remove the realtitme db call. If we want to add more...
+    // data tto the claims from the db we can retrieve that from firestore.
+
     // req.body the payload coming from the client to authenticate the user
     // uid is the firebase uid generated when a user is authenticated on the firebase client
     const { uid }  = req.body
@@ -11,7 +16,8 @@ const firebaseAuth = async (req, res) => {
     if (userPayload) {
       // create tokenClaims if you wish to add extra data to the generated user token
       const tokenClaims = {
-        roleId: userPayload.roleId
+        roleId: userPayload.roleId,
+        // ...more claims for type of user?
       }
 
       // use firebase admin auth to set token claimsm which will be decoded for additional authentication
@@ -24,7 +30,7 @@ const firebaseAuth = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       error: { message: 'could not complete auth request'}
-    });
+    })
   }
 }
 
