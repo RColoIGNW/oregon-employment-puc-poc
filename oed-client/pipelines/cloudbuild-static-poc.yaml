@@ -5,12 +5,13 @@ steps:
         path: '/app'
     args:
       - --dockerfile=./oed-client/docker/Client.Dockerfile
+      - --context=dir:///app
       - --destination=gcr.io/$PROJECT_ID/static.build
       - --cache=true
       - --cache-ttl=24h
 
   # View Directory
-  - name: 'gcr.io/$PROJECT_ID/static.build'
+  - name: 'node:12.16.2'
     dir: '/app'
     volumes:
       - name: 'vol1'
