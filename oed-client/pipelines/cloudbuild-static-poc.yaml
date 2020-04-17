@@ -71,6 +71,17 @@ steps:
   # - name: 'gatsby-build'
   #   args: ['npm', 'run', 'storybook:build']
 
+  # View Directory
+  - name: 'gcr.io/$PROJECT_ID/static.build'
+    dir: '/app'
+    entrypoint: "bash"
+    args: [ '-c', 'ls -la']
+
+  - name: 'gcr.io/$PROJECT_ID/static.build'
+    dir: '/app/public'
+    entrypoint: "bash"
+    args: [ '-c', 'ls -la']
+
   #deploy static build
   - name: 'gcr.io/$PROJECT_ID/static.build'
     dir: '/app'
