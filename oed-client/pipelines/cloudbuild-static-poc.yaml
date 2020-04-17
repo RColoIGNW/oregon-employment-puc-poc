@@ -105,5 +105,5 @@ steps:
     dir: '/app'
     volumes:
       - name: 'vol1'
-        path: '/app/public'
+        path: '/app'
     args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
