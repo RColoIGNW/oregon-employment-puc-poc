@@ -46,7 +46,7 @@ steps:
   #  args: ['npm', 'i', '-g', 'firebase-tools']
 
   # build the gatsby site generate typedefs (use envs from prod)
-  - name: 'gatsby-build'
+  - name: 'gcr.io/$PROJECT_ID/static.build'
     dir: '/app'
     args: ['npm', 'run', 'build']
     env:
@@ -72,6 +72,6 @@ steps:
   #   args: ['npm', 'run', 'storybook:build']
 
   #deploy static build
-  - name: 'gatsby-build'
+  - name: 'gcr.io/$PROJECT_ID/static.build'
     dir: '/app'
     args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
