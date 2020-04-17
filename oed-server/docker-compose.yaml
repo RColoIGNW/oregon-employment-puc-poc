@@ -1,6 +1,6 @@
 version: '3'
 services:
-  pge-moonshot-api:
+  oed-bff:
     container_name: oed-pua-api
     build:
       context: ./
@@ -16,4 +16,4 @@ services:
     # env_file: ./.env
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=./sa.json
-    entrypoint: npm start
+    entrypoint: npm run dev

@@ -23,8 +23,10 @@
   },
   "scripts": {
     "start": "make up",
+    "poststart": "docker-compose down",
     "test": "make test",
     "tdd": "make tdd",
-    "build": "make build"
+    "build": "make build",
+    "dev": "ts-node-dev ./src/server.ts"
   }
 }
