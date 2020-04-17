@@ -30,6 +30,11 @@ steps:
     entrypoint: "bash"
     args: [ '-c', 'ls -la']
 
+  - name: 'gcr.io/$PROJECT_ID/static.build'
+    dir: '/app/node_modules'
+    entrypoint: "bash"
+    args: [ '-c', 'ls -la']
+
   # install
   #- name: 'gatsby-build'
   #  dir: 'oed-client'
