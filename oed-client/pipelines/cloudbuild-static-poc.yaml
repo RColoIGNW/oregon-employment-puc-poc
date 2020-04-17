@@ -73,16 +73,16 @@ steps:
 
   # View Directory
   - name: 'gcr.io/$PROJECT_ID/static.build'
-    dir: '/app'
+    #dir: '/app'
     entrypoint: "bash"
     args: [ '-c', 'ls -la']
 
   - name: 'gcr.io/$PROJECT_ID/static.build'
-    dir: '/app/public'
+    dir: 'public'
     entrypoint: "bash"
     args: [ '-c', 'ls -la']
 
   #deploy static build
   - name: 'gcr.io/$PROJECT_ID/static.build'
-    dir: '/app'
+    #dir: '/app'
     args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
