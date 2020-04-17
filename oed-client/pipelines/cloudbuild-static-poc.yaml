@@ -5,7 +5,7 @@ steps:
         path: '/app'
     args:
       - --dockerfile=./oed-client/docker/Client.Dockerfile
-      - --destination=gcr.io/$PROJECT_ID/static.build
+      - --destination=gcr.io/$PROJECT_ID/static.gatsby.build
       - --cache=true
       - --cache-ttl=24h
 
@@ -49,7 +49,7 @@ steps:
   #  args: ['npm', 'i', '-g', 'firebase-tools']
 
   # build the gatsby site generate typedefs (use envs from prod)
-  - name: 'gcr.io/$PROJECT_ID/static.build'
+  - name: 'gcr.io/$PROJECT_ID/static.gatsby.build'
     dir: '/app'
     volumes:
       - name: 'vol1'
@@ -78,7 +78,7 @@ steps:
   #   args: ['npm', 'run', 'storybook:build']
 
   # View Directory
-  - name: 'gcr.io/$PROJECT_ID/static.build'
+  - name: 'gcr.io/$PROJECT_ID/static.gatsby.build'
     dir: '/app'
     volumes:
       - name: 'vol1'
@@ -92,9 +92,9 @@ steps:
   #    args: [ '-c', 'ls -la']
 
   #deploy static build
-  - name: 'gcr.io/$PROJECT_ID/static.build'
+  - name: 'gcr.io/$PROJECT_ID/static.gatsby.build'
     dir: '/app'
     volumes:
       - name: 'vol1'
-        path: '/app/public'
+        path: '/app'
     args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
