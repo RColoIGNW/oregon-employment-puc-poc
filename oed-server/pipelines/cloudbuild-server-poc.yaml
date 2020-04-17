@@ -11,9 +11,14 @@ steps:
     entrypoint: npm
     args: ['run', 'build']
 
+  # View Directory
+  - name: node:12.16.2-alpine3.11
+    dir: 'oed-server'
+    entrypoint: "bash"
+    args: [ '-c', 'ls -la']
+
   # build container
   - name: 'gcr.io/cloud-builders/docker'
-    dir: 'oed-server'
     args: ['build', '-f', './docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA', '.']
 
   # push the container image to Container Registry

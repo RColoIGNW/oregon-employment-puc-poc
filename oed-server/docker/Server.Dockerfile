@@ -9,10 +9,10 @@ FROM node:12.16.2-alpine3.11
 
 WORKDIR /app
 
-COPY dist/ ./
-COPY node_modules/ ./
-COPY package.json .package.json
-COPY .env .env
-COPY sa.json sa.json
+COPY oed-server/dist/ ./
+COPY oed-server/node_modules/ ./
+COPY oed-server/package.json .package.json
+COPY oed-server/.env .env
+COPY oed-server/sa.json sa.json
 
 CMD [ "node", "dist/server.js" ]
