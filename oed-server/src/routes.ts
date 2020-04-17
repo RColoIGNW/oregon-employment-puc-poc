@@ -6,7 +6,16 @@ import {
 } from './util/token'
 
 export const routes = router => {
-  // Get all users
+  // app disovery/healthcheck
+  router.route('/')
+    .get((_, res) => {
+        return res.status(200).json({
+          message: 'Api Service Routes!',
+          statusCode: 200
+        })
+      }
+    )
+  // test service
   router
     .route('/test-service')
     .get(

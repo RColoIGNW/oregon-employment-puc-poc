@@ -7,5 +7,5 @@ const port = process.env.PORT || 4000
 
 // start the app by using heroku port
 app.listen(port as number, () => {
-  log("App started on port: " + port)
+  console.log("App started on port: " + port)
 })

@@ -54,7 +54,16 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+
+app.get('/', (_, res: Response) => {
+  return res.status(200).json({
+    message: "Api Server!",
+    statusCode: 200,
+  })
+})
+
 // Add API Routes
 app.use('/api', router);
+
 
 export default app
