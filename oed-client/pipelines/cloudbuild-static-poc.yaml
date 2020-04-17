@@ -48,6 +48,9 @@ steps:
   # build the gatsby site generate typedefs (use envs from prod)
   - name: 'gcr.io/$PROJECT_ID/static.build'
     dir: '/app'
+    volumes:
+      - name: 'vol1'
+        path: '/app/public'
     args: ['npm', 'run', 'build']
     env:
       - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
@@ -73,16 +76,22 @@ steps:
 
   # View Directory
   - name: 'gcr.io/$PROJECT_ID/static.build'
-    #dir: '/app'
+    dir: '/app'
+    volumes:
+      - name: 'vol1'
+        path: '/app/public'
     entrypoint: "bash"
     args: [ '-c', 'ls -la']
 
-  - name: 'gcr.io/$PROJECT_ID/static.build'
-    dir: 'public'
-    entrypoint: "bash"
-    args: [ '-c', 'ls -la']
+#  - name: 'gcr.io/$PROJECT_ID/static.build'
+#    dir: 'oed-client'
+#    entrypoint: "bash"
+#    args: [ '-c', 'ls -la']
 
   #deploy static build
   - name: 'gcr.io/$PROJECT_ID/static.build'
-    #dir: '/app'
+    dir: '/app'
+    volumes:
+      - name: 'vol1'
+        path: '/app/public'
     args: ['npm', 'run', 'deploy', '--', '--token', '$_FIREBASE_TOKEN']
