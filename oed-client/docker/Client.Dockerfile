@@ -12,9 +12,11 @@ FROM node:12.16.2
 WORKDIR /app
 # RUN mkdir oed-client
 # WORKDIR /app/oed-client
-COPY oed-client/package*.json ./
-RUN npm install
+# COPY oed-client/package*.json ./
 COPY oed-client/ ./
+# RUN npm install
 RUN ls -af
 #RUN npm run build
 #RUN npm run deploy
+
+# WORKDIR /app/oed-client

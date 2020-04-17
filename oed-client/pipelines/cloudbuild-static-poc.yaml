@@ -25,15 +25,15 @@ steps:
       - _FIREBASE_TOKEN=$_FIREBASE_TOKEN
 
   # View Directory
-  #- name: 'gatsby-build'
+  - name: 'gatsby-build'
   #  dir: 'oed-client'
-  #  entrypoint: "bash"
-  #  args: [ '-c', 'ls -la']
+    entrypoint: "bash"
+    args: [ '-c', 'ls -la']
 
   # install
-  # - name: 'gatsby-build'
-  #  dir: 'oed-client'
-  #  args: ['npm', 'ci']
+  - name: 'gatsby-build'
+    #dir: 'oed-client'
+    args: ['npm', 'ci']
 
   # install firebase tools
   # - name: 'gatsby-build'
