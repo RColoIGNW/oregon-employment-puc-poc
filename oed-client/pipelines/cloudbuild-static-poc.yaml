@@ -49,7 +49,7 @@ steps:
   #  args: ['npm', 'i', '-g', 'firebase-tools']
 
   # build the gatsby site generate typedefs (use envs from prod)
-  - name: 'gcr.io/$PROJECT_ID/static.build'
+  - name: 'node:12.16.2'
     dir: '/app'
     volumes:
       - name: 'vol1'
@@ -78,13 +78,13 @@ steps:
   #   args: ['npm', 'run', 'storybook:build']
 
   # View Directory
-  - name: 'gcr.io/$PROJECT_ID/static.build'
-    dir: '/app'
-    volumes:
-      - name: 'vol1'
-        path: '/app'
-    entrypoint: "bash"
-    args: [ '-c', 'ls -la']
+#  - name: 'gcr.io/$PROJECT_ID/static.build'
+#    dir: '/app'
+#    volumes:
+#      - name: 'vol1'
+#        path: '/app'
+#    entrypoint: "bash"
+#    args: [ '-c', 'ls -la']
 
 #  - name: 'gcr.io/$PROJECT_ID/static.build'
 #    dir: 'oed-client'
@@ -92,7 +92,7 @@ steps:
 #    args: [ '-c', 'ls -la']
 
   #deploy static build
-  - name: 'gcr.io/$PROJECT_ID/static.build'
+  - name: 'node:12.16.2'
     dir: '/app'
     volumes:
       - name: 'vol1'
