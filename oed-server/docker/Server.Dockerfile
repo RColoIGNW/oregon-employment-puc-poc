@@ -7,12 +7,15 @@
 
 FROM node:12.16.2-alpine3.11
 
-WORKDIR /app
+RUN ls -af
 
-COPY oed-server/dist/ ./
-COPY oed-server/node_modules/ ./
-COPY oed-server/package.json .package.json
-COPY oed-server/.env .env
-COPY oed-server/sa.json sa.json
+COPY ./oed-server/dist ./dist
+RUN ls -af
+RUN ls -af ./dist
+COPY ./oed-server/node_modules ./node_modules
+RUN ls -af
+COPY ./oed-server/package.json .package.json
+COPY ./oed-server/.env .env
+COPY ./oed-server/sa.json sa.json
 
 CMD [ "node", "dist/server.js" ]
