@@ -55,7 +55,7 @@ export const isAuthorized: RequestHandler = async (
   }
 };
 
-// Checks if a user has the required permission from token claims stored in firebase admin for the user - you would use this for the oregon state admin/backend api's
+// Checks if a user has the required permission from token claims stored for the user - you would use this for the oregon state admin/backend api's
 export const hasAdminRole: RequestHandler = async (_: Request, res, next) => {
   try {
     // const roleRequest = await db.collection('roles').doc('some-doc').get()
