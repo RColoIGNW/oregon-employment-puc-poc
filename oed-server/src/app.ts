@@ -1,9 +1,9 @@
-// require('dotenv').config({ // TODO: implement .env file to load env vars
-//   path: `${__dirname}/../.env`,
-// })
+require('dotenv').config({
+  path: `${__dirname}/../.env`,
+})
 
 import bodyParser from 'body-parser'
-import cors from 'cors'
+import cors, { CorsOptionsDelegate } from 'cors'
 import express, { NextFunction, Request, Response } from 'express'
 
 import routes from './routes'
@@ -12,10 +12,11 @@ const app = express()
 const router = express.Router()
 
 const headers1 = 'Origin, X-Requested-With, Content-Type, Accept'
-const headers2 = 'Authorization, Access-Control-Allow-Credentials, x-access-token'
+const headers2 =
+  'Authorization, Access-Control-Allow-Credentials, x-access-token'
 const whitelist = [process.env.CLIENT_URL]
 
-const corsOptionsDelegate = (req: Request, callback) => {
+const corsOptionsDelegate: CorsOptionsDelegate = (req: Request, callback) => {
   let corsOptions
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
     corsOptions = { origin: true }
@@ -40,13 +41,16 @@ app.use(cors(corsOptionsDelegate))
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin
-  if(whitelist.indexOf(origin as string) > -1){
+  if (whitelist.indexOf(origin as string) > -1) {
     res.header('Access-Control-Allow-Origin', origin)
   } else {
     res.header('Access-Control-Allow-Origin', clientHeaderOrigin)
   }
 
-  res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH, OPTIONS, PUT')
+  res.header(
+    'Access-Control-Allow-Methods',
+    'GET, POST, DELETE, PATCH, OPTIONS, PUT'
+  )
   res.header('Access-Control-Allow-Headers', `${headers1},${headers2}`)
   res.header('Access-Control-Allow-Credentials', 'true')
 

@@ -8,13 +8,16 @@ export interface RequestOptions extends RequestInit {
   requireJSON?: boolean
 }
 
-export async function request<T>(url: string, options?: RequestOptions): Promise<T>
-export async function request(url: string, options?: RequestOptions): Promise<string>
-
 export async function request<T>(
   url: string,
-  options: RequestOptions
-) {
+  options?: RequestOptions
+): Promise<T>
+export async function request(
+  url: string,
+  options?: RequestOptions
+): Promise<string>
+
+export async function request<T>(url: string, options: RequestOptions) {
   log('request: fetching', url)
   let response
   try {
@@ -28,8 +31,14 @@ export async function request<T>(
   return result
 }
 
-export async function parseResponse<T>(res: Response, requireJSON?: boolean): Promise<T>
-export async function parseResponse(res: Response, requireJSON?: boolean): Promise<string>
+export async function parseResponse<T>(
+  res: Response,
+  requireJSON?: boolean
+): Promise<T>
+export async function parseResponse(
+  res: Response,
+  requireJSON?: boolean
+): Promise<string>
 
 export async function parseResponse(res: Response, requireJSON?: boolean) {
   const text = await res.text()
