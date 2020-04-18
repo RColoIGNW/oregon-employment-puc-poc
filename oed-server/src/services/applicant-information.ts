@@ -17,6 +17,7 @@ export const submitApplicantInformation = async (req: Request, res: Response) =>
     const { applicationCount } = userDoc.data()
     t.update(userRef, { applicationCount: applicationCount ? applicationCount + 1 : 1 })
     t.set(applicationsRef, requestBody)
+    return Promise.resolve('Transaction Successful!')
   }).catch(error => res.status(400).send(error))
 
   return res.status(200).json({
