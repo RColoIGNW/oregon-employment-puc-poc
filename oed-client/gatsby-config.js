@@ -4,7 +4,7 @@ const siteTitle = "Oregon Employment Department PUC POC";
 const siteDescription =
   "A proof of concept site for Oregon Employment Department";
 const siteAuthor = "Brian McBride";
-const siteUrl = "https://gatsby-starter-typescript-deluxe.netlify.com";
+const siteUrl = "https://oregon-pua-poc.web.app/";
 const siteImage = `${siteUrl}/icons/icon_512x512.png`;
 const siteKeywords = ["gatsby", "typescript", "starter", "javascript", "react"];
 
@@ -14,6 +14,7 @@ module.exports = {
     description: siteDescription,
     author: siteAuthor,
     url: siteUrl,
+    siteUrl: siteUrl,
     keywords: siteKeywords,
     image: siteImage,
   },
@@ -75,5 +76,12 @@ module.exports = {
       },
     },
     `gatsby-plugin-offline`,
+    `gatsby-plugin-sitemap`,
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        policy: [{ userAgent: '*', disallow: '/' }]
+      }
+    }
   ],
 };
