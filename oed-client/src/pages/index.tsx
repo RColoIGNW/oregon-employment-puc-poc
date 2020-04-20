@@ -50,17 +50,15 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-const useSignIn = () => {
+const useSignIn = () => { // fake for demo
   useEffect(async () => {
     if (!localStorage.token) {
-      await firebase.auth().signInWithEmailAndPassword('djones@ignw.io', 'Password123!')
+      // await firebase.auth().signInWithEmailAndPassword('admin@ignw.test.com', 'Testing123!') // admin test
+      await firebase.auth().signInWithEmailAndPassword('djones@ignw.io', 'Testing123!') // customer test
       localStorage.setItem('token', await firebase.auth().currentUser?.getIdToken() || '')
     }
   })
-
-  return {
-
-  }
+  return {}
 }
 
 const InitialApplicationPage = () => {
