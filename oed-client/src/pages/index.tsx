@@ -51,14 +51,18 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 const useSignIn = () => { // fake for demo
-  useEffect(async () => {
-    if (!localStorage.token) {
-      // await firebase.auth().signInWithEmailAndPassword('admin@ignw.test.com', 'Testing123!') // admin test
-      await firebase.auth().signInWithEmailAndPassword('djones@ignw.io', 'Testing123!') // customer test
-      localStorage.setItem('token', await firebase.auth().currentUser?.getIdToken() || '')
+  useEffect(() => {
+    const signInAsCustomer = (): any => {
+      if (!localStorage.token && typeof window !== 'undefined') {
+        // await firebase.auth().signInWithEmailAndPassword('admin@ignw.test.com', 'Testing123!') // admin test
+        return firebase?.auth()?.signInWithEmailAndPassword('djones@ignw.io', 'Testing123!')
+          .then(async () => {
+            localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken() || '')
+          })
+      }
     }
+    signInAsCustomer()
   })
-  return {}
 }
 
 const InitialApplicationPage = () => {
