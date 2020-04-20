@@ -1,12 +1,10 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import ApplicantInfo from '../ApplicantInfo'
 
 
 const SectionA = () => {
   return (
-    <Typography>
-      FORM HERE
-    </Typography>
+    <ApplicantInfo />
   )
 }
 
