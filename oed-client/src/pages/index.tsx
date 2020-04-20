@@ -67,7 +67,7 @@ const useSignIn = () => { // fake for demo
 }
 
 const InitialApplicationPage = () => {
-  useSignIn()
+  // useSignIn() remove until I can figure out why firebase env vars are not loading
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const handleBack = () => {
