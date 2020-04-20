@@ -46,6 +46,7 @@ const rules = {
   'employmentRecord.started': 'date',
   'employmentRecord.ended': 'date',
   'gender': 'string',
+  'uid': 'required|string',
 }
 
 export const submitApplicantInformation = async (req: Request, res: Response) => {
@@ -54,7 +55,7 @@ export const submitApplicantInformation = async (req: Request, res: Response) =>
     if (validation.fails()) { return res.status(400).send(validation.errors) }
 
     const requestBody = req.body || {
-      uid: "123-fake-uid", // TODO: get from req.body.uid or add to request headers
+      uid: '123-fake-uid', // TODO: get from req.body.uid or add to request headers
       // add mock data
     }
     const uid = requestBody.uid || '123-fake-uid'
