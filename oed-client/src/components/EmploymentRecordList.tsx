@@ -38,7 +38,7 @@ interface EmploymentRecordListProps {
 }
 
 export default (props: EmploymentRecordListProps) => {
-  const { employmentRecords, onAddEmploymentRecord } = props
+  const { employmentRecords } = props
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -50,6 +50,11 @@ export default (props: EmploymentRecordListProps) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const onAddEmploymentRecord = (employmentRecord: EmploymentRecord) => {
+    props.onAddEmploymentRecord && props.onAddEmploymentRecord(employmentRecord)
+    handleClose()
+  }
 
   return (
     <>

@@ -7,25 +7,78 @@ import { Button } from '@material-ui/core'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import { Address } from '../models/Address'
+
+const validate = (name: string, value: string): string => {
+  switch (name) {
+    case 'name':
+      if (!value.trim()) return 'Enter employer name'
+      break
+    case 'phone':
+      if (!value.trim()) return 'Enter employer phone'
+      break
+    default: return ''
+  }
+  return ''
+}
 
 interface EmploymentRecordEditProps {
   employmentRecord?: EmploymentRecord
   onAccept: (employmentRecord: EmploymentRecord) => void
 }
 
-export default (props: EmploymentRecordEditProps) => {
-  const [employmentRecord, setEmploymentRecord] = useState(props.employmentRecord || {} as EmploymentRecord)
+const defaultValue: EmploymentRecord = {
+  employer: {
+    name: '',
+    phone: '',
+    address: {
+      street: '',
+      city: '',
+      state: '',
+      zipCode: ''
+    },
+  },
+  started: new Date(),
+  ended: new Date()
+}
 
-  const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //  setEmploymentRecord({ ...employmentRecord, name: event.target.value })
+export default (props: EmploymentRecordEditProps) => {
+  const employmentRecord = props.employmentRecord || defaultValue
+  const [state, setState] = useState(
+    {
+      value: {
+        ...employmentRecord.employer,
+        started: employmentRecord.started,
+        ended: employmentRecord.ended,
+      },
+      errors: {}
+    }
+  )
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setState({ value: { ...state.value, [name]: value }, errors: { ...state.errors, [name]: validate(name, value) } })
   }
 
   const handleStartedChange = (value: MaterialUiPickersDate) => {
-//    value && setStarted(value.toDate())
+    //    value && setStarted(value.toDate())
+  }
+
+  const onAddressCompleted = (address: Address) => {
+    console.log(address)
+    setState({ value: { ...state.value, address: address }, errors: { ...state.errors } })
   }
 
   const onAccept = () => {
-    props.onAccept && props.onAccept(employmentRecord)
+    props.onAccept && props.onAccept({
+      employer: {
+        name: state.value.name,
+        address: state.value.address,
+        phone: state.value.phone
+      },
+      started: state.value.started,
+      ended: state.value.ended
+    })
   }
 
   return (
@@ -33,18 +86,18 @@ export default (props: EmploymentRecordEditProps) => {
 
       <Grid container spacing={2} direction="column">
         <Grid item xs={12}>
-          <TextField fullWidth id="employer-name" label="Name of Employer" variant="outlined" onChange={onNameChange} />
+          <TextField fullWidth value={state.value.name} name="name" onChange={onChange} label="Name of Employer" variant="outlined" />
         </Grid>
         <Grid item xs={12}>
-          <AddressEdit />
+          <AddressEdit onCompletion={onAddressCompleted} />
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <DatePicker fullWidth value={started} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
+              <DatePicker fullWidth value={state.value.started} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
             </Grid>
             <Grid item xs={6}>
-              <DatePicker fullWidth value={started} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
+              <DatePicker fullWidth value={state.value.ended} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
             </Grid>
           </Grid>
         </Grid>
