@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout } from "../components/layout";
 import { SEO } from "../components/seo";
-import { Grid, Typography, Stepper, Step, StepContent, StepLabel, Button } from "@material-ui/core";
+import { Grid, Typography, Stepper, Step, StepContent, StepLabel, Button, makeStyles, Theme, createStyles } from "@material-ui/core";
 import SectionA from "../components/sectionA/sectionA";
 import SectionB from "../components/sectionB/sectionB";
 import SectionC from "../components/sectionC/sectionC";
@@ -40,7 +40,16 @@ const pageInfo = {
   submit: 'Submit',
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({   
+    appStepper: {
+      padding: theme.spacing(1),
+    }
+  }),
+);
+
 const InitialApplicationPage = () => {  
+  const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0);
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -59,8 +68,8 @@ const InitialApplicationPage = () => {
         </Typography>
       </Grid>
       <Grid item >         
-        <Stepper activeStep={activeStep} orientation="vertical" > 
-          <Step>
+        <Stepper activeStep={activeStep} orientation="vertical"  className={classes.appStepper}> 
+          <Step key={'A'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionA.icon}}>{pageInfo.sectionA.title}</StepLabel>
             <StepContent>              
               <Grid container direction={'column'} spacing={2}>
@@ -73,7 +82,7 @@ const InitialApplicationPage = () => {
               </Grid>
             </StepContent>
           </Step>
-          <Step>
+          <Step key={'B'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionB.icon}}>{pageInfo.sectionB.title}</StepLabel>
             <StepContent>              
               <Grid container direction={'column'} spacing={2}>
@@ -86,7 +95,7 @@ const InitialApplicationPage = () => {
               </Grid>
             </StepContent>
           </Step>
-          <Step>
+          <Step key={'C'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionC.icon}}>{pageInfo.sectionC.title}</StepLabel>
             <StepContent>              
               <Grid container direction={'column'} spacing={2}>
@@ -99,7 +108,7 @@ const InitialApplicationPage = () => {
               </Grid>
             </StepContent>
           </Step>
-          <Step>
+          <Step key={'D'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionD.icon}}>{pageInfo.sectionD.title}</StepLabel>
             <StepContent>              
               <Grid container direction={'column'} spacing={2}>
@@ -112,7 +121,7 @@ const InitialApplicationPage = () => {
               </Grid>
             </StepContent>
           </Step>
-          <Step>
+          <Step key={'E'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionE.icon}}>{pageInfo.sectionE.title}</StepLabel>
             <StepContent>              
               <Grid container direction={'column'} spacing={2}>
@@ -125,7 +134,7 @@ const InitialApplicationPage = () => {
               </Grid>
             </StepContent>
           </Step>
-          <Step>
+          <Step key={'F'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionF.icon}}>{pageInfo.sectionF.title}</StepLabel>
             <StepContent>              
               <Grid container direction={'column'} spacing={2}>

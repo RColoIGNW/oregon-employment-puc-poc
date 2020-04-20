@@ -94,7 +94,7 @@ const SectionD = () => {
         questions.map((q) => {
           return (
               <>
-                <Grid item>
+                <Grid item id={q.code}>
                   <Question question={q}>
                     {q.componentDetails}
                   </Question>
