@@ -57,7 +57,7 @@ export const submitApplicantInformation = async (req: Request, res: Response) =>
       const applicationDoc = await t.get(applicationsRef)
       const increment = fb.firestore.FieldValue.increment(applicationDoc.data() ? 0 : 1);
       t[countDoc.data() ? 'update' :  'set'](countRef, { applicationCount: increment })
-      t[applicationDoc.data() ? 'update' : 'set'](applicationsRef, requestBody)
+      t[applicationDoc.data() ? 'update' : 'set'](applicationsRef, { application: requestBody })
       return Promise.resolve('Transaction Successful!')
     })
     .then(() => res.status(200).json({ success: true}))
