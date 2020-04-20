@@ -1,12 +1,10 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import EmploymentRecordList from '../EmploymentRecordList'
 
 
 const SectionB = () => {
   return (
-    <Typography>
-      LIST HERE
-    </Typography>
+    <EmploymentRecordList employmentRecords={[]} />
   )
 }
 
