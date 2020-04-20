@@ -1,5 +1,5 @@
-import type { RequestHandler } from 'express-serve-static-core'
-import { NextFunction, Request, Response } from 'express'
+import type { RequestHandler } from "express-serve-static-core";
+import { NextFunction, Request, Response } from "express";
 // import firebase from './firebase'
 
 // const db = firebase.firestore()
@@ -18,9 +18,9 @@ export const decodeToken: RequestHandler = async (
   if (!req.headers.authorization) {
     return res.status(400).json({
       error: {
-        message: 'You did not specify any jwt for this request',
-      }
-    })
+        message: "You did not specify any jwt for this request",
+      },
+    });
   }
 
   try {
@@ -29,13 +29,13 @@ export const decodeToken: RequestHandler = async (
     // if (!isValid) {
     //   throw new Error('You are unauthorized to access this resource')
     // }
-    next()
+    next();
   } catch (error) {
     return res.status(500).json({
       error,
-    })
+    });
   }
-}
+};
 
 // Checks if a user is authenticated from firebase admin
 export const isAuthorized: RequestHandler = async (
@@ -49,7 +49,7 @@ export const isAuthorized: RequestHandler = async (
     return res.status(401).json({
       error: {
         message:
-          'You are not authorised to perform this action. SignUp/Login to continue',
+          "You are not authorised to perform this action. SignUp/Login to continue",
       },
     });
   }
@@ -62,7 +62,7 @@ export const hasAdminRole: RequestHandler = async (_: Request, res, next) => {
     // const rolesPayload = roleRequest.val()
     // const role = rolesPayload.find((role) => role.id === roleRanks.admin)
 
-    next()
+    next();
     // if (req.user.roleId <= role.id) {
     //   next()
     // } else {
@@ -76,7 +76,7 @@ export const hasAdminRole: RequestHandler = async (_: Request, res, next) => {
     return res.status(500).json({
       error: {
         message:
-          'An error occurred while getting user access. Please try again',
+          "An error occurred while getting user access. Please try again",
       },
     });
   }

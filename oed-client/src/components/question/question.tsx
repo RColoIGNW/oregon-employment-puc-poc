@@ -7,6 +7,7 @@ export interface IQuestion {
   showOptions: boolean
   note?: string  
   whenShowDetails: 'YES' | 'NO' | 'ALWAYS' | 'NEVER'
+  componentDetails?: React.ReactNode
   answer?: any
 }
 
