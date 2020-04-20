@@ -59,6 +59,7 @@ const useSignIn = () => { // fake for demo
           .then(async () => {
             localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken() || '')
           })
+          .catch(console.error)
       }
     }
     signInAsCustomer()
