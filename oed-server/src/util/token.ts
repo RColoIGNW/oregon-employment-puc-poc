@@ -15,7 +15,7 @@ export const decodeToken: RequestHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.headers.Authorization) {
+  if (!req.headers.authorization) {
     return res.status(400).json({
       error: {
         message: "You did not specify any jwt for this request",
@@ -24,7 +24,7 @@ export const decodeToken: RequestHandler = async (
   }
 
   try {
-    req.token = req.headers.Authorization.replace("Bearer ", "");
+    req.token = req.headers.authorization.replace('Bearer ', '')
     // const isValid = await verifyToken(req.token)
     // if (!isValid) {
     //   throw new Error('You are unauthorized to access this resource')
@@ -43,8 +43,8 @@ export const isAuthorized: RequestHandler = async (
   res,
   next
 ) => {
-  if (req.user) {
-    next();
+  if (!req.user) { // TODO:  add real logic - fake for demo for now
+    next()
   } else {
     return res.status(401).json({
       error: {
