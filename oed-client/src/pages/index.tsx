@@ -1,16 +1,18 @@
-import React from "react";
-import { Layout } from "../components/layout";
-import { SEO } from "../components/seo";
-import { Grid, Typography, Stepper, Step, StepContent, StepLabel, Button, makeStyles, Theme, createStyles } from "@material-ui/core";
-import SectionA from "../components/sectionA/sectionA";
-import SectionB from "../components/sectionB/sectionB";
-import SectionC from "../components/sectionC/sectionC";
-import SectionD from "../components/sectionD/sectionD";
-import SectionE from "../components/sectionE/sectionE";
-import SectionF from "../components/sectionF/sectionF";
+import { Button, Grid, Step, StepContent, StepLabel, Stepper, Theme, Typography, createStyles, makeStyles } from "@material-ui/core"
+import React, { useEffect } from "react"
+
+import { Layout } from "../components/layout"
+import SectionA from "../components/sectionA/sectionA"
+import SectionB from "../components/sectionB/sectionB"
+import SectionC from "../components/sectionC/sectionC"
+import SectionD from "../components/sectionD/sectionD"
+import SectionE from "../components/sectionE/sectionE"
+import SectionF from "../components/sectionF/sectionF"
+import { SEO } from "../components/seo"
+import firebase from '../lib/firebase'
 
 const pageInfo = {
-  title: 'INITIAL APPLICATION FOR PANDEMIC UNEMPLOYMENT ASSISTANCE', 
+  title: 'INITIAL APPLICATION FOR PANDEMIC UNEMPLOYMENT ASSISTANCE',
   sectionA: {
     icon: 'A',
     title: 'APPLICANT INFORMATION',
@@ -34,44 +36,58 @@ const pageInfo = {
   sectionF: {
     icon: 'F',
     title: 'APPLICANT CERTIFICATION',
-  },    
+  },
   back: 'Back',
   next: 'Next',
   submit: 'Submit',
 }
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({   
+  createStyles({
     appStepper: {
       padding: theme.spacing(1),
     }
   }),
-);
+)
 
-const InitialApplicationPage = () => {  
+const useSignIn = () => {
+  useEffect(async () => {
+    if (!localStorage.token) {
+      await firebase.auth().signInWithEmailAndPassword('djones@ignw.io', 'Password123!')
+      localStorage.setItem('token', await firebase.auth().currentUser?.getIdToken() || '')
+    }
+  })
+
+  return {
+
+  }
+}
+
+const InitialApplicationPage = () => {
+  useSignIn()
   const classes = useStyles()
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(0)
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  }
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  }
 
   return (
   <Layout>
     <SEO />
     <Grid container direction="column" spacing={2}>
-      <Grid item> 
+      <Grid item>
         <Typography variant={'h5'}>
           {pageInfo.title}
         </Typography>
       </Grid>
-      <Grid item >         
-        <Stepper activeStep={activeStep} orientation="vertical"  className={classes.appStepper}> 
+      <Grid item >
+        <Stepper activeStep={activeStep} orientation="vertical"  className={classes.appStepper}>
           <Step key={'A'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionA.icon}}>{pageInfo.sectionA.title}</StepLabel>
-            <StepContent>              
+            <StepContent>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
                   <SectionA/>
@@ -84,7 +100,7 @@ const InitialApplicationPage = () => {
           </Step>
           <Step key={'B'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionB.icon}}>{pageInfo.sectionB.title}</StepLabel>
-            <StepContent>              
+            <StepContent>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
                   <SectionB/>
@@ -97,7 +113,7 @@ const InitialApplicationPage = () => {
           </Step>
           <Step key={'C'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionC.icon}}>{pageInfo.sectionC.title}</StepLabel>
-            <StepContent>              
+            <StepContent>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
                   <SectionC/>
@@ -110,7 +126,7 @@ const InitialApplicationPage = () => {
           </Step>
           <Step key={'D'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionD.icon}}>{pageInfo.sectionD.title}</StepLabel>
-            <StepContent>              
+            <StepContent>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
                   <SectionD/>
@@ -123,7 +139,7 @@ const InitialApplicationPage = () => {
           </Step>
           <Step key={'E'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionE.icon}}>{pageInfo.sectionE.title}</StepLabel>
-            <StepContent>              
+            <StepContent>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
                   <SectionE/>
@@ -136,7 +152,7 @@ const InitialApplicationPage = () => {
           </Step>
           <Step key={'F'}>
             <StepLabel StepIconProps={{icon: pageInfo.sectionF.icon}}>{pageInfo.sectionF.title}</StepLabel>
-            <StepContent>              
+            <StepContent>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
                   <SectionF/>
@@ -173,7 +189,7 @@ const StepActions = (props: StepActionsProp) => {
           onClick={props.onBack}
         >
           { pageInfo.back }
-        </Button>                    
+        </Button>
       </Grid>
       <Grid item>
         <Button
@@ -181,7 +197,7 @@ const StepActions = (props: StepActionsProp) => {
           color="primary"
           onClick={props.onNext}
         >
-          { 
+          {
             (showSubmit) ? pageInfo.submit : pageInfo.next
           }
         </Button>
@@ -189,4 +205,4 @@ const StepActions = (props: StepActionsProp) => {
     </Grid>
   )
 }
-export default InitialApplicationPage;
+export default InitialApplicationPage
