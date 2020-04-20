@@ -1,6 +1,7 @@
 import type { Router } from 'express'
 import { decodeToken, isAuthorized } from './util/token'
 import submitApplicantInformation from './services/applicant-information'
+import { getApplicants } from './services/applicants'
 
 export const routes = (router: Router) => {
   // app discovery/healthcheck
@@ -14,6 +15,10 @@ export const routes = (router: Router) => {
   router
     .route('/new-application')
     .post(decodeToken, isAuthorized, submitApplicantInformation)
+
+  router
+    .route('/applications')
+    .get(decodeToken, isAuthorized, getApplicants)
 }
 
 export default routes
