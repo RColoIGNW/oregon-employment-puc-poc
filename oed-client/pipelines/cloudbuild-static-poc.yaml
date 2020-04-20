@@ -11,6 +11,7 @@ steps:
     entrypoint: npm
     args: ['run', 'build']
     env:
+      - NODE_ENV=production
       - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
       - REACT_APP_API_KEY=AIzaSyAmfP-LG4RTfDu_wxOcTnFTqJHnf-Cy_KY
       - REACT_APP_AUTH_DOMAIN=pge-$PROJECT_ID.firebaseapp.com

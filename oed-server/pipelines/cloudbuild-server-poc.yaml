@@ -10,6 +10,8 @@ steps:
     dir: 'oed-server'
     entrypoint: npm
     args: ['run', 'build']
+    env:
+      - NODE_ENV=production
 
   # Run Prune
   - name: node:12.16.2-alpine3.11
