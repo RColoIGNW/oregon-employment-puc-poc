@@ -89,7 +89,7 @@ export default (props: AddressEditProps) => {
           onChange={onChange}
           error={!!state.errors.zipCode}
           helperText={state.errors.zipCode}
-          label="State"
+          label="Zip Code"
           variant="outlined"
           fullWidth
         />

@@ -65,7 +65,6 @@ export default (props: EmploymentRecordEditProps) => {
   }
 
   const onAddressCompleted = (address: Address) => {
-    console.log(address)
     setState({ value: { ...state.value, address: address }, errors: { ...state.errors } })
   }
 
