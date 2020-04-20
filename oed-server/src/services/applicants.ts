@@ -7,7 +7,7 @@ import firebase from '../util/firebase'
 const db = firebase.firestore()
 
 export const getApplicants = async (_: Request, res: Response) => {
-  const applications: any = []
+  const applications: any = [] // TODO: add types
   await db
     .collection('users')
     .orderBy('application')
