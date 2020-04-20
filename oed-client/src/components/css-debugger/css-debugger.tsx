@@ -1,6 +1,6 @@
-import React, { useState, useEffect, ComponentProps } from "react"
-import styled, { createGlobalStyle } from "styled-components";
 import { motion } from "framer-motion";
+import React, { ComponentProps, useEffect, useState } from "react"
+import styled, { createGlobalStyle } from "styled-components";
 
 const ToggleDebugButton = styled(motion.button).attrs(() => ({
   drag: true,
@@ -48,7 +48,7 @@ interface CSSDebuggerProps {
 
 const CSSDebugger: React.FC<CSSDebuggerProps> = ({
   debug = false,
-  showToggle = true,
+  showToggle = typeof window !== 'undefined' && window.location.href.includes('localhost') ? true : false,
   showGrid = true,
   buttonStyle,
   color = "rgba(255, 0, 0, .75)",
