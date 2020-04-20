@@ -2,8 +2,6 @@ import { Request, Response } from 'express'
 
 import firebase from '../util/firebase'
 
-// import { logger } from '../util/logger'
-
 const db = firebase.firestore()
 
 export const getApplicants = async (_: Request, res: Response) => {

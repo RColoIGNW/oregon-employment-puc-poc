@@ -5,9 +5,12 @@ import Validator from 'validatorjs'
 import firebase from '../util/firebase'
 import { logger } from '../util/logger'
 
+const log = logger('api:application-information')
+
 const db = firebase.firestore()
 
 const rules = {
+  'isSubmitted': 'boolean',
   'address.street': 'string',
   'address.city': 'string',
   'address.state': 'string',
@@ -41,27 +44,37 @@ const rules = {
 
 export const submitApplicantInformation = async (req: Request, res: Response) => {
   try {
+    if (!req.body) { throw new Error('Request Body Required') }
+
     const validation = new Validator(req.body, rules)
     if (validation.fails()) { return res.status(400).send(validation.errors) }
 
-    const requestBody = req.body || {
-      uid: '123-fake-uid',
-      // add mock data
-    }
+    const requestBody = req.body
     const uid = requestBody.uid || '123-fake-uid'
     const countRef = db.collection('applications-count').doc('pua-applications')
-    const applicationsRef = db.collection('users').doc(uid)
+    const applicationRef = db.collection('users').doc(uid)
 
-    return db.runTransaction(async (t) => {
-      const countDoc = await t.get(countRef)
-      const applicationDoc = await t.get(applicationsRef)
-      const increment = fb.firestore.FieldValue.increment(applicationDoc.data() ? 0 : 1);
-      t[countDoc.data() ? 'update' :  'set'](countRef, { applicationCount: increment })
-      t[applicationDoc.data() ? 'update' : 'set'](applicationsRef, { application: requestBody })
-      return Promise.resolve('Transaction Successful!')
-    })
-    .then(() => res.status(200).json({ success: true}))
-    .finally(() => logger('SubmitApplicationInformation Transaction Finished!'))
+    return db
+      .runTransaction(async (t) => {
+        const countDoc = await t.get(countRef)
+        const applicationDoc = await t.get(applicationRef)
+        const increment = fb.firestore.FieldValue.increment(applicationDoc.data() ? 0 : 1)
+        t[countDoc.data() ? 'update' :  'set'](countRef, { applicationCount: increment })
+        t[applicationDoc.data() ? 'update' : 'set'](applicationRef, { application: requestBody })
+        return Promise.resolve('Transaction Successful!')
+      })
+      .then(async () => {
+        await applicationRef
+          .get()
+          .then(querySnapshot => {
+            if (!!querySnapshot.data()?.application?.isSubmitted) {
+              // publish to pub/sub for downstream services
+              log(JSON.stringify(querySnapshot.data()), 'Published to pub/sub!')
+            }
+          })
+        return res.status(200).json({ success: true })
+      })
+      .finally(() => log('SubmitApplicationInformation Transaction Finished!'))
   } catch (error) {
     res.status(400).json({ error })
   }
