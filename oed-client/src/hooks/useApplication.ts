@@ -1,9 +1,10 @@
 import Applicant from "../models/Applicant"
 import storage from '../utils/storage'
 import EmploymentRecord from "../models/EmploymentRecord"
+import useApplicantFormApi from "./useApplicantFormApi"
 
 export default () => {
-  //const usedesmond
+  const api = useApplicantFormApi()
 
   const loadApplication = () => {
     //load from API
@@ -12,6 +13,7 @@ export default () => {
 
   const saveSectionA = (applicant: Applicant) => {
     storage.save(storage.StorageKey.SectionA, applicant)
+    api.saveForm(applicant)
   }
 
   const saveSectionB = (employmentRecords: EmploymentRecord[]) => {
