@@ -199,7 +199,7 @@ const InitialApplicationPage = () => {
     },
   ]
 
-  const ActiveSection = steps[activeStep].component
+  const ActiveSection = steps?.[activeStep]?.component
 
   return (
     <Layout>
