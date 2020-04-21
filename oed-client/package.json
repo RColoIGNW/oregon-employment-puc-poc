@@ -11,7 +11,7 @@
     "url": "https://github.com/gojutin/gatsby-starter-typescript-deluxe/issues"
   },
   "scripts": {
-    "develop": "gatsby develop -p 8000",
+    "develop": "gatsby develop",
     "dev": "npm run develop",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx}",
     "lint": "eslint . --ext ts --ext tsx --ext js --ext jsx",

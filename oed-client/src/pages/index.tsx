@@ -12,7 +12,7 @@ import { SEO } from "../components/seo"
 import firebase from '../lib/firebase'
 
 const pageInfo = {
-  title: 'INITIAL APPLICATION FOR PANDEMIC UNEMPLOYMENT ASSISTANCE',
+  title: 'Initial Application for Pandemic Unemployment Assistance',
   sectionA: {
     icon: 'A',
     title: 'APPLICANT INFORMATION',
@@ -84,7 +84,11 @@ const InitialApplicationPage = () => {
   <Layout>
     <SEO />
     <Grid container direction="column" spacing={2}>
-      <Grid item>
+      <Grid item style={{
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '2em'
+      }}>
         <Typography variant={'h5'}>
           {pageInfo.title}
         </Typography>

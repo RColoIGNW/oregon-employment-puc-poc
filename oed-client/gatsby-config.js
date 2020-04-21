@@ -9,7 +9,7 @@ const siteImage = `${siteUrl}/icons/icon_512x512.png`;
 const siteKeywords = ["gatsby", "typescript", "starter", "javascript", "react"]
 
 require('dotenv').config({
-  path: `.env.${process.env.activeEnv}`
+  path: `.env.${activeEnv}`
 })
 
 module.exports = {
