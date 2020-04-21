@@ -89,8 +89,8 @@ export default function MaterialTableDemo() {
         },
         {
           icon: Check as any,
-          tooltip: 'Save',
-          onClick: (_: any, rowData: any) => alert("You saved " + rowData.name)
+          tooltip: 'Approve',
+          onClick: (_: any, rowData: any) => alert("You approved " + rowData.name)
         }
       ]}
     />
