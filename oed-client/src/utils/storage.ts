@@ -8,11 +8,11 @@ enum StorageKey {
 }
 
 const save = (key: string, value: any) => {
-  localStorage.setItem(key, JSON.stringify(value))
+  typeof window !== 'undefined' && localStorage.setItem(key, JSON.stringify(value))
 }
 
 const load = (key: string) => {
-  const item = localStorage.getItem(key)
+  const item = typeof window !== 'undefined' && localStorage.getItem(key)
   return item ? JSON.parse(item) : null
 }
 
