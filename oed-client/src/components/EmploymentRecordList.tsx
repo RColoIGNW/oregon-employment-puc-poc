@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
-import Fab from '@material-ui/core/Fab'
+import { Button } from '@material-ui/core'
 
 import EmploymentRecordItem from './EmploymentRecordItem'
 import EmploymentRecord from '../models/EmploymentRecord'
 import EmploymentRecordEdit from './EmploymentRecordEdit'
-import { Button } from '@material-ui/core'
 
 interface EmploymentRecordListProps {
   employmentRecords: EmploymentRecord[]
