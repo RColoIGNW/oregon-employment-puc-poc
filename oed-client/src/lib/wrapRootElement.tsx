@@ -1,7 +1,9 @@
-import React, { ReactNode } from "react"
-import { Helmet } from 'react-helmet';
 import CssBaseline from '@material-ui/core/CssBaseline'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
+import React, { ReactNode } from "react"
+import { Helmet } from 'react-helmet';
+
+import AuthProvider from '../providers/AuthProvider';
 import theme from '../themes/theme-light'
 
 const WrapRootElement:React.FC<{ element: ReactNode }> = ({element}) => {
@@ -16,7 +18,9 @@ const WrapRootElement:React.FC<{ element: ReactNode }> = ({element}) => {
       </Helmet>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {element}
+      <AuthProvider>
+        {element}
+      </AuthProvider>
     </ThemeProvider>
     </React.Fragment>
   )
