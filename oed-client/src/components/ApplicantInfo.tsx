@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import FormGroup from '@material-ui/core/FormGroup'
@@ -37,7 +37,8 @@ const defaultValue: Applicant = {
 }
 
 interface ApplicantInfoProps {
-  applicant?: Applicant
+  applicant?: Applicant,
+  onChange: (applicant: Applicant) => void
 }
 
 export default (props: ApplicantInfoProps) => {
@@ -70,6 +71,10 @@ export default (props: ApplicantInfoProps) => {
       : current.splice(current.findIndex(r => r === value), 1)
     setState({ ...state, races: current })
   }
+
+  useEffect(() => {
+    props.onChange(state)
+  }, [state])
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>

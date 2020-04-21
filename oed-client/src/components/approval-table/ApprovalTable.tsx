@@ -50,8 +50,8 @@ interface TableState {
   data: Row[]
 }
 
-export default function MaterialTableDemo() {
-  const [state] = React.useState<TableState>({
+export default function ApprovalTable(props) {
+  const tableProps = {
     columns: [
       { title: 'Date Applied', field: 'date' },
       { title: 'Name', field: 'name' },
@@ -61,22 +61,19 @@ export default function MaterialTableDemo() {
         field: 'status',
       },
     ],
-    data: [
-      { name: 'Mehmet', date: '01-01-2016', phone: '5032201234', status: 'pending' },
-      {
-        name: 'Zerya Betül',
-        date: '04-24-2020',
-        phone: '5035554444',
-        status: 'pending',
-      },
-    ],
-  })
+    data: props?.data?.map(({ application: d }) => ({
+      name: d.firstName,
+      date: d.lastModified,
+      phone: d.contactMethod.phone,
+      status: d.isSubmitted ? 'Pending' : 'In Progress'
+    }))
+  }
 
   return (
     <MaterialTable
       title="Unapproved Applications"
-      columns={state.columns}
-      data={state.data}
+      columns={tableProps.columns}
+      data={tableProps.data}
       options={{
         actionsColumnIndex: -1,
       }}

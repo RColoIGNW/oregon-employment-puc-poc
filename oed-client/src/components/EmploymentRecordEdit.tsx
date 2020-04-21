@@ -1,12 +1,21 @@
 import React, { useState } from 'react'
-import EmploymentRecord from '../models/EmploymentRecord'
 import TextField from '@material-ui/core/TextField'
-import AddressEdit from './AddressEdit'
 import Grid from '@material-ui/core/Grid'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+
+import AddressEdit from './AddressEdit'
+
 import { Address } from '../models/Address'
+import EmploymentRecord from '../models/EmploymentRecord'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const validate = (name: string, value: string): string => {
   switch (name) {
@@ -23,7 +32,9 @@ const validate = (name: string, value: string): string => {
 
 interface EmploymentRecordEditProps {
   employmentRecord?: EmploymentRecord
-  onAccept: (employmentRecord: EmploymentRecord) => void
+  open: boolean
+  onAccept?: (employmentRecord: EmploymentRecord) => void
+  onCancel?: () => void
 }
 
 const defaultValue: EmploymentRecord = {
@@ -43,6 +54,10 @@ const defaultValue: EmploymentRecord = {
 
 export default (props: EmploymentRecordEditProps) => {
   const employmentRecord = props.employmentRecord || defaultValue
+  const { open, onAccept, onCancel } = props
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  
   const [state, setState] = useState(
     {
       value: {
@@ -67,8 +82,8 @@ export default (props: EmploymentRecordEditProps) => {
     setState({ value: { ...state.value, address: address }, errors: { ...state.errors } })
   }
 
-  const onAccept = () => {
-    props.onAccept && props.onAccept({
+  const handleAccept = () => {
+    onAccept && onAccept({
       employer: {
         name: state.value.name,
         address: state.value.address,
@@ -79,30 +94,60 @@ export default (props: EmploymentRecordEditProps) => {
     })
   }
 
+  const handleCancel = () => {
+    onCancel && onCancel()
+  }
+
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
-
-      <Grid container spacing={2} direction="column">
-        <Grid item xs={12}>
-          <TextField fullWidth value={state.value.name} name="name" onChange={onChange} label="Name of Employer" variant="outlined" />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField fullWidth value={state.value.phone} name="phone" onChange={onChange} label="Phone Number" variant="outlined" />
-        </Grid>
-        <Grid item xs={12}>
-          <AddressEdit onCompletion={onAddressCompleted} />
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <DatePicker fullWidth value={state.value.started} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
+      <Dialog fullScreen={fullScreen} open={open} onClose={handleCancel}>
+        <DialogTitle id="simple-dialog-title">Employment record</DialogTitle>
+        <DialogContent>
+          <Grid container direction="column" spacing={2}>
+            <Grid item>
             </Grid>
-            <Grid item xs={6}>
-              <DatePicker fullWidth value={state.value.ended} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
+            <Grid item>
+              <Grid container spacing={2} direction="column">
+                <Grid item xs={12}>
+                  <TextField fullWidth value={state.value.name} name="name" onChange={onChange} label="Name of Employer" variant="outlined" />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth value={state.value.phone} name="phone" onChange={onChange} label="Phone Number" variant="outlined" />
+                </Grid>
+                <Grid item xs={12}>
+                  <AddressEdit onCompletion={onAddressCompleted} />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <DatePicker fullWidth value={state.value.started} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <DatePicker fullWidth value={state.value.ended} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={2} justify="flex-end">
+                <Grid item>
+                </Grid>
+                <Grid item>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" color="primary" onClick={handleAccept}>
+            Accept
+          </Button>
+          <Button variant="contained" onClick={handleCancel}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </MuiPickersUtilsProvider>
   )
 }
