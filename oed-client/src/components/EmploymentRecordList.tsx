@@ -10,6 +10,8 @@ import EmploymentRecordEdit from './EmploymentRecordEdit'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import { Typography } from '@material-ui/core'
 
 function getModalStyle() {
   const top = 50;
@@ -28,13 +30,16 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       width: 320,
       backgroundColor: theme.palette.background.paper,
+      [theme.breakpoints.up('sm')]: {
+        width: 480,
+      },
     },
   }),
 );
 
 interface EmploymentRecordListProps {
   employmentRecords: EmploymentRecord[]
-  onAddEmploymentRecord: (employmentRecord: EmploymentRecord) => void
+  onCompletion: (employmentRecord: EmploymentRecord) => void
 }
 
 export default (props: EmploymentRecordListProps) => {
@@ -85,12 +90,31 @@ export default (props: EmploymentRecordListProps) => {
       >
         <Card style={modalStyle} className={classes.card}>
           <CardContent>
-            <h2>Add an employment record</h2>
-            <EmploymentRecordEdit onAccept={onAddEmploymentRecord} />
+            <Grid container direction="column" spacing={2}>
+              <Grid item>
+                <Typography variant="h6">Add an employment record</Typography>
+              </Grid>
+              <Grid item>
+                <EmploymentRecordEdit onAccept={onAddEmploymentRecord} />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={2} justify="flex-end">
+                  <Grid item>
+                    <Button variant="contained" color="primary" onClick={handleClose}>
+                      Accept
+            </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button variant="contained" onClick={handleClose}>
+                      Cancel
+            </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
           </CardContent>
         </Card>
       </Modal>
-
     </>
   )
 }
