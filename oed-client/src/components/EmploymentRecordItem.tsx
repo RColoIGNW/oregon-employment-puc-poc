@@ -58,7 +58,7 @@ export default (props: EmploymentRecordItemProps) => {
                 </Button>
               </Grid>
               <Grid item>
-                <Button onClick={handleDelete} variant="contained" color="primary" startIcon={<DeleteIcon />}>
+                <Button onClick={handleDelete} variant="contained" startIcon={<DeleteIcon />}>
                   Delete
                 </Button>
               </Grid>
