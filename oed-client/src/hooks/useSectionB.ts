@@ -7,7 +7,7 @@ export default () => {
   const handleSubmit = (): { employmentRecords: EmploymentRecord[], hasErrors: boolean } => {
     return {
       employmentRecords: currentValue,
-      hasErrors: currentValue.length === 0
+      hasErrors: false
     }
   }
 
