@@ -61,7 +61,7 @@ const useSignIn = () => { // fake for demo
   useEffect(() => {
     const signInAsCustomer = (): any => {
       if (!localStorage.token && typeof window !== 'undefined') {
-        firebase.auth().signInWithEmailAndPassword('djones@ignw.io', 'Testing123!')
+        firebase.auth().signInAnonymously()
           .then(async () => {
             localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken().catch(console.error) || '')
           })
