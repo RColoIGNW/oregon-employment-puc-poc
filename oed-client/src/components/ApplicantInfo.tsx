@@ -15,6 +15,7 @@ import { Gender } from '../models/Gender'
 import { ContactMethod } from '../models/ContactMethod'
 import { Races, Race } from '../models/Race'
 import AddressEdit from './AddressEdit'
+import Address from '../models/Address'
 
 const defaultValue: Applicant = {
   firstName: '',
@@ -63,6 +64,10 @@ export default (props: ApplicantInfoProps) => {
     value && setState({ ...state, dob: value.toDate() })
   }
 
+  const handleAddressChange = (address: Address) => {
+    setState({...state, address: address})
+  }
+
   const handleRaceSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target
     const current = state.races
@@ -95,7 +100,7 @@ export default (props: ApplicantInfoProps) => {
           <KeyboardDatePicker name="dob" value={state.dob} onChange={handleDOBChange} fullWidth format="MM/DD/YYYY" inputVariant="outlined" />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <AddressEdit address={state.address} />
+          <AddressEdit address={state.address} onCompletion={handleAddressChange} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Grid container spacing={2}>

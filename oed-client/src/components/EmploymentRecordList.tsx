@@ -21,7 +21,6 @@ export default (props: EmploymentRecordListProps) => {
   const handleOpen = (employmentRecord?: EmploymentRecord) => {
     setSelectedRecord(employmentRecord)
     setOpen(true);
-    console.log(selectedRecord)
   };
 
   const handleClose = () => {
