@@ -12,10 +12,10 @@ export default () => {
   }
 
   const saveForm = (formData: Partial<SaveApplicantForm>) => {
-    const body = JSON.stringify(formData)
+    // const body = JSON.stringify(formData)
     const requestOptions = {
       method: 'POST',
-      body,
+      body: JSON.stringify({...formData, uid: localStorage.getItem('uid')}),
       redirect: 'follow',
     }
     return request(`${process.env.REACT_APP_API_HOST}/api/new-application`, requestOptions as any)

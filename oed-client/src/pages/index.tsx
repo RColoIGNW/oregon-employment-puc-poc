@@ -62,8 +62,9 @@ const useSignIn = () => { // fake for demo
     const signInAsCustomer = (): any => {
       if (!localStorage.token && typeof window !== 'undefined') {
         firebase.auth().signInAnonymously()
-          .then(async () => {
+          .then(async (userCredential) => {
             localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken().catch(console.error) || '')
+            localStorage.setItem('uid', userCredential.user?.uid || '')
           })
           .catch(console.error)
       }
