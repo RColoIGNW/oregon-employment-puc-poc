@@ -22,8 +22,10 @@ const question2: IQuestion = {
   whenShowDetails: 'NEVER'
 }
 
-const SectionE = () => {
-
+interface SectionProps{
+  showErrors: boolean
+}
+const SectionE = (props: SectionProps) => {
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
@@ -39,10 +41,10 @@ const SectionE = () => {
       <Grid item>
         <Grid container direction={'column'}>
           <Grid item>
-            <Question question={question1}></Question>
+            <Question question={question1} showErrors={props.showErrors}></Question>
           </Grid>
           <Grid item>
-            <Question question={question2}></Question>
+            <Question question={question2} showErrors={props.showErrors}></Question>
           </Grid>
         </Grid>        
       </Grid>

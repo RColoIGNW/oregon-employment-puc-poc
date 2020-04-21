@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Divider } from '@material-ui/core'
+import { Grid, Divider, makeStyles, Theme, createStyles } from '@material-ui/core'
 import { Question, IQuestion } from '../question/question'
 
 const question_6_1: IQuestion = {
@@ -87,7 +87,18 @@ const questions: IQuestion[] = [
     whenShowDetails: 'YES',
   }
 ]
-const SectionD = () => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    separator: {
+      padding: theme.spacing(1, 0),
+    }
+  }),
+)
+interface SectionProps{
+  showErrors: boolean
+}
+const SectionD = (props: SectionProps) => {
+  const classes = useStyles()
   return (
     <Grid container direction={'column'} spacing={2}>
       {
@@ -95,11 +106,9 @@ const SectionD = () => {
           return (
               <div key={q.code}>
                 <Grid item>
-                  <Question question={q}>
-                    {q.componentDetails}
-                  </Question>
+                  <Question question={q} showErrors={props.showErrors}/>
                 </Grid>
-                <Grid item>
+                <Grid item className={classes.separator}> 
                   <Divider/>
                 </Grid>
               </div>

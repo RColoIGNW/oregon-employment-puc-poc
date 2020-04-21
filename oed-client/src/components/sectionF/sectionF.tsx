@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Grid, TextField } from '@material-ui/core'
+import { Typography, Grid } from '@material-ui/core'
 import { Question, IQuestion } from '../question/question'
 
 const pageInfo = {
@@ -10,11 +10,8 @@ const question2: IQuestion = {
   code: 'F_2',
   text: 'If NO, are you in satisfactory immigration status?',
   showOptions: true,
-  whenShowDetails: 'NEVER',
-  componentDetails: <TextField
-    placeholder='Alien Reg # '
-    
-  ></TextField>
+  whenShowDetails: 'ALWAYS',
+  note: 'Alien Reg # '
 }
 
 const question1: IQuestion = {
@@ -22,12 +19,14 @@ const question1: IQuestion = {
   text: 'I am a citizen or national of the United States',
   showOptions: true,
   whenShowDetails: 'NEVER',
-  componentDetails: <Question question={question2}/>
+  subQuestions: [question2]
 }
 
+interface SectionProps{
+  showErrors: boolean
+}
 
-
-const SectionF = () => {
+const SectionF = (props: SectionProps) => {
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
@@ -38,11 +37,8 @@ const SectionF = () => {
       <Grid item>
         <Grid container direction={'column'}>
           <Grid item>
-            <Question question={question1}></Question>
-          </Grid>
-          <Grid item>
-            <Question question={question2}></Question>
-          </Grid>
+            <Question question={question1} showErrors={props.showErrors}/>
+          </Grid>        
         </Grid>        
       </Grid>
     </Grid>    
