@@ -49,7 +49,7 @@ export const submitApplicantInformation = async (req: Request, res: Response) =>
     const validation = new Validator(req.body, rules)
     if (validation.fails()) { return res.status(400).send(validation.errors) }
 
-    const requestBody = req.body
+    const requestBody = { ...req.body, lastModified: new Date().toISOString() }
     const uid = requestBody.uid || '123-fake-uid'
     const countRef = db.collection('applications-count').doc('pua-applications')
     const applicationRef = db.collection('users').doc(uid)
