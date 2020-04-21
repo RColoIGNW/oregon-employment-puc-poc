@@ -10,6 +10,9 @@ import SectionE from "../components/sectionE/sectionE"
 import SectionF from "../components/sectionF/sectionF"
 import { SEO } from "../components/seo"
 import firebase from '../lib/firebase'
+import useSectionA from "../hooks/useSectionA"
+import useApplication from "../hooks/useApplication"
+import useSectionB from "../hooks/useSectionB"
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
@@ -62,7 +65,7 @@ const useSignIn = () => { // fake for demo
       }
     }
     signInAsCustomer()
-    return () => {}
+    return () => { }
   })
 }
 
@@ -70,116 +73,145 @@ const InitialApplicationPage = () => {
   // useSignIn() remove until I can figure out why firebase env vars are not loading
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
+  
+  const {
+    saveSectionA,
+    saveSectionB
+  } = useApplication()
+
+  const {
+    handleSubmit: handleSectionASubmit,
+    handleChange: handleSectionAChange,
+    currentValue: sectionACurrentValue } = useSectionA()
+
+    const {
+      handleSubmit: handleSectionBSubmit,
+      handleChange: handleSectionBChange,
+      currentValue: sectionBCurrentValue } = useSectionB()
+  
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    let isStepValid: boolean = true
+    switch (activeStep) {
+      case 0:
+        const { applicant, hasErrors: sectionAHasErrors } = handleSectionASubmit()
+        saveSectionA(applicant)
+        isStepValid = !sectionAHasErrors
+        break
+      case 1:
+        const { employmentRecords, hasErrors: sectionBHasErrors } = handleSectionBSubmit()
+        saveSectionB(employmentRecords)
+        isStepValid = !sectionBHasErrors
+        break
+    }
+    isStepValid && setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
 
   return (
-  <Layout>
-    <SEO />
-    <Grid container direction="column" spacing={2}>
-      <Grid item style={{
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '2em'
-      }}>
-        <Typography variant={'h5'}>
-          {pageInfo.title}
-        </Typography>
+    <Layout>
+      <SEO />
+      <Grid container direction="column" spacing={2}>
+        <Grid item style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '2em'
+        }}>
+          <Typography variant={'h5'}>
+            {pageInfo.title}
+          </Typography>
+        </Grid>
+        <Grid item >
+          <Stepper activeStep={activeStep} orientation="vertical" className={classes.appStepper}>
+            <Step key={'A'}>
+              <StepLabel StepIconProps={{ icon: pageInfo.sectionA.icon }}>{pageInfo.sectionA.title}</StepLabel>
+              <StepContent>
+                <Grid container direction={'column'} spacing={2}>
+                  <Grid item>
+                    <SectionA value={sectionACurrentValue} onChange={handleSectionAChange} />
+                  </Grid>
+                  <Grid item>
+                    <StepActions isFirstStep={true} onBack={handleBack} onNext={handleNext} />
+                  </Grid>
+                </Grid>
+              </StepContent>
+            </Step>
+            <Step key={'B'}>
+              <StepLabel StepIconProps={{ icon: pageInfo.sectionB.icon }}>{pageInfo.sectionB.title}</StepLabel>
+              <StepContent>
+                <Grid container direction={'column'} spacing={2}>
+                  <Grid item>
+                    <SectionB value={sectionBCurrentValue} onChange={handleSectionBChange} />
+                  </Grid>
+                  <Grid item>
+                    <StepActions onBack={handleBack} onNext={handleNext} />
+                  </Grid>
+                </Grid>
+              </StepContent>
+            </Step>
+            <Step key={'C'}>
+              <StepLabel StepIconProps={{ icon: pageInfo.sectionC.icon }}>{pageInfo.sectionC.title}</StepLabel>
+              <StepContent>
+                <Grid container direction={'column'} spacing={2}>
+                  <Grid item>
+                    <SectionC />
+                  </Grid>
+                  <Grid item>
+                    <StepActions onBack={handleBack} onNext={handleNext} />
+                  </Grid>
+                </Grid>
+              </StepContent>
+            </Step>
+            <Step key={'D'}>
+              <StepLabel StepIconProps={{ icon: pageInfo.sectionD.icon }}>{pageInfo.sectionD.title}</StepLabel>
+              <StepContent>
+                <Grid container direction={'column'} spacing={2}>
+                  <Grid item>
+                    <SectionD />
+                  </Grid>
+                  <Grid item>
+                    <StepActions onBack={handleBack} onNext={handleNext} />
+                  </Grid>
+                </Grid>
+              </StepContent>
+            </Step>
+            <Step key={'E'}>
+              <StepLabel StepIconProps={{ icon: pageInfo.sectionE.icon }}>{pageInfo.sectionE.title}</StepLabel>
+              <StepContent>
+                <Grid container direction={'column'} spacing={2}>
+                  <Grid item>
+                    <SectionE />
+                  </Grid>
+                  <Grid item>
+                    <StepActions onBack={handleBack} onNext={handleNext} />
+                  </Grid>
+                </Grid>
+              </StepContent>
+            </Step>
+            <Step key={'F'}>
+              <StepLabel StepIconProps={{ icon: pageInfo.sectionF.icon }}>{pageInfo.sectionF.title}</StepLabel>
+              <StepContent>
+                <Grid container direction={'column'} spacing={2}>
+                  <Grid item>
+                    <SectionF />
+                  </Grid>
+                  <Grid item>
+                    <StepActions isLastStep={true} onBack={handleBack} onNext={handleNext} />
+                  </Grid>
+                </Grid>
+              </StepContent>
+            </Step>
+          </Stepper>
+        </Grid>
       </Grid>
-      <Grid item >
-        <Stepper activeStep={activeStep} orientation="vertical"  className={classes.appStepper}>
-          <Step key={'A'}>
-            <StepLabel StepIconProps={{icon: pageInfo.sectionA.icon}}>{pageInfo.sectionA.title}</StepLabel>
-            <StepContent>
-              <Grid container direction={'column'} spacing={2}>
-                <Grid item>
-                  <SectionA/>
-                </Grid>
-                <Grid item>
-                  <StepActions isFirstStep={true} onBack={handleBack} onNext={handleNext}/>
-                </Grid>
-              </Grid>
-            </StepContent>
-          </Step>
-          <Step key={'B'}>
-            <StepLabel StepIconProps={{icon: pageInfo.sectionB.icon}}>{pageInfo.sectionB.title}</StepLabel>
-            <StepContent>
-              <Grid container direction={'column'} spacing={2}>
-                <Grid item>
-                  <SectionB/>
-                </Grid>
-                <Grid item>
-                  <StepActions onBack={handleBack} onNext={handleNext}/>
-                </Grid>
-              </Grid>
-            </StepContent>
-          </Step>
-          <Step key={'C'}>
-            <StepLabel StepIconProps={{icon: pageInfo.sectionC.icon}}>{pageInfo.sectionC.title}</StepLabel>
-            <StepContent>
-              <Grid container direction={'column'} spacing={2}>
-                <Grid item>
-                  <SectionC/>
-                </Grid>
-                <Grid item>
-                  <StepActions onBack={handleBack} onNext={handleNext}/>
-                </Grid>
-              </Grid>
-            </StepContent>
-          </Step>
-          <Step key={'D'}>
-            <StepLabel StepIconProps={{icon: pageInfo.sectionD.icon}}>{pageInfo.sectionD.title}</StepLabel>
-            <StepContent>
-              <Grid container direction={'column'} spacing={2}>
-                <Grid item>
-                  <SectionD/>
-                </Grid>
-                <Grid item>
-                  <StepActions onBack={handleBack} onNext={handleNext}/>
-                </Grid>
-              </Grid>
-            </StepContent>
-          </Step>
-          <Step key={'E'}>
-            <StepLabel StepIconProps={{icon: pageInfo.sectionE.icon}}>{pageInfo.sectionE.title}</StepLabel>
-            <StepContent>
-              <Grid container direction={'column'} spacing={2}>
-                <Grid item>
-                  <SectionE/>
-                </Grid>
-                <Grid item>
-                  <StepActions onBack={handleBack} onNext={handleNext}/>
-                </Grid>
-              </Grid>
-            </StepContent>
-          </Step>
-          <Step key={'F'}>
-            <StepLabel StepIconProps={{icon: pageInfo.sectionF.icon}}>{pageInfo.sectionF.title}</StepLabel>
-            <StepContent>
-              <Grid container direction={'column'} spacing={2}>
-                <Grid item>
-                  <SectionF/>
-                </Grid>
-                <Grid item>
-                  <StepActions isLastStep={true} onBack={handleBack} onNext={handleNext}/>
-                </Grid>
-              </Grid>
-            </StepContent>
-          </Step>
-        </Stepper>
-      </Grid>
-    </Grid>
-  </Layout>
+    </Layout>
   )
 }
 
 
 //#region Step Action Buttons
-interface  StepActionsProp {
+interface StepActionsProp {
   isFirstStep?: boolean
   isLastStep?: boolean
   onBack: () => void
@@ -189,13 +221,13 @@ const StepActions = (props: StepActionsProp) => {
   const disabledBack = props.isFirstStep || false
   const showSubmit = props.isLastStep || false
   return (
-    <Grid container direction={'row'} justify={'flex-end'}  alignItems={'center'} spacing={2}>
+    <Grid container direction={'row'} justify={'flex-end'} alignItems={'center'} spacing={2}>
       <Grid item>
         <Button
           disabled={disabledBack}
           onClick={props.onBack}
         >
-          { pageInfo.back }
+          {pageInfo.back}
         </Button>
       </Grid>
       <Grid item>

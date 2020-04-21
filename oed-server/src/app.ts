@@ -37,15 +37,15 @@ app.use(bodyParser.json())
 
 // Use express backend routes
 const clientHeaderOrigin = process.env.CLIENT_URL
-app.use(cors(corsOptionsDelegate))
+app.use(cors('*' as any))
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin
-  if (whitelist.indexOf(origin as string) > -1) {
+  // if (whitelist.indexOf(origin as string) > -1) {
     res.header('Access-Control-Allow-Origin', origin)
-  } else {
-    res.header('Access-Control-Allow-Origin', clientHeaderOrigin)
-  }
+  // } else {
+  //   res.header('Access-Control-Allow-Origin', clientHeaderOrigin)
+  // }
 
   res.header(
     'Access-Control-Allow-Methods',
