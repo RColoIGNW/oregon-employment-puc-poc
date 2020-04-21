@@ -238,12 +238,10 @@ const InitialApplicationPage = () => {
           </Stepper>
 
           {isMobile &&
-            <div className={classes.root}>
-              <Paper square elevation={0} className={classes.header}>
+            <div>
+              <Paper square elevation={0}>
                 <Typography>{steps[activeStep].title}</Typography>
               </Paper>
-
-              <span style={{ cursor: 'pointer' }} StepIconProps={{ icon: steps[activeStep].icon }}></span>
                 <Grid container direction={'column'} spacing={2}>
                   <Grid item>
                     <ActiveSection value={steps[activeStep].currentValue} onChange={steps[activeStep]?.onChange} />
@@ -255,7 +253,7 @@ const InitialApplicationPage = () => {
                 variant="text"
                 activeStep={activeStep}
                 nextButton={
-                  <Button size="medium" variant="contained" color="primary" onClick={handleNext} disabled={activeStep === steps.length - 1}>
+                  <Button size="medium" variant="contained" color="primary" onClick={handleNext}>
                     {activeStep === steps.length - 1 ? pageInfo.submit : pageInfo.next}
                   </Button>
                 }
