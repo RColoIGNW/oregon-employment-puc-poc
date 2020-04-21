@@ -6,6 +6,7 @@ import Fab from '@material-ui/core/Fab'
 import EmploymentRecordItem from './EmploymentRecordItem'
 import EmploymentRecord from '../models/EmploymentRecord'
 import EmploymentRecordEdit from './EmploymentRecordEdit'
+import { Button } from '@material-ui/core'
 
 interface EmploymentRecordListProps {
   employmentRecords: EmploymentRecord[]
@@ -45,7 +46,7 @@ export default (props: EmploymentRecordListProps) => {
               <EmploymentRecordItem
                 employmentRecord={employmentRecord}
                 onEditEmploymentRecord={handleOpen}
-                onDeleteEmploymentRecord={onDeleteEmploymentRecord} 
+                onDeleteEmploymentRecord={onDeleteEmploymentRecord}
               />
             </Grid>
           )
@@ -53,9 +54,9 @@ export default (props: EmploymentRecordListProps) => {
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Grid container justify="center" alignItems="center">
             <Grid item>
-              <Fab color="primary" size="large" onClick={() => handleOpen()}>
-                <AddIcon />
-              </Fab>
+              <Button variant="contained" color="primary" size="large" startIcon={<AddIcon />} onClick={() => handleOpen()}>
+                Add employment record
+              </Button>
             </Grid>
           </Grid>
         </Grid>

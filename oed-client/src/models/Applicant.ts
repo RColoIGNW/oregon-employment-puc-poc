@@ -1,4 +1,4 @@
-import { Address } from './Address';
+import Address from './Address';
 import { ContactMethod } from './ContactMethod';
 import { Gender } from './Gender';
 import { Race } from './Race';
