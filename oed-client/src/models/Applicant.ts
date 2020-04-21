@@ -11,6 +11,7 @@ export default interface Applicant {
   dob?: Date;
   address: Address;
   phone: string;
+  email: string;
   gender?: Gender;
   isHispanicLatino?: boolean;
   contactMethod?: ContactMethod;

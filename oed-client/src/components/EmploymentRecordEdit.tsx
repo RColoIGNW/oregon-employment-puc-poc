@@ -3,7 +3,6 @@ import EmploymentRecord from '../models/EmploymentRecord'
 import TextField from '@material-ui/core/TextField'
 import AddressEdit from './AddressEdit'
 import Grid from '@material-ui/core/Grid'
-import { Button } from '@material-ui/core'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
@@ -65,7 +64,6 @@ export default (props: EmploymentRecordEditProps) => {
   }
 
   const onAddressCompleted = (address: Address) => {
-    console.log(address)
     setState({ value: { ...state.value, address: address }, errors: { ...state.errors } })
   }
 
@@ -89,6 +87,9 @@ export default (props: EmploymentRecordEditProps) => {
           <TextField fullWidth value={state.value.name} name="name" onChange={onChange} label="Name of Employer" variant="outlined" />
         </Grid>
         <Grid item xs={12}>
+          <TextField fullWidth value={state.value.phone} name="phone" onChange={onChange} label="Phone Number" variant="outlined" />
+        </Grid>
+        <Grid item xs={12}>
           <AddressEdit onCompletion={onAddressCompleted} />
         </Grid>
         <Grid item xs={12}>
@@ -98,20 +99,6 @@ export default (props: EmploymentRecordEditProps) => {
             </Grid>
             <Grid item xs={6}>
               <DatePicker fullWidth value={state.value.ended} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={2} justify="flex-end">
-            <Grid item>
-              <Button variant="contained" color="primary" onClick={onAccept}>
-                Accept
-            </Button>
-            </Grid>
-            <Grid item>
-              <Button variant="contained">
-                Cancel
-            </Button>
             </Grid>
           </Grid>
         </Grid>

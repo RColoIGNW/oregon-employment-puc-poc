@@ -3,17 +3,13 @@ import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import { Address } from '../models/Address'
 
-const validate = (name: string, value: string): string => {
+const isValid = (name: string, value: string): boolean => {
   switch (name) {
     case 'street':
-      if (!value.trim()) return 'Enter your street address'
-      break
     case 'city':
-      if (!value.trim()) return 'Enter your city'
-      break
-    default: return ''
+      return !value.trim()
   }
-  return ''
+  return false
 }
 
 const defaultValue: Address = {
@@ -29,7 +25,7 @@ interface AddressEditProps {
 }
 
 type AddressEditErrors = {
-  [k in keyof Address]: string
+  [k in keyof Address]: boolean
 }
 
 export default (props: AddressEditProps) => {
@@ -39,8 +35,7 @@ export default (props: AddressEditProps) => {
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    console.log({ name, value })
-    setState({ value: { ...state.value, [name]: value }, errors: { ...state.errors, [name]: validate(name, value) } })
+    setState({ value: { ...state.value, [name]: value }, errors: { ...state.errors, [name]: isValid(name, value) } })
     props.onCompletion && props.onCompletion(state.value)
   }
 
@@ -51,7 +46,7 @@ export default (props: AddressEditProps) => {
           name="street"
           value={state.value.street}
           onChange={onChange}
-          error={!!state.errors.street}
+          error={state.errors.street}
           helperText={state.errors.street}
           label="Street or P.O."
           variant="outlined"
@@ -63,33 +58,30 @@ export default (props: AddressEditProps) => {
           name="city"
           value={state.value.city}
           onChange={onChange}
-          error={!!state.errors.city}
-          helperText={state.errors.city}
+          error={state.errors.city}
           label="City"
           variant="outlined"
           fullWidth
         />
       </Grid>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={6} md={3}>
         <TextField
           name="state"
           value={state.value.state}
           onChange={onChange}
-          error={!!state.errors.state}
-          helperText={state.errors.state}
+          error={state.errors.state}
           label="State"
           variant="outlined"
           fullWidth
         />
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={6} md={4}>
         <TextField
           name="zipCode"
           value={state.value.zipCode}
           onChange={onChange}
-          error={!!state.errors.zipCode}
-          helperText={state.errors.zipCode}
-          label="State"
+          error={state.errors.zipCode}
+          label="Zip Code"
           variant="outlined"
           fullWidth
         />
