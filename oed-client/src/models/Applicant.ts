@@ -1,7 +1,7 @@
-import { Gender } from './Gender';
-import { ContactMethod } from './ContactMethod';
-import { Race } from './Race';
 import { Address } from './Address';
+import { ContactMethod } from './ContactMethod';
+import { Gender } from './Gender';
+import { Race } from './Race';
 
 export default interface Applicant {
   firstName: string;
@@ -9,7 +9,7 @@ export default interface Applicant {
   lastName: string;
   ssn: string;
   dob?: Date;
-  address: Address;
+  address?: Address;
   phone: string;
   email: string;
   gender?: Gender;
