@@ -1,18 +1,10 @@
-import { Grid, Theme, createStyles, makeStyles } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 import React, { useEffect } from "react"
 
 import ApprovalTable from '../../components/approval-table'
 import { Layout } from "../../components/layout"
 import { SEO } from "../../components/seo"
 import firebase from '../../lib/firebase'
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    appStepper: {
-      padding: theme.spacing(1),
-    }
-  }),
-)
 
 const useSignIn = () => { // fake for demo
   useEffect(() => {
@@ -32,7 +24,6 @@ const useSignIn = () => { // fake for demo
 
 const InitialApplicationPage = () => {
   useSignIn()
-  // const classes = useStyles()
 
   return (
   <Layout>
