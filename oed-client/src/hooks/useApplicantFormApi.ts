@@ -1,3 +1,4 @@
+import SaveApplicantForm from '../models/SaveApplicantForm'
 import { request } from '../util/request'
 
 export default () => {
@@ -11,7 +12,7 @@ export default () => {
     .catch(console.error)
   }
 
-  const saveForm = (formData) => {
+  const saveForm = (formData: Partial<SaveApplicantForm>) => {
     const body = JSON.stringify(formData)
 
     const requestOptions = {
@@ -21,7 +22,7 @@ export default () => {
     }
 
     return request('http://localhost:4000/api/new-application', requestOptions as any)
-      .catch((error) => console.log('error', error))
+      .catch(console.error)
   }
 
   return {

@@ -27,7 +27,7 @@ const useSignIn = () => { // fake for demo
   })
 }
 
-const InitialApplicationPage = () => {
+const ApprovalsPage = () => {
   useSignIn()
   const [tableData, setTableData] = useState([])
   const { getUnapprovedApplications } = useApplicantFormApi()
@@ -54,4 +54,4 @@ const InitialApplicationPage = () => {
   )
 }
 
-export default InitialApplicationPage
+export default ApprovalsPage
