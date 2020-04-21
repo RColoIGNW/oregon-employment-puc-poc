@@ -1,7 +1,7 @@
 import Employer from './Employer';
 
 export default interface EmploymentRecord {
-  id: number
+  id?: number
   employer: Employer;
   started: Date;
   ended: Date;

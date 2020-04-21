@@ -12,14 +12,19 @@ import PhoneNumberDisplay from './PhoneNumberDisplay'
 interface EmploymentRecordItemProps {
   employmentRecord: EmploymentRecord
   onDeleteEmploymentRecord: (employmentRecord: EmploymentRecord) => void
+  onEditEmploymentRecord: (employmentRecord: EmploymentRecord) => void
 }
 
 export default (props: EmploymentRecordItemProps) => {
-  const { employmentRecord, onDeleteEmploymentRecord } = props
+  const { employmentRecord, onDeleteEmploymentRecord, onEditEmploymentRecord } = props
   const { employer } = employmentRecord
 
   const handleDelete = () => {
     onDeleteEmploymentRecord(employmentRecord)
+  }
+
+  const handleEdit = () => {
+    onEditEmploymentRecord(employmentRecord)
   }
 
   return (
@@ -48,7 +53,7 @@ export default (props: EmploymentRecordItemProps) => {
           <Grid item>
             <Grid container justify="flex-end" spacing={2}>
               <Grid item>
-                <Button variant="contained" startIcon={<EditIcon />}>
+                <Button onClick={handleEdit} variant="contained" startIcon={<EditIcon />}>
                   Edit
                 </Button>
               </Grid>

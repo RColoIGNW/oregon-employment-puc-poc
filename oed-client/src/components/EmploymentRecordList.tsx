@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
 import Fab from '@material-ui/core/Fab'
@@ -16,9 +16,12 @@ interface EmploymentRecordListProps {
 export default (props: EmploymentRecordListProps) => {
   const { employmentRecords } = props
   const [open, setOpen] = React.useState(false);
+  const [selectedRecord, setSelectedRecord] = useState<EmploymentRecord>()
 
-  const handleOpen = () => {
+  const handleOpen = (employmentRecord?: EmploymentRecord) => {
+    setSelectedRecord(employmentRecord)
     setOpen(true);
+    console.log(selectedRecord)
   };
 
   const handleClose = () => {
@@ -40,14 +43,18 @@ export default (props: EmploymentRecordListProps) => {
         {
           employmentRecords.map((employmentRecord, index) =>
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <EmploymentRecordItem employmentRecord={employmentRecord} onDeleteEmploymentRecord={onDeleteEmploymentRecord} />
+              <EmploymentRecordItem
+                employmentRecord={employmentRecord}
+                onEditEmploymentRecord={handleOpen}
+                onDeleteEmploymentRecord={onDeleteEmploymentRecord} 
+              />
             </Grid>
           )
         }
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Grid container justify="center" alignItems="center">
             <Grid item>
-              <Fab color="primary" size="large" onClick={handleOpen}>
+              <Fab color="primary" size="large" onClick={() => handleOpen()}>
                 <AddIcon />
               </Fab>
             </Grid>
@@ -55,7 +62,7 @@ export default (props: EmploymentRecordListProps) => {
         </Grid>
       </Grid>
 
-      <EmploymentRecordEdit open={open} onAccept={onAddEmploymentRecord} onCancel={handleClose}/>
+      <EmploymentRecordEdit open={open} employmentRecord={selectedRecord} onAccept={onAddEmploymentRecord} onCancel={handleClose} />
     </>
   )
 }

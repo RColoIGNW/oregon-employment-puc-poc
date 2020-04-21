@@ -5,9 +5,22 @@ import EmploymentRecord from '../../models/EmploymentRecord'
 const SectionB = () => {
   const [employmentRecords, setEmploymentRecords] = useState<EmploymentRecord[]>([])
   const addEmploymentRecord = (employmentRecord: EmploymentRecord) => {
-    employmentRecord.id = Date.now()
-    setEmploymentRecords([...employmentRecords, employmentRecord])
+    if (employmentRecord.id) {
+      updateEmploymentRecord(employmentRecord)
+    } else {
+      employmentRecord.id = Date.now()
+      setEmploymentRecords([...employmentRecords, employmentRecord])
+    }
   }
+
+  const updateEmploymentRecord = (employmentRecord: EmploymentRecord) => {
+    const index = employmentRecords.findIndex(r => r.id === employmentRecord.id)
+    console.log(index)
+    console.log(employmentRecords)
+    employmentRecords.splice(index, 1, employmentRecord)
+    setEmploymentRecords([...employmentRecords])
+  }
+
   const deleteEmploymentRecord = (employmentRecord: EmploymentRecord) => {
     const index = employmentRecords.findIndex(r => r.id === employmentRecord.id)
     employmentRecords.splice(index, 1)

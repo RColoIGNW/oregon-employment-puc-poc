@@ -69,6 +69,8 @@ export default (props: EmploymentRecordEditProps) => {
     }
   )
 
+  console.log(state.value)
+
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setState({ value: { ...state.value, [name]: value }, errors: { ...state.errors, [name]: validate(name, value) } })
