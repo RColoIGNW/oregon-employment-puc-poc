@@ -9,13 +9,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 import AddressEdit from './AddressEdit'
 
-import { Address } from '../models/Address'
+import Address from '../models/Address'
 import EmploymentRecord from '../models/EmploymentRecord'
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 
 const validate = (name: string, value: string): string => {
   switch (name) {
@@ -75,7 +75,11 @@ export default (props: EmploymentRecordEditProps) => {
   }
 
   const handleStartedChange = (value: MaterialUiPickersDate) => {
-    //    value && setStarted(value.toDate())
+    value && setState({value: { ...state.value, started: value.toDate() }, errors: { ...state.errors}})
+  }
+
+  const handleEndedChange = (value: MaterialUiPickersDate) => {
+    value && setState({value: { ...state.value, ended: value.toDate() }, errors: { ...state.errors}})
   }
 
   const onAddressCompleted = (address: Address) => {
@@ -123,7 +127,7 @@ export default (props: EmploymentRecordEditProps) => {
                       <DatePicker fullWidth value={state.value.started} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
                     </Grid>
                     <Grid item xs={6}>
-                      <DatePicker fullWidth value={state.value.ended} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
+                      <DatePicker fullWidth value={state.value.ended} onChange={handleEndedChange} format="MM/DD/YYYY" inputVariant="outlined" />
                     </Grid>
                   </Grid>
                 </Grid>
