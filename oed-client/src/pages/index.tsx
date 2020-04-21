@@ -57,9 +57,10 @@ const useSignIn = () => { // fake for demo
   useEffect(() => {
     const signInAsCustomer = (): any => {
       if (!localStorage.token && typeof window !== 'undefined') {
-        firebase.auth().signInWithEmailAndPassword('djones@ignw.io', 'Testing123!')
-          .then(async () => {
+        firebase.auth().signInWithEmailAndPassword('test@test.com', 'Testing123!')
+          .then(async (user) => {
             localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken().catch(console.error) || '')
+            localStorage.setItem('uid', user.user?.uid || '')
           })
           .catch(console.error)
       }
@@ -70,7 +71,7 @@ const useSignIn = () => { // fake for demo
 }
 
 const InitialApplicationPage = () => {
-  // useSignIn() remove until I can figure out why firebase env vars are not loading
+  useSignIn()
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   
