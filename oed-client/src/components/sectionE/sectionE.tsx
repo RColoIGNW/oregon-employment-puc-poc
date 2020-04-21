@@ -1,6 +1,7 @@
 import React from 'react'
 import { Typography, Grid } from '@material-ui/core'
-import { Question, IQuestion } from '../question/question'
+import { Question} from '../question/question'
+import { QuestionModel } from '../../models/Question'
 
 const pageInfo = {
   text: 'Any unemployment insurance benefits you receive are fully taxable income if you are required to file a tax return. You may need to make estimated tax payments. For more information on estimated tax payments, contact the Internal Revenue Service. For state tax information, contact the Oregon Department of Revenue.',
@@ -8,14 +9,14 @@ const pageInfo = {
   note2: 'This authorization will remain in effect for this claim until the Oregon Employment Department has received written notification from you of its termination.',
 }
 
-const question1: IQuestion = {
+const question1: QuestionModel = {
   code: 'E_1',
   text: 'Do you choose to have 10% of your unemployment benefits withheld for federal income taxes?',
   showOptions: true,
   whenShowDetails: 'NEVER'
 }
 
-const question2: IQuestion = {
+const question2: QuestionModel = {
   code: 'E_2',
   text: 'Do you choose to have 6% of your unemployment benefits withheld for state income taxes?',
   showOptions: true,
@@ -23,7 +24,8 @@ const question2: IQuestion = {
 }
 
 interface SectionProps{
-  showErrors: boolean
+  questions: QuestionModel[],
+  onChange: (q: QuestionModel) => void
 }
 const SectionE = (props: SectionProps) => {
   return (
@@ -40,12 +42,13 @@ const SectionE = (props: SectionProps) => {
       </Grid>
       <Grid item>
         <Grid container direction={'column'}>
-          <Grid item>
-            <Question question={question1} showErrors={props.showErrors}></Question>
-          </Grid>
-          <Grid item>
-            <Question question={question2} showErrors={props.showErrors}></Question>
-          </Grid>
+          {
+            props.questions.map( (q) => {
+              <Grid item>
+                <Question question={q} onChange={() => props.onChange(q)} ></Question>
+              </Grid>
+            })
+          }  
         </Grid>        
       </Grid>
       <Grid item>

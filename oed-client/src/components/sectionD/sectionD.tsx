@@ -1,15 +1,17 @@
 import React from 'react'
 import { Grid, Divider, makeStyles, Theme, createStyles } from '@material-ui/core'
-import { Question, IQuestion } from '../question/question'
+import { Question } from '../question/question'
+import { QuestionModel } from '../../models/Question'
 
-const question_6_1: IQuestion = {
+
+const question_6_1: QuestionModel = {
   code: 'D_6_1',
   text: 'If "YES", can you discharge them?',
   showOptions: true,
   whenShowDetails: 'NEVER'
 }
 
-const questions: IQuestion[] = [
+const questions: QuestionModel[] = [
   {
     code: 'D_1',
     text: 'At the time of the pandemic, was this self-employment your primary occupation and primary means of livelihood?',
@@ -95,18 +97,19 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 interface SectionProps{
-  showErrors: boolean
+  questions: QuestionModel[],
+  onChange: (question: QuestionModel) => void
 }
 const SectionD = (props: SectionProps) => {
   const classes = useStyles()
   return (
     <Grid container direction={'column'} spacing={2}>
       {
-        questions.map((q) => {
+        props.questions.map((q) => {
           return (
               <div key={q.code}>
                 <Grid item>
-                  <Question question={q} showErrors={props.showErrors}/>
+                  <Question question={q} onChange={() => props.onChange(q)}/>
                 </Grid>
                 <Grid item className={classes.separator}> 
                   <Divider/>

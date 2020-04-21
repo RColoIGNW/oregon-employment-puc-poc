@@ -1,5 +1,7 @@
 import { Grid, FormControlLabel, Checkbox, Typography, TextField, makeStyles, Theme, createStyles } from '@material-ui/core';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { QuestionModel } from '../../models/Question'
+import { AnswerModel } from '../../models/Answer';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -14,64 +16,54 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export interface IAnswer {
-  questionCode: string
-  selectedOption?: 'YES' | 'NO'
-  detailInfo?: string
-  subQuestionsAnwers?: IAnswer[]
-}
-export interface IQuestion {
-  code: string
-  text: string
-  showOptions: boolean
-  note?: string  
-  whenShowDetails: 'YES' | 'NO' | 'ALWAYS' | 'NEVER'
- // componentDetails?: React.ReactNode
-  subQuestions?: IQuestion[]
-  isDisabled?:  boolean
-  answer?: IAnswer
-  errorMessage?: string
-  detailErrorMessage?: string
-}
+
 
 interface QuestionProps {
-  question: IQuestion
-  showErrors: boolean
-  onChange?: (answer: any) => void
+  question: QuestionModel
+  onChange: (answer: AnswerModel) => void
 }
 
-export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
+export const Question = (props: QuestionProps) => {
   const classes = useStyles()
+  const [answer, setAnswer] = useState(props.question.answer)
+  
   const info = {
     yes: 'Yes',
     no: 'No'
   }
-  const [selectedOption, setSelectedOption] = useState('')
-  const [disableDetails, setDisableDetails] = useState<boolean>(props.question.whenShowDetails !== 'ALWAYS')
-  const error = 'Invalid answer'
-
-  const onChange = (option: 'NO' | 'YES') => {
+  
+  const [disableDetails, setDisableDetails] = useState<boolean>(
+    props.question.whenShowDetails !== props.question.answer.selectedOption  && props.question.whenShowDetails !== 'ALWAYS' 
+     )
+  const handleOptionChange = (option: 'NO' | 'YES') => {
     setDisableDetails(
       props.question.whenShowDetails !== 'ALWAYS' && props.question.whenShowDetails !== option)
-    setSelectedOption(option)
-    //TODO: Implement answer
-    props.onChange && props.onChange({})
+      setAnswer({...answer, selectedOption: option })
   }
 
-  const isValidAnswer= (): boolean => {
-    return false
+  const handleDetailChange = (event: React.ChangeEvent<HTMLInputElement>) => {        
+    setAnswer({...answer, detailInfo: event.target.value })
   }
+
+
+  const handleSubQuestionAnswerChange = (a : AnswerModel) => {
+    //props.onChange(question)
+  }
+
+  useEffect(() => {
+    props.onChange(answer)
+  }, [answer])
 
   return (
     <Grid container direction={'column'}>
       <Grid item>
         <Grid container direction={'row'} alignItems={'center'} justify={'space-between'}>
-          { 
-            props.showErrors && isValidAnswer() &&
+          {/* { 
+             props.showErrors && isValidAnswer() &&
           <Grid item className={classes.error}>
             {error}
           </Grid>
-          }
+          } */}
           <Grid item>
             <Typography variant={'body2'}>
               {props.question.text}
@@ -82,13 +74,13 @@ export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
             <Grid container direction={'row'} spacing={2} justify={'flex-end'}> 
               <Grid item >
                 <FormControlLabel
-                  control={<Checkbox color={'primary'} checked={selectedOption === 'YES'} onChange={() => onChange('YES')} name="yesAnswer" />}
+                  control={<Checkbox color={'primary'} checked={answer?.selectedOption === 'YES'} onChange={() => handleOptionChange('YES')} name="yesAnswer"/>}
                   label={info.yes}
                 />
               </Grid>
               <Grid item >
                 <FormControlLabel
-                  control={<Checkbox color={'primary'} checked={selectedOption === 'NO'} onChange={() => onChange('NO')} name="noAnswer" />}
+                  control={<Checkbox color={'primary'} checked={answer?.selectedOption  === 'NO'} onChange={() => handleOptionChange('NO')} name="noAnswer"/>}
                   label={info.no}
                 />
               </Grid>          
@@ -116,6 +108,8 @@ export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
                 multiline
                 rows={2}          
                 variant={ disableDetails ? 'filled': 'outlined' }
+                value={answer?.detailInfo || ''}
+                onChange={handleDetailChange}
                 fullWidth
               />
             </Grid>
@@ -125,7 +119,7 @@ export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
             props.question.subQuestions.map((sq) => {
               return (
                 <Grid item key={sq.code}>
-                  <Question question={sq} />
+                  <Question question={sq} onChange={handleSubQuestionAnswerChange}/>
                 </Grid>
               )
             })

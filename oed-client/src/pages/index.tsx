@@ -13,6 +13,7 @@ import firebase from '../lib/firebase'
 import useSectionA from "../hooks/useSectionA"
 import useApplication from "../hooks/useApplication"
 import useSectionB from "../hooks/useSectionB"
+import useSectionC from "../hooks/useSectionC"
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
@@ -76,7 +77,11 @@ const InitialApplicationPage = () => {
   
   const {
     saveSectionA,
-    saveSectionB
+    saveSectionB,
+    saveSectionC,
+    saveSectionD,
+    saveSectionE,
+    saveSectionF
   } = useApplication()
 
   const {
@@ -84,10 +89,34 @@ const InitialApplicationPage = () => {
     handleChange: handleSectionAChange,
     currentValue: sectionACurrentValue } = useSectionA()
 
-    const {
-      handleSubmit: handleSectionBSubmit,
-      handleChange: handleSectionBChange,
-      currentValue: sectionBCurrentValue } = useSectionB()
+  const {
+    handleSubmit: handleSectionBSubmit,
+    handleChange: handleSectionBChange,
+    currentValue: sectionBCurrentValue } = useSectionB()
+
+  const {
+    handleSubmit: handleSectionCSubmit,
+    handleChange: handleSectionCChange,
+    questions: questionsSectionC
+  } = useSectionC()
+
+  // const {
+  //   handleSubmit: handleSectionDSubmit,
+  //   handleChange: handleSectionDChange,
+  //   questions: questionsSectionD
+  // } = useSectionD()
+
+  // const {
+  //   handleSubmit: handleSectionESubmit,
+  //   handleChange: handleSectionEChange,
+  //   questions: questionsSectionE
+  // } = useSectionE()
+
+  // const {
+  //   handleSubmit: handleSectionFSubmit,
+  //   handleChange: handleSectionFChange,
+  //   questions: questionsSectionF
+  // } = useSectionF()
   
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
@@ -105,6 +134,26 @@ const InitialApplicationPage = () => {
         saveSectionB(employmentRecords)
         isStepValid = !sectionBHasErrors
         break
+      case 2:
+        const { answers: answersSectionC, hasErrors: sectionCHasErrors } = handleSectionCSubmit()
+        saveSectionC(answersSectionC)
+        isStepValid = !sectionCHasErrors
+        break
+        // case 3:
+        //   const { questions: questionsSectionD, hasErrors: sectionDHasErrors } = handleSectionDSubmit()
+        //   saveSectionD(questionsSectionD)
+        //   isStepValid = !sectionDHasErrors
+        //   break
+        // case 4:
+        //   const { questions: questionsSectionE, hasErrors: sectionEHasErrors } = handleSectionESubmit()
+        //   saveSectionE(questionsSectionE)
+        //   isStepValid = !sectionEHasErrors
+        //   break 
+        // case 5:
+        //   const { questions: questionsSectionF, hasErrors: sectionFHasErrors } = handleSectionFSubmit()
+        //   saveSectionC(questionsSectionF)
+        //   isStepValid = !sectionFHasErrors
+        //   break
     }
     isStepValid && setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
@@ -155,7 +204,7 @@ const InitialApplicationPage = () => {
               <StepContent>
                 <Grid container direction={'column'} spacing={2}>
                   <Grid item>
-                    <SectionC />
+                    <SectionC questions={questionsSectionC} onChange={handleSectionCChange}/>
                   </Grid>
                   <Grid item>
                     <StepActions onBack={handleBack} onNext={handleNext} />
@@ -168,7 +217,7 @@ const InitialApplicationPage = () => {
               <StepContent>
                 <Grid container direction={'column'} spacing={2}>
                   <Grid item>
-                    <SectionD />
+                    {/* <SectionD /> */}
                   </Grid>
                   <Grid item>
                     <StepActions onBack={handleBack} onNext={handleNext} />
@@ -181,7 +230,7 @@ const InitialApplicationPage = () => {
               <StepContent>
                 <Grid container direction={'column'} spacing={2}>
                   <Grid item>
-                    <SectionE />
+                    {/* <SectionE /> */}
                   </Grid>
                   <Grid item>
                     <StepActions onBack={handleBack} onNext={handleNext} />
@@ -194,7 +243,7 @@ const InitialApplicationPage = () => {
               <StepContent>
                 <Grid container direction={'column'} spacing={2}>
                   <Grid item>
-                    <SectionF />
+                    {/* <SectionF /> */}
                   </Grid>
                   <Grid item>
                     <StepActions isLastStep={true} onBack={handleBack} onNext={handleNext} />
