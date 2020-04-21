@@ -20,9 +20,7 @@ const useSignIn = () => { // fake for demo
         })
         .catch(console.error)
     }
-    if (!localStorage.token && typeof window !== 'undefined') {
-      signInAsAdmin()
-    }
+    signInAsAdmin()
     return () => {}
   })
 }

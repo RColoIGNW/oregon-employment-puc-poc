@@ -1,7 +1,5 @@
 import { Button, Grid, MobileStepper, Paper, Step, StepContent, StepLabel, Stepper, Theme, Typography, createStyles, makeStyles } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import React, { useEffect } from "react"
 
 import { Layout } from "../components/layout"

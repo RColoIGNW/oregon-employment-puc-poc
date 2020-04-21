@@ -56,15 +56,14 @@ export default function ApprovalTable(props) {
       { title: 'Date Applied', field: 'date' },
       { title: 'Name', field: 'name' },
       { title: 'Phone', field: 'phone' },
-      {
-        title: 'Approval Status',
-        field: 'status',
-      },
+      { title: 'SSN', field: 'ssn' },
+      { title: 'Approval Status', field: 'status' },
     ],
     data: props?.data?.map(({ application: d }) => ({
       name: d?.firstName,
       date: moment(d?.lastModified).format('LLL'),
-      phone: d?.contactMethod?.phone,
+      phone: d?.contactMethod?.phone || d.phone,
+      ssn: d.ssn,
       status: d?.isSubmitted ? 'Pending' : 'In Progress'
     }))
     .reverse()
