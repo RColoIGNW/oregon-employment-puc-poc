@@ -1,5 +1,10 @@
 enum StorageKey {
-  SectionA = 'SectionA'
+  SectionA = 'SectionA',
+  SectionB = 'SectionB',
+  SectionC = 'SectionC',
+  SectionD = 'SectionD',
+  SectionE = 'SectionE',
+  SectionF = 'SectionF',
 }
 
 const save = (key: string, value: any) => {

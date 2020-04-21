@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import EmploymentRecordList from '../EmploymentRecordList'
 import EmploymentRecord from '../../models/EmploymentRecord'
 
-const SectionB = () => {
-  const [employmentRecords, setEmploymentRecords] = useState<EmploymentRecord[]>([])
+interface SectionBProps {
+  value: EmploymentRecord[],
+  onChange: (employmentRecords: EmploymentRecord[]) => void
+}
+
+const SectionB = (props: SectionBProps) => {
+  const [employmentRecords, setEmploymentRecords] = useState<EmploymentRecord[]>(props.value)
+
   const addEmploymentRecord = (employmentRecord: EmploymentRecord) => {
     if (employmentRecord.id) {
       updateEmploymentRecord(employmentRecord)
@@ -26,6 +32,10 @@ const SectionB = () => {
     employmentRecords.splice(index, 1)
     setEmploymentRecords([...employmentRecords])
   }
+
+  useEffect(() => {
+    props.onChange(employmentRecords)
+  }, [employmentRecords])
 
   return (
     <EmploymentRecordList

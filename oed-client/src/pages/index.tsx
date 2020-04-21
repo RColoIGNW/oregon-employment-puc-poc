@@ -12,6 +12,7 @@ import { SEO } from "../components/seo"
 import firebase from '../lib/firebase'
 import useSectionA from "../hooks/useSectionA"
 import useApplication from "../hooks/useApplication"
+import useSectionB from "../hooks/useSectionB"
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
@@ -74,7 +75,8 @@ const InitialApplicationPage = () => {
   const [activeStep, setActiveStep] = React.useState(0)
   
   const {
-    saveSectionA
+    saveSectionA,
+    saveSectionB
   } = useApplication()
 
   const {
@@ -82,6 +84,11 @@ const InitialApplicationPage = () => {
     handleChange: handleSectionAChange,
     currentValue: sectionACurrentValue } = useSectionA()
 
+    const {
+      handleSubmit: handleSectionBSubmit,
+      handleChange: handleSectionBChange,
+      currentValue: sectionBCurrentValue } = useSectionB()
+  
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
@@ -89,9 +96,15 @@ const InitialApplicationPage = () => {
     let isStepValid: boolean = true
     switch (activeStep) {
       case 0:
-        const { applicant, hasErrors } = handleSectionASubmit()
+        const { applicant, hasErrors: sectionAHasErrors } = handleSectionASubmit()
         saveSectionA(applicant)
-        isStepValid = hasErrors
+        isStepValid = !sectionAHasErrors
+        break
+      case 1:
+        const { employmentRecords, hasErrors: sectionBHasErrors } = handleSectionBSubmit()
+        saveSectionB(employmentRecords)
+        isStepValid = !sectionBHasErrors
+        break
     }
     isStepValid && setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
@@ -129,7 +142,7 @@ const InitialApplicationPage = () => {
               <StepContent>
                 <Grid container direction={'column'} spacing={2}>
                   <Grid item>
-                    <SectionB />
+                    <SectionB value={sectionBCurrentValue} onChange={handleSectionBChange} />
                   </Grid>
                   <Grid item>
                     <StepActions onBack={handleBack} onNext={handleNext} />

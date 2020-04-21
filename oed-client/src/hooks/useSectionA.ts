@@ -27,13 +27,12 @@ export default () => {
   const handleSubmit = (): { applicant: Applicant, hasErrors: boolean } => {
     return {
       applicant: currentValue,
-      hasErrors: true
+      hasErrors: false
     }
   }
 
   const handleChange = (applicant: Applicant) => {
     currentValue = applicant
-    console.log(currentValue)
   }
 
   return {

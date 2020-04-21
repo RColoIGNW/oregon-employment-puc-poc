@@ -1,5 +1,6 @@
 import Applicant from "../models/Applicant"
 import storage from '../utils/storage'
+import EmploymentRecord from "../models/EmploymentRecord"
 
 export default () => {
   //const usedesmond
@@ -13,8 +14,13 @@ export default () => {
     storage.save(storage.StorageKey.SectionA, applicant)
   }
 
+  const saveSectionB = (employmentRecords: EmploymentRecord[]) => {
+    storage.save(storage.StorageKey.SectionB, employmentRecords)
+  }
+
   return {
     loadApplication,
-    saveSectionA
+    saveSectionA,
+    saveSectionB
   }
 }
