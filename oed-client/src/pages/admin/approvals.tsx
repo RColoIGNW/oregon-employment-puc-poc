@@ -16,9 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const useSignIn = () => { // fake for demo
   useEffect(() => {
-    const signInAsCustomer = (): any => {
+    const signInAsAdmin = (): any => {
       if (!localStorage.token && typeof window !== 'undefined') {
-        // await firebase.auth().signInWithEmailAndPassword('admin@ignw.test.com', 'Testing123!') // admin test
         firebase.auth().signInWithEmailAndPassword('admin@ignw.test.com', 'Testing123!')
           .then(async () => {
             localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken().catch(console.error) || '')
@@ -26,7 +25,7 @@ const useSignIn = () => { // fake for demo
           .catch(console.error)
       }
     }
-    signInAsCustomer()
+    signInAsAdmin()
     return () => {}
   })
 }
