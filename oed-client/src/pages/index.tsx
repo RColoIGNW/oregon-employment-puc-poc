@@ -55,14 +55,17 @@ const useSignIn = () => { // fake for demo
     const signInAsCustomer = (): any => {
       if (!localStorage.token && typeof window !== 'undefined') {
         // await firebase.auth().signInWithEmailAndPassword('admin@ignw.test.com', 'Testing123!') // admin test
-        return firebase?.auth()?.signInWithEmailAndPassword('djones@ignw.io', 'Testing123!')
+        firebase.auth().signInWithEmailAndPassword('admin@ignw.test.com', 'Testing123!')
           .then(async () => {
-            localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken() || '')
+            localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken().catch(console.error) || '')
           })
           .catch(console.error)
       }
     }
     signInAsCustomer()
+    return () => {
+      console.log('cleanup')
+    }
   })
 }
 
