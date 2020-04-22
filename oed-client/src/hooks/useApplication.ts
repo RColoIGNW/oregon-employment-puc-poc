@@ -1,14 +1,15 @@
-import Applicant from "../models/Applicant"
-import storage from '../utils/storage'
+import Applicant from '../models/Applicant'
 import EmploymentRecord from "../models/EmploymentRecord"
+import storage from '../utils/storage'
 import useApplicantFormApi from "./useApplicantFormApi"
 
-export default () => {
+export default (formData?: Partial<Applicant>) => {
   const api = useApplicantFormApi()
 
   const loadApplication = () => {
     //load from API
     //save to localstorage
+    return formData
   }
 
   const saveSectionA = (applicant: Applicant) => {
@@ -23,6 +24,7 @@ export default () => {
   return {
     loadApplication,
     saveSectionA,
-    saveSectionB
+    saveSectionB,
+    formData,
   }
 }

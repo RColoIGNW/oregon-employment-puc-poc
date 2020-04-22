@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import EmploymentRecordList from '../EmploymentRecordList'
+import React, { useEffect, useState } from 'react'
+
 import EmploymentRecord from '../../models/EmploymentRecord'
+import EmploymentRecordList from '../EmploymentRecordList'
 
 interface SectionBProps {
   value: EmploymentRecord[],
   onChange: (employmentRecords: EmploymentRecord[]) => void
+  isDisabled?: boolean
 }
 
 const SectionB = (props: SectionBProps) => {
@@ -21,8 +23,6 @@ const SectionB = (props: SectionBProps) => {
 
   const updateEmploymentRecord = (employmentRecord: EmploymentRecord) => {
     const index = employmentRecords.findIndex(r => r.id === employmentRecord.id)
-    console.log(index)
-    console.log(employmentRecords)
     employmentRecords.splice(index, 1, employmentRecord)
     setEmploymentRecords([...employmentRecords])
   }
@@ -39,6 +39,7 @@ const SectionB = (props: SectionBProps) => {
 
   return (
     <EmploymentRecordList
+      isDisabled={props.isDisabled}
       employmentRecords={employmentRecords}
       onAddEmploymentRecord={addEmploymentRecord}
       onDeleteEmploymentRecord={deleteEmploymentRecord} />

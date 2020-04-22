@@ -1,15 +1,16 @@
-import React from 'react'
+import Container from '@material-ui/core/Container'
 import Divider from '@material-ui/core/Divider'
+import moment from 'moment'
+import React from 'react'
 
-import Employer from '../models/Employer'
-import EmploymentRecord from '../models/EmploymentRecord'
-import EmploymentRecordList from './EmploymentRecordList'
 import { Address } from '../models/Address'
 import Applicant from '../models/Applicant'
+import Employer from '../models/Employer'
+import EmploymentRecord from '../models/EmploymentRecord'
 import { Race } from '../models/Race'
+import SaveApplicantForm from '../models/SaveApplicantForm';
 import ApplicantInfo from './ApplicantInfo'
-import Container from '@material-ui/core/Container'
-import moment from 'moment'
+import EmploymentRecordList from './EmploymentRecordList'
 
 const address: Address = { street: '123 Main St', city: 'Great City', state: 'FL', zipCode: '12345' }
 
@@ -24,7 +25,7 @@ const applicant: Applicant = {
   gender: undefined,
   isHispanicLatino: undefined,
   contactMethod: undefined,
-  races: [Race.White, Race.Other]
+  races: [Race.White, Race.Other],
 }
 
 const employer: Employer = {
@@ -43,14 +44,16 @@ const employmentRecords: EmploymentRecord[] = [
   employmentRecord, employmentRecord, employmentRecord, employmentRecord, employmentRecord
 ]
 
-export default () => {
+export default (formData?: SaveApplicantForm) => {
+  console.log(formData);
+
   return (
       <Container>
-        <ApplicantInfo applicant={applicant} />
+        <ApplicantInfo applicant={formData || applicant} isDisabled={true} />
         <br />
         <Divider />
         <br />
-        <EmploymentRecordList employmentRecords={employmentRecords} />
+        <EmploymentRecordList isDisabled={true} employmentRecords={formData && formData.employmentRecords || employmentRecords} />
       </Container>
   )
 }

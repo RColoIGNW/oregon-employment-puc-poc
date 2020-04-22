@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import { Button } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
-import { Button } from '@material-ui/core'
+import React, { useState } from 'react'
 
-import EmploymentRecordItem from './EmploymentRecordItem'
 import EmploymentRecord from '../models/EmploymentRecord'
 import EmploymentRecordEdit from './EmploymentRecordEdit'
+import EmploymentRecordItem from './EmploymentRecordItem'
 
 interface EmploymentRecordListProps {
   employmentRecords: EmploymentRecord[]
   onAddEmploymentRecord: (employmentRecord: EmploymentRecord) => void
   onDeleteEmploymentRecord: (employmentRecord: EmploymentRecord) => void
+  isDisabled?: boolean
 }
 
 export default (props: EmploymentRecordListProps) => {
@@ -40,12 +41,13 @@ export default (props: EmploymentRecordListProps) => {
     <>
       <Grid container spacing={2} justify="flex-start" alignItems="center" >
         {
-          employmentRecords.map((employmentRecord, index) =>
+          typeof employmentRecords.map === 'function' && employmentRecords?.map((employmentRecord, index) =>
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <EmploymentRecordItem
                 employmentRecord={employmentRecord}
                 onEditEmploymentRecord={handleOpen}
                 onDeleteEmploymentRecord={onDeleteEmploymentRecord}
+                isDisabled={props.isDisabled}
               />
             </Grid>
           )
@@ -53,7 +55,7 @@ export default (props: EmploymentRecordListProps) => {
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Grid container justify="center" alignItems="center">
             <Grid item>
-              <Button variant="contained" color="primary" size="large" startIcon={<AddIcon />} onClick={() => handleOpen()}>
+              <Button disabled={!!props.isDisabled} variant="contained" color="primary" size="large" startIcon={<AddIcon />} onClick={() => handleOpen()}>
                 Add employment record
               </Button>
             </Grid>
@@ -61,7 +63,7 @@ export default (props: EmploymentRecordListProps) => {
         </Grid>
       </Grid>
 
-      <EmploymentRecordEdit open={open} employmentRecord={selectedRecord} onAccept={onAddEmploymentRecord} onCancel={handleClose} />
+      <EmploymentRecordEdit isDisabled={props.isDisabled} open={open} employmentRecord={selectedRecord} onAccept={onAddEmploymentRecord} onCancel={handleClose} />
     </>
   )
 }

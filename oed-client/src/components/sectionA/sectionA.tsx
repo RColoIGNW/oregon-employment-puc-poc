@@ -1,16 +1,18 @@
 import React from 'react'
-import ApplicantInfo from '../ApplicantInfo'
+
 import Applicant from '../../models/Applicant'
+import ApplicantInfo from '../ApplicantInfo'
 
 interface SectionAProps {
   value: Applicant
   onChange: (applicant: Applicant) => void
+  isDisabled?: boolean
 }
 
 const SectionA = (props: SectionAProps) => {
-  const { onChange, value: applicant } = props
+  const { onChange, value: applicant, isDisabled } = props
   return (
-    <ApplicantInfo applicant={applicant} onChange={onChange} />
+    <ApplicantInfo {...{isDisabled, applicant, onChange}} />
   )
 }
 
