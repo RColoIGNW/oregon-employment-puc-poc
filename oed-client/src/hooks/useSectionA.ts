@@ -1,28 +1,30 @@
-import Applicant from "../models/Applicant";
+import Applicant from '../models/Applicant'
+import SaveApplicantForm from '../models/SaveApplicantForm'
 import storage from '../utils/storage'
 
-export default () => {
-  const defaultValue: Applicant = {
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    ssn: '',
+export default (formData?: SaveApplicantForm) => {
+  const defaultValue: SaveApplicantForm|Applicant = {
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    ssn: "",
     dob: undefined,
     address: {
-      street: '',
-      city: '',
-      state: '',
-      zipCode: ''
+      street: "",
+      city: "",
+      state: "",
+      zipCode: "",
     },
-    phone: '',
-    email: '',
+    phone: "",
+    email: "",
     gender: undefined,
     isHispanicLatino: undefined,
     contactMethod: undefined,
-    races: []
+    races: [],
+    isSubmitted: false,
   }
 
-  let currentValue: Applicant = storage.load(storage.StorageKey.SectionA) || defaultValue
+  let currentValue: SaveApplicantForm|Applicant = formData || storage.load(storage.StorageKey.SectionA) || defaultValue
 
   const handleSubmit = (): { applicant: Applicant, hasErrors: boolean } => {
     return {
@@ -31,7 +33,7 @@ export default () => {
     }
   }
 
-  const handleChange = (applicant: Applicant) => {
+  const handleChange = (applicant: SaveApplicantForm|Applicant) => {
     currentValue = applicant
   }
 
