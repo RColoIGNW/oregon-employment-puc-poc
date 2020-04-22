@@ -1,8 +1,13 @@
 import { Grid, FormControlLabel, Checkbox, Typography, TextField, makeStyles, Theme, createStyles } from '@material-ui/core';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { QuestionModel } from '../../models/Question'
 import { AnswerModel } from '../../models/Answer';
 
+// const useFocus = () => {
+// 	const htmlElRef = useRef()
+// 	const setFocus = () => {htmlElRef && htmlElRef.current &&  htmlElRef.current.focus()}
+// 	return [ htmlElRef,  setFocus ] 
+// }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({   
@@ -25,6 +30,9 @@ interface QuestionProps {
 
 export const Question = (props: QuestionProps) => {
   const classes = useStyles()
+  let focusTimer: NodeJS.Timeout
+  //let [detailsInput, setDetailsFocus] = useFocus() 
+  let detailsInput = useRef(null)
   const [answer, setAnswer] = useState(props.question.answer)
   
   const info = {
@@ -36,9 +44,17 @@ export const Question = (props: QuestionProps) => {
     props.question.whenShowDetails !== props.question.answer.selectedOption  && props.question.whenShowDetails !== 'ALWAYS' 
      )
   const handleOptionChange = (option: 'NO' | 'YES') => {
-    setDisableDetails(
-      props.question.whenShowDetails !== 'ALWAYS' && props.question.whenShowDetails !== option)
-      setAnswer({...answer, selectedOption: option })
+    setDisableDetails(props.question.whenShowDetails !== 'ALWAYS' && props.question.whenShowDetails !== option)
+    console.log('TEST')
+    if (props.question.whenShowDetails === option) {
+      //detailsInput.current.focus()
+      focusTimer  = setTimeout(() => {
+        if (detailsInput && detailsInput.current){
+          detailsInput.current.focus()
+        }
+      }, 10)
+    } 
+    setAnswer({...answer, selectedOption: option, detailInfo: props.question.whenShowDetails !== option ? '' : answer.detailInfo })
   }
 
   const handleDetailChange = (event: React.ChangeEvent<HTMLInputElement>) => {        
@@ -46,13 +62,24 @@ export const Question = (props: QuestionProps) => {
   }
 
 
-  const handleSubQuestionAnswerChange = (a : AnswerModel) => {
-    //props.onChange(question)
+  const handleSubQuestionAnswerChange = (a : AnswerModel) => {       
+    const subAnswers = answer.subQuestionsAnwers    || []
+    const index = subAnswers.findIndex(ans => ans.questionCode === a.questionCode) 
+    if (index === -1) {
+      subAnswers.push(a)
+    } else {
+      subAnswers[index] = a
+    }
+    setAnswer({...answer, subQuestionsAnwers: subAnswers})    
   }
 
   useEffect(() => {
     props.onChange(answer)
   }, [answer])
+
+  useEffect(() => {    
+    return () => clearTimeout(focusTimer);
+  }, []);
 
   return (
     <Grid container direction={'column'}>
@@ -111,7 +138,12 @@ export const Question = (props: QuestionProps) => {
                 value={answer?.detailInfo || ''}
                 onChange={handleDetailChange}
                 fullWidth
+                inputRef={detailsInput}
+                // ref={el => detailsInput = el}
               />
+              {/* <input
+                type="text"
+                ref={detailsInput} /> */}
             </Grid>
           }
           {

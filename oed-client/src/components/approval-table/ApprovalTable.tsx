@@ -15,8 +15,8 @@ import SaveAlt from '@material-ui/icons/SaveAlt'
 import Search from '@material-ui/icons/Search'
 import ViewColumn from '@material-ui/icons/ViewColumn'
 import MaterialTable, { Column } from 'material-table'
-import React from 'react'
-import { forwardRef } from 'react'
+import moment from 'moment'
+import React, { forwardRef } from 'react'
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props as any} ref={ref} />),
@@ -51,22 +51,22 @@ interface TableState {
 }
 
 export default function ApprovalTable(props) {
-  const tableProps = {
+  const tableProps: TableState = {
     columns: [
       { title: 'Date Applied', field: 'date' },
       { title: 'Name', field: 'name' },
       { title: 'Phone', field: 'phone' },
-      {
-        title: 'Approval Status',
-        field: 'status',
-      },
+      { title: 'SSN', field: 'ssn' },
+      { title: 'Approval Status', field: 'status' },
     ],
     data: props?.data?.map(({ application: d }) => ({
-      name: d.firstName,
-      date: d.lastModified,
-      phone: d.contactMethod.phone,
-      status: d.isSubmitted ? 'Pending' : 'In Progress'
+      name: d?.firstName,
+      date: moment(d?.lastModified).format('LLL'),
+      phone: d?.contactMethod?.phone || d.phone,
+      ssn: d.ssn,
+      status: d?.isSubmitted ? 'Pending' : 'In Progress'
     }))
+    .reverse()
   }
 
   return (

@@ -7,13 +7,13 @@ enum StorageKey {
   SectionF = 'SectionF',
 }
 
-const save = (key: string, value: any) => {  
-  value && localStorage.setItem(key, JSON.stringify(value))  
+const save = (key: string, value: any) => {
+  typeof window !== 'undefined' && value && localStorage.setItem(key, JSON.stringify(value))
 }
 
 const load = (key: string) => {
-  const item = localStorage.getItem(key)
-  return item  ? JSON.parse(item) : null
+  const item = typeof window !== 'undefined' && localStorage.getItem(key)
+  return item ? JSON.parse(item) : null
 }
 
 export default {

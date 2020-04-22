@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Divider, makeStyles, Theme, createStyles } from '@material-ui/core'
 import { Question } from '../question/question'
 import { QuestionModel } from '../../models/Question'
+import { AnswerModel } from '../../models/Answer'
 
 
 
@@ -15,19 +16,20 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 interface SectionCProps{
-  questions: QuestionModel[],
-  onChange: (question: QuestionModel) => void
+  value: QuestionModel[],
+  onChange: (answer: AnswerModel) => void
 }
 
 const SectionC = (props: SectionCProps) => {
   const classes = useStyles()
-  const handleChange = (q: QuestionModel) => {
-    props.onChange(q)
+  const questions = props.value
+  const handleChange = (a: AnswerModel) => {
+    props.onChange(a)
   }
   return (
     <Grid container direction={'column'} spacing={1}>
       {
-        props.questions.map((q) => {
+        questions.map((q) => {
           return (
               <div key={q.code}>
                 <Grid item >

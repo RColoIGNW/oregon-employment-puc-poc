@@ -188,7 +188,14 @@ export default () => {
   const prepareQuestions = (): QuestionModel[]   => {
       return _questions.map(q => {
         const _answer = currentAnswers.find((a) => a.questionCode === q.code)
-        return {...q, answer: _answer || q.answer}
+        let subQuestions = q.subQuestions
+        if(_answer && _answer.subQuestionsAnwers){
+          subQuestions = q.subQuestions?.map((subQ) => {
+            const subQAnswer  = _answer.subQuestionsAnwers?.find(sqa => sqa.questionCode === subQ.code) || subQ.answer            
+            return {...subQ, answer: subQAnswer}
+          })
+        }
+        return {...q, answer: _answer || q.answer, subQuestions: subQuestions}
       } )
   }
 
@@ -197,7 +204,6 @@ export default () => {
   let questions = prepareQuestions()
   
   const handleChange = (a: AnswerModel) => {
-    //TODO: UPDATE question Answer
     const index = questions.findIndex((q) => q.code === a.questionCode)
     questions[index].answer = a
   }
