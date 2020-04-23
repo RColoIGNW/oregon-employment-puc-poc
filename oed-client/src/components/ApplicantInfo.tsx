@@ -16,6 +16,7 @@ import { ContactMethod } from '../models/ContactMethod'
 import { Races, Race } from '../models/Race'
 import AddressEdit from './AddressEdit'
 import Address from '../models/Address'
+import PhoneTextField from './PhoneTextField'
 
 const defaultValue: Applicant = {
   firstName: '',
@@ -65,7 +66,7 @@ export default (props: ApplicantInfoProps) => {
   }
 
   const handleAddressChange = (address: Address) => {
-    setState({...state, address: address})
+    setState({ ...state, address: address })
   }
 
   const handleRaceSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +106,15 @@ export default (props: ApplicantInfoProps) => {
         <Grid item xs={12} sm={6}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField name="phone" value={state.phone} onChange={handleChange} fullWidth label="Phone Number" variant="outlined" type="phone" />
+              <PhoneTextField
+                name="phone"
+                value={state.phone}
+                onChange={handleChange}
+                fullWidth
+                label="Phone Number"
+                variant="outlined"
+                type=""
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField name="email" value={state.email} onChange={handleChange} fullWidth label="Email Address" variant="outlined" type="email" />
