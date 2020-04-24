@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import MomentUtils from '@date-io/moment';
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog';
@@ -10,11 +11,11 @@ import TextField from '@material-ui/core/TextField'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
-import React, { useState } from 'react'
 
 import Address from '../models/Address'
 import EmploymentRecord from '../models/EmploymentRecord'
 import AddressEdit from './AddressEdit'
+import PhoneTextField from './PhoneTextField';
 
 const validate = (name: string, value: string): string => {
   switch (name) {
@@ -116,7 +117,7 @@ export default (props: EmploymentRecordEditProps) => {
                   <TextField fullWidth value={state.value.name} name="name" onChange={onChange} label="Name of Employer" variant="outlined" disabled={props.isDisabled} />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField fullWidth value={state.value.phone} name="phone" onChange={onChange} label="Phone Number" variant="outlined" disabled={props.isDisabled} />
+                  <PhoneTextField fullWidth value={state.value.phone} name="phone" onChange={onChange} label="Phone Number" variant="outlined" disabled={props.isDisabled} />
                 </Grid>
                 <Grid item xs={12}>
                   <AddressEdit onCompletion={onAddressCompleted} />

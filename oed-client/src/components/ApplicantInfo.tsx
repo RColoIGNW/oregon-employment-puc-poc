@@ -1,5 +1,8 @@
+import React, { useEffect, useState } from 'react'
 import MomentUtils from '@date-io/moment';
-import { Grid, Radio, RadioGroup } from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControl from '@material-ui/core/FormControl'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -8,7 +11,6 @@ import FormLabel from '@material-ui/core/FormLabel'
 import TextField from '@material-ui/core/TextField'
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
-import React, { useEffect, useState } from 'react'
 
 import Address from '../models/Address'
 import Applicant from '../models/Applicant'
@@ -16,6 +18,8 @@ import { ContactMethod } from '../models/ContactMethod'
 import { Gender } from '../models/Gender'
 import { Race, Races } from '../models/Race'
 import AddressEdit from './AddressEdit'
+import PhoneTextField from './PhoneTextField'
+import SSNTextField from './SSNTextField';
 
 const defaultValue: Applicant = {
   firstName: '',
@@ -34,8 +38,7 @@ const defaultValue: Applicant = {
   gender: undefined,
   isHispanicLatino: undefined,
   contactMethod: undefined,
-  races: [],
-  isSubmitted: false
+  races: []
 }
 
 interface ApplicantInfoProps {
@@ -68,7 +71,7 @@ export default (props: ApplicantInfoProps) => {
   }
 
   const handleAddressChange = (address: Address) => {
-    setState({...state, address: address})
+    setState({ ...state, address: address })
   }
 
   const handleRaceSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +100,7 @@ export default (props: ApplicantInfoProps) => {
           <TextField name="lastName" value={state.lastName} onChange={handleChange} fullWidth label="Last Name" variant="outlined" disabled={disabled} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField name="ssn" value={state.ssn} onChange={handleChange} fullWidth label="SSN" variant="outlined" disabled={disabled} />
+          <SSNTextField name="ssn" value={state.ssn} onChange={handleChange} fullWidth label="SSN" variant="outlined" disabled={disabled} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <KeyboardDatePicker name="dob" value={state.dob} onChange={handleDOBChange} fullWidth format="MM/DD/YYYY" inputVariant="outlined" disabled={disabled} />
@@ -108,10 +111,10 @@ export default (props: ApplicantInfoProps) => {
         <Grid item xs={12} sm={6}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField name="phone" value={state.phone} onChange={handleChange} fullWidth label="Phone Number" variant="outlined" type="phone" disabled={disabled} />
+              <PhoneTextField name="phone" value={state.phone} onChange={handleChange} fullWidth label="Phone Number" variant="outlined" disabled={disabled} />
             </Grid>
             <Grid item xs={12}>
-              <TextField name="email" value={state.email} onChange={handleChange} fullWidth label="Email Address" variant="outlined" type="email" disabled={disabled} />
+              <TextField name="email" value={state.email} onChange={handleChange} fullWidth label="Email Address" variant="outlined" disabled={disabled} />
             </Grid>
           </Grid>
         </Grid>

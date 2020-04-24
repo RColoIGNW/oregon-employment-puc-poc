@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, ButtonBase, Typography } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
 import React, { useState } from 'react'
@@ -41,7 +41,7 @@ export default (props: EmploymentRecordListProps) => {
     <>
       <Grid container spacing={2} justify="flex-start" alignItems="center" >
         {
-          typeof employmentRecords.map === 'function' && employmentRecords?.map((employmentRecord, index) =>
+          employmentRecords?.map((employmentRecord, index) =>
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <EmploymentRecordItem
                 employmentRecord={employmentRecord}
@@ -55,8 +55,11 @@ export default (props: EmploymentRecordListProps) => {
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Grid container justify="center" alignItems="center">
             <Grid item>
-              <Button disabled={!!props.isDisabled} variant="contained" color="primary" size="large" startIcon={<AddIcon />} onClick={() => handleOpen()}>
-                Add employment record
+              <Button component="div" variant="contained" size="large" disabled={!!props.isDisabled} color="primary" onClick={() => handleOpen()}>
+                <Grid container direction="column" alignItems="center">
+                <Grid item><AddIcon /></Grid>
+                  <Grid item><Typography>Add employment record</Typography></Grid>
+                </Grid>
               </Button>
             </Grid>
           </Grid>
