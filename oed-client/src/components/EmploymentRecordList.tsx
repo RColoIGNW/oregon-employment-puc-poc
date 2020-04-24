@@ -1,7 +1,8 @@
-import { Button, ButtonBase, Typography } from '@material-ui/core'
+import React, { useState } from 'react'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
-import React, { useState } from 'react'
 
 import EmploymentRecord from '../models/EmploymentRecord'
 import EmploymentRecordEdit from './EmploymentRecordEdit'
@@ -57,7 +58,7 @@ export default (props: EmploymentRecordListProps) => {
             <Grid item>
               <Button component="div" variant="contained" size="large" disabled={!!props.isDisabled} color="primary" onClick={() => handleOpen()}>
                 <Grid container direction="column" alignItems="center">
-                <Grid item><AddIcon /></Grid>
+                  <Grid item><AddIcon /></Grid>
                   <Grid item><Typography>Add employment record</Typography></Grid>
                 </Grid>
               </Button>
