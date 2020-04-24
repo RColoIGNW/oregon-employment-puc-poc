@@ -18,6 +18,8 @@ import MaterialTable, { Column } from 'material-table'
 import moment from 'moment'
 import React, { forwardRef } from 'react'
 
+import { Application } from '../../pages/index'
+
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props as any} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props as any} ref={ref} />),
@@ -60,6 +62,7 @@ export default function ApprovalTable(props) {
       { title: 'Approval Status', field: 'status' },
     ],
     data: props?.data?.map(({ application: d }) => ({
+      ...d,
       name: d?.firstName,
       date: moment(d?.lastModified).format('LLL'),
       phone: d?.contactMethod?.phone || d.phone,
@@ -90,6 +93,11 @@ export default function ApprovalTable(props) {
           onClick: (_: any, rowData: any) => alert("You approved " + rowData.name)
         }
       ]}
+      detailPanel={(rowData: any) => {
+        return (
+          <Application isDisabled={true} path={props.path} currentValues={rowData} />
+        )
+      }}
     />
   )
 }

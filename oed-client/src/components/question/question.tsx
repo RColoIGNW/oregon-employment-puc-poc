@@ -1,11 +1,11 @@
-import { Grid, FormControlLabel, Checkbox, Typography, TextField } from '@material-ui/core';
+import { Checkbox, FormControlLabel, Grid, TextField, Typography } from '@material-ui/core';
 import React, { useState } from 'react'
 
 export interface IQuestion {
   code: string
   text: string
   showOptions: boolean
-  note?: string  
+  note?: string
   whenShowDetails: 'YES' | 'NO' | 'ALWAYS' | 'NEVER'
   componentDetails?: React.ReactNode
   answer?: any
@@ -14,6 +14,7 @@ export interface IQuestion {
 interface QuestionProps {
   question: IQuestion
   onChange?: (answer: any) => void
+  isDisabled?: boolean
 }
 
 export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
@@ -24,7 +25,7 @@ export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
     no: 'No'
   }
   const [selectedOption, setSelectedOption] = useState('')
-  const [disableDetails, setDisableDetails] = useState<boolean>(props.question.whenShowDetails !== 'ALWAYS')
+  const [disableDetails, setDisableDetails] = useState<boolean>(!!props.isDisabled || props.question.whenShowDetails !== 'ALWAYS')
 
 
   const onChange = (option: 'NO' | 'YES') => {
@@ -42,28 +43,28 @@ export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
             <Typography variant={'body2'}>
               {props.question.text}
             </Typography>
-          </Grid>    
+          </Grid>
           { props.question.showOptions &&
           <Grid item>
-            <Grid container direction={'row'} spacing={2} justify={'flex-end'}> 
+            <Grid container direction={'row'} spacing={2} justify={'flex-end'}>
               <Grid item >
                 <FormControlLabel
-                  control={<Checkbox color={'primary'} checked={selectedOption === 'YES'} onChange={() => onChange('YES')} name="yesAnswer" />}
+                  control={<Checkbox color={'primary'} checked={selectedOption === 'YES'} onChange={() => onChange('YES')} name="yesAnswer" disabled={!!props.isDisabled} />}
                   label={info.yes}
                 />
               </Grid>
               <Grid item >
                 <FormControlLabel
-                  control={<Checkbox color={'primary'} checked={selectedOption === 'NO'} onChange={() => onChange('NO')} name="noAnswer" />}
+                  control={<Checkbox color={'primary'} checked={selectedOption === 'NO'} onChange={() => onChange('NO')} name="noAnswer" disabled={!!props.isDisabled} />}
                   label={info.no}
                 />
-              </Grid>          
+              </Grid>
             </Grid>
-          </Grid>          
+          </Grid>
           }
         </Grid>
       </Grid>
-      { 
+      {
         props.question.note &&
         <Grid item>
           <Typography variant={'body2'}>
@@ -71,14 +72,14 @@ export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
           </Typography>
         </Grid>
       }
-      { 
+      {
         props.question.whenShowDetails!== 'NEVER' &&
         <Grid item>
-          <TextField 
-            id="answer-details"            
+          <TextField
+            id="answer-details"
             disabled={disableDetails}
             multiline
-            rows={2}          
+            rows={2}
             variant={ disableDetails ? 'filled': 'outlined' }
             fullWidth
           />
@@ -88,6 +89,6 @@ export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
         {props.children}
       </Grid>
     </Grid>
-    
+
   )
 }
