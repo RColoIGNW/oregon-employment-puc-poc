@@ -5,12 +5,13 @@ import { QuestionModel } from '../models/Question'
 import { AnswerModel } from '../models/Answer'
 import useApplicantFormApi from './useApplicantFormApi'
 
-export default () => {
+export default (formData?: Partial<Applicant>) => {
   const api = useApplicantFormApi()
 
   const loadApplication = () => {
     //load from API
     //save to localstorage
+    return formData
   }
 
   const saveSectionA = (applicant: Applicant) => {
@@ -46,6 +47,7 @@ export default () => {
     saveSectionC,
     saveSectionD,
     saveSectionE,
-    saveSectionF
+    saveSectionF,
+    formData,
   }
 }

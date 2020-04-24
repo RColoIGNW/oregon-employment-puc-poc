@@ -1,21 +1,20 @@
-import React, { useState } from 'react'
-import TextField from '@material-ui/core/TextField'
-import Grid from '@material-ui/core/Grid'
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Grid from '@material-ui/core/Grid'
 import { useTheme } from '@material-ui/core/styles';
-
-import AddressEdit from './AddressEdit'
+import TextField from '@material-ui/core/TextField'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import React, { useState } from 'react'
 
 import Address from '../models/Address'
 import EmploymentRecord from '../models/EmploymentRecord'
+import AddressEdit from './AddressEdit'
 
 const validate = (name: string, value: string): string => {
   switch (name) {
@@ -35,6 +34,7 @@ interface EmploymentRecordEditProps {
   open: boolean
   onAccept?: (employmentRecord: EmploymentRecord) => void
   onCancel?: () => void
+  isDisabled?: boolean
 }
 
 const defaultValue: EmploymentRecord = {
@@ -57,7 +57,7 @@ export default (props: EmploymentRecordEditProps) => {
   const { open, onAccept, onCancel } = props
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  
+
   const [state, setState] = useState(
     {
       value: {
@@ -113,10 +113,10 @@ export default (props: EmploymentRecordEditProps) => {
             <Grid item>
               <Grid container spacing={2} direction="column">
                 <Grid item xs={12}>
-                  <TextField fullWidth value={state.value.name} name="name" onChange={onChange} label="Name of Employer" variant="outlined" />
+                  <TextField fullWidth value={state.value.name} name="name" onChange={onChange} label="Name of Employer" variant="outlined" disabled={props.isDisabled} />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField fullWidth value={state.value.phone} name="phone" onChange={onChange} label="Phone Number" variant="outlined" />
+                  <TextField fullWidth value={state.value.phone} name="phone" onChange={onChange} label="Phone Number" variant="outlined" disabled={props.isDisabled} />
                 </Grid>
                 <Grid item xs={12}>
                   <AddressEdit onCompletion={onAddressCompleted} />
@@ -124,10 +124,10 @@ export default (props: EmploymentRecordEditProps) => {
                 <Grid item xs={12}>
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
-                      <DatePicker fullWidth value={state.value.started} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" />
+                      <DatePicker fullWidth value={state.value.started} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
                     </Grid>
                     <Grid item xs={6}>
-                      <DatePicker fullWidth value={state.value.ended} onChange={handleEndedChange} format="MM/DD/YYYY" inputVariant="outlined" />
+                      <DatePicker fullWidth value={state.value.ended} onChange={handleEndedChange} format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -144,10 +144,10 @@ export default (props: EmploymentRecordEditProps) => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="primary" onClick={handleAccept}>
+          <Button variant="contained" color="primary" onClick={handleAccept} disabled={props.isDisabled}>
             Accept
           </Button>
-          <Button variant="contained" onClick={handleCancel}>
+          <Button variant="contained" onClick={handleCancel} disabled={props.isDisabled}>
             Cancel
           </Button>
         </DialogActions>

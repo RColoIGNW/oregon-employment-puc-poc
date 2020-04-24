@@ -13,8 +13,7 @@ import {
   makeStyles 
 } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import React, { useEffect } from 'react'
-
+import React, { useEffect, useState } from "react"
 import { Layout } from '../components/layout'
 import SectionA from '../components/sectionA/sectionA'
 import SectionB from '../components/sectionB/sectionB'
@@ -28,9 +27,8 @@ import useSectionA from '../hooks/useSectionA'
 import useSectionB from '../hooks/useSectionB'
 import useSectionC from '../hooks/useSectionC'
 import firebase from '../lib/firebase'
-import theme from '../themes/theme-light'
-
-
+import Applicant from "../models/Applicant"
+import theme from "../themes/theme-light"
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
   sectionA: {
@@ -94,9 +92,10 @@ interface StepActionsProp {
   isLastStep?: boolean
   onBack: () => void
   onNext: () => void
+  isDisabled?: boolean
 }
 const StepActions = (props: StepActionsProp) => {
-  const disabledBack = props.isFirstStep || false
+  const disabledBack = !!props.isDisabled || props.isFirstStep || false
   const showSubmit = props.isLastStep || false
   return (
     <Grid container direction={'row'} justify={'flex-end'} alignItems={'center'} spacing={2}>
@@ -110,6 +109,7 @@ const StepActions = (props: StepActionsProp) => {
       </Grid>
       <Grid item>
         <Button
+          disabled={!!props.isDisabled}
           variant="contained"
           color="primary"
           onClick={props.onNext}
@@ -123,32 +123,51 @@ const StepActions = (props: StepActionsProp) => {
   )
 }
 
-const InitialApplicationPage = () => {
+interface ApplicationProps {
+  currentValues?: Applicant
+  path: string
+  isDisabled?: boolean
+}
+
+export const Application = (props: ApplicationProps) => {
   useSignIn()
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [path, setPath] = useState('')
+  const disabled = !!props.isDisabled
+
+  useEffect(() => {
+    if (path !== props.path) {
+      setPath(props.path)
+    }
+    return () => {
+      if (path !== '/') {
+        localStorage.clear()
+      }
+    }
+  }, [path])
 
   const {
     saveSectionA,
     saveSectionB,
     saveSectionC,
-    saveSectionD,
-    saveSectionE,
-    saveSectionF
-  } = useApplication()
+    // saveSectionD,
+    // saveSectionE,
+    // saveSectionF
+  } = useApplication(props.currentValues)
 
   const {
     handleSubmit: handleSectionASubmit,
     handleChange: handleSectionAChange,
-    currentValue: sectionACurrentValue 
-  } = useSectionA()
+    currentValue: sectionACurrentValue     
+  } = useSectionA(props.currentValues)
 
   const {
     handleSubmit: handleSectionBSubmit,
     handleChange: handleSectionBChange,
     currentValue: sectionBCurrentValue 
-  } = useSectionB()
+  } = useSectionB(props.currentValues)
 
   const {
     handleSubmit: handleSectionCSubmit,
@@ -193,6 +212,7 @@ const InitialApplicationPage = () => {
         break
       case 2:
         const { answers: answersSectionC, hasErrors: sectionCHasErrors } = handleSectionCSubmit()
+        console.log('saving C...')
         saveSectionC(answersSectionC)
         isStepValid = !sectionCHasErrors
         break
@@ -269,72 +289,82 @@ const InitialApplicationPage = () => {
   const ActiveSection = steps?.[activeStep]?.component
 
   return (
-    <Layout>
-      <SEO />
-      <Grid container direction="column" spacing={2}>
-        <Grid item style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '2em'
-        }}>
-          <Typography variant={'h5'}>
-            {pageInfo.title}
-          </Typography>
-        </Grid>
-        <Grid item >
-          <Stepper activeStep={activeStep} orientation="vertical" className={classes.appStepper}>
-            {!isMobile && steps.map(((step, index) => {
-              const Section = step.component
-              return (
-                <Step key={step.key}>
-                  <StepLabel style={{ cursor: 'pointer' }} StepIconProps={{ icon: step.icon }} onClick={() => setActiveStep(index)}>{step.title}</StepLabel>
-                  <StepContent>
-                    <Grid container direction={'column'} spacing={2}>
-                      <Grid item>
-                        <Section value={step.currentValue} onChange={step?.onChange} />
-                      </Grid>
-                      <Grid item>
-                        <StepActions isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} />
-                      </Grid>
-                    </Grid>
-                  </StepContent>
-                </Step>
-              )
-            }))}
-          </Stepper>
-
-          {isMobile &&
-            <div>
-              <Paper square elevation={0}>
-                <Typography>{steps[activeStep].title}</Typography>
-              </Paper>
-                <Grid container direction={'column'} spacing={2}>
-                  <Grid item>
-                    <ActiveSection value={steps[activeStep].currentValue} onChange={steps[activeStep]?.onChange} />
-                  </Grid>
-                </Grid>
-              <MobileStepper
-                steps={steps.length}
-                position="bottom"
-                variant="text"
-                activeStep={activeStep}
-                nextButton={
-                  <Button size="medium" variant="contained" color="primary" onClick={handleNext}>
-                    {activeStep === steps.length - 1 ? pageInfo.submit : pageInfo.next}
-                  </Button>
-                }
-                backButton={
-                  <Button size="medium" onClick={handleBack} disabled={activeStep === 0}>
-                    Back
-                  </Button>
-                }
-              />
-            </div>
-          }
-        </Grid>
+    <Grid container direction="column" spacing={2}>
+      <Grid item style={{
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '2em'
+      }}>
+        <Typography variant={'h5'}>
+          {pageInfo.title}
+        </Typography>
       </Grid>
-    </Layout>
+      <Grid item >
+        <Stepper activeStep={activeStep} orientation="vertical" className={classes.appStepper}>
+          {!isMobile && steps.map(((step, index) => {
+            const Section = step.component
+            return (
+              <Step key={step.key}>
+                <StepLabel
+                  style={{ cursor: 'pointer' }}
+                  StepIconProps={{ icon: step.icon }}
+                  onClick={() => setActiveStep(index)}
+                >
+                    {step.title}
+                </StepLabel>
+                <StepContent>
+                  <Grid container direction={'column'} spacing={2}>
+                    <Grid item>
+                      <Section isDisabled={disabled} value={step.currentValue} onChange={step?.onChange} />
+                    </Grid>
+                    <Grid item>
+                      <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} />
+                    </Grid>
+                  </Grid>
+                </StepContent>
+              </Step>
+            )
+          }))}
+        </Stepper>
+
+        {isMobile &&
+          <div>
+            <Paper square elevation={0}>
+              <Typography>{steps[activeStep].title}</Typography>
+            </Paper>
+            <Grid container direction={'column'} spacing={2}>
+              <Grid item>
+                <ActiveSection isDisabled={disabled} value={steps[activeStep].currentValue} onChange={steps[activeStep]?.onChange} />
+              </Grid>
+            </Grid>
+            <MobileStepper
+              steps={steps.length}
+              position="bottom"
+              variant="text"
+              activeStep={activeStep}
+              nextButton={
+                <Button disabled={disabled} size="medium" variant="contained" color="primary" onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? pageInfo.submit : pageInfo.next}
+                </Button>
+              }
+              backButton={
+                <Button disabled={disabled || activeStep === 0} size="medium" onClick={handleBack} >
+                  Back
+                </Button>
+              }
+            />
+          </div>
+        }
+      </Grid>
+    </Grid>
   )
 }
 
-export default InitialApplicationPage
+const AppPage = (props: any) => (
+  <Layout>
+    <SEO />
+    <Application {...props} />
+  </Layout>
+)
+
+export default AppPage

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
+import TextField from '@material-ui/core/TextField'
+import React, { useState } from 'react'
+
 import Address from '../models/Address'
 
 const isValid = (name: string, value: string): boolean => {
@@ -22,6 +23,7 @@ const defaultValue: Address = {
 interface AddressEditProps {
   address?: Address
   onCompletion?: (address: Address) => void
+  isDisabled?: boolean
 }
 
 type AddressEditErrors = {
@@ -32,6 +34,8 @@ export default (props: AddressEditProps) => {
   const address = props.address || defaultValue
   const errors: AddressEditErrors = {} as AddressEditErrors
   const [state, setState] = useState({ value: address, errors: errors })
+
+  const disabled = !!props.isDisabled
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -48,6 +52,7 @@ export default (props: AddressEditProps) => {
           onChange={onChange}
           error={state.errors.street}
           helperText={state.errors.street}
+          disabled={disabled}
           label="Street or P.O."
           variant="outlined"
           fullWidth
@@ -59,6 +64,7 @@ export default (props: AddressEditProps) => {
           value={state.value.city}
           onChange={onChange}
           error={state.errors.city}
+          disabled={disabled}
           label="City"
           variant="outlined"
           fullWidth
@@ -70,6 +76,7 @@ export default (props: AddressEditProps) => {
           value={state.value.state}
           onChange={onChange}
           error={state.errors.state}
+          disabled={disabled}
           label="State"
           variant="outlined"
           fullWidth
@@ -81,6 +88,7 @@ export default (props: AddressEditProps) => {
           value={state.value.zipCode}
           onChange={onChange}
           error={state.errors.zipCode}
+          disabled={disabled}
           label="Zip Code"
           variant="outlined"
           fullWidth

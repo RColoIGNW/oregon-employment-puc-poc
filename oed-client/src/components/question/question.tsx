@@ -20,12 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
   }),
 );
-
-
-
 interface QuestionProps {
   question: QuestionModel
   onChange: (answer: AnswerModel) => void
+  isDisabled?: boolean
 }
 
 export const Question = (props: QuestionProps) => {
@@ -39,7 +37,7 @@ export const Question = (props: QuestionProps) => {
     yes: 'Yes',
     no: 'No'
   }
-  
+
   const [disableDetails, setDisableDetails] = useState<boolean>(
     props.question.whenShowDetails !== props.question.answer.selectedOption  && props.question.whenShowDetails !== 'ALWAYS' 
      )
@@ -60,6 +58,7 @@ export const Question = (props: QuestionProps) => {
   const handleDetailChange = (event: React.ChangeEvent<HTMLInputElement>) => {        
     setAnswer({...answer, detailInfo: event.target.value })
   }
+
 
 
   const handleSubQuestionAnswerChange = (a : AnswerModel) => {       
@@ -95,24 +94,40 @@ export const Question = (props: QuestionProps) => {
             <Typography variant={'body2'}>
               {props.question.text}
             </Typography>
-          </Grid>    
+          </Grid>
           { props.question.showOptions &&
           <Grid item>
-            <Grid container direction={'row'} spacing={2} justify={'flex-end'}> 
+            <Grid container direction={'row'} spacing={2} justify={'flex-end'}>
               <Grid item >
                 <FormControlLabel
-                  control={<Checkbox color={'primary'} checked={answer?.selectedOption === 'YES'} onChange={() => handleOptionChange('YES')} name="yesAnswer"/>}
                   label={info.yes}
+                  control={
+                    <Checkbox 
+                      color={'primary'} 
+                      checked={answer?.selectedOption === 'YES'} 
+                      onChange={() => handleOptionChange('YES')} 
+                      name="yesAnswer" 
+                      disabled={!!props.isDisabled}
+                    />
+                  }
                 />
               </Grid>
               <Grid item >
                 <FormControlLabel
-                  control={<Checkbox color={'primary'} checked={answer?.selectedOption  === 'NO'} onChange={() => handleOptionChange('NO')} name="noAnswer"/>}
                   label={info.no}
+                  control={
+                    <Checkbox 
+                      color={'primary'} 
+                      checked={answer?.selectedOption  === 'NO'} 
+                      onChange={() => handleOptionChange('NO')} 
+                      name="noAnswer" 
+                      disabled={!!props.isDisabled}
+                    />
+                  }                  
                 />
-              </Grid>          
+              </Grid>
             </Grid>
-          </Grid>          
+          </Grid>
           }
         </Grid>
       </Grid>
@@ -151,7 +166,7 @@ export const Question = (props: QuestionProps) => {
             props.question.subQuestions.map((sq) => {
               return (
                 <Grid item key={sq.code}>
-                  <Question question={sq} onChange={handleSubQuestionAnswerChange}/>
+                  <Question question={sq} onChange={handleSubQuestionAnswerChange} isDisabled={props.isDisabled}/>
                 </Grid>
               )
             })

@@ -9,6 +9,20 @@ const log = logger('api:application-information')
 
 const db = firebase.firestore()
 
+
+import validate from 'validate.js/validate'
+import isEmpty from 'lodash-es/isEmpty'
+
+validate.validators.array = (arrayItems, itemConstraints) => {
+  const arrayItemErrors = arrayItems.reduce((errors, item, index) => {
+    const error = validate(item, itemConstraints)
+    if (error) errors[index] = { error: error }
+    return errors
+  }, {})
+
+  return isEmpty(arrayItemErrors) ? null : { errors: arrayItemErrors }
+}
+
 const rules = {
   'isSubmitted': 'boolean',
   'address.street': 'string',

@@ -7,6 +7,7 @@ import { AnswerModel } from '../../models/Answer'
 
 
 
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     separator: {
@@ -26,6 +27,7 @@ const SectionC = (props: SectionCProps) => {
   const handleChange = (a: AnswerModel) => {
     props.onChange(a)
   }
+
   return (
     <Grid container direction={'column'} spacing={1}>
       {

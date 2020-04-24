@@ -204,6 +204,7 @@ export default () => {
   let questions = prepareQuestions()
   
   const handleChange = (a: AnswerModel) => {
+    console.log('SAVE')
     const index = questions.findIndex((q) => q.code === a.questionCode)
     questions[index].answer = a
   }
