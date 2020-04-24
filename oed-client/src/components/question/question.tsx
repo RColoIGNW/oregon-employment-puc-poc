@@ -1,4 +1,15 @@
-import { Grid, FormControlLabel, Checkbox, Typography, TextField, makeStyles, Theme, createStyles } from '@material-ui/core';
+import { 
+  Grid, 
+  FormControlLabel, 
+  Checkbox, 
+  Typography,
+  TextField,
+  makeStyles,
+  Theme,
+  createStyles,
+  Card,
+  CardContent 
+} from '@material-ui/core';
 import React, { useState, useEffect, useRef } from 'react'
 import { QuestionModel } from '../../models/Question'
 import { AnswerModel } from '../../models/Answer';
@@ -11,6 +22,10 @@ import { AnswerModel } from '../../models/Answer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({   
+    questionBox: {
+      margin: theme.spacing(1,0),
+      background: '#f5f5f5'
+    },
     questionDetails: {
       margin: theme.spacing(0, 0, 0, 3),
     },
@@ -81,98 +96,103 @@ export const Question = (props: QuestionProps) => {
   }, []);
 
   return (
-    <Grid container direction={'column'}>
-      <Grid item>
-        <Grid container direction={'row'} alignItems={'center'} justify={'space-between'}>
-          {/* { 
-             props.showErrors && isValidAnswer() &&
-          <Grid item className={classes.error}>
-            {error}
-          </Grid>
-          } */}
+    <Card className={classes.questionBox}>
+      <CardContent>
+        <Grid container direction={'column'}>
           <Grid item>
-            <Typography variant={'body2'}>
-              {props.question.text}
-            </Typography>
-          </Grid>
-          { props.question.showOptions &&
-          <Grid item>
-            <Grid container direction={'row'} spacing={2} justify={'flex-end'}>
-              <Grid item >
-                <FormControlLabel
-                  label={info.yes}
-                  control={
-                    <Checkbox 
-                      color={'primary'} 
-                      checked={answer?.selectedOption === 'YES'} 
-                      onChange={() => handleOptionChange('YES')} 
-                      name="yesAnswer" 
-                      disabled={!!props.isDisabled}
-                    />
-                  }
-                />
+            <Grid container direction={'row'} alignItems={'center'} justify={'space-between'}>
+              {/* { 
+                props.showErrors && isValidAnswer() &&
+              <Grid item className={classes.error}>
+                {error}
               </Grid>
-              <Grid item >
-                <FormControlLabel
-                  label={info.no}
-                  control={
-                    <Checkbox 
-                      color={'primary'} 
-                      checked={answer?.selectedOption  === 'NO'} 
-                      onChange={() => handleOptionChange('NO')} 
-                      name="noAnswer" 
-                      disabled={!!props.isDisabled}
-                    />
-                  }                  
-                />
+              } */}
+              <Grid item>
+                <Typography variant={'body2'}>
+                  {props.question.text}
+                </Typography>
               </Grid>
-            </Grid>
-          </Grid>
-          }
-        </Grid>
-      </Grid>
-      <Grid item className={classes.questionDetails}>
-        <Grid container direction={'column'} spacing={1}>
-          { 
-            props.question.note &&
-            <Grid item>
-              <Typography variant={'body2'}>
-                {props.question.note}
-              </Typography>
-            </Grid>
-          }
-          { 
-            props.question.whenShowDetails!== 'NEVER' &&
-            <Grid item>
-              <TextField 
-                id="answer-details"            
-                disabled={disableDetails}
-                multiline
-                rows={2}          
-                variant={ disableDetails ? 'filled': 'outlined' }
-                value={answer?.detailInfo || ''}
-                onChange={handleDetailChange}
-                fullWidth
-                inputRef={detailsInput}
-                // ref={el => detailsInput = el}
-              />
-              {/* <input
-                type="text"
-                ref={detailsInput} /> */}
-            </Grid>
-          }
-          {
-            props.question.subQuestions &&
-            props.question.subQuestions.map((sq) => {
-              return (
-                <Grid item key={sq.code}>
-                  <Question question={sq} onChange={handleSubQuestionAnswerChange} isDisabled={props.isDisabled}/>
+              { props.question.showOptions &&
+              <Grid item>
+                <Grid container direction={'row'} spacing={2} justify={'flex-end'}>
+                  <Grid item >
+                    <FormControlLabel
+                      label={info.yes}
+                      control={
+                        <Checkbox 
+                          color={'primary'} 
+                          checked={answer?.selectedOption === 'YES'} 
+                          onChange={() => handleOptionChange('YES')} 
+                          name="yesAnswer" 
+                          disabled={!!props.isDisabled}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item >
+                    <FormControlLabel
+                      label={info.no}
+                      control={
+                        <Checkbox 
+                          color={'primary'} 
+                          checked={answer?.selectedOption  === 'NO'} 
+                          onChange={() => handleOptionChange('NO')} 
+                          name="noAnswer" 
+                          disabled={!!props.isDisabled}
+                        />
+                      }                  
+                    />
+                  </Grid>
                 </Grid>
-              )
-            })
-          }
-        </Grid>
-      </Grid>
-    </Grid>    
+              </Grid>
+              }
+            </Grid>
+          </Grid>
+          <Grid item className={classes.questionDetails}>
+            <Grid container direction={'column'} spacing={1}>
+              { 
+                props.question.note &&
+                <Grid item>
+                  <Typography variant={'body2'}>
+                    {props.question.note}
+                  </Typography>
+                </Grid>
+              }
+              { 
+                props.question.whenShowDetails!== 'NEVER' &&
+                <Grid item>
+                  <TextField 
+                    id="answer-details"            
+                    disabled={disableDetails}
+                    multiline
+                    rows={2}          
+                    variant={ disableDetails ? 'filled': 'outlined' }
+                    style={ disableDetails ? {border: 0}: {background: '#FFFFFF'}}
+                    value={answer?.detailInfo || ''}
+                    onChange={handleDetailChange}
+                    fullWidth
+                    inputRef={detailsInput}
+                    // ref={el => detailsInput = el}
+                  />
+                  {/* <input
+                    type="text"
+                    ref={detailsInput} /> */}
+                </Grid>
+              }
+              {
+                props.question.subQuestions &&
+                props.question.subQuestions.map((sq) => {
+                  return (
+                    <Grid item key={sq.code}>
+                      <Question question={sq} onChange={handleSubQuestionAnswerChange} isDisabled={props.isDisabled}/>
+                    </Grid>
+                  )
+                })
+              }
+            </Grid>
+          </Grid>
+        </Grid>    
+      </CardContent>
+    </Card>
   )
 }

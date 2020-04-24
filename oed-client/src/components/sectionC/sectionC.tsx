@@ -36,10 +36,7 @@ const SectionC = (props: SectionCProps) => {
               <div key={q.code}>
                 <Grid item >
                   <Question question={q} onChange={handleChange}/>
-                </Grid>
-                <Grid item className={classes.separator} >
-                  <Divider/>
-                </Grid>
+                </Grid>               
               </div>
           )
         })       

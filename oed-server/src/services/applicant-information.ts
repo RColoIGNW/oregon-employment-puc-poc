@@ -1,27 +1,15 @@
 import { Request, Response } from 'express'
 import fb from 'firebase-admin'
+import { v4 as uuidv4 } from 'uuid';
 import Validator from 'validatorjs'
 
 import firebase from '../util/firebase'
 import { logger } from '../util/logger'
+import { getUnpackedSettings } from 'http2'
 
 const log = logger('api:application-information')
 
 const db = firebase.firestore()
-
-
-import validate from 'validate.js/validate'
-import isEmpty from 'lodash-es/isEmpty'
-
-validate.validators.array = (arrayItems, itemConstraints) => {
-  const arrayItemErrors = arrayItems.reduce((errors, item, index) => {
-    const error = validate(item, itemConstraints)
-    if (error) errors[index] = { error: error }
-    return errors
-  }, {})
-
-  return isEmpty(arrayItemErrors) ? null : { errors: arrayItemErrors }
-}
 
 const rules = {
   'isSubmitted': 'boolean',
@@ -60,11 +48,12 @@ export const submitApplicantInformation = async (req: Request, res: Response) =>
   try {
     if (!req.body) { throw new Error('Request Body Required') }
 
-    const validation = new Validator(req.body, rules)
-    if (validation.fails()) { return res.status(400).send(validation.errors) }
+    // const validation = new Validator(req.body, rules)
+    // if (validation.fails()) { return res.status(400).send(validation.errors) }
 
     const requestBody = { ...req.body, lastModified: new Date().toISOString() }
-    const uid = requestBody.uid || '123-fake-uid'
+    //const uid = requestBody.uid || '123-fake-uid'
+    const uid = requestBody.uid || uuidv4()
     const countRef = db.collection('applications-count').doc('pua-applications')
     const applicationRef = db.collection('users').doc(uid)
 
