@@ -15,10 +15,10 @@ export default () => {
     // const body = JSON.stringify(formData)
     const requestOptions = {
       method: 'POST',
-      body: JSON.stringify({...formData, uid: localStorage.getItem('uid')}),
+      body: JSON.stringify({...formData, userId: localStorage.getItem('uid')}),
       redirect: 'follow',
     }
-    return request(`${process.env.REACT_APP_API_HOST}/api/new-application`, requestOptions as any)
+    return request(`${process.env.REACT_APP_API_HOST}/api/applications`, requestOptions as any)
       .catch(console.error)
   }
 

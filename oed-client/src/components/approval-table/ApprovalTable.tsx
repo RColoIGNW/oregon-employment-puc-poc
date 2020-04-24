@@ -61,7 +61,7 @@ export default function ApprovalTable(props) {
       { title: 'SSN', field: 'ssn' },
       { title: 'Approval Status', field: 'status' },
     ],
-    data: props?.data?.map(({ application: d }) => ({
+    data: props?.data?.map((d) => ({
       ...d,
       name: d?.firstName,
       date: moment(d?.lastModified).format('LLL'),

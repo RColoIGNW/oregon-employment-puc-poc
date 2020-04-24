@@ -60,16 +60,26 @@ const useSignIn = () => { // fake for demo
   useEffect(() => {
     const signInAsCustomer = (): any => {
       if (!localStorage.token && typeof window !== 'undefined') {
-        firebase.auth().signInAnonymously()
-          .then(async (userCredential) => {
-            localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken().catch(console.error) || '')
-            localStorage.setItem('uid', userCredential.user?.uid || '')
-          })
-          .catch(console.error)
+        if (localStorage.getItem('email') && localStorage.getItem('password')) {
+          firebase.auth().signInWithEmailAndPassword(localStorage.getItem('email')!, localStorage.getItem('password')!)
+            .then(async (userCredential) => {
+              console.log(userCredential)
+              localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken().catch(console.error) || '')
+              localStorage.setItem('uid', userCredential.user?.uid || '')
+            })
+            .catch(console.error)
+        } else {
+          firebase.auth().signInAnonymously()
+            .then(async (userCredential) => {
+              localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken().catch(console.error) || '')
+              localStorage.setItem('uid', userCredential.user?.uid || '')
+            })
+            .catch(console.error)
+        }
       }
     }
     signInAsCustomer()
-    return () => {}
+    return () => { }
   })
 }
 
@@ -131,7 +141,7 @@ export const Application = (props: ApplicationProps) => {
     }
     return () => {
       if (path !== '/') {
-        localStorage.clear()
+        //localStorage.clear()
       }
     }
   }, [path])
@@ -146,10 +156,10 @@ export const Application = (props: ApplicationProps) => {
     handleChange: handleSectionAChange,
     currentValue: sectionACurrentValue } = useSectionA(props.currentValues)
 
-    const {
-      handleSubmit: handleSectionBSubmit,
-      handleChange: handleSectionBChange,
-      currentValue: sectionBCurrentValue } = useSectionB(props.currentValues)
+  const {
+    handleSubmit: handleSectionBSubmit,
+    handleChange: handleSectionBChange,
+    currentValue: sectionBCurrentValue } = useSectionB(props.currentValues)
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
@@ -244,7 +254,7 @@ export const Application = (props: ApplicationProps) => {
                   StepIconProps={{ icon: step.icon }}
                   onClick={() => setActiveStep(index)}
                 >
-                    {step.title}
+                  {step.title}
                 </StepLabel>
                 <StepContent>
                   <Grid container direction={'column'} spacing={2}>
