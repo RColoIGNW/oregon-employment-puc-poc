@@ -1,6 +1,6 @@
 import type { Router } from 'express'
 import { decodeToken, isAuthorized, hasAdminRole } from './util/token'
-import submitApplicantInformation from './services/applicant-information'
+import applicationService from './services/application.service'
 import { getApplicants } from './services/applicants'
 
 export const routes = (router: Router) => {
@@ -13,12 +13,32 @@ export const routes = (router: Router) => {
   })
 
   router
-    .route('/new-application')
-    .post(decodeToken, isAuthorized, submitApplicantInformation)
+    .route('/applications')
+    .post(decodeToken, isAuthorized, applicationService.createApplication)
 
   router
     .route('/applications')
-    .get(decodeToken, isAuthorized, hasAdminRole, getApplicants)
+    .get(decodeToken, isAuthorized, hasAdminRole,applicationService.getApplications)
+
+  router
+    .route('/users/:userId/applications')
+    .get(decodeToken, isAuthorized, applicationService.getApplicationsByUser)
+
+  router
+    .route('/applications/:id')
+    .get(decodeToken, isAuthorized, applicationService.getApplicationById)
+
+    router
+    .route('/applications/:id')
+    .delete(decodeToken, isAuthorized, hasAdminRole, applicationService.deleteApplication)
+
+    router
+    .route('/applications/:id')
+    .put(decodeToken, isAuthorized, applicationService.updateApplication)
+
+    router
+    .route('/applications/:id/:status')
+    .patch(decodeToken, isAuthorized, applicationService.changeApplicationStatus)
 }
 
 export default routes

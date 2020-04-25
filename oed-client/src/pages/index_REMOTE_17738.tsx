@@ -1,34 +1,22 @@
-import { 
-  Button, 
-  Grid, 
-  MobileStepper, 
-  Paper, 
-  Step, 
-  StepContent, 
-  StepLabel, 
-  Stepper, 
-  Theme, 
-  Typography, 
-  createStyles, 
-  makeStyles 
-} from '@material-ui/core'
+import { Button, Grid, MobileStepper, Paper, Step, StepContent, StepLabel, Stepper, Theme, Typography, createStyles, makeStyles } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import React, { useEffect, useState } from "react"
-import { Layout } from '../components/layout'
-import SectionA from '../components/sectionA/sectionA'
-import SectionB from '../components/sectionB/sectionB'
-import SectionC from '../components/sectionC/sectionC'
-import SectionD from '../components/sectionD/sectionD'
-import SectionE from '../components/sectionE/sectionE'
-import SectionF from '../components/sectionF/sectionF'
-import { SEO } from '../components/seo'
-import useApplication from '../hooks/useApplication'
-import useSectionA from '../hooks/useSectionA'
-import useSectionB from '../hooks/useSectionB'
-import useSectionC from '../hooks/useSectionC'
+
+import { Layout } from "../components/layout"
+import SectionA from "../components/sectionA/sectionA"
+import SectionB from "../components/sectionB/sectionB"
+import SectionC from "../components/sectionC/sectionC"
+import SectionD from "../components/sectionD/sectionD"
+import SectionE from "../components/sectionE/sectionE"
+import SectionF from "../components/sectionF/sectionF"
+import { SEO } from "../components/seo"
+import useApplication from "../hooks/useApplication"
+import useSectionA from "../hooks/useSectionA"
+import useSectionB from "../hooks/useSectionB"
 import firebase from '../lib/firebase'
 import Applicant from "../models/Applicant"
 import theme from "../themes/theme-light"
+
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
   sectionA: {
@@ -160,54 +148,22 @@ export const Application = (props: ApplicationProps) => {
 
   const {
     saveSectionA,
-    saveSectionB,
-    saveSectionC,
-    // saveSectionD,
-    // saveSectionE,
-    // saveSectionF
+    saveSectionB
   } = useApplication(props.currentValues)
 
   const {
     handleSubmit: handleSectionASubmit,
     handleChange: handleSectionAChange,
-    currentValue: sectionACurrentValue     
-  } = useSectionA(props.currentValues)
-  
+    currentValue: sectionACurrentValue } = useSectionA(props.currentValues)
+
   const {
     handleSubmit: handleSectionBSubmit,
     handleChange: handleSectionBChange,
-    currentValue: sectionBCurrentValue 
-  } = useSectionB(props.currentValues)
-
-  const {
-    handleSubmit: handleSectionCSubmit,
-    handleChange: handleSectionCChange,
-    questions: questionsSectionC
-  } = useSectionC()
-
-  // const {
-  //   handleSubmit: handleSectionDSubmit,
-  //   handleChange: handleSectionDChange,
-  //   questions: questionsSectionD
-  // } = useSectionD()
-
-  // const {
-  //   handleSubmit: handleSectionESubmit,
-  //   handleChange: handleSectionEChange,
-  //   questions: questionsSectionE
-  // } = useSectionE()
-
-  // const {
-  //   handleSubmit: handleSectionFSubmit,
-  //   handleChange: handleSectionFChange,
-  //   questions: questionsSectionF
-  // } = useSectionF() 
-
+    currentValue: sectionBCurrentValue } = useSectionB(props.currentValues)
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
-
   const handleNext = () => {
     let isStepValid: boolean = true
     switch (activeStep) {
@@ -221,27 +177,6 @@ export const Application = (props: ApplicationProps) => {
         saveSectionB(employmentRecords)
         isStepValid = !sectionBHasErrors
         break
-      case 2:
-        const { answers: answersSectionC, hasErrors: sectionCHasErrors } = handleSectionCSubmit()
-        console.log('saving C...')
-        saveSectionC(answersSectionC)
-        isStepValid = !sectionCHasErrors
-        break
-        // case 3:
-        //   const { questions: questionsSectionD, hasErrors: sectionDHasErrors } = handleSectionDSubmit()
-        //   saveSectionD(questionsSectionD)
-        //   isStepValid = !sectionDHasErrors
-        //   break
-        // case 4:
-        //   const { questions: questionsSectionE, hasErrors: sectionEHasErrors } = handleSectionESubmit()
-        //   saveSectionE(questionsSectionE)
-        //   isStepValid = !sectionEHasErrors
-        //   break 
-        // case 5:
-        //   const { questions: questionsSectionF, hasErrors: sectionFHasErrors } = handleSectionFSubmit()
-        //   saveSectionC(questionsSectionF)
-        //   isStepValid = !sectionFHasErrors
-        //   break
     }
     isStepValid && setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
@@ -270,9 +205,7 @@ export const Application = (props: ApplicationProps) => {
       icon: pageInfo.sectionC.icon,
       title: pageInfo.sectionC.title,
       isFirstStep: false,
-      currentValue: questionsSectionC,
-      onChange: handleSectionCChange,
-      component: SectionC,
+      component: SectionC
     },
     {
       key: 'D',
@@ -359,7 +292,7 @@ export const Application = (props: ApplicationProps) => {
                 </Button>
               }
               backButton={
-                <Button disabled={disabled || activeStep === 0} size="medium" onClick={handleBack} >
+                <Button disabled={disabled} size="medium" onClick={handleBack} disabled={activeStep === 0}>
                   Back
                 </Button>
               }
@@ -371,7 +304,7 @@ export const Application = (props: ApplicationProps) => {
   )
 }
 
-const AppPage = (props: any) => (
+const AppPage = (props) => (
   <Layout>
     <SEO />
     <Application {...props} />

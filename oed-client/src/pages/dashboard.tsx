@@ -1,3 +1,6 @@
+import React, { useEffect, forwardRef, useState } from "react"
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 import AddBox from '@material-ui/icons/AddBox'
 import ArrowUpward from '@material-ui/icons/ArrowUpward'
 import Block from '@material-ui/icons/Block'
@@ -14,11 +17,12 @@ import Remove from '@material-ui/icons/Remove'
 import SaveAlt from '@material-ui/icons/SaveAlt'
 import Search from '@material-ui/icons/Search'
 import ViewColumn from '@material-ui/icons/ViewColumn'
-import MaterialTable, { Column } from 'material-table'
-import moment from 'moment'
-import React, { forwardRef } from 'react'
+import MaterialTable from 'material-table'
 
-import { Application } from '../../pages/index'
+import { Layout } from "../components/layout"
+import { SEO } from "../components/seo"
+import useApprovals from '../hooks/useApprovals'
+import useApplicantFormApi from "../hooks/useApplicantFormApi"
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props as any} ref={ref} />),
@@ -40,64 +44,83 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props as any} ref={ref} />)
 }
 
-interface Row {
-  name: string
-  date: string
-  phone: string
-  status: string
+interface TableAction {
+  icon: any,
+  tooltip: string,
+  onClick: (event: any, rowData: any) => void
 }
 
-interface TableState {
-  columns: Array<Column<Row>>;
-  data: Row[]
+interface ApplicationsTableProps {
+  columns: {title: string, field: string}[],
+  data: any[],
+  actions: TableAction[]
 }
 
-export default function ApprovalTable(props) {
-  const tableProps: TableState = {
-    columns: [
-      { title: 'Date Applied', field: 'date' },
-      { title: 'Name', field: 'name' },
-      { title: 'Phone', field: 'phone' },
-      { title: 'SSN', field: 'ssn' },
-      { title: 'Approval Status', field: 'status' },
-    ],
-    data: props?.data?.map((d) => ({
-      ...d,
-      name: d?.firstName,
-      date: moment(d?.lastModified).format('LLL'),
-      phone: d?.contactMethod?.phone || d.phone,
-      ssn: d.ssn,
-      status: d?.isSubmitted ? 'Pending' : 'In Progress'
-    }))
-    .reverse()
-  }
+const ApplicationsTable = (props: ApplicationsTableProps) => {
+  const {columns, data, actions} = props
 
   return (
     <MaterialTable
       title="Unapproved Applications"
-      columns={tableProps.columns}
-      data={tableProps.data}
+      columns={columns}
+      data={data}
       options={{
         actionsColumnIndex: -1,
       }}
       icons={tableIcons as any}
-      actions={[
-        {
-          icon: Block as any,
-          tooltip: 'Decline',
-          onClick: (_: any, rowData: any) => alert("You declined " + rowData.name)
-        },
-        {
-          icon: Check as any,
-          tooltip: 'Approve',
-          onClick: (_: any, rowData: any) => alert("You approved " + rowData.name)
-        }
-      ]}
-      detailPanel={(rowData: any) => {
-        return (
-          <Application isDisabled={true} path={props.path} currentValues={rowData} />
-        )
-      }}
+      actions={actions}
     />
   )
 }
+
+const DashboardPage = () => {
+  const apiClient = useApplicantFormApi()
+  const [data, setData] = useState([])
+  const columns = [
+    { title: 'Date Applied', field: 'date' },
+    { title: 'Name', field: 'firstName' },
+    { title: 'Phone', field: 'phone' },
+    { title: 'SSN', field: 'ssn' },
+    { title: 'Approval Status', field: 'status' },
+  ]
+
+  const actions = [
+    {
+      icon: Block as any,
+      tooltip: 'Decline',
+      onClick: (_: any, rowData: any) => alert("You declined " + rowData.name)
+    },
+    {
+      icon: Check as any,
+      tooltip: 'Approve',
+      onClick: (_: any, rowData: any) => alert("You approved " + rowData.name)
+    }
+  ]
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await apiClient.getUserApplications()
+      console.log(data)
+      setData(data)
+    }
+    fetchData()
+  }, [])
+
+  return (
+    <Layout>
+      <SEO title={'Dashboard'} />
+      <Grid container direction="column" spacing={3}>
+        <Grid item>
+          <Typography style={{ color: 'blue' }}>
+            {'Development Site  - Rapid changes may occur'}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <ApplicationsTable columns={columns} data={data} actions={actions} />
+        </Grid>
+      </Grid>
+    </Layout>
+  )
+}
+
+export default DashboardPage

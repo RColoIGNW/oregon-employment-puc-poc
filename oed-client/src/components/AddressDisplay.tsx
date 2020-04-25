@@ -1,6 +1,7 @@
 import React from 'react'
-import { Typography, Grid } from '@material-ui/core'
-import { Address } from '../models/Address'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Address from '../models/Address'
 
 interface AddressDisplayProps {
   address: Address
