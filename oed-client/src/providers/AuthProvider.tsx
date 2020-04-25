@@ -45,6 +45,7 @@ export const AuthProvider: FC = ({ children }) => {
     const getAccountInformation = async () => {
       const t = await user?.getIdToken() || ''
       localStorage.setItem('token', t)
+      localStorage.setItem('uid', user?.uid || '')
       setToken(t)
     }
     getAccountInformation() // tslint:disable-line
