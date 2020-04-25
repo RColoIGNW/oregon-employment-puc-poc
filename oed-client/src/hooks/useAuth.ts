@@ -45,9 +45,14 @@ export default (props: { location: { origin: string } }) => {
           localStorage.accessToken = token
         }
       })
-      return () => {
 
+      if (ui.isPendingRedirect()) {
+        updateTransition({
+          open: true
+        })
       }
+
+      return () => {}
     }, [loadingState])
   }
 }
