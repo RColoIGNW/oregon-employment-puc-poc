@@ -1,6 +1,6 @@
 import EmploymentRecord from '../models/EmploymentRecord'
-import SaveApplicantForm from '../models/SaveApplicantForm';
-import storage from '../utils/storage'
+import SaveApplicantForm from '../models/SaveApplicantForm'
+import storage from '../util/storage'
 
 export default (formData?: Partial<SaveApplicantForm>) => {
   let currentValue: EmploymentRecord[] = formData || storage.load(storage.StorageKey.SectionB) || []

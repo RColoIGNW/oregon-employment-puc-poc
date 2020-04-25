@@ -1,6 +1,6 @@
 import Applicant from '../models/Applicant'
 import SaveApplicantForm from '../models/SaveApplicantForm'
-import storage from '../utils/storage'
+import storage from '../util/storage'
 
 export default (formData?: SaveApplicantForm) => {
   const defaultValue: SaveApplicantForm|Applicant = {
