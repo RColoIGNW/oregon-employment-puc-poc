@@ -1,6 +1,5 @@
-import "firebaseui/dist/firebaseui.css"
+import 'firebaseui/dist/firebaseui.css'
 
-import * as firebaseui from "firebaseui"
-// const firebaseui = typeof window !== `undefined` ? require("firebaseUI") : null
+import * as firebaseui from 'firebaseui'
 
 export default firebaseui
