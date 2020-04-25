@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper"
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 import Typography from "@material-ui/core/Typography"
 import { navigate } from "gatsby"
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import Alerts from '../components/alerts'
 import { Layout } from "../components/layout"
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-export default function LandingPage() {
+export default function DashboardPage() {
   const classes = useStyles()
   const menuItems = [
     {
@@ -73,8 +73,8 @@ export default function LandingPage() {
         <Grid item>
           <Paper>
             <List className={classes.root}>
-              {menuItems.map(item => (
-                <>
+              {menuItems.map((item, idx) => (
+                <Fragment key={`menu-item-${idx}`}>
                   <ListItem alignItems="flex-start">
                     <Grid item xs={2}>
                       <Button color={'primary'} variant={'contained'} size={'large'} style={{width: '15em'}} onClick={() => navigate(item.link)}>
@@ -99,7 +99,7 @@ export default function LandingPage() {
                       </Grid>
                     </ListItem>
                   <Divider variant="inset" component="li" />
-                </>
+                </Fragment>
               ))}
             </List>
           </Paper>

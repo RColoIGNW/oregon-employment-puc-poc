@@ -30,7 +30,7 @@ const Layout: React.FC = ({ children }) => {
     }
   `)
 
-  const { signOut } = useContext(AuthContext)
+  const { signOut, user } = useContext(AuthContext)
 
   return (
     <>
@@ -55,9 +55,11 @@ const Layout: React.FC = ({ children }) => {
             cursor: 'pointer',
             padding: '5px',
           }}>
-            <Button variant={'outlined'} style={{ color: '#fff' }} onClick={() => signOut()}>
-              {`Sign Out`}
-            </Button>
+            {user?.token &&
+              <Button variant={'outlined'} style={{ color: '#fff' }} onClick={() => signOut()}>
+                {`Sign Out`}
+              </Button>
+            }
           </Box>
         </Toolbar>
       </AppBar>

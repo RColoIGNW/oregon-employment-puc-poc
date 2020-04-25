@@ -15,5 +15,6 @@
   },
   "scripts": {
     "start": "lerna run start"
-  }
+  },
+  "dependencies": {}
 }
