@@ -22,8 +22,19 @@ export default () => {
       .catch(console.error)
   }
 
+  const getUserApplications = () => {
+    const userId = localStorage.getItem('uid')
+    return request(`${process.env.REACT_APP_API_HOST}/api/users/${userId}/applications`)
+    .then((result: any) => {
+      if (!result.success) { return [] }
+      return result.response
+    })
+    .catch(console.error)
+  }
+
   return {
     saveForm,
     getUnapprovedApplications,
+    getUserApplications
   }
 }
