@@ -2,14 +2,24 @@ import Applicant from '../models/Applicant'
 import EmploymentRecord from "../models/EmploymentRecord"
 import storage from '../util/storage'
 import useApplicantFormApi from "./useApplicantFormApi"
+import Application from '../models/Application'
 
-export default (formData?: Partial<Applicant>) => {
+export default (formData?: Partial<Application>) => {
   const api = useApplicantFormApi()
 
   const loadApplication = () => {
     //load from API
+
     //save to localstorage
     return formData
+  }
+
+  const saveApplication = (application: Application) => {
+    if (application.id) {
+      api.updateApplication(application)
+    } else {
+      api.createApplication(application)
+    }
   }
 
   const saveSectionA = (applicant: Applicant) => {

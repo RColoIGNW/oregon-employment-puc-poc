@@ -18,7 +18,7 @@ import MaterialTable, { Column } from 'material-table'
 import moment from 'moment'
 import React, { forwardRef } from 'react'
 
-import { Application } from '../../pages/application'
+import { ApplicationModel } from '../../pages/application'
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props as any} ref={ref} />),
@@ -95,7 +95,7 @@ export default function ApprovalTable(props: any) {
       ]}
       detailPanel={(rowData: any) => {
         return (
-          <Application isDisabled={true} path={props.path} currentValues={rowData} />
+          <ApplicationModel isDisabled={true} application={rowData} />
         )
       }}
     />

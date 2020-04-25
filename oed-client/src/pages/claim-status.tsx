@@ -17,12 +17,13 @@ import Remove from '@material-ui/icons/Remove'
 import SaveAlt from '@material-ui/icons/SaveAlt'
 import Search from '@material-ui/icons/Search'
 import ViewColumn from '@material-ui/icons/ViewColumn'
+import Download from '@material-ui/icons/GetApp'
 import MaterialTable from 'material-table'
 
 import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
-import useApprovals from '../hooks/useApprovals'
 import useApplicantFormApi from "../hooks/useApplicantFormApi"
+import { navigate } from "gatsby"
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props as any} ref={ref} />),
@@ -73,7 +74,7 @@ const ApplicationsTable = (props: ApplicationsTableProps) => {
   )
 }
 
-const DashboardPage = () => {
+const ClaimsStatusPage = () => {
   const apiClient = useApplicantFormApi()
   const [data, setData] = useState([])
   const columns = [
@@ -84,23 +85,39 @@ const DashboardPage = () => {
     { title: 'Approval Status', field: 'status' },
   ]
 
+  const handleEdit = (_: any, rowData: any) => {
+    navigate('application', { state: {applicationId: rowData.applicationId }})
+  }
+
+  const handleDiscard = (_: any, rowData: any) => {
+    console.log('onDiscard')
+  }
+
+  const handleDownload = (_: any, rowData: any) => {
+    console.log('onDownload')
+  }
+
   const actions = [
     {
-      icon: Block as any,
-      tooltip: 'Decline',
-      onClick: (_: any, rowData: any) => alert("You declined " + rowData.name)
+      icon: Edit as any,
+      tooltip: 'Edit',
+      onClick: handleEdit
     },
     {
-      icon: Check as any,
-      tooltip: 'Approve',
-      onClick: (_: any, rowData: any) => alert("You approved " + rowData.name)
+      icon: DeleteOutline as any,
+      tooltip: 'Discard',
+      onClick: handleDiscard
+    },
+    {
+      icon: Download as any,
+      tooltip: 'Download',
+      onClick: handleDownload
     }
   ]
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await apiClient.getUserApplications()
-      console.log(data)
       setData(data)
     }
     fetchData()
@@ -123,4 +140,4 @@ const DashboardPage = () => {
   )
 }
 
-export default DashboardPage
+export default ClaimsStatusPage

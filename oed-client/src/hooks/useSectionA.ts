@@ -1,5 +1,5 @@
 import Applicant from '../models/Applicant'
-import SaveApplicantForm from '../models/SaveApplicantForm'
+import SaveApplicantForm from '../models/Application'
 import storage from '../util/storage'
 
 export default (formData?: SaveApplicantForm) => {

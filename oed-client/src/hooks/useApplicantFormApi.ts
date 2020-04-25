@@ -1,5 +1,5 @@
-import SaveApplicantForm from '../models/SaveApplicantForm'
 import { request } from '../util/request'
+import Application from '../models/Application'
 
 export default () => {
   const getUnapprovedApplications = () => {
@@ -11,11 +11,11 @@ export default () => {
     .catch(console.error)
   }
 
-  const saveForm = (formData: Partial<SaveApplicantForm>) => {
+  const createApplication = (application: Partial<Application>) => {
     // const body = JSON.stringify(formData)
     const requestOptions = {
       method: 'POST',
-      body: JSON.stringify({...formData, userId: localStorage.getItem('uid')}),
+      body: JSON.stringify(application),
       redirect: 'follow',
     }
     return request(`${process.env.REACT_APP_API_HOST}/api/applications`, requestOptions as any)
@@ -32,9 +32,19 @@ export default () => {
     .catch(console.error)
   }
 
+  const getApplication = (applicationId: string) => {
+    return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}`)
+    .then((result: any) => {
+      if (!result.success) { return undefined }
+      return result.response
+    })
+    .catch(console.error)
+  }
+
   return {
-    saveForm,
+    createApplication,
     getUnapprovedApplications,
-    getUserApplications
+    getUserApplications,
+    getApplication
   }
 }

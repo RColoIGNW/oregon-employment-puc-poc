@@ -13,8 +13,10 @@ import { SEO } from "../components/seo"
 import useApplication from "../hooks/useApplication"
 import useSectionA from "../hooks/useSectionA"
 import useSectionB from "../hooks/useSectionB"
-import Applicant from "../models/Applicant"
+import ApplicationModel from "../models/Application"
 import theme from "../themes/theme-light"
+import useApplicantFormApi from "../hooks/useApplicantFormApi"
+import { navigate } from "gatsby"
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
@@ -93,8 +95,7 @@ const StepActions = (props: StepActionsProp) => {
 }
 
 interface ApplicationProps {
-  currentValues?: Applicant
-  path: string
+  application?: ApplicationModel
   isDisabled?: boolean
 }
 
@@ -102,34 +103,22 @@ export const Application = (props: ApplicationProps) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const [path, setPath] = useState('')
   const disabled = !!props.isDisabled
-
-  useEffect(() => {
-    if (path !== props.path) {
-      setPath(props.path)
-    }
-    return () => {
-      if (path !== '/') {
-        localStorage.clear()
-      }
-    }
-  }, [path])
-
+  console.log(props.application)
   const {
     saveSectionA,
     saveSectionB
-  } = useApplication(props.currentValues)
+  } = useApplication(props.application)
 
   const {
     handleSubmit: handleSectionASubmit,
     handleChange: handleSectionAChange,
-    currentValue: sectionACurrentValue } = useSectionA(props.currentValues)
+    currentValue: sectionACurrentValue } = useSectionA(props.application)
 
-    const {
-      handleSubmit: handleSectionBSubmit,
-      handleChange: handleSectionBChange,
-      currentValue: sectionBCurrentValue } = useSectionB(props.currentValues)
+  const {
+    handleSubmit: handleSectionBSubmit,
+    handleChange: handleSectionBChange,
+    currentValue: sectionBCurrentValue } = useSectionB(props.application)
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
@@ -224,7 +213,7 @@ export const Application = (props: ApplicationProps) => {
                   StepIconProps={{ icon: step.icon }}
                   onClick={() => setActiveStep(index)}
                 >
-                    {step.title}
+                  {step.title}
                 </StepLabel>
                 <StepContent>
                   <Grid container direction={'column'} spacing={2}>
@@ -274,11 +263,36 @@ export const Application = (props: ApplicationProps) => {
   )
 }
 
-const AppPage = (props) => (
-  <Layout>
-    <SEO />
-    <Application {...props} />
-  </Layout>
-)
+const ApplicationPage = (props: any) => {
+  const api = useApplicantFormApi()
+  const [application, setApplication] = useState<ApplicationModel>()
 
-export default AppPage
+  useEffect(() => {
+    const retrieveApplication = async (applicationId: string) => {
+      const application = await api.getApplication(applicationId)
+      setApplication(application)
+    }
+
+    const { applicationId } = props.location?.state
+
+    if (applicationId) {
+      retrieveApplication(applicationId)
+    } else {
+      const uid = localStorage.getItem('uid')
+      if (uid) {
+        setApplication({ userId: uid } as ApplicationModel)
+      } else {
+        navigate('/')
+      }
+    }
+  }, [])
+
+  return (
+    <Layout>
+      <SEO />
+      <Application application={application} />
+    </Layout>
+  )
+}
+
+export default ApplicationPage
