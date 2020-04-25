@@ -1,6 +1,6 @@
 import Applicant from '../models/Applicant'
 import EmploymentRecord from "../models/EmploymentRecord"
-import storage from '../utils/storage'
+import storage from '../util/storage'
 import useApplicantFormApi from "./useApplicantFormApi"
 
 export default (formData?: Partial<Applicant>) => {

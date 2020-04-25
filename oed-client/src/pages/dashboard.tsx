@@ -41,12 +41,12 @@ export default function DashboardPage() {
     {
       buttonLabel: 'Claim a Week of Benefits',
       description: 'Claim a week of unemployment benefits once your claim is established. Just like claiming by phone but easier! * Please see notes below. If you completed your New Claim this week, please wait until Sunday to Claim a Week of Benefits. If you are out of work due to COVID- 19, please read the FAQs prior to claiming a week of benefits.',
-      link: '#'
+      link: '/weekly-claims'
     },
     {
       buttonLabel: 'Claim Status',
       description: 'See the status of your current weekly claim report (if claimed by Internet or phone)',
-      link: '#'
+      link: '/claim-status'
     }
 
   ]
