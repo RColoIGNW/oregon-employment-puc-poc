@@ -46,7 +46,8 @@ const questions: IQuestion[] = [
     componentDetails: <Grid container direction={'column'}>
       {
         question_c_2_details.map((q) => (
-          <Grid item key={q.code}>
+          <Grid item id={q.code} key={`section-c-detail-${q.code}`}>
+
             <Question question={q}/>
           </Grid>
         ))
@@ -141,13 +142,13 @@ const SectionC = () => {
       {
         questions.map((q) => {
           return (
-              <div key={q.code}>
+              <div id={q.code} key={`section-c-${q.code}`}>
                 <Grid item >
                   <Question question={q}>
                     {q.componentDetails}
                   </Question>
                 </Grid>
-                <Grid item>
+                <Grid item key={`section-c-2-${q.code}`}>
                   <Divider/>
                 </Grid>
               </div>
