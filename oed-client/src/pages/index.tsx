@@ -1,12 +1,11 @@
 import { Grid, Typography } from '@material-ui/core'
-// import firebaseui from 'firebaseui'
-import React, { useEffect } from "react"
+import React from "react"
 
 import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
 import useAuth from '../hooks/useAuth'
 
-const LoginPage = (props) => {
+const LoginPage = (props: { location: { origin: string } }) => {
   useAuth(props)
 
   return (
