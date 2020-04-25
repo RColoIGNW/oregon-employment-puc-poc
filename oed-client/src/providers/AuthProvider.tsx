@@ -1,4 +1,5 @@
 import { User } from 'firebase'
+import { navigate } from 'gatsby'
 import React, {
   Context,
   FunctionComponent as FC,
@@ -10,7 +11,6 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 
 import firebase from '../lib/firebase'
 
-// tslint:disable-next-line
 export interface AuthUser extends User {
   token: string
 }
@@ -19,6 +19,7 @@ export interface AuthContext {
   user: AuthUser | undefined
   loading: boolean,
   error: firebase.auth.Error | undefined
+  signOut: () => any
 }
 
 export const AuthContext: Context<AuthContext> = createContext<AuthContext>(
@@ -26,12 +27,19 @@ export const AuthContext: Context<AuthContext> = createContext<AuthContext>(
     user: undefined,
     loading: true,
     error: undefined,
+    signOut: () => {}
   }
 )
 
 export const AuthProvider: FC = ({ children }) => {
   const [ user, loading, error ] = useAuthState(firebase.auth && firebase.auth())
   const [token, setToken] = useState(typeof window !== 'undefined' && localStorage.token || '')
+
+  const signOut = async () => {
+    await firebase.auth().signOut()
+    localStorage.clear()
+    return navigate('/')
+  }
 
   useEffect(() => {
     const getAccountInformation = async () => {
@@ -50,6 +58,7 @@ export const AuthProvider: FC = ({ children }) => {
       } as any,
       loading,
       error,
+      signOut,
     }}
     children={children}
   />
