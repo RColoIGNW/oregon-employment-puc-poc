@@ -9,7 +9,7 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
       module: {
         rules: [
           {
-            test: /firebaseui/, // required to fix third party window not defined errors duing gatsby build - https://www.gatsbyjs.org/docs/debugging-html-builds/#fixing-third-party-modules
+            test: /firebaseui/, // required to fix third party window not defined errors during gatsby build - https://www.gatsbyjs.org/docs/debugging-html-builds/#fixing-third-party-modules
             use: loaders.null(),
           },
         ],
