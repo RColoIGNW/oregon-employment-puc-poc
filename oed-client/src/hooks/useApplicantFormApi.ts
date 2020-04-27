@@ -36,9 +36,6 @@ export default () => {
   }
 
   const updateApplication = (application: Partial<Application>) => {
-    console.log('====================================');
-    console.log(application);
-    console.log('====================================');
     const requestOptions = {
       method: 'PUT',
       body: JSON.stringify(application),

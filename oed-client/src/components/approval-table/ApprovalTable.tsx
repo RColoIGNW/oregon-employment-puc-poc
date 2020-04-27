@@ -92,9 +92,6 @@ export default function ApprovalTable(props: any) {
           icon: Block as any,
           tooltip: 'Decline',
           onClick: (_: any, rowData: any) => {
-            console.log('====================================');
-            console.log(rowData, props.data[rowData.tableData.id]);
-            console.log('====================================');
             updateApplication({ ...rowData, status: 'Deny'})
           }
         },
