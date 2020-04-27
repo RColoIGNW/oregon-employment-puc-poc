@@ -21,8 +21,8 @@ import useSectionB from "../../hooks/useSectionB"
 import useWeeklyFormApi from '../../hooks/useWeeklyFormApi'
 import ApplicationModel from '../../models/Application'
 import theme from "../../themes/theme-light"
-import SectionA from "../sectionA/sectionA"
-import SectionB from "../sectionB/sectionB"
+import SectionA from "../sectionA/sectionA" // TODO: replace with new sections for weekly benefits
+import SectionB from "../sectionB/sectionB" // TODO: replace with new sections for weekly benefits
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
