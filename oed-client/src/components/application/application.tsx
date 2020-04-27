@@ -147,8 +147,10 @@ export const Application = (props: ApplicationProps) => {
   }
 
   const handleSave = async () => {
-    const applicationId = await save(application);
-    setApplication({ ...application, id: applicationId })
+    if(application){
+      const applicationId = await save(application);
+      setApplication({ ...application, id: applicationId })
+    }
   }
 
   const handleBack = () => {
@@ -189,34 +191,34 @@ export const Application = (props: ApplicationProps) => {
       isFirstStep: false,
       component: SectionB
     },
-    // {
-    //   key: 'C',
-    //   icon: pageInfo.sectionC.icon,
-    //   title: pageInfo.sectionC.title,
-    //   isFirstStep: false,
-    //   component: SectionC
-    // },
-    // {
-    //   key: 'D',
-    //   icon: pageInfo.sectionD.icon,
-    //   title: pageInfo.sectionD.title,
-    //   isFirstStep: false,
-    //   component: SectionD
-    // },
-    // {
-    //   key: 'E',
-    //   icon: pageInfo.sectionE.icon,
-    //   title: pageInfo.sectionE.title,
-    //   isFirstStep: false,
-    //   component: SectionE
-    // },
-    // {
-    //   key: 'F',
-    //   icon: pageInfo.sectionF.icon,
-    //   title: pageInfo.sectionF.title,
-    //   isFirstStep: false,
-    //   component: SectionF
-    // },
+    {
+      key: 'C',
+      icon: pageInfo.sectionC.icon,
+      title: pageInfo.sectionC.title,
+      isFirstStep: false,
+      component: SectionC
+    },
+    {
+      key: 'D',
+      icon: pageInfo.sectionD.icon,
+      title: pageInfo.sectionD.title,
+      isFirstStep: false,
+      component: SectionD
+    },
+    {
+      key: 'E',
+      icon: pageInfo.sectionE.icon,
+      title: pageInfo.sectionE.title,
+      isFirstStep: false,
+      component: SectionE
+    },
+    {
+      key: 'F',
+      icon: pageInfo.sectionF.icon,
+      title: pageInfo.sectionF.title,
+      isFirstStep: false,
+      component: SectionF
+    },
   ]
 
   const ActiveSection = steps?.[activeStep]?.component

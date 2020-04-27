@@ -63,7 +63,8 @@ export default function ApprovalTable(props: any) {
       { title: 'Approval Status', field: 'status' },
     ],
     data: props?.data?.map((application: ApplicationModel) => { 
-      return {      
+      return {   
+        id: application.id,   
         name: application.applicant?.firstName,
         date: moment(application.lastModified).format('LLL'),
         phone: application.applicant?.phone,
@@ -97,7 +98,7 @@ export default function ApprovalTable(props: any) {
       ]}
       detailPanel={(rowData: any) => {
         return (
-          <Application isDisabled={true} application={rowData} />
+          <Application isDisabled={true} applicationId={rowData.id} />
         )
       }}
     />
