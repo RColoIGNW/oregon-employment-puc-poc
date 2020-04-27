@@ -18,8 +18,10 @@ import MaterialTable, { Column } from 'material-table'
 import moment from 'moment'
 import React, { forwardRef } from 'react'
 
-import { Application } from '../application/application'
+import useApplicantFormApi from '../../hooks/useApplicantFormApi'
 import ApplicationModel from '../../models/Application'
+import ApplicationStatus from '../../models/ApplicationStatus'
+import { Application } from '../application/application'
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props as any} ref={ref} />),
@@ -54,6 +56,7 @@ interface TableState {
 }
 
 export default function ApprovalTable(props: any) {
+  const { updateApplication } = useApplicantFormApi()
   const tableProps: TableState = {
     columns: [
       { title: 'Date Applied', field: 'date' },
@@ -62,14 +65,14 @@ export default function ApprovalTable(props: any) {
       { title: 'SSN', field: 'ssn' },
       { title: 'Approval Status', field: 'status' },
     ],
-    data: props?.data?.map((application: ApplicationModel) => { 
-      return {   
-        id: application.id,   
+    data: props?.data?.map((application: ApplicationModel) => {
+      return {
+        id: application.id,
         name: application.applicant?.firstName,
         date: moment(application.lastModified).format('LLL'),
         phone: application.applicant?.phone,
         ssn: application.applicant?.ssn,
-        status: !application.status || application.status === ApplicationStatus.InProgress ?  'In Progress': 'Pending'
+        status: application.status || 'In Progress'
       }
     })
     .reverse()
@@ -88,12 +91,19 @@ export default function ApprovalTable(props: any) {
         {
           icon: Block as any,
           tooltip: 'Decline',
-          onClick: (_: any, rowData: any) => alert("You declined " + rowData.name)
+          onClick: (_: any, rowData: any) => {
+            console.log('====================================');
+            console.log(rowData, props.data[rowData.tableData.id]);
+            console.log('====================================');
+            updateApplication({ ...rowData, status: 'Deny'})
+          }
         },
         {
           icon: Check as any,
           tooltip: 'Approve',
-          onClick: (_: any, rowData: any) => alert("You approved " + rowData.name)
+          onClick: (_: any, rowData: any) => {
+            updateApplication({ ...rowData, status: 'Approved' })
+          }
         }
       ]}
       detailPanel={(rowData: any) => {
