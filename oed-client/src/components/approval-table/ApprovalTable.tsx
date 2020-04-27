@@ -20,7 +20,6 @@ import React, { forwardRef } from 'react'
 
 import useApplicantFormApi from '../../hooks/useApplicantFormApi'
 import ApplicationModel from '../../models/Application'
-import ApplicationStatus from '../../models/ApplicationStatus'
 import { Application } from '../application/application'
 
 const tableIcons = {
