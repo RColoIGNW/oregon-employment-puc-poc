@@ -15,9 +15,9 @@ import {
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import React, { useEffect, useState } from 'react'
 
-import useApplication from "../../hooks/useApplication"
 import useSectionA from "../../hooks/useSectionA"
 import useSectionB from "../../hooks/useSectionB"
+import useWeeklyApplication from "../../hooks/useWeeklyApplication"
 import useWeeklyFormApi from '../../hooks/useWeeklyFormApi'
 import ApplicationModel from '../../models/Application'
 import theme from "../../themes/theme-light"
@@ -120,7 +120,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
     }
   }, [applicationId])
 
-  const { save, localSave } = useApplication()
+  const { save, localSave } = useWeeklyApplication()
   const { handleSubmit: handleSectionASubmit } = useSectionA()
   const { handleSubmit: handleSectionBSubmit } = useSectionB()
 
