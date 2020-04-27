@@ -9,6 +9,7 @@ import SectionC from "../components/sectionC/sectionC"
 import SectionD from "../components/sectionD/sectionD"
 import SectionE from "../components/sectionE/sectionE"
 import SectionF from "../components/sectionF/sectionF"
+import SectionG from "../components/sectionG/sectionG"
 import { SEO } from "../components/seo"
 import useApplication from "../hooks/useApplication"
 import useSectionA from "../hooks/useSectionA"
@@ -41,6 +42,10 @@ const pageInfo = {
   sectionF: {
     icon: 'F',
     title: 'APPLICANT CERTIFICATION',
+  },
+  sectionG: {
+    icon: 'G',
+    title: 'ADDITIONAL DOCUMENTS (OPTIONAL)',
   },
   back: 'Back',
   next: 'Next',
@@ -197,6 +202,13 @@ export const Application = (props: ApplicationProps) => {
       title: pageInfo.sectionF.title,
       isFirstStep: false,
       component: SectionF
+    },
+    {
+      key: 'G',
+      icon: pageInfo.sectionG.icon,
+      title: pageInfo.sectionG.title,
+      isFirstStep: false,
+      component: SectionG
     },
   ]
 

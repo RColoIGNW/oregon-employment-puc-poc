@@ -47,6 +47,9 @@ export const AuthProvider: FC = ({ children }) => {
       localStorage.setItem('token', t)
       localStorage.setItem('uid', user?.uid || '')
       setToken(t)
+      console.log('====================================');
+      console.log(user?.uid);
+      console.log('====================================');
     }
     getAccountInformation() // tslint:disable-line
   }, [ user ])
