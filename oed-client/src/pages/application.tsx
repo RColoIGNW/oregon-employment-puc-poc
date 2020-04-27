@@ -6,8 +6,7 @@ import { Layout } from '../components/layout'
 import { SEO } from '../components/seo'
 
 const ApplicationPage = (props: any) => {
-
-  const { applicationId } = props?.location?.state ?? {}
+  const applicationId = props.location?.state?.applicationId
 
   const handleSubmit = () => {
     navigate('confirm')
