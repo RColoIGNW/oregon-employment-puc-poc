@@ -93,8 +93,8 @@ const SectionD = () => {
       {
         questions.map((q) => {
           return (
-              <>
-                <Grid item id={q.code}>
+              <div key={q.code}>
+                <Grid item>
                   <Question question={q}>
                     {q.componentDetails}
                   </Question>
@@ -102,7 +102,7 @@ const SectionD = () => {
                 <Grid item>
                   <Divider/>
                 </Grid>
-              </>
+              </div>
           )
         }) 
       
