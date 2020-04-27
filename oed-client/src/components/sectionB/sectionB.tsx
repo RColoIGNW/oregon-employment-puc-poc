@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react'
-
 import EmploymentRecord from '../../models/EmploymentRecord'
 import EmploymentRecordList from '../EmploymentRecordList'
+import { SectionProps } from '../../models/SectionProps'
 
-interface SectionBProps {
-  value: EmploymentRecord[],
-  onChange: (employmentRecords: EmploymentRecord[]) => void
-  isDisabled?: boolean
-}
-
-const SectionB = (props: SectionBProps) => {
-  const [employmentRecords, setEmploymentRecords] = useState<EmploymentRecord[]>(props.value)
+const SectionB = (props: SectionProps) => {
+  const [employmentRecords, setEmploymentRecords] = useState<EmploymentRecord[]>(props.application.employmentRecords || [])
 
   const addEmploymentRecord = (employmentRecord: EmploymentRecord) => {
     if (employmentRecord.id) {
@@ -34,7 +28,7 @@ const SectionB = (props: SectionBProps) => {
   }
 
   useEffect(() => {
-    props.onChange(employmentRecords)
+    props.onChange({...props.application, employmentRecords: employmentRecords})
   }, [employmentRecords])
 
   return (

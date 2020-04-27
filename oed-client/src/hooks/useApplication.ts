@@ -1,30 +1,26 @@
-import Applicant from '../models/Applicant'
-import EmploymentRecord from "../models/EmploymentRecord"
 import storage from '../util/storage'
 import useApplicantFormApi from "./useApplicantFormApi"
+import Application from '../models/Application'
 
-export default (formData?: Partial<Applicant>) => {
+export default () => {
   const api = useApplicantFormApi()
 
-  const loadApplication = () => {
+  const load = () => {
     //load from API
-    //save to localstorage
-    return formData
+    //save to localstorage    
   }
 
-  const saveSectionA = (applicant: Applicant) => {
-    storage.save(storage.StorageKey.SectionA, applicant)
-    api.saveForm(applicant)
+  const save = async (application: Application): Promise<string> => {
+    return  await api.saveApplication(application)    
   }
 
-  const saveSectionB = (employmentRecords: EmploymentRecord[]) => {
-    storage.save(storage.StorageKey.SectionB, employmentRecords)
+  const localSave = (application:  Application) => {
+    storage.save('application', application)
   }
 
   return {
-    loadApplication,
-    saveSectionA,
-    saveSectionB,
-    formData,
+    load,
+    localSave,
+    save
   }
 }

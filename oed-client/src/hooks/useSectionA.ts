@@ -1,39 +1,39 @@
 import Applicant from '../models/Applicant'
-import SaveApplicantForm from '../models/SaveApplicantForm'
 import storage from '../util/storage'
 
-export default (formData?: SaveApplicantForm) => {
-  const defaultValue: SaveApplicantForm|Applicant = {
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    ssn: "",
+export default () => {
+  const defaultValue: Applicant = {
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    ssn: '',
     dob: undefined,
     address: {
-      street: "",
-      city: "",
-      state: "",
-      zipCode: "",
+      street:'',
+      city: '',
+      state: '',
+      zipCode: '',
     },
-    phone: "",
-    email: "",
+    phone: '',
+    email: '',
     gender: undefined,
     isHispanicLatino: undefined,
     contactMethod: undefined,
     races: [],
-    isSubmitted: false,
   }
 
-  let currentValue: SaveApplicantForm|Applicant = formData || storage.load(storage.StorageKey.SectionA) || defaultValue
+  let currentValue: Partial<Applicant>  = storage.load(storage.StorageKey.SectionA) || defaultValue
 
+  //TODO: Implement
   const handleSubmit = (): { applicant: Applicant, hasErrors: boolean } => {
+    //TODO: Add validations
     return {
-      applicant: currentValue,
+      applicant: currentValue as Applicant,
       hasErrors: false
     }
   }
 
-  const handleChange = (applicant: SaveApplicantForm|Applicant) => {
+  const handleChange = (applicant: Partial<Applicant>) => {
     currentValue = applicant
   }
 
