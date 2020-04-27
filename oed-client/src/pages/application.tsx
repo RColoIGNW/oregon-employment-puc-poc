@@ -5,13 +5,13 @@ import { navigate } from 'gatsby'
 import { Application } from '../components/application/application'
 
 const ApplicationPage = (props: any) => {
-  
+
   const applicationId = props.location?.state?.applicationId
-  
-  const handleSubmit = () => {    
-    navigate('confirm')  
+
+  const handleSubmit = () => {
+    navigate('confirm')
   }
-  
+
   return (
     <Layout>
       <SEO />

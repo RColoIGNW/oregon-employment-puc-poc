@@ -14,6 +14,21 @@
           "destination": "/index.html"
         }
       ]
+    },
+    {
+      "site": "oregon-pandemic-demo",
+      "public": "public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
     }
   ]
 }

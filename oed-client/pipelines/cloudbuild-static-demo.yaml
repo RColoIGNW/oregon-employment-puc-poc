@@ -12,6 +12,7 @@ steps:
     args: ['run', 'build']
     env:
       - NODE_ENV=production
+      - REACT_APP_API_HOST=https://oed-poc-demo-server-ohkmuktm2a-uw.a.run.app
       - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
       - REACT_APP_API_KEY=AIzaSyAmfP-LG4RTfDu_wxOcTnFTqJHnf-Cy_KY
       - REACT_APP_AUTH_DOMAIN=pge-$PROJECT_ID.firebaseapp.com
@@ -28,7 +29,7 @@ steps:
   - name: node:12.16.2
     dir: 'oed-client'
     entrypoint: npm
-    args: ['run', 'deploy', '--only', 'hosting:oregon-pua-poc', '--', '--token', '$_FIREBASE_TOKEN']
+    args: ['run', 'deploy', '--only', 'hosting:oregon-pandemic-demo', '--', '--token', '$_FIREBASE_TOKEN']
 
 
 #steps:
