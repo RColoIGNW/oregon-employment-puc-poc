@@ -7,7 +7,6 @@ import { Application } from '../components/application/application'
 const ApplicationPage = (props: any) => {
   
   const { applicationId } = props.location?.state
-  console.log(props.location)
   
   const handleSubmit = () => {    
     navigate('confirm')  

@@ -5,7 +5,6 @@ import { SectionProps } from '../../models/SectionProps'
 
 const SectionA = (props: SectionProps) => {    
   const [application, setApplication] = useState(props.application)  
-  console.log(props.application)
   
   const handleChange = (applicant: Applicant) => {
     setApplication({...application, applicant: applicant})
@@ -19,7 +18,7 @@ const SectionA = (props: SectionProps) => {
   // }, [application])
 
   return (
-    <ApplicantInfo {...{isDisabled: props.isDisabled, applicant: application.applicant, onChange:handleChange}} />
+    <ApplicantInfo applicant={application.applicant} onChange={handleChange} isDisabled={props.isDisabled}/>
   )
 }
 
