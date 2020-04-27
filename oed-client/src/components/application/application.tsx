@@ -288,7 +288,7 @@ export const Application = (props: ApplicationProps) => {
               </Paper>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
-                  <ActiveSection isDisabled={disabled} application={application} onChange={handleChange} />
+                  <ActiveSection applicationId={applicationId} isDisabled={disabled} application={application} onChange={handleChange} />
                 </Grid>
               </Grid>
               <MobileStepper
