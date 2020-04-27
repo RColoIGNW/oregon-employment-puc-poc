@@ -18,7 +18,8 @@ import MaterialTable, { Column } from 'material-table'
 import moment from 'moment'
 import React, { forwardRef } from 'react'
 
-import { ApplicationModel } from '../../pages/application'
+import { Application } from '../application/application'
+import ApplicationModel from '../../models/Application'
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props as any} ref={ref} />),
@@ -61,14 +62,15 @@ export default function ApprovalTable(props: any) {
       { title: 'SSN', field: 'ssn' },
       { title: 'Approval Status', field: 'status' },
     ],
-    data: props?.data?.map((d) => ({
-      ...d,
-      name: d?.firstName,
-      date: moment(d?.lastModified).format('LLL'),
-      phone: d?.contactMethod?.phone || d.phone,
-      ssn: d.ssn,
-      status: d?.isSubmitted ? 'Pending' : 'In Progress'
-    }))
+    data: props?.data?.map((application: ApplicationModel) => { 
+      return {      
+        name: application.applicant?.firstName,
+        date: moment(application.lastModified).format('LLL'),
+        phone: application.applicant?.phone,
+        ssn: application.applicant?.ssn,
+        status: !application.status || application.status === ApplicationStatus.InProgress ?  'In Progress': 'Pending'
+      }
+    })
     .reverse()
   }
 
@@ -95,7 +97,7 @@ export default function ApprovalTable(props: any) {
       ]}
       detailPanel={(rowData: any) => {
         return (
-          <ApplicationModel isDisabled={true} application={rowData} />
+          <Application isDisabled={true} application={rowData} />
         )
       }}
     />

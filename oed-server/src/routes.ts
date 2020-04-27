@@ -14,11 +14,12 @@ export const routes = (router: Router) => {
 
   router
     .route('/applications')
-    .post(decodeToken, isAuthorized, hasAdminRole, applicationService.createApplication)
+    .post(decodeToken, isAuthorized, applicationService.createApplication)
 
   router
     .route('/applications')
     .get(decodeToken, isAuthorized, applicationService.getApplications)
+    // .get(decodeToken, isAuthorized, hasAdminRole, applicationService.getApplications)
 
   router
     .route('/users/:userId/applications')

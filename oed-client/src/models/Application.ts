@@ -6,5 +6,6 @@ export default interface Application {
   userId: string
   applicant?: Applicant
   employmentRecords?: EmploymentRecord[]
-  status?: ApplicationStatus
+  status?: ApplicationStatus,
+  lastModified?: Date
 }

@@ -63,15 +63,13 @@ const createApplication = async (req: Request, res: Response) => {
         return Promise.resolve('Transaction Successful!')
       })
       .then(async () => {
-        await applicationRef
-          .get()
-          .then(querySnapshot => {
-            if (!!querySnapshot.data()?.isSubmitted) {
-              // publish to pub/sub for downstream services
-              log(JSON.stringify(querySnapshot.data()), 'Published to pub/sub!')
-            }
-          })
-        return res.status(200).json({ success: true })
+        const doc = await applicationRef.get()
+        const application = doc.data()
+        if (application.isSubmitted){
+          // publish to pub/sub for downstream services
+          log(JSON.stringify(application), 'Published to pub/sub!')
+        }
+        return res.status(200).json({ success: true, applicationId: doc.id })
       })
       .finally(() => log('SubmitApplicationInformation Transaction Finished!'))
   } catch (error) {
@@ -87,7 +85,7 @@ const getApplications = async (req: Request, res: Response) => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          applications.push({applicationId: doc.id, ...doc.data()})
+          applications.push({id: doc.id, ...doc.data()})
         })
       })
 
@@ -109,7 +107,7 @@ const getApplicationsByUser = async (req: Request, res: Response) => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          applications.push({applicationId: doc.id, ...doc.data()})
+          applications.push({id: doc.id, ...doc.data()})
         })
       })
 
@@ -130,7 +128,7 @@ const getApplicationById = async (req: Request, res: Response) => {
       .doc(req.params.id)
       .get()
       .then(doc => {
-        application = { applicationId: doc.id, ...doc.data() }
+        application = { id: doc.id, ...doc.data() }
       })
 
     return res.status(200).send({
@@ -159,10 +157,12 @@ const deleteApplication = async (req: Request, res: Response) => {
 
 const updateApplication = async (req: Request, res: Response) => {
   try {
+    const { id, ...applicationInfo } = req.body;
+    //TODO: Validate
     await db
       .collection('applications')
       .doc(req.params.id)
-      .update(req.body)
+      .update(applicationInfo)
 
     return res.status(204).send({
       success: true

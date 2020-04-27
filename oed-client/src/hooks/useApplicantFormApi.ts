@@ -11,14 +11,37 @@ export default () => {
     .catch(console.error)
   }
 
+  const saveApplication = async (application: Partial<Application>): Promise<string> => {
+    let applicationId: string =  application.id || ''    
+    if (applicationId) {
+      await updateApplication(application)
+    } else {
+      const result: any = await createApplication(application)
+      console.log(result)
+      applicationId = result.applicationId as string
+    }
+    return applicationId
+  }
+
   const createApplication = (application: Partial<Application>) => {
     // const body = JSON.stringify(formData)
+    const userId = localStorage.getItem('uid')
     const requestOptions = {
       method: 'POST',
-      body: JSON.stringify(application),
+      body: JSON.stringify({...application, userId: userId}),
       redirect: 'follow',
     }
     return request(`${process.env.REACT_APP_API_HOST}/api/applications`, requestOptions as any)
+      .catch(console.error)
+  }
+
+  const updateApplication = (application: Partial<Application>) => {
+    const requestOptions = {
+      method: 'PUT',
+      body: JSON.stringify(application),
+      redirect: 'follow',
+    }
+    return request(`${process.env.REACT_APP_API_HOST}/api/applications/${application.id}`, requestOptions as any)
       .catch(console.error)
   }
 
@@ -42,7 +65,7 @@ export default () => {
   }
 
   return {
-    createApplication,
+    saveApplication,
     getUnapprovedApplications,
     getUserApplications,
     getApplication

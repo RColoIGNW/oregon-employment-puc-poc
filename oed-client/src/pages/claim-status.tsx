@@ -79,14 +79,14 @@ const ClaimsStatusPage = () => {
   const [data, setData] = useState([])
   const columns = [
     { title: 'Date Applied', field: 'date' },
-    { title: 'Name', field: 'firstName' },
-    { title: 'Phone', field: 'phone' },
-    { title: 'SSN', field: 'ssn' },
+    { title: 'Name', field: 'applicant.firstName' },
+    { title: 'Phone', field: 'applicant.phone' },
+    { title: 'SSN', field: 'applicant.ssn' },
     { title: 'Approval Status', field: 'status' },
   ]
 
   const handleEdit = (_: any, rowData: any) => {
-    navigate('application', { state: {applicationId: rowData.applicationId }})
+    navigate('application', { state: {applicationId: rowData.id }})
   }
 
   const handleDiscard = (_: any, rowData: any) => {

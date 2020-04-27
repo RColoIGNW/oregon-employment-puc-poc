@@ -1,18 +1,25 @@
-import React from 'react'
-
-import Applicant from '../../models/Applicant'
+import React, { useState, useEffect } from 'react'
 import ApplicantInfo from '../ApplicantInfo'
+import Applicant from '../../models/Applicant'
+import { SectionProps } from '../../models/SectionProps'
 
-interface SectionAProps {
-  value: Applicant
-  onChange: (applicant: Applicant) => void
-  isDisabled?: boolean
-}
+const SectionA = (props: SectionProps) => {    
+  const [application, setApplication] = useState(props.application)  
+  console.log(props.application)
+  
+  const handleChange = (applicant: Applicant) => {
+    setApplication({...application, applicant: applicant})
+    props.onChange && props.onChange(application)
+  }
 
-const SectionA = (props: SectionAProps) => {
-  const { onChange, value: applicant, isDisabled } = props
+  // useEffect(() => {
+  //   console.log('UE')
+  //   console.log(application)
+  //   props.onChange(application)
+  // }, [application])
+
   return (
-    <ApplicantInfo {...{isDisabled, applicant, onChange}} />
+    <ApplicantInfo {...{isDisabled: props.isDisabled, applicant: application.applicant, onChange:handleChange}} />
   )
 }
 
