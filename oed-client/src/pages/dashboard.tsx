@@ -77,7 +77,7 @@ export default function DashboardPage() {
                 <Fragment key={`menu-item-${idx}`}>
                   <ListItem alignItems="flex-start">
                     <Grid item xs={2}>
-                      <Button color={'primary'} variant={'contained'} size={'large'} style={{width: '15em'}} onClick={() => navigate(item.link)}>
+                      <Button color={'primary'} variant={'contained'} size={'large'} style={{width: '15em'}} onClick={() => navigate(item.link, {option1: 'asdfasd'} as any)}>
                         {item.buttonLabel}
                       </Button>
                     </Grid>

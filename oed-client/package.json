@@ -73,7 +73,8 @@
     "react-text-mask": "^5.4.3",
     "styled-components": "^5.1.0",
     "typeface-roboto": "0.0.75",
-    "use-media": "^1.4.0"
+    "use-media": "^1.4.0",
+    "uuidv4": "^6.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

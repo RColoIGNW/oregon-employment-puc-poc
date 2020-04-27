@@ -47,6 +47,7 @@ const questions: IQuestion[] = [
       {
         question_c_2_details.map((q) => (
           <Grid item id={q.code} key={`section-c-detail-${q.code}`}>
+
             <Question question={q}/>
           </Grid>
         ))
@@ -141,8 +142,8 @@ const SectionC = () => {
       {
         questions.map((q) => {
           return (
-              <>
-                <Grid item id={q.code} key={`section-c-${q.code}`}>
+              <div id={q.code} key={`section-c-${q.code}`}>
+                <Grid item >
                   <Question question={q}>
                     {q.componentDetails}
                   </Question>
@@ -150,7 +151,7 @@ const SectionC = () => {
                 <Grid item key={`section-c-2-${q.code}`}>
                   <Divider/>
                 </Grid>
-              </>
+              </div>
           )
         })
 

@@ -67,11 +67,11 @@ const Container = styled.div`
   transition: border .24s ease-in-out;
 `
 
-export default function Dropzone() {
+export default function Dropzone(props: { applicationId: string }) {
   const classes = useStyles()
   const [ files ] = useState([] as any)
-  const [ fileObjects, setFileObjects ] = useState([] as any)
-  const { handleSubmit, removeFile, files: allFiles } = useFileUpload()
+  const { handleSubmit, removeFile, files: allFiles } = useFileUpload({ applicationId: props.applicationId })
+  const [ fileObjects, setFileObjects ] = useState(allFiles as any)
   const { getRootProps, getInputProps, isDragActive,
     isDragAccept,
     isDragReject } = useDropzone({
@@ -82,22 +82,35 @@ export default function Dropzone() {
     }
   })
 
-  const thumbs = [...new Set(allFiles) as any]?.map((file: string, idx: number) => {
+  const displayFiles: any = []
+
+  const dedupedFiles = [...new Set(allFiles) as any]
+  dedupedFiles.forEach(file => {
+    if (!displayFiles.find(f => f?.split('?')[0] === file?.split('?')[0]) && !!file) {
+      displayFiles.push(file)
+    }
+  })
+
+  const thumbs = displayFiles?.map((file: string, idx: number) => {
+    const name = decodeURIComponent(file).split('?')[0].split('/')[10]
     return file && (
       <React.Fragment key={`${file}-${idx}`}>
-        <div className={classes.thumb}>
-          <div className={classes.thumbInner}>
-            <img
-              src={file}
-              className={classes.img}
-            />
+        {name.includes('.jpg') || name.includes('.png') || name.includes('.jpeg') ?
+          <div className={classes.thumb}>
+            <div className={classes.thumbInner}>
+              <img
+                src={file}
+                className={classes.img}
+                alt={name}
+              />
+            </div>
           </div>
-        </div>
-        <span style={{ cursor: 'pointer', color: 'red' }} onClick={() => {
+          :
+          <span>{name}</span>
+        }
+        <span style={{ cursor: 'pointer', color: 'red', marginLeft: '4px', marginRight: '1em' }} onClick={() => {
           removeFile(file, idx)
-          // delete allFiles[idx]
-          // setFiles(allFiles)
-          // setFileObjects(allFiles)
+          // setFileObjects(allFiles) // TODO: remove file object from state
         }}>X</span>
       </React.Fragment>
     )

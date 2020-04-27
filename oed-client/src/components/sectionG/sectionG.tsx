@@ -8,7 +8,7 @@ const pageInfo = {
 }
 
 
-const SectionF = () => {
+const SectionF = (props: { application: { id: string } }) => {
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
@@ -19,7 +19,7 @@ const SectionF = () => {
       <Grid item>
         <Grid container direction={'column'}>
           <Grid item>
-            <Dropzone />
+            <Dropzone applicationId={props?.application?.id} />
           </Grid>
         </Grid>
       </Grid>

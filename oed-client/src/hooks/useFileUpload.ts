@@ -2,17 +2,13 @@ import { useEffect, useState } from 'react'
 
 import firebase from '../lib/firebase'
 
-export const useFileUpload = () => {
+export const useFileUpload = (props: { applicationId: string }) => {
   const storageRef = firebase.storage().ref()
   const [allFiles, setFiles] = useState([])
   const [initFiles, setInitFiles] = useState(false)
 
   const getFiles = async () => {
-    console.log('====================================');
-    console.log('PRESTATE', allFiles);
-    console.log('====================================');
-    const appId = '123'
-    const ref: any = storageRef.child(`pua-documents/${localStorage.uid}/${appId}`)
+    const ref: any = storageRef.child(`pua-documents/${localStorage.uid}/${props.applicationId}`)
     const files = await ref.listAll()
     const downloadFiles = files.items.map((file: any) => {
       return storageRef.child(file.location.path).getDownloadURL().then(url => {
@@ -37,10 +33,10 @@ export const useFileUpload = () => {
   const removeFile = (fileUrl: string, idx: number) => {
     const path = decodeURIComponent(fileUrl)
       .replace(
-        "https://firebasestorage.googleapis.com/v0/b/oregon-pua-poc.appspot.com/o/",
-        ""
+        'https://firebasestorage.googleapis.com/v0/b/oregon-pua-poc.appspot.com/o/',
+        ''
       )
-      .split("?")[0]
+      .split('?')[0]
     const ref: any = storageRef.child(path)
     ref.delete().then(() => {
       console.info('Deleted a blob or file!')
@@ -52,8 +48,7 @@ export const useFileUpload = () => {
 
   const handleSubmit = (fileObjects: File[]) => {
     fileObjects.forEach((fileObject: File) => {
-      const appId = '123'
-      const ref: any = storageRef.child(`pua-documents/${localStorage.uid}/${appId}/${fileObject.name}`)
+      const ref: any = storageRef.child(`pua-documents/${localStorage.uid}/${props.applicationId}/${fileObject.name}`)
       const file = new Blob([fileObject])
       const metaData = { contentType: fileObject.type }
       ref.put(file, metaData).then((snapshot: any) => {

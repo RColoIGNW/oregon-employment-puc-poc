@@ -1,6 +1,14 @@
-import { Checkbox, FormControlLabel, Grid, TextField, Typography } from '@material-ui/core';
+import { Grid, FormControlLabel, Checkbox, Typography, TextField, makeStyles, Theme, createStyles } from '@material-ui/core';
 import React, { useState } from 'react'
 
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({   
+    questionDetails: {
+      margin: theme.spacing(0, 0, 0, 3),
+    }
+  }),
+);
 export interface IQuestion {
   code: string
   text: string
@@ -18,8 +26,7 @@ interface QuestionProps {
 }
 
 export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
-  // const theme = useTheme();
-  // const isMobile = theme.breakpoints.down('sm')
+  const classes = useStyles()
   const info = {
     yes: 'Yes',
     no: 'No'
@@ -36,7 +43,7 @@ export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
     props.onChange && props.onChange({})
   }
   return (
-    <Grid container direction={'column'}>
+    <Grid container direction={'column'} spacing={1}>
       <Grid item>
         <Grid container direction={'row'} alignItems={'center'} justify={'space-between'}>
           <Grid item>
@@ -64,29 +71,30 @@ export const Question = (props: React.PropsWithChildren<QuestionProps>) => {
           }
         </Grid>
       </Grid>
-      {
-        props.question.note &&
-        <Grid item>
-          <Typography variant={'body2'}>
-            {props.question.note}
-          </Typography>
+      <Grid item className={classes.questionDetails}>
+        <Grid container direction={'column'} spacing={1}>
+          { 
+            props.question.note &&
+            <Grid item>
+              <Typography variant={'body2'}>
+                {props.question.note}
+              </Typography>
+            </Grid>
+          }
+          { 
+            props.question.whenShowDetails!== 'NEVER' &&
+            <Grid item>
+              <TextField 
+                id="answer-details"            
+                disabled={disableDetails}
+                multiline
+                rows={2}          
+                variant={ disableDetails ? 'filled': 'outlined' }
+                fullWidth
+              />
+            </Grid>
+          }
         </Grid>
-      }
-      {
-        props.question.whenShowDetails!== 'NEVER' &&
-        <Grid item>
-          <TextField
-            id="answer-details"
-            disabled={disableDetails}
-            multiline
-            rows={2}
-            variant={ disableDetails ? 'filled': 'outlined' }
-            fullWidth
-          />
-        </Grid>
-      }
-      <Grid item>
-        {props.children}
       </Grid>
     </Grid>
 
