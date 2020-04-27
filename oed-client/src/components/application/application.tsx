@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react'
 import {
   Button,
   Grid,
@@ -14,22 +13,21 @@ import {
   makeStyles
 } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import theme from "../../themes/theme-light"
+import React, { useEffect, useState } from 'react'
+
+import useApplicantFormApi from '../../hooks/useApplicantFormApi'
+import useApplication from "../../hooks/useApplication"
+import useSectionA from "../../hooks/useSectionA"
+import useSectionB from "../../hooks/useSectionB"
 import ApplicationModel from '../../models/Application'
-
-
+import theme from "../../themes/theme-light"
 import SectionA from "../sectionA/sectionA"
 import SectionB from "../sectionB/sectionB"
 import SectionC from "../sectionC/sectionC"
 import SectionD from "../sectionD/sectionD"
 import SectionE from "../sectionE/sectionE"
 import SectionF from "../sectionF/sectionF"
-
-import useApplication from "../../hooks/useApplication"
-import useSectionA from "../../hooks/useSectionA"
-import useSectionB from "../../hooks/useSectionB"
-import useApplicantFormApi from '../../hooks/useApplicantFormApi'
-
+import SectionG from "../sectionG/sectionG"
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
@@ -56,6 +54,10 @@ const pageInfo = {
   sectionF: {
     icon: 'F',
     title: 'APPLICANT CERTIFICATION',
+  },
+  sectionG: {
+    icon: 'G',
+    title: 'ADDITIONAL DOCUMENTS (OPTIONAL)',
   },
   back: 'Back',
   next: 'Next',
@@ -225,6 +227,13 @@ export const Application = (props: ApplicationProps) => {
       isFirstStep: false,
       component: SectionF
     },
+    {
+      key: 'G',
+      icon: pageInfo.sectionG.icon,
+      title: pageInfo.sectionG.title,
+      isFirstStep: false,
+      component: SectionG
+    }
   ]
 
   const ActiveSection = steps?.[activeStep]?.component
@@ -250,14 +259,17 @@ export const Application = (props: ApplicationProps) => {
                   <StepLabel
                     style={{ cursor: 'pointer' }}
                     StepIconProps={{ icon: step.icon }}
-                    onClick={() => setActiveStep(index)}
+                    onClick={() => {
+                      setActiveStep(index)
+                      handleSave()
+                    }}
                   >
                     {step.title}
                   </StepLabel>
                   <StepContent>
                     <Grid container direction={'column'} spacing={2}>
                       <Grid item>
-                        <Section isDisabled={disabled} application={application} onChange={handleChange} />
+                        <Section applicationId={applicationId} isDisabled={disabled} application={application} onChange={handleChange} />
                       </Grid>
                       <Grid item>
                         <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} />
