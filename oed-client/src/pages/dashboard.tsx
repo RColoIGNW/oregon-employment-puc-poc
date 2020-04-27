@@ -27,6 +27,30 @@ const useStyles = makeStyles((theme: Theme) =>
     inline: {
       display: 'inline',
     },
+    button: {
+      width: '15em',
+      [theme.breakpoints.down('md')]: {
+        width: '100%'
+      }
+    },
+    list: {
+      marginLeft: '5em',
+      [theme.breakpoints.down('md')]: {
+        width: '100%',
+        marginLeft: '0'
+      }
+    },
+    container: {
+      display: 'flex',
+      flexDirection: 'row',
+      marginBottom: '1em',
+      minHeight: '7em',
+      alignItems: 'center',
+      [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column',
+        alignItems: 'center',
+      }
+    }
   }),
 )
 
@@ -70,40 +94,39 @@ export default function DashboardPage() {
           </Typography>
         </Grid>
 
-        <Grid item>
-          <Paper>
-            <List className={classes.root}>
-              {menuItems.map((item, idx) => (
-                <Fragment key={`menu-item-${idx}`}>
-                  <ListItem alignItems="flex-start">
-                    <Grid item xs={2}>
-                      <Button color={'primary'} variant={'contained'} size={'large'} style={{width: '15em'}} onClick={() => navigate(item.link, {option1: 'asdfasd'} as any)}>
-                        {item.buttonLabel}
-                      </Button>
-                    </Grid>
-                    <Grid item style={{marginLeft: '5em'}}>
-                      <ListItemText
-                        secondary={
-                          <React.Fragment>
-                            <Typography
-                              component="span"
-                              variant="body2"
-                              className={classes.inline}
-                              color="primary"
-                            >
-                              {item.description}
-                            </Typography>
-                          </React.Fragment>
-                        }
-                      />
-                      </Grid>
-                    </ListItem>
-                  <Divider variant="inset" component="li" />
-                </Fragment>
-              ))}
-            </List>
+        {menuItems.map(item => (
+          <Paper style={{margin: '1em'}} className={classes.container}>
+            <Grid item xs={12} md={2} style={{marginLeft: '1em'}}>
+              <Button
+                className={classes.button}
+                color={'primary'}
+                variant={'contained'}
+                size={'large'}
+                onClick={() => navigate(item.link, {option1: 'asdfasd'} as any)}
+              >
+                {item.buttonLabel}
+              </Button>
+            </Grid>
+            <Grid item className={classes.list}>
+              <ListItemText
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      className={classes.inline}
+                      color="primary"
+                    >
+                      {item.description}
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </Grid>
+            <Divider />
           </Paper>
-        </Grid>
+        ))}
+
       </Grid>
     </Layout>
   )

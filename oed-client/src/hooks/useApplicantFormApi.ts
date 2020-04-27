@@ -1,5 +1,5 @@
-import { request } from '../util/request'
 import Application from '../models/Application'
+import { request } from '../util/request'
 
 export default () => {
   const getUnapprovedApplications = () => {
@@ -12,7 +12,8 @@ export default () => {
   }
 
   const saveApplication = async (application: Partial<Application>): Promise<string> => {
-    let applicationId: string =  application.id || ''    
+    let applicationId: string =  application.id || ''
+
     if (applicationId) {
       await updateApplication(application)
     } else {
@@ -24,7 +25,6 @@ export default () => {
   }
 
   const createApplication = (application: Partial<Application>) => {
-    // const body = JSON.stringify(formData)
     const userId = localStorage.getItem('uid')
     const requestOptions = {
       method: 'POST',
@@ -68,6 +68,7 @@ export default () => {
     saveApplication,
     getUnapprovedApplications,
     getUserApplications,
-    getApplication
+    getApplication,
+    updateApplication,
   }
 }

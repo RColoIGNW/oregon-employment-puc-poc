@@ -1,20 +1,28 @@
 import { useEffect, useState } from 'react'
 
-import useApplicantFormApi from './useApplicantFormApi'
+import firebase from '../lib/firebase'
 
 export default () => {
   const [tableData, setTableData] = useState([])
-  const { getUnapprovedApplications } = useApplicantFormApi()
+  const db = firebase.firestore()
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getUnapprovedApplications()
-      setTableData(data)
+      db.collection("applications")
+        .orderBy('lastModified')
+        .onSnapshot((querySnapshot) => {
+          const data: any = []
+          querySnapshot.forEach((doc: any) => {
+            const segments: any = doc?.Rm?.key?.path?.segments || []
+            data.push({...doc.data(), id: segments[segments.length - 1]})
+          })
+          setTableData(data.reverse())
+        })
     }
 
     if (!tableData?.length) { getData() }
     return () => {}
-  })
+  }, [tableData])
 
   return {
     tableData,
