@@ -18,7 +18,7 @@ import MaterialTable, { Column } from 'material-table'
 import moment from 'moment'
 import React, { forwardRef } from 'react'
 
-import { Application } from '../../pages/index'
+import { Application } from '../../pages/application'
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props as any} ref={ref} />),
@@ -52,7 +52,7 @@ interface TableState {
   data: Row[]
 }
 
-export default function ApprovalTable(props) {
+export default function ApprovalTable(props: any) {
   const tableProps: TableState = {
     columns: [
       { title: 'Date Applied', field: 'date' },
@@ -61,7 +61,8 @@ export default function ApprovalTable(props) {
       { title: 'SSN', field: 'ssn' },
       { title: 'Approval Status', field: 'status' },
     ],
-    data: props?.data?.map((d) => ({
+
+    data: props?.data?.map(({ application: d }: any) => ({
       ...d,
       name: d?.firstName,
       date: moment(d?.lastModified).format('LLL'),

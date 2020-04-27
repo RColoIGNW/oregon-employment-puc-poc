@@ -12,17 +12,16 @@ const SectionC = (props: SectionCProps) => {
   const questions = props.value
   const handleChange = (a: AnswerModel) => {
     props.onChange(a)
-  }
-
+  }  
   return (
     <Grid container direction={'column'} spacing={1}>
       {
         questions.map((q) => {
           return (
-              <div key={q.code}>
+              <div id={q.code} key={`section-c-${q.code}`}>
                 <Grid item >
                   <Question question={q} onChange={handleChange}/>
-                </Grid>               
+                </Grid>     
               </div>
           )
         })       
