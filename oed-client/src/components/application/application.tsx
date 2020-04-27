@@ -130,10 +130,16 @@ export const Application = (props: ApplicationProps) => {
       setApplication(application)
     }
 
+    const createApplication = async () => {
+      const app = {userId: localStorage.uid}
+      const applicationId = await api.saveApplication(app);
+      setApplication({...app, id: applicationId })
+    }
+
     if (applicationId) {
       retrieveApplication(applicationId)
     } else {
-      setApplication({} as ApplicationModel)
+      createApplication()
     }
   }, [applicationId])
 
