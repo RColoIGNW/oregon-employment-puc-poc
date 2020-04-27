@@ -1,12 +1,12 @@
 import { navigate } from 'gatsby'
 import React from 'react'
 
-import { Application } from '../components/application/application'
 import { Layout } from '../components/layout'
 import { SEO } from '../components/seo'
+import WeeklyForm from '../components/weekly-form'
 
 const ApplicationPage = (props: any) => {
-  const applicationId = props.location?.state?.applicationId
+  const applicationId = props?.location?.state?.applicationId
 
   const handleSubmit = () => {
     navigate('confirm')
@@ -14,8 +14,8 @@ const ApplicationPage = (props: any) => {
 
   return (
     <Layout>
-      <SEO />
-      <Application applicationId={applicationId} onSubmit={handleSubmit}/>
+      <SEO title={'Weekly Benefits - Oregon Pandemic Unemployment Assistance'} />
+      <WeeklyForm applicationId={applicationId} onSubmit={handleSubmit} />
     </Layout>
   )
 }

@@ -1,3 +1,4 @@
+import { navigate } from 'gatsby';
 import { useEffect } from 'react'
 import  { useContext } from 'react'
 
@@ -7,6 +8,12 @@ import { TransitionContext } from '../providers/TransitionProvider'
 
 export default (props: { location: { origin: string } }) => {
   const { setState: updateTransition, state: loadingState } = useContext(TransitionContext)
+
+  useEffect(() => {
+    if (localStorage.token) {
+      navigate('/dashboard')
+    }
+  })
 
   if (typeof window !== 'undefined') {
     useEffect(() => {

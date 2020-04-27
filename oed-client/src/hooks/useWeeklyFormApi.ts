@@ -1,24 +1,15 @@
-import { request } from '../util/request'
 import Application from '../models/Application'
+import { request } from '../util/request'
 
 export default () => {
-  const getUnapprovedApplications = () => {
-    return request(`${process.env.REACT_APP_API_HOST}/api/applications`)
-    .then((result: any) => {
-      if (!result.success) { return [] }
-      return result.response
-    })
-    .catch(console.error)
-  }
-
   const saveApplication = async (application: Partial<Application>): Promise<string> => {
-    let applicationId: string =  application.id || ''    
+    let applicationId: string =  application.id || ''
     if (applicationId) {
       await updateApplication(application)
     } else {
       const result: any = await createApplication(application)
       console.log(result)
-      applicationId = result.applicationId as string
+      applicationId = result?.applicationId as string
     }
     return applicationId
   }
@@ -31,7 +22,7 @@ export default () => {
       body: JSON.stringify({...application, userId: userId}),
       redirect: 'follow',
     }
-    return request(`${process.env.REACT_APP_API_HOST}/api/applications`, requestOptions as any)
+    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications`, requestOptions as any)
       .catch(console.error)
   }
 
@@ -41,13 +32,13 @@ export default () => {
       body: JSON.stringify(application),
       redirect: 'follow',
     }
-    return request(`${process.env.REACT_APP_API_HOST}/api/applications/${application.id}`, requestOptions as any)
+    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.id}`, requestOptions as any)
       .catch(console.error)
   }
 
   const getUserApplications = () => {
     const userId = localStorage.getItem('uid')
-    return request(`${process.env.REACT_APP_API_HOST}/api/users/${userId}/applications`)
+    return request(`${process.env.REACT_APP_API_HOST}/api/users/${userId}/weekly-applications`)
     .then((result: any) => {
       if (!result.success) { return [] }
       return result.response
@@ -56,7 +47,7 @@ export default () => {
   }
 
   const getApplication = (applicationId: string) => {
-    return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}`)
+    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${applicationId}`)
     .then((result: any) => {
       if (!result.success) { return undefined }
       return result.response
@@ -66,7 +57,6 @@ export default () => {
 
   return {
     saveApplication,
-    getUnapprovedApplications,
     getUserApplications,
     getApplication
   }

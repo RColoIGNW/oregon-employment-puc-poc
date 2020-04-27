@@ -1,22 +1,21 @@
-import storage from '../util/storage'
-import useApplicantFormApi from './useApplicantFormApi'
 import Application from '../models/Application'
-
+import storage from '../util/storage'
+import useWeeklyFormApi from "./useWeeklyFormApi"
 
 export default () => {
-  const api = useApplicantFormApi()
+  const api = useWeeklyFormApi()
 
   const load = () => {
     //load from API
-    //save to localstorage    
+    //save to localstorage
   }
 
   const save = async (application: Application): Promise<string> => {
-    return  await api.saveApplication(application)    
+    return  await api.saveApplication(application)
   }
 
   const localSave = (application:  Application) => {
-    storage.save('application', application)
+    storage.save('weekly-application', application)
   }
 
   return {
