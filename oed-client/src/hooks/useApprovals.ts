@@ -4,7 +4,7 @@ import firebase from '../lib/firebase'
 
 export default () => {
   const [tableData, setTableData] = useState([])
-  const db = firebase.firestore()
+  const db = firebase?.firestore?.()
 
   useEffect(() => {
     const getData = async () => {
