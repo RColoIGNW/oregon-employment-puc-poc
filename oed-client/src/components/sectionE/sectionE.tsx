@@ -1,7 +1,6 @@
 import React from 'react'
 import { Typography, Grid } from '@material-ui/core'
 import { Question} from '../question/question'
-import { QuestionModel } from '../../models/Question'
 import { SectionProps } from '../../models/SectionProps'
 import useQuestions from '../../hooks/useQuestions'
 import { AnswerModel } from '../../models/Answer'
@@ -13,15 +12,20 @@ const pageInfo = {
 }
 const SectionE = (props: SectionProps) => {
   const { application, onChange } = props 
-  const { getQuestions } = useQuestions(props.application.answers || [])
-  const questions = getQuestions('SECTION_E')
+  const answers = props.application.answers || []
+  const { getQuestions } = useQuestions(answers)  
+  const questions = getQuestions('SECTION_E')  
 
   const handleChange = (answer: AnswerModel) => {    
-    const index = questions.findIndex((q: QuestionModel) => q.code === answer.questionCode)
-    questions[index].answer = answer    
-    //TODO: combine answers
-    onChange && onChange({...application, answers: questions.map(q => q.answer)})
+    const index = answers.findIndex(a => a.questionCode === answer.questionCode)
+    if (index === -1){
+      answers.push(answer)
+    } else {
+      answers[index] = answer
+    }    
+    onChange && onChange({...application, answers: answers})
   }
+
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
@@ -37,11 +41,11 @@ const SectionE = (props: SectionProps) => {
       <Grid item>
         <Grid container direction={'column'}>
           {
-            questions.map( (q) => {
-              <Grid item>
+            questions.map( (q, index) => (
+              <Grid item key={index}>
                 <Question question={q} onChange={handleChange}/>
               </Grid>
-            })
+            ))
           }  
         </Grid>        
       </Grid>

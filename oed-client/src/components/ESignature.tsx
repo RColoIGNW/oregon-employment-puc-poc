@@ -27,7 +27,7 @@ export default (props: SectionProps) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={application.isCertified}
+                  checked={application.isCertified || false}
                   onChange={handleChange}
                   name="certified"
                   color="primary"
@@ -37,7 +37,7 @@ export default (props: SectionProps) => {
             />
           </Grid>
           <Grid item>
-            <TextField fullWidth label="Full Name" value={application.certifiedBy} onChange={handleFullNameChange} />
+            <TextField fullWidth label="Full Name" value={application.certifiedBy || ''} onChange={handleFullNameChange} />
           </Grid>
         </Grid>
       </Grid>
