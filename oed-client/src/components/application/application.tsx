@@ -28,6 +28,7 @@ import SectionD from "../sectionD/sectionD"
 import SectionE from "../sectionE/sectionE"
 import SectionF from "../sectionF/sectionF"
 import SectionG from "../sectionG/sectionG"
+import { navigate } from "gatsby"
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
@@ -111,7 +112,7 @@ const StepActions = (props: StepActionsProp) => {
 }
 
 interface ApplicationProps {
-  applicationId?: string
+  applicationId: string
   onSubmit?: (applicationId: string) => void
   isDisabled?: boolean
 }
@@ -128,23 +129,15 @@ export const Application = (props: ApplicationProps) => {
 
   useEffect(() => {
     //TODO: Check Application in Progress (check storage) ask Continue or discard?
+    if (!applicationId){
+      navigate('dashboard')
+    }
     const retrieveApplication = async (applicationId: string) => {
       const application = await api.getApplication(applicationId)
       setApplication(application)
     }
-
-    const createApplication = async () => {
-      const app = { userId: localStorage.uid } as ApplicationModel
-      const applicationId = await api.saveApplication(app);
-      setApplication({ ...app, id: applicationId })
-    }
-
-    if (applicationId) {
-      retrieveApplication(applicationId)
-    } else {
-      createApplication()
-    }
-  }, [applicationId])
+    applicationId && retrieveApplication(applicationId)
+  }, [])
 
   const { save, localSave } = useApplication()
   const { handleSubmit: handleSectionASubmit } = useSectionA()
@@ -156,10 +149,7 @@ export const Application = (props: ApplicationProps) => {
   }
 
   const handleSave = async () => {
-    if (application) {
-      const applicationId = await save(application);
-      setApplication({ ...application, id: applicationId })
-    }
+    application && await save(application);    
   }
 
   const handleBack = () => {
@@ -201,8 +191,7 @@ export const Application = (props: ApplicationProps) => {
     }
 
     if (isStepValid) {      
-      try {
-        console.log('test')
+      try {        
         await handleSave()     
         if (activeStep === steps.length - 1){
           //Submit App

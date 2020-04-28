@@ -58,7 +58,7 @@ export const Question = (props: QuestionProps) => {
      )
   const handleOptionChange = (option: 'NO' | 'YES') => {
     setDisableDetails(props.question.whenShowDetails !== 'ALWAYS' && props.question.whenShowDetails !== option)
-    console.log('TEST')
+    
     if (props.question.whenShowDetails === option) {
       //detailsInput.current.focus()
       focusTimer  = setTimeout(() => {

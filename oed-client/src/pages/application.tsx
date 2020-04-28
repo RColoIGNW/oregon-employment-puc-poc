@@ -11,7 +11,6 @@ const ApplicationPage = (props: any) => {
   const { submit } = useApplication()
 
   const handleSubmit = async (appId: string) => {
-    console.log('submit')
     try {
       //TODO: Show Progress
       await submit(appId)

@@ -352,8 +352,7 @@ export default (answers: AnswerModel[]) => {
   let questions: QuestionModel[] = prepareQuestions(answers)  
 
   const getQuestions = (section: SECTION): QuestionModel[] => {
-    const sectionCode = getSectionLetter(section)
-    console.log('Get quetions')
+    const sectionCode = getSectionLetter(section)    
     return questions.filter(q => q.code.startsWith(sectionCode))
   }
 

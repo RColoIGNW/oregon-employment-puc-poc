@@ -17,29 +17,16 @@ export default () => {
       method: 'PATCH',
       body: JSON.stringify({status: ApplicationStatus.Submitted}),
       redirect: 'follow',
-    }
-    console.log(requestOptions)
+    }    
     return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}`, requestOptions as any)
       .catch(console.error)
   }
 
-  const saveApplication = async (application: Partial<Application>): Promise<string> => {
-    let applicationId: string =  application.id || ''
-
-    if (applicationId) {
-      await updateApplication(application)
-    } else {
-      const result: any = await createApplication(application)
-      applicationId = result?.applicationId as string
-    }
-    return applicationId
-  }
-
-  const createApplication = (application: Partial<Application>) => {
+  const createApplication = () => {
     const userId = localStorage.getItem('uid')
     const requestOptions = {
       method: 'POST',
-      body: JSON.stringify({...application, userId: userId}),
+      body: JSON.stringify({userId: userId}),
       redirect: 'follow',
     }
     return request(`${process.env.REACT_APP_API_HOST}/api/applications`, requestOptions as any)
@@ -77,7 +64,7 @@ export default () => {
 
   return {
     getApplication,
-    saveApplication,
+    createApplication,    
     submitApplication,
     updateApplication,
     getUnapprovedApplications,
