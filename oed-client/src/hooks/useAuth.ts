@@ -8,7 +8,7 @@ import { TransitionContext } from '../providers/TransitionProvider'
 
 export default (props: { location: { origin: string } }) => {
   const { setState: updateTransition, state: loadingState } = useContext(TransitionContext)
-  const [token, setToken] = useState(localStorage.token)
+  const [token, setToken] = useState(typeof window !== 'undefined' && localStorage.token || '')
 
   useEffect(() => {
     if (token) {
