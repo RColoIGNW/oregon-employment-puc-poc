@@ -1,5 +1,6 @@
 import Application from '../models/Application'
 import { request } from '../util/request'
+import { ApplicationStatus } from '../models/ApplicationStatus'
 
 export default () => {
   const getUnapprovedApplications = () => {
@@ -9,6 +10,17 @@ export default () => {
       return result.response
     })
     .catch(console.error)
+  }
+
+  const submitApplication = (applicationId: string): Promise<any> => {    
+    const requestOptions = {
+      method: 'PATCH',
+      body: JSON.stringify({status: ApplicationStatus.Submitted}),
+      redirect: 'follow',
+    }
+    console.log(requestOptions)
+    return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}`, requestOptions as any)
+      .catch(console.error)
   }
 
   const saveApplication = async (application: Partial<Application>): Promise<string> => {
@@ -66,6 +78,7 @@ export default () => {
   return {
     getApplication,
     saveApplication,
+    submitApplication,
     updateApplication,
     getUnapprovedApplications,
     getUserApplications,

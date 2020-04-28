@@ -155,6 +155,7 @@ const deleteApplication = async (req: Request, res: Response) => {
   }
 }
 
+
 const updateApplication = async (req: Request, res: Response) => {
   try {
     const { id, ...applicationInfo } = req.body;
@@ -172,11 +173,27 @@ const updateApplication = async (req: Request, res: Response) => {
   }
 }
 
+const changeApplicationStatus = async (req: Request, res: Response) => {
+  try {
+    await db
+      .collection('applications')
+      .doc(req.params.id)
+      .update(req.body)
+
+    return res.status(204).send({
+      success: true
+    })
+  } catch (error) {
+    res.status(400).json({ error })
+  }
+}
+
 export default {
   createApplication,
   getApplications,
   getApplicationsByUser,
   getApplicationById,
   deleteApplication,
-  updateApplication
+  updateApplication,
+  changeApplicationStatus
 }

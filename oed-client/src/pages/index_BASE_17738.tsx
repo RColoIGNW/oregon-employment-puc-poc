@@ -1,33 +1,21 @@
-import {
-  Button,
-  Grid,
-  MobileStepper,
-  Paper,
-  Step,
-  StepContent,
-  StepLabel,
-  Stepper,
-  Theme,
-  Typography,
-  createStyles,
-  makeStyles
-} from "@material-ui/core"
+import { Button, Grid, MobileStepper, Paper, Step, StepContent, StepLabel, Stepper, Theme, Typography, createStyles, makeStyles } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react"
 
-import useApplicantFormApi from '../../hooks/useApplicantFormApi'
-import useApplication from "../../hooks/useApplication"
-import useSectionA from "../../hooks/useSectionA"
-import useSectionB from "../../hooks/useSectionB"
-import ApplicationModel from '../../models/Application'
-import theme from "../../themes/theme-light"
-import SectionA from "../sectionA/sectionA"
-import SectionB from "../sectionB/sectionB"
-import SectionC from "../sectionC/sectionC"
-import SectionD from "../sectionD/sectionD"
-import SectionE from "../sectionE/sectionE"
-import SectionF from "../sectionF/sectionF"
-import SectionG from "../sectionG/sectionG"
+import { Layout } from "../components/layout"
+import SectionA from "../components/sectionA/sectionA"
+import SectionB from "../components/sectionB/sectionB"
+import SectionC from "../components/sectionC/sectionC"
+import SectionD from "../components/sectionD/sectionD"
+import SectionE from "../components/sectionE/sectionE"
+import SectionF from "../components/sectionF/sectionF"
+import { SEO } from "../components/seo"
+import useApplication from "../hooks/useApplication"
+import useSectionA from "../hooks/useSectionA"
+import useSectionB from "../hooks/useSectionB"
+import firebase from '../lib/firebase'
+import Applicant from "../models/Applicant"
+import theme from "../themes/theme-light"
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
@@ -55,13 +43,9 @@ const pageInfo = {
     icon: 'F',
     title: 'APPLICANT CERTIFICATION',
   },
-  sectionG: {
-    icon: 'G',
-    title: 'ADDITIONAL DOCUMENTS (OPTIONAL)',
-  },
   back: 'Back',
   next: 'Next',
-  submit: 'Submit Application',
+  submit: 'Submit',
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -72,6 +56,24 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
+const useSignIn = () => { // fake for demo
+  useEffect(() => {
+    const signInAsCustomer = (): any => {
+      if (!localStorage.token && typeof window !== 'undefined') {
+        firebase.auth().signInAnonymously()
+          .then(async (userCredential) => {
+            localStorage.setItem('token', await firebase?.auth()?.currentUser?.getIdToken().catch(console.error) || '')
+            localStorage.setItem('uid', userCredential.user?.uid || '')
+          })
+          .catch(console.error)
+      }
+    }
+    signInAsCustomer()
+    return () => {}
+  })
+}
+
+
 //#region Step Action Buttons
 interface StepActionsProp {
   isFirstStep?: boolean
@@ -80,7 +82,6 @@ interface StepActionsProp {
   onNext: () => void
   isDisabled?: boolean
 }
-
 const StepActions = (props: StepActionsProp) => {
   const disabledBack = !!props.isDisabled || props.isFirstStep || false
   const showSubmit = props.isLastStep || false
@@ -111,110 +112,63 @@ const StepActions = (props: StepActionsProp) => {
 }
 
 interface ApplicationProps {
-  applicationId?: string
-  onSubmit?: (applicationId: string) => void
+  currentValues?: Applicant
+  path: string
   isDisabled?: boolean
 }
 
 export const Application = (props: ApplicationProps) => {
+  useSignIn()
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-
-  const { applicationId, isDisabled } = props
-  const disabled = !!isDisabled
-  const api = useApplicantFormApi()
-  const [application, setApplication] = useState<ApplicationModel>()
+  const [path, setPath] = useState('')
+  const disabled = !!props.isDisabled
 
   useEffect(() => {
-    //TODO: Check Application in Progress (check storage) ask Continue or discard?
-    const retrieveApplication = async (applicationId: string) => {
-      const application = await api.getApplication(applicationId)
-      setApplication(application)
+    if (path !== props.path) {
+      setPath(props.path)
     }
-
-    const createApplication = async () => {
-      const app = { userId: localStorage.uid } as ApplicationModel
-      const applicationId = await api.saveApplication(app);
-      setApplication({ ...app, id: applicationId })
+    return () => {
+      if (path !== '/') {
+        localStorage.clear()
+      }
     }
+  }, [path])
 
-    if (applicationId) {
-      retrieveApplication(applicationId)
-    } else {
-      createApplication()
-    }
-  }, [applicationId])
+  const {
+    saveSectionA,
+    saveSectionB
+  } = useApplication(props.currentValues)
 
-  const { save, localSave } = useApplication()
-  const { handleSubmit: handleSectionASubmit } = useSectionA()
-  const { handleSubmit: handleSectionBSubmit } = useSectionB()
+  const {
+    handleSubmit: handleSectionASubmit,
+    handleChange: handleSectionAChange,
+    currentValue: sectionACurrentValue } = useSectionA(props.currentValues)
 
-  const handleChange = (app: ApplicationModel) => {
-    localSave(app)
-    setApplication(app)
-  }
-
-  const handleSave = async () => {
-    if (application) {
-      const applicationId = await save(application);
-      setApplication({ ...application, id: applicationId })
-    }
-  }
+    const {
+      handleSubmit: handleSectionBSubmit,
+      handleChange: handleSectionBChange,
+      currentValue: sectionBCurrentValue } = useSectionB(props.currentValues)
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
-
-  const handleNext = async () => {
+  const handleNext = () => {
     let isStepValid: boolean = true
     switch (activeStep) {
-      case 0: //A
-        const { hasErrors: sectionAHasErrors } = handleSectionASubmit()
+      case 0:
+        const { applicant, hasErrors: sectionAHasErrors } = handleSectionASubmit()
+        saveSectionA(applicant)
         isStepValid = !sectionAHasErrors
         break
-      case 1: //B
-        const { hasErrors: sectionBHasErrors } = handleSectionBSubmit()
+      case 1:
+        const { employmentRecords, hasErrors: sectionBHasErrors } = handleSectionBSubmit()
+        saveSectionB(employmentRecords)
         isStepValid = !sectionBHasErrors
         break
-      // case 2: //C
-      //   const { hasErrors: sectionCHasErrors } = handleSectionCSubmit()
-      //   isStepValid = !sectionCHasErrors
-      // break
-      // case 4: //D
-      //   const { hasErrors: sectionDHasErrors } = handleSectionDSubmit()
-      //   isStepValid = !sectionDHasErrors
-      // break
-      // case 5: //E
-      //   const { hasErrors: sectionEHasErrors } = handleSectionESubmit()
-      //   isStepValid = !sectionEHasErrors
-      // break
-      // case 6: //F
-      //   const { hasErrors: sectionFHasErrors } = handleSectionFSubmit()
-      //   isStepValid = !sectionFHasErrors
-      // break
-      // case 6: //G
-      //   const { hasErrors: sectionGHasErrors } = handleSectionGSubmit()
-      //   isStepValid = !sectionGHasErrors
-      // break
-
     }
-
-    if (isStepValid) {      
-      try {
-        console.log('test')
-        await handleSave()     
-        if (activeStep === steps.length - 1){
-          //Submit App
-          props.onSubmit && props.onSubmit(application!.id)  
-        } else {
-          setActiveStep((prevActiveStep) => prevActiveStep + 1)              
-        }
-      }
-      catch(e){
-      }
-
-    }
+    isStepValid && setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
 
   const steps = [
@@ -222,14 +176,18 @@ export const Application = (props: ApplicationProps) => {
       key: 'A',
       icon: pageInfo.sectionA.icon,
       title: pageInfo.sectionA.title,
+      currentValue: sectionACurrentValue,
       isFirstStep: true,
+      onChange: handleSectionAChange,
       component: SectionA
     },
     {
       key: 'B',
       icon: pageInfo.sectionB.icon,
       title: pageInfo.sectionB.title,
+      currentValue: sectionBCurrentValue,
       isFirstStep: false,
+      onChange: handleSectionBChange,
       component: SectionB
     },
     {
@@ -252,27 +210,17 @@ export const Application = (props: ApplicationProps) => {
       title: pageInfo.sectionE.title,
       isFirstStep: false,
       component: SectionE
-    },    
+    },
     {
       key: 'F',
       icon: pageInfo.sectionF.icon,
-      title: pageInfo.sectionG.title,
-      isFirstStep: false,
-      component: SectionG
-    },
-    {
-      key: 'G',
-      icon: pageInfo.sectionG.icon,
       title: pageInfo.sectionF.title,
       isFirstStep: false,
-      isLastStep: true,
       component: SectionF
     },
   ]
 
   const ActiveSection = steps?.[activeStep]?.component
-
-  if (!application) return (<div>Loading...</div>)
 
   return (
     <Grid container direction="column" spacing={2}>
@@ -294,20 +242,17 @@ export const Application = (props: ApplicationProps) => {
                 <StepLabel
                   style={{ cursor: 'pointer' }}
                   StepIconProps={{ icon: step.icon }}
-                  onClick={() => {
-                    setActiveStep(index)
-                    handleSave()
-                  }}
+                  onClick={() => setActiveStep(index)}
                 >
-                  {step.title}
+                    {step.title}
                 </StepLabel>
                 <StepContent>
                   <Grid container direction={'column'} spacing={2}>
                     <Grid item>
-                      <Section application={application} onChange={handleChange} isDisabled={disabled} />
+                      <Section isDisabled={disabled} value={step.currentValue} onChange={step?.onChange} />
                     </Grid>
                     <Grid item>
-                      <StepActions onBack={handleBack} onNext={handleNext} isFirstStep={!!step.isFirstStep} isDisabled={disabled} isLastStep={activeStep === steps.length - 1}/>
+                      <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} />
                     </Grid>
                   </Grid>
                 </StepContent>
@@ -323,7 +268,7 @@ export const Application = (props: ApplicationProps) => {
             </Paper>
             <Grid container direction={'column'} spacing={2}>
               <Grid item>
-                <ActiveSection application={application} onChange={handleChange} isDisabled={disabled} />
+                <ActiveSection isDisabled={disabled} value={steps[activeStep].currentValue} onChange={steps[activeStep]?.onChange} />
               </Grid>
             </Grid>
             <MobileStepper
@@ -337,7 +282,7 @@ export const Application = (props: ApplicationProps) => {
                 </Button>
               }
               backButton={
-                <Button disabled={disabled || activeStep === 0} size="medium" onClick={handleBack} >
+                <Button disabled={disabled} size="medium" onClick={handleBack} disabled={activeStep === 0}>
                   Back
                 </Button>
               }
@@ -348,3 +293,12 @@ export const Application = (props: ApplicationProps) => {
     </Grid>
   )
 }
+
+const AppPage = (props) => (
+  <Layout>
+    <SEO />
+    <Application {...props} />
+  </Layout>
+)
+
+export default AppPage

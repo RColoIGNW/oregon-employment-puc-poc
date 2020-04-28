@@ -1,4 +1,4 @@
-enum ApplicationStatus {
+export enum ApplicationStatus {
   InProgress = 'InProgress',
   Submitted = 'Submitted',
   Cancelled = 'Cancelled',

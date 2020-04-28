@@ -31,11 +31,14 @@ export const routes = (router: Router) => {
 
   router
     .route('/applications/:id')
-    .delete(decodeToken, isAuthorized, applicationService.deleteApplication)
+    .delete(decodeToken, isAuthorized, hasAdminRole, applicationService.deleteApplication)
 
   router
     .route('/applications/:id')
     .put(decodeToken, isAuthorized, applicationService.updateApplication)
+  router
+    .route('/applications/:id')
+    .patch(decodeToken, isAuthorized, applicationService.changeApplicationStatus)
 
   router
     .route('/weekly-applications')
@@ -60,7 +63,6 @@ export const routes = (router: Router) => {
   router
     .route('/weekly-applications/:id')
     .put(decodeToken, isAuthorized, weekyApplicationService.updateWeeklyApplication)
-
 }
 
 export default routes

@@ -60,12 +60,7 @@ export default function DashboardPage() {
     {
       buttonLabel: 'File your new claim',
       description: 'Establish a new claim for Oregon unemployment benefits. If you are filing due to COVID- 19, please watch this training video.',
-      link: '/application',
-      linkState: {
-        state: {
-          applicationId: uuid()
-        }
-      }
+      link: '/application',      
     },
     {
       buttonLabel: 'Claim a Week of Benefits',
