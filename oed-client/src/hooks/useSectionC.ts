@@ -1,6 +1,6 @@
 import { QuestionModel } from '../models/Question'
 import { AnswerModel } from '../models/Answer'
-import storage from '../utils/storage'
+import storage from '../util/storage'
 
 const c_2_questions: QuestionModel[]= [
   {

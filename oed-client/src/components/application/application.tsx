@@ -61,7 +61,7 @@ const pageInfo = {
   },
   back: 'Back',
   next: 'Next',
-  submit: 'Submit',
+  submit: 'Submit Application',
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -111,7 +111,7 @@ const StepActions = (props: StepActionsProp) => {
 
 interface ApplicationProps {
   applicationId?: string
-  onSubmit?: () => void
+  onSubmit?: (application: ApplicationModel) => void
   isDisabled?: boolean
 }
 

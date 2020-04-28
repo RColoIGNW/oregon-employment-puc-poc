@@ -19,9 +19,14 @@ export default () => {
     storage.save('application', application)
   }
 
+  const submit = async (application: Application) => {
+    return await api.submitApplication(application)
+  }
+
   return {
     load,
     localSave,
-    save
+    save,
+    submit
   }
 }

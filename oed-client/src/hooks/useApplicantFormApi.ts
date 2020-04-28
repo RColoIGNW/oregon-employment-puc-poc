@@ -11,6 +11,10 @@ export default () => {
     .catch(console.error)
   }
 
+  const submitApplication = (application: Application): Promise<string> => {
+    return saveApplication({...application, status: ApplicationStatus.Submitted})
+  }
+
   const saveApplication = async (application: Partial<Application>): Promise<string> => {
     let applicationId: string =  application.id || ''    
     if (applicationId) {
@@ -66,6 +70,7 @@ export default () => {
 
   return {
     saveApplication,
+    submitApplication,
     getUnapprovedApplications,
     getUserApplications,
     getApplication
