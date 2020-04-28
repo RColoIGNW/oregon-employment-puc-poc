@@ -1,1 +1,1 @@
-export { default } from './dropzone'
+export { default } from './Dropzone'

@@ -19,7 +19,7 @@ export default () => {
     } else {
       const result: any = await createApplication(application)
       console.log(result)
-      applicationId = result.applicationId as string
+      applicationId = result?.applicationId as string
     }
     return applicationId
   }

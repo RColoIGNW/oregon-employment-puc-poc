@@ -88,6 +88,11 @@ export default function ApprovalTable(props: any) {
       icons={tableIcons as any}
       actions={[
         {
+          icon: Edit as any,
+          tooltip: 'Admin Note',
+          onClick: () => props.toggleModal(true)
+        },
+        {
           icon: Block as any,
           tooltip: 'Decline',
           onClick: (_: any, rowData: any) => {

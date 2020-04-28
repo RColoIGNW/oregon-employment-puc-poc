@@ -4,6 +4,7 @@ import firebase from '../lib/firebase'
 
 export default () => {
   const [tableData, setTableData] = useState([])
+  const [isModalOpen, toggleModal] = useState(false)
   const db = firebase?.firestore?.()
 
   useEffect(() => {
@@ -26,5 +27,7 @@ export default () => {
 
   return {
     tableData,
+    toggleModal,
+    isModalOpen,
   }
 }
