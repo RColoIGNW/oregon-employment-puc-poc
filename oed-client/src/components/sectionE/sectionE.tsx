@@ -2,32 +2,26 @@ import React from 'react'
 import { Typography, Grid } from '@material-ui/core'
 import { Question} from '../question/question'
 import { QuestionModel } from '../../models/Question'
+import { SectionProps } from '../../models/SectionProps'
+import useQuestions from '../../hooks/useQuestions'
+import { AnswerModel } from '../../models/Answer'
 
 const pageInfo = {
   text: 'Any unemployment insurance benefits you receive are fully taxable income if you are required to file a tax return. You may need to make estimated tax payments. For more information on estimated tax payments, contact the Internal Revenue Service. For state tax information, contact the Oregon Department of Revenue.',
   note1: 'You may choose to have 10% of your benefits withheld for federal taxes and/or 6% for state taxes.',  
   note2: 'This authorization will remain in effect for this claim until the Oregon Employment Department has received written notification from you of its termination.',
 }
-
-const question1: QuestionModel = {
-  code: 'E_1',
-  text: 'Do you choose to have 10% of your unemployment benefits withheld for federal income taxes?',
-  showOptions: true,
-  whenShowDetails: 'NEVER'
-}
-
-const question2: QuestionModel = {
-  code: 'E_2',
-  text: 'Do you choose to have 6% of your unemployment benefits withheld for state income taxes?',
-  showOptions: true,
-  whenShowDetails: 'NEVER'
-}
-
-interface SectionProps{
-  questions: QuestionModel[],
-  onChange: (q: QuestionModel) => void
-}
 const SectionE = (props: SectionProps) => {
+  const { application, onChange } = props 
+  const { getQuestions } = useQuestions(props.application.answers || [])
+  const questions = getQuestions('SECTION_E')
+
+  const handleChange = (answer: AnswerModel) => {    
+    const index = questions.findIndex((q: QuestionModel) => q.code === answer.questionCode)
+    questions[index].answer = answer    
+    //TODO: combine answers
+    onChange && onChange({...application, answers: questions.map(q => q.answer)})
+  }
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>
@@ -43,9 +37,9 @@ const SectionE = (props: SectionProps) => {
       <Grid item>
         <Grid container direction={'column'}>
           {
-            props.questions.map( (q) => {
+            questions.map( (q) => {
               <Grid item>
-                <Question question={q} onChange={() => props.onChange(q)} ></Question>
+                <Question question={q} onChange={handleChange}/>
               </Grid>
             })
           }  

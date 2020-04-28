@@ -1,32 +1,26 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
-import { Question } from '../question/question'
-import { QuestionModel } from '../../models/Question'
+import { SectionProps } from '../../models/SectionProps'
+import useQuestions from '../../hooks/useQuestions'
+import QuestionList from '../question-list/question-list'
 import { AnswerModel } from '../../models/Answer'
-interface SectionCProps{
-  value: QuestionModel[],
-  onChange: (answer: AnswerModel) => void
-}
 
-const SectionC = (props: SectionCProps) => {
-  const questions = props.value
-  const handleChange = (a: AnswerModel) => {
-    props.onChange(a)
-  }  
-  return (
-    <Grid container direction={'column'} spacing={1}>
-      {
-        questions.map((q) => {
-          return (
-              <div id={q.code} key={`section-c-${q.code}`}>
-                <Grid item >
-                  <Question question={q} onChange={handleChange}/>
-                </Grid>     
-              </div>
-          )
-        })       
-      }
-    </Grid>
+const SectionC = (props: SectionProps) => {
+  const { application, onChange } = props 
+  const answers = props.application.answers || []
+  const { getQuestions } = useQuestions(answers)  
+  const questions = getQuestions('SECTION_C')  
+
+  const handleChange = (answer: AnswerModel) => {    
+    const index = answers.findIndex(a => a.questionCode === answer.questionCode)
+    if (index === -1){
+      answers.push(answer)
+    } else {
+      answers[index] = answer
+    }    
+    onChange && onChange({...application, answers: answers})
+  }
+  return (    
+    <QuestionList questions={questions} onChange={handleChange}/>
   )
 }
 

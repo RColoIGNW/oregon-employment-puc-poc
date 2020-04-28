@@ -219,21 +219,21 @@ export const Application = (props: ApplicationProps) => {
       title: pageInfo.sectionE.title,
       isFirstStep: false,
       component: SectionE
-    },
+    },    
     {
       key: 'F',
       icon: pageInfo.sectionF.icon,
-      title: pageInfo.sectionF.title,
+      title: pageInfo.sectionG.title,
       isFirstStep: false,
-      component: SectionF
+      component: SectionG
     },
     {
       key: 'G',
       icon: pageInfo.sectionG.icon,
-      title: pageInfo.sectionG.title,
+      title: pageInfo.sectionF.title,
       isFirstStep: false,
-      component: SectionG
-    }
+      component: SectionF
+    },
   ]
 
   const ActiveSection = steps?.[activeStep]?.component

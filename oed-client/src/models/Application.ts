@@ -1,5 +1,6 @@
 import Applicant from './Applicant'
 import EmploymentRecord from './EmploymentRecord'
+import { AnswerModel } from './Answer'
 
 export default interface Application {
   id?: string
@@ -7,5 +8,6 @@ export default interface Application {
   applicant?: Applicant
   employmentRecords?: EmploymentRecord[]
   status?: ApplicationStatus,
-  lastModified?: Date
+  lastModified?: Date,
+  answers?: AnswerModel[]
 }

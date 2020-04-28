@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import ApplicantInfo from '../ApplicantInfo'
 import Applicant from '../../models/Applicant'
 import { SectionProps } from '../../models/SectionProps'
