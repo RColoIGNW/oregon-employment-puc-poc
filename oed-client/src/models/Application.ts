@@ -6,6 +6,8 @@ export default interface Application {
   userId: string
   applicant?: Applicant
   employmentRecords?: EmploymentRecord[]
+  isCertified: boolean
+  certifiedBy: string
   status?: ApplicationStatus
   submitted?: Date
   lastModified?: Date
