@@ -1,9 +1,6 @@
-import React, { useEffect, forwardRef, useState } from "react"
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import AddBox from '@material-ui/icons/AddBox'
 import ArrowUpward from '@material-ui/icons/ArrowUpward'
-import Block from '@material-ui/icons/Block'
 import Check from '@material-ui/icons/Check'
 import ChevronLeft from '@material-ui/icons/ChevronLeft'
 import ChevronRight from '@material-ui/icons/ChevronRight'
@@ -12,18 +9,19 @@ import DeleteOutline from '@material-ui/icons/DeleteOutline'
 import Edit from '@material-ui/icons/Edit'
 import FilterList from '@material-ui/icons/FilterList'
 import FirstPage from '@material-ui/icons/FirstPage'
+import Download from '@material-ui/icons/GetApp'
 import LastPage from '@material-ui/icons/LastPage'
 import Remove from '@material-ui/icons/Remove'
 import SaveAlt from '@material-ui/icons/SaveAlt'
 import Search from '@material-ui/icons/Search'
 import ViewColumn from '@material-ui/icons/ViewColumn'
-import Download from '@material-ui/icons/GetApp'
+import { navigate } from "gatsby"
 import MaterialTable from 'material-table'
+import React, { forwardRef, useEffect, useState } from "react"
 
 import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
 import useApplicantFormApi from "../hooks/useApplicantFormApi"
-import { navigate } from "gatsby"
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props as any} ref={ref} />),
@@ -126,12 +124,7 @@ const ClaimsStatusPage = () => {
   return (
     <Layout>
       <SEO title={'Dashboard'} />
-      <Grid container direction="column" spacing={3}>
-        <Grid item>
-          <Typography style={{ color: 'blue' }}>
-            {'Development Site  - Rapid changes may occur'}
-          </Typography>
-        </Grid>
+      <Grid container direction="column" spacing={3} style={{marginTop: '1em'}}>
         <Grid item>
           <ApplicationsTable columns={columns} data={data} actions={actions} />
         </Grid>
