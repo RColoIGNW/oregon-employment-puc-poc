@@ -37,7 +37,7 @@ export const routes = (router: Router) => {
     .route('/applications/:id')
     .put(decodeToken, isAuthorized, applicationService.updateApplication)
   router
-    .route('/applications/:id/:status')
+    .route('/applications/:id')
     .patch(decodeToken, isAuthorized, applicationService.changeApplicationStatus)
 
   router

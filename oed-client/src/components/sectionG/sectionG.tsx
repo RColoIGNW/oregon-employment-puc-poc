@@ -2,13 +2,17 @@ import { Grid, Typography } from '@material-ui/core'
 import React from 'react'
 
 import Dropzone from '../dropzone'
+import Application from '../../models/Application'
 
 const pageInfo = {
   text: 'Upload Documents',
 }
 
+interface SectionFProps {
+  application: Application
+}
 
-const SectionF = (props: { application: { id: string } }) => {
+const SectionF = (props: SectionFProps) => {
   return (
     <Grid container direction={'column'} spacing={2}>
       <Grid item>

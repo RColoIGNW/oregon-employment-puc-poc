@@ -19,8 +19,9 @@ export default () => {
     storage.save('application', application)
   }
 
-  const submit = async (application: Application) => {
-    return await api.submitApplication(application)
+  const submit = (applicationId: string) => {
+    console.log('tetetetete')
+    return api.submitApplication(applicationId)
   }
 
   return {

@@ -7,8 +7,8 @@ import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
 
 const pageInfo = {
-  successMessage: '',
-  button: 'View application status'  
+  successMessage: 'Your application has been successfully submitted. Here is your application ID',    
+  button: 'View your applications'  
 }
 
 const ApplicationSubmittedPage = (props: any) => {  
@@ -17,7 +17,7 @@ const ApplicationSubmittedPage = (props: any) => {
   return (
     <Layout>
       <SEO title={'Application Submitted'} />
-      <Grid container direction="column">
+      <Grid container direction={'column'} justify={'center'} alignItems={'center'} spacing={4} style={{marginTop: 24}}>
         <Grid item>
             <Typography variant={'h4'}>
               {pageInfo.successMessage}

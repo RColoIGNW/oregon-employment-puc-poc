@@ -5,16 +5,16 @@ import { Application } from '../components/application/application'
 import { Layout } from '../components/layout'
 import { SEO } from '../components/seo'
 import useApplication from '../hooks/useApplication'
-import { Button } from '@material-ui/core'
 
 const ApplicationPage = (props: any) => {
   const applicationId = props.location?.state?.applicationId
   const { submit } = useApplication()
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (appId: string) => {
+    console.log('submit')
     try {
       //TODO: Show Progress
-      await submit(applicationId)
+      await submit(appId)
       navigate('application-submitted',  { state: {applicationId: applicationId }})
     } catch (e) {
       //TODO: Show submit error
@@ -23,10 +23,8 @@ const ApplicationPage = (props: any) => {
 
   return (
     <Layout>
-      <SEO />
-      <Button onClick={handleSubmit}>TEST </Button>
-      <Application applicationId={applicationId} onSubmit={handleSubmit}/>
-      
+      <SEO />      
+      <Application applicationId={applicationId} onSubmit={handleSubmit}/>      
     </Layout>
   )
 }
