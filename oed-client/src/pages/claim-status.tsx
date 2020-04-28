@@ -85,7 +85,7 @@ const ClaimsStatusPage = () => {
                     <Grid container spacing={1} alignItems="center">
                       <Grid item xs={12}>
                         <Typography variant="body1" color="primary" style={{ fontWeight: 'bold' }}>
-                          <Link to="application" state={{ applicationId: application.id }} style={{ textDecoration: 'none' }}>
+                          <Link to="/application" state={{ applicationId: application.id }} style={{ textDecoration: 'none' }}>
                             {application.id}
                           </Link>
                         </Typography>
