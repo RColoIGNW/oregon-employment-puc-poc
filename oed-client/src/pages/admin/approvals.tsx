@@ -8,16 +8,21 @@ import { SEO } from "../../components/seo"
 import useApprovals from '../../hooks/useApprovals'
 
 const ApprovalsPage = () => {
-  const { tableData, isModalOpen, toggleModal } = useApprovals()
+  const { tableData, isModalOpen, toggleModal, openModal, adminNote, handleChange, handleSubmit } = useApprovals()
   return (
   <Layout>
     <SEO title={'Approvals'} />
     <Grid container direction="column" spacing={3} style={{marginTop: '2em'}}>
       <Grid item>
-        <ApprovalTable data={tableData} toggleModal={toggleModal}  />
+        <ApprovalTable data={tableData} openModal={openModal}  />
       </Grid>
     </Grid>
-    <AdminNoteDialog open={!!isModalOpen} onCancel={() => toggleModal(false)} onSave={console.log} />
+    <AdminNoteDialog
+      open={!!isModalOpen}
+      handleChange={handleChange}
+      adminNote={adminNote}
+      onCancel={() => toggleModal(false)}
+      onSave={handleSubmit} />
   </Layout>
   )
 }

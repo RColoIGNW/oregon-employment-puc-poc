@@ -7,7 +7,13 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
 import React from 'react'
 
-export default function FormDialog(props: { open: boolean, onCancel: () => any, onSave: () => any }) {
+export default function FormDialog(props: {
+  open: boolean,
+  onCancel: () => any,
+  onSave: () => any,
+  handleChange: (event: { target: { value: string } }) => any,
+  adminNote: string,
+}) {
   const handleClose = () => {
     props.onCancel()
   }
@@ -27,6 +33,7 @@ export default function FormDialog(props: { open: boolean, onCancel: () => any, 
           type="text"
           style={{ height: '4em' }}
           fullWidth
+          onChange={props?.handleChange}
         />
       </DialogContent>
       <DialogActions>
