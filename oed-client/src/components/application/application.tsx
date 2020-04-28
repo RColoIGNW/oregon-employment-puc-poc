@@ -80,6 +80,7 @@ interface StepActionsProp {
   onNext: () => void
   isDisabled?: boolean
 }
+
 const StepActions = (props: StepActionsProp) => {
   const disabledBack = !!props.isDisabled || props.isFirstStep || false
   const showSubmit = props.isLastStep || false
@@ -133,9 +134,9 @@ export const Application = (props: ApplicationProps) => {
     }
 
     const createApplication = async () => {
-      const app = {userId: localStorage.uid}
+      const app = { userId: localStorage.uid } as ApplicationModel
       const applicationId = await api.saveApplication(app);
-      setApplication({...app, id: applicationId })
+      setApplication({ ...app, id: applicationId })
     }
 
     if (applicationId) {
@@ -155,7 +156,7 @@ export const Application = (props: ApplicationProps) => {
   }
 
   const handleSave = async () => {
-    if(application){
+    if (application) {
       const applicationId = await save(application);
       setApplication({ ...application, id: applicationId })
     }
