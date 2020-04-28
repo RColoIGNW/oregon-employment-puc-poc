@@ -16,4 +16,5 @@ export default interface Applicant {
   isHispanicLatino?: boolean;
   contactMethod?: ContactMethod;
   races: Race[];
+  adminNote: string
 }
