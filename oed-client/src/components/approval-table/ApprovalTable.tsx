@@ -66,6 +66,7 @@ export default function ApprovalTable(props: any) {
     ],
     data: props?.data?.map((application: ApplicationModel) => {
       return {
+        ...application,
         id: application.id,
         name: application.applicant?.firstName,
         date: moment(application.lastModified).format('LLL'),
@@ -90,7 +91,7 @@ export default function ApprovalTable(props: any) {
         {
           icon: Edit as any,
           tooltip: 'Admin Note',
-          onClick: () => props.toggleModal(true)
+          onClick: (_: any, rowData: any) => props.openModal(rowData)
         },
         {
           icon: Block as any,
