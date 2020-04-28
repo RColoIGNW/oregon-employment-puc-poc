@@ -53,6 +53,17 @@ const question_6_1: QuestionModel = {
   }
 }
 
+const questionF_1_1: QuestionModel = {
+  code: 'F_1_1',
+  text: 'If NO, are you in satisfactory immigration status?',
+  showOptions: true,
+  whenShowDetails: 'ALWAYS',
+  note: 'Alien Reg # ',
+  answer: {
+    questionCode: 'F_1_1'
+  }
+}
+
 const _questions: QuestionModel[] = [
   {
     code: 'C_1',
@@ -304,7 +315,7 @@ const _questions: QuestionModel[] = [
     text: 'Do you have more than one client?',
     note: 'If "YES", how many clients do you have?',
     showOptions: true,
-    whenShowDetails: 'YES',
+    whenShowDetails: 'ALWAYS',
     answer: {
       questionCode: 'D_11'
     }
@@ -325,6 +336,16 @@ const _questions: QuestionModel[] = [
     whenShowDetails: 'NEVER',
     answer: {
       questionCode: 'E_2'
+    }
+  },
+  {
+    code: 'F_1',
+    text: 'I am a citizen or national of the United States',
+    showOptions: true,
+    whenShowDetails: 'NEVER',
+    subQuestions: [questionF_1_1],
+    answer: {
+      questionCode: 'F_1'
     }
   }
 ]
@@ -352,8 +373,7 @@ export default (answers: AnswerModel[]) => {
   let questions: QuestionModel[] = prepareQuestions(answers)  
 
   const getQuestions = (section: SECTION): QuestionModel[] => {
-    const sectionCode = getSectionLetter(section)
-    console.log('Get quetions')
+    const sectionCode = getSectionLetter(section)    
     return questions.filter(q => q.code.startsWith(sectionCode))
   }
 

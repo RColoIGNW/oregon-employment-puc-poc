@@ -11,16 +11,15 @@ export default () => {
     //save to localstorage    
   }
 
-  const save = async (application: Application): Promise<string> => {
-    return  await api.saveApplication(application)    
+  const save = (application: Application) => {
+    return api.updateApplication(application)    
   }
 
   const localSave = (application:  Application) => {
     storage.save('application', application)
   }
 
-  const submit = (applicationId: string) => {
-    console.log('tetetetete')
+  const submit = (applicationId: string) => {    
     return api.submitApplication(applicationId)
   }
 

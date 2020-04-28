@@ -155,7 +155,6 @@ const deleteApplication = async (req: Request, res: Response) => {
   }
 }
 
-
 const updateApplication = async (req: Request, res: Response) => {
   try {
     const { id, ...applicationInfo } = req.body;
