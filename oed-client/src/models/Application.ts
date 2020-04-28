@@ -2,10 +2,13 @@ import Applicant from './Applicant'
 import EmploymentRecord from './EmploymentRecord'
 
 export default interface Application {
-  id?: string
+  id: string
   userId: string
   applicant?: Applicant
   employmentRecords?: EmploymentRecord[]
-  status?: ApplicationStatus,
+  isCertified: boolean
+  certifiedBy: string
+  status?: ApplicationStatus
+  submitted?: Date
   lastModified?: Date
 }

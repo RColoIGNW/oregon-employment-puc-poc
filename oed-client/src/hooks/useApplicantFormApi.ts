@@ -18,7 +18,6 @@ export default () => {
       await updateApplication(application)
     } else {
       const result: any = await createApplication(application)
-      console.log(result)
       applicationId = result?.applicationId as string
     }
     return applicationId
@@ -65,10 +64,10 @@ export default () => {
   }
 
   return {
+    getApplication,
     saveApplication,
+    updateApplication,
     getUnapprovedApplications,
     getUserApplications,
-    getApplication,
-    updateApplication,
   }
 }
