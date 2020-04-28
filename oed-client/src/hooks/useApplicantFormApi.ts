@@ -43,7 +43,7 @@ export default () => {
       .catch(console.error)
   }
 
-  const getUserApplications = () => {
+  const getUserApplications = (): Promise<Application[]> => {
     const userId = localStorage.getItem('uid')
     return request(`${process.env.REACT_APP_API_HOST}/api/users/${userId}/applications`)
     .then((result: any) => {

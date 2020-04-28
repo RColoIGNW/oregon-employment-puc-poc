@@ -11,7 +11,7 @@ export default (props: SectionProps) => {
   }
   const { application, onChange } = props
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+  const handleChange = (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     onChange({ ...application, isCertified: checked })
   }
   const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
