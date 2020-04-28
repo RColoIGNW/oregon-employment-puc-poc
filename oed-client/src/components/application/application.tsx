@@ -133,8 +133,12 @@ export const Application = (props: ApplicationProps) => {
       navigate('dashboard')
     }
     const retrieveApplication = async (applicationId: string) => {
-      const application = await api.getApplication(applicationId)
-      setApplication(application)
+      try {
+        const application = await api.getApplication(applicationId)
+        setApplication(application)
+      } catch(e){
+        //TODO: Show Error notification
+      }
     }
     applicationId && retrieveApplication(applicationId)
   }, [])

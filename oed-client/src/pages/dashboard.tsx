@@ -60,8 +60,12 @@ export default function DashboardPage() {
   const api = useApplicantFormApi()
 
   const handleNewApplication = async () => {
-    const applicationId = await api.createApplication()
-    navigate('application', {state: {applicationId: applicationId}})
+    try {
+      const result = await api.createApplication() as any      
+      navigate('application', {state: {applicationId: result.applicationId}})
+    } catch (e) {
+
+    }
   }
   const handleNavigate = (link: string) => navigate(link)
 
