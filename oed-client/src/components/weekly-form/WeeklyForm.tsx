@@ -24,6 +24,9 @@ import theme from "../../themes/theme-light"
 import SectionA from "../sectionA/sectionA" // TODO: replace with new sections for weekly benefits
 import SectionB from "../sectionB/sectionB" // TODO: replace with new sections for weekly benefits
 
+import WeeklySectionA from "../weekly-sectionA/weeklySectionA"
+import WeeklySectionB from "../weekly-sectionB/WeeklySectionB"
+
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
   sectionA: {
@@ -165,14 +168,14 @@ export default function WeeklyForm(props: WeeklyFormProps) {
       icon: pageInfo.sectionA.icon,
       title: pageInfo.sectionA.title,
       isFirstStep: true,
-      component: SectionA
+      component: WeeklySectionA
     },
     {
       key: 'B',
       icon: pageInfo.sectionB.icon,
       title: pageInfo.sectionB.title,
       isFirstStep: false,
-      component: SectionB
+      component: WeeklySectionB
     },
   ]
 
