@@ -2,6 +2,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button"
 import Container from "@material-ui/core/Container"
+import Grid from "@material-ui/core/Grid"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from '@material-ui/core/Typography'
 import { graphql, useStaticQuery } from "gatsby"
@@ -9,13 +10,11 @@ import Img from "gatsby-image"
 import React, { useContext } from "react"
 
 import { AuthContext } from '../../providers/AuthProvider'
-// import Button from '@material-ui/core/Button';
-// import IconButton from '@material-ui/core/IconButton';
-// import MenuIcon from '@material-ui/icons/Menu';
-// Components
-import { CSSDebugger } from "../css-debugger";
+import Alerts from '../alerts'
+import { AlertProps } from '../alerts/Alerts'
+import { CSSDebugger } from "../css-debugger"
 
-const Layout: React.FC = ({ children }) => {
+const Layout = (props : { children: React.ReactNode, alert?: AlertProps|false }) => {
   const data = useStaticQuery(graphql`
     query MyQuery {
       file(relativePath: { eq: "orgov_logo.png" }) {
@@ -30,6 +29,7 @@ const Layout: React.FC = ({ children }) => {
     }
   `)
 
+  const { children, alert } = props
   const { signOut, user } = useContext(AuthContext)
   const showDebugger = typeof window !== 'undefined' && !!window.location.href.includes('localhost')
 
@@ -69,6 +69,21 @@ const Layout: React.FC = ({ children }) => {
           <CSSDebugger />
         }
         <Toolbar />
+        {!!alert &&
+          <Grid item style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '1em',
+          }}>
+            <Alerts
+              isOpen={true}
+              variant={alert?.variant || 'outlined'}
+              severity={alert?.severity || 'info'}
+              message={alert?.message}
+              {...alert}
+            />
+          </Grid>
+        }
         <main>{children}</main>
       </Container>
     </>

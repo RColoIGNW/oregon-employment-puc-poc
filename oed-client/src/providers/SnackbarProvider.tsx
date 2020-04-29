@@ -2,36 +2,42 @@ import Alert from '@material-ui/lab/Alert'
 import React, { Context, Dispatch, SetStateAction, createContext, useState } from 'react'
 import { toast } from 'react-toastify'
 
-interface SnackBarContext {
-  open: boolean
-  message: string
-  duration: number
-  setState: Dispatch<SetStateAction<Context<SnackBarContext>>>
-  showFeedback: (options?: { message?: string }) => any
+import { AlertSeverity } from '../components/alerts/Alerts'
+
+interface FeedbackOptions {
+  message?: string
+  severity?: AlertSeverity,
+  duration?: number
+  toastId?: string
 }
 
-const SnackbarAlert = ({message = 'Saved!'}) => {
+interface SnackBarContext {
+  setState: Dispatch<SetStateAction<Context<SnackBarContext>>>
+  showFeedback: (options?: FeedbackOptions) => any,
+  isActive: (arg: any) => any
+}
+
+const SnackbarAlert = (props: { options: FeedbackOptions }) => {
   return (
-    <Alert style={{width: '100%'}} severity="success">{message}</Alert>
+    <Alert style={{width: '100%'}} severity={props.options.severity}>{props.options.message}</Alert>
   )
 }
 
 export const SnackBarContext: Context<SnackBarContext> = createContext<SnackBarContext>({
-  open: false,
-  message: 'Successfully Saved!',
-  duration: 5000,
   setState: () => {},
-  showFeedback: (options?: { message?:string }) => {
-    toast(<SnackbarAlert message={options?.message || 'Saved!'} />, {
+  showFeedback: (options?: FeedbackOptions|any) => {
+    toast(<SnackbarAlert options={options} />, {
       position: toast.POSITION.TOP_RIGHT,
-      autoClose: 5000,
+      autoClose: options?.duration || 5000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: false,
       progress: undefined,
+      toastId: options?.toastId,
     })
-  }
+  },
+  isActive: toast.isActive
 })
 
 export const SnackBarProvider = () => {

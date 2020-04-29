@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { uuid } from 'uuidv4'
 
 import firebase from '../lib/firebase'
+import { SnackBarContext } from '../providers/SnackbarProvider'
 
 export type UploadFile = {
   path: string
@@ -18,6 +20,7 @@ export const useFileUpload = (props: { applicationId: string }): FileUploadProps
   const storageRef = firebase.storage().ref()
   const [files, setFiles] = useState([] as UploadFile[])
   const [initFiles, setInitFiles] = useState(false)
+  const snackbar = useContext(SnackBarContext)
 
   const getFiles = async () => {
     const ref: any = storageRef.child(`pua-documents/${localStorage.uid}/${props.applicationId}`)
@@ -51,8 +54,40 @@ export const useFileUpload = (props: { applicationId: string }): FileUploadProps
         console.info('Deleted a blob or file!')
         await getFiles()
         setInitFiles(false)
+        snackbar.showFeedback({
+          message: "Removed file",
+          severity: "success",
+        })
       })
       .catch(console.error)
+  }
+
+  const listenToUploadProgress = (uploadTask: any) => {
+    const toastId = uuid()
+    uploadTask.on('state_changed', (snapshot: any) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.info('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED:
+            console.info('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING:
+            console.info('Upload is running');
+            if (!snackbar.isActive(toastId)) {
+              snackbar.showFeedback({ message: 'Upload in progress', severity: 'info', toastId  })
+            }
+            break;
+        }
+      },
+      (error: any) => {
+        snackbar.showFeedback({message: 'Upload failed', severity: 'error' })
+        console.error(error)
+      },
+      () => {
+        snackbar.showFeedback({ message: 'Upload Complete', severity: 'success' })
+        getFiles()
+      }
+    )
   }
 
   const handleSubmit = (fileObjects: File[]) => {
@@ -60,10 +95,8 @@ export const useFileUpload = (props: { applicationId: string }): FileUploadProps
       const ref: any = storageRef.child(`pua-documents/${localStorage.uid}/${props.applicationId}/${fileObject.name}`)
       const file = new Blob([fileObject])
       const metaData = { contentType: fileObject.type }
-      ref.put(file, metaData).then((snapshot: any) => {
-        console.info('Uploaded a blob or file!', snapshot)
-        return getFiles()
-      }).catch(console.error)
+      const uploadTask = ref.put(file, metaData)
+      return listenToUploadProgress(uploadTask)
     })
   }
 
