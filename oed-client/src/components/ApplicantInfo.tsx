@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import MomentUtils from '@date-io/moment';
 import Grid from '@material-ui/core/Grid'
 import Radio from '@material-ui/core/Radio'
@@ -38,7 +38,8 @@ const defaultValue: Applicant = {
   gender: undefined,
   isHispanicLatino: undefined,
   contactMethod: undefined,
-  races: []
+  races: [],
+  adminNote: ''
 }
 
 interface ApplicantInfoProps {
@@ -48,73 +49,69 @@ interface ApplicantInfoProps {
 }
 
 export default (props: ApplicantInfoProps) => {
-  const [state, setState] = useState(props.applicant || defaultValue)
+  const applicant = props.applicant || defaultValue
   const disabled = !!props.isDisabled
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    setState({ ...state, [name]: value })
+    props.onChange({ ...applicant, [name]: value })
   }
 
   const handleSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = event.target
-    setState({ ...state, [name]: checked && value })
+    props.onChange({ ...applicant, [name]: checked && value })
   }
 
   const handleBooleanSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = event.target
-    setState({ ...state, [name]: checked && value === 'true' })
+    props.onChange({ ...applicant, [name]: checked && value === 'true' })
   }
 
   const handleDOBChange = (value: MaterialUiPickersDate) => {
-    value && setState({ ...state, dob: value.toDate() })
+    value && props.onChange({ ...applicant, dob: value.toDate() })
   }
 
   const handleAddressChange = (address: Address) => {
-    setState({ ...state, address: address })
+    props.onChange({ ...applicant, address: address })
   }
 
   const handleRaceSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target
-    const current = state.races
+    const current = applicant.races
     checked
       ? current.push(value as Race)
       : current.splice(current.findIndex(r => r === value), 1)
-    setState({ ...state, races: current })
+    props.onChange({ ...applicant, races: current })
   }
-
-  useEffect(() => {
-    props.onChange(state)
-  }, [state])
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
-          <TextField name="firstName" value={state.firstName} onChange={handleChange} fullWidth label="First Name" variant="outlined" disabled={disabled} />
+          <TextField name="firstName" value={applicant.firstName} onChange={handleChange} fullWidth label="First Name" variant="outlined" disabled={disabled} />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <TextField name="middleName" value={state.middleName} onChange={handleChange} fullWidth label="Middle Name" variant="outlined" disabled={disabled} />
+          <TextField name="middleName" value={applicant.middleName} onChange={handleChange} fullWidth label="Middle Name" variant="outlined" disabled={disabled} />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <TextField name="lastName" value={state.lastName} onChange={handleChange} fullWidth label="Last Name" variant="outlined" disabled={disabled} />
+          <TextField name="lastName" value={applicant.lastName} onChange={handleChange} fullWidth label="Last Name" variant="outlined" disabled={disabled} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <SSNTextField name="ssn" value={state.ssn} onChange={handleChange} fullWidth label="SSN" variant="outlined" disabled={disabled} />
+          <SSNTextField name="ssn" value={applicant.ssn} onChange={handleChange} fullWidth label="SSN" variant="outlined" disabled={disabled} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <KeyboardDatePicker name="dob" value={state.dob} onChange={handleDOBChange} fullWidth format="MM/DD/YYYY" inputVariant="outlined" disabled={disabled} />
+          <KeyboardDatePicker name="dob" value={applicant.dob} onChange={handleDOBChange} fullWidth format="MM/DD/YYYY" inputVariant="outlined" disabled={disabled} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <AddressEdit isDisabled={disabled} address={state.address} onCompletion={handleAddressChange} />
+          <AddressEdit isDisabled={disabled} address={applicant.address} onChange={handleAddressChange} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <PhoneTextField name="phone" value={state.phone} onChange={handleChange} fullWidth label="Phone Number" variant="outlined" disabled={disabled} />
+              <PhoneTextField name="phone" value={applicant.phone} onChange={handleChange} fullWidth label="Phone Number" variant="outlined" disabled={disabled} />
             </Grid>
             <Grid item xs={12}>
-              <TextField name="email" value={state.email} onChange={handleChange} fullWidth label="Email Address" variant="outlined" disabled={disabled} />
+              <TextField name="email" value={applicant.email} onChange={handleChange} fullWidth label="Email Address" variant="outlined" disabled={disabled} />
             </Grid>
           </Grid>
         </Grid>
@@ -123,11 +120,11 @@ export default (props: ApplicantInfoProps) => {
             <FormLabel component="legend">Preferred Method of Contact</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={state.contactMethod === ContactMethod.Phone} onChange={handleSelection} name="contactMethod" value={ContactMethod.Phone} disabled={disabled} />}
+                control={<Radio checked={applicant.contactMethod === ContactMethod.Phone} onChange={handleSelection} name="contactMethod" value={ContactMethod.Phone} disabled={disabled} />}
                 label={ContactMethod.Phone}
               />
               <FormControlLabel
-                control={<Radio checked={state.contactMethod === ContactMethod.Email} onChange={handleSelection} name="contactMethod" value={ContactMethod.Email} disabled={disabled} />}
+                control={<Radio checked={applicant.contactMethod === ContactMethod.Email} onChange={handleSelection} name="contactMethod" value={ContactMethod.Email} disabled={disabled} />}
                 label={ContactMethod.Email}
               />
             </RadioGroup>
@@ -138,11 +135,11 @@ export default (props: ApplicantInfoProps) => {
             <FormLabel component="legend">Gender</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={state.gender === Gender.Male} onChange={handleSelection} name="gender" value={Gender.Male} disabled={disabled} />}
+                control={<Radio checked={applicant.gender === Gender.Male} onChange={handleSelection} name="gender" value={Gender.Male} disabled={disabled} />}
                 label={Gender.Male}
               />
               <FormControlLabel
-                control={<Radio checked={state.gender === Gender.Female} onChange={handleSelection} name="gender" value={Gender.Female} disabled={disabled} />}
+                control={<Radio checked={applicant.gender === Gender.Female} onChange={handleSelection} name="gender" value={Gender.Female} disabled={disabled} />}
                 label={Gender.Female}
               />
             </RadioGroup>
@@ -153,11 +150,11 @@ export default (props: ApplicantInfoProps) => {
             <FormLabel component="legend">Are you of Hispanic or Latino ethnicity?</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={state.isHispanicLatino === true} onChange={handleBooleanSelection} name="isHispanicLatino" value={true} disabled={disabled} />}
+                control={<Radio checked={applicant.isHispanicLatino === true} onChange={handleBooleanSelection} name="isHispanicLatino" value={true} disabled={disabled} />}
                 label="Yes"
               />
               <FormControlLabel
-                control={<Radio checked={state.isHispanicLatino === false} onChange={handleBooleanSelection} name="isHispanicLatino" value={false} disabled={disabled} />}
+                control={<Radio checked={applicant.isHispanicLatino === false} onChange={handleBooleanSelection} name="isHispanicLatino" value={false} disabled={disabled} />}
                 label="No"
               />
             </RadioGroup>
@@ -170,7 +167,7 @@ export default (props: ApplicantInfoProps) => {
               {
                 Races.map(race => (
                   <FormControlLabel key={race}
-                    control={<Checkbox checked={!!state.races?.find(r => r === race)} onChange={handleRaceSelection} name="races" value={race} disabled={disabled} />}
+                    control={<Checkbox checked={!!applicant.races?.find(r => r === race)} onChange={handleRaceSelection} name="races" value={race} disabled={disabled} />}
                     label={race}
                   />
                 ))
