@@ -1,6 +1,5 @@
 import React from 'react'
 import { Question } from '../question/question'
-import { QuestionModel } from '../../models/Question'
 import { Typography, Grid } from '@material-ui/core'
 import { SectionProps } from '../../models/SectionProps'
 
