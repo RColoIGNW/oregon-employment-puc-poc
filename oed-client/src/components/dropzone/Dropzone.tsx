@@ -123,7 +123,7 @@ export default function Dropzone(props: { applicationId: string }) {
 
   return (
     <div className="container">
-      <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject }) as any}>
+      <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject }) as any} style={{cursor: 'pointer'}}>
         <input {...getInputProps() as any} />
         <p>Drag 'n' drop some files here, or click to select files</p>
       </Container>
