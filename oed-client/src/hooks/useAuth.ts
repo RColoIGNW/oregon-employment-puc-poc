@@ -6,12 +6,12 @@ import firebase from '../lib/firebase'
 import firebaseui from '../lib/firebaseUI'
 import { TransitionContext } from '../providers/TransitionProvider'
 
-export default (props: { location: { origin: string } }) => {
+export default (props: { location: { origin: string, pathname: string } }) => {
   const { setState: updateTransition, state: loadingState } = useContext(TransitionContext)
   const [token, setToken] = useState(typeof window !== 'undefined' && localStorage.token || '')
 
   useEffect(() => {
-    if (token) {
+    if (token && props.location.pathname === '/') {
       navigate('/dashboard')
     }
   }, [token, setToken])

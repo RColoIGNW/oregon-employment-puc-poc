@@ -13,13 +13,15 @@ import {
   makeStyles
 } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import React, { useEffect, useState } from 'react'
+import { navigate } from "gatsby"
+import React, { useContext, useEffect, useState } from 'react'
 
 import useApplicantFormApi from '../../hooks/useApplicantFormApi'
 import useApplication from "../../hooks/useApplication"
 import useSectionA from "../../hooks/useSectionA"
 import useSectionB from "../../hooks/useSectionB"
 import ApplicationModel from '../../models/Application'
+import { SnackBarContext } from '../../providers/SnackbarProvider'
 import theme from "../../themes/theme-light"
 import SectionA from "../sectionA/sectionA"
 import SectionB from "../sectionB/sectionB"
@@ -28,7 +30,6 @@ import SectionD from "../sectionD/sectionD"
 import SectionE from "../sectionE/sectionE"
 import SectionF from "../sectionF/sectionF"
 import SectionG from "../sectionG/sectionG"
-import { navigate } from "gatsby"
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
@@ -121,6 +122,7 @@ export const Application = (props: ApplicationProps) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const snackbar = useContext(SnackBarContext)
 
   const { applicationId, isDisabled } = props
   const disabled = !!isDisabled
@@ -153,7 +155,8 @@ export const Application = (props: ApplicationProps) => {
   }
 
   const handleSave = async () => {
-    application && await save(application);    
+    application && await save(application)
+    snackbar.showFeedback()
   }
 
   const handleBack = () => {
@@ -194,14 +197,14 @@ export const Application = (props: ApplicationProps) => {
 
     }
 
-    if (isStepValid) {      
-      try {        
-        await handleSave()     
+    if (isStepValid) {
+      try {
+        await handleSave()
         if (activeStep === steps.length - 1){
           //Submit App
-          props.onSubmit && props.onSubmit(application!.id)  
+          props.onSubmit && props.onSubmit(application!.id)
         } else {
-          setActiveStep((prevActiveStep) => prevActiveStep + 1)              
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
       }
       catch(e){
@@ -245,7 +248,7 @@ export const Application = (props: ApplicationProps) => {
       title: pageInfo.sectionE.title,
       isFirstStep: false,
       component: SectionE
-    },    
+    },
     {
       key: 'F',
       icon: pageInfo.sectionF.icon,
@@ -265,7 +268,7 @@ export const Application = (props: ApplicationProps) => {
 
   const ActiveSection = steps?.[activeStep]?.component
 
-  if (!application) return (<div>Loading...</div>)
+  if (!application) return (<>Loading...</>)
 
   return (
     <Grid container direction="column" spacing={2}>
@@ -300,7 +303,13 @@ export const Application = (props: ApplicationProps) => {
                       <Section application={application} onChange={handleChange} isDisabled={disabled} />
                     </Grid>
                     <Grid item>
-                      <StepActions onBack={handleBack} onNext={handleNext} isFirstStep={!!step.isFirstStep} isDisabled={disabled} isLastStep={activeStep === steps.length - 1}/>
+                      <StepActions
+                        onBack={handleBack}
+                        onNext={handleNext}
+                        isFirstStep={!!step.isFirstStep}
+                        isDisabled={disabled}
+                        isLastStep={activeStep === steps.length - 1}
+                      />
                     </Grid>
                   </Grid>
                 </StepContent>
@@ -310,13 +319,17 @@ export const Application = (props: ApplicationProps) => {
         </Stepper>
 
         {isMobile &&
-          <div>
+          <>
             <Paper square elevation={0}>
               <Typography>{steps[activeStep].title}</Typography>
             </Paper>
             <Grid container direction={'column'} spacing={2}>
               <Grid item>
-                <ActiveSection application={application} onChange={handleChange} isDisabled={disabled} />
+                <ActiveSection
+                  application={application}
+                  onChange={handleChange}
+                  isDisabled={disabled}
+                />
               </Grid>
             </Grid>
             <MobileStepper
@@ -325,7 +338,13 @@ export const Application = (props: ApplicationProps) => {
               variant="text"
               activeStep={activeStep}
               nextButton={
-                <Button disabled={disabled} size="medium" variant="contained" color="primary" onClick={handleNext}>
+                <Button
+                  disabled={disabled}
+                  size="medium"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                >
                   {activeStep === steps.length - 1 ? pageInfo.submit : pageInfo.next}
                 </Button>
               }
@@ -335,9 +354,11 @@ export const Application = (props: ApplicationProps) => {
                 </Button>
               }
             />
-          </div>
+          </>
         }
       </Grid>
     </Grid>
   )
 }
+
+export default Application
