@@ -17,7 +17,7 @@ export type AlertVariant =
   | 'outlined'
   | 'standard'
 
-interface AlertProps {
+export interface AlertProps {
   severity?: AlertSeverity
   variant?: AlertVariant
   title?: string | JSX.Element

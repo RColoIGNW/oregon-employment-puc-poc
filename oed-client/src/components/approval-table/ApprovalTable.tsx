@@ -87,7 +87,7 @@ export default function ApprovalTable(props: any) {
         actionsColumnIndex: -1,
         rowStyle: {
           flexWrap: 'nowrap',
-          textOverflow: 'elipsis'
+          textOverflow: 'ellipsis'
         }
       }}
       icons={tableIcons as any}

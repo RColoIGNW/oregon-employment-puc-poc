@@ -17,8 +17,7 @@ import useApplicantFormApi from "../hooks/useApplicantFormApi"
 import Application from '../models/Application'
 
 const GoBackToDashboard = () => (
-  <Grid item style={{flexDirection:'column', display: 'flex'}}>
-    <Typography color={'primary'}>{'You have not yet submitted any claims'}</Typography>
+  <Grid item style={{flexDirection:'row', width: '100%', display: 'flex', justifyContent: 'center'}}>
     <Button variant={'contained'} color={'primary'} onClick={() => navigate('/dashboard')}>{`Go to Dashboard`}</Button>
   </Grid>
 )
@@ -80,8 +79,8 @@ const ClaimsStatusPage = () => {
   if (!data) return (<div>Loading...</div>)
 
   return (
-    <Layout>
-      <SEO title={'Dashboard'} />
+    <Layout alert={!data.length && { message:'You have not yet submitted any claims', title: 'Claim Status' }}>
+      <SEO title={'Claim Status'} />
       <Grid container direction="row" spacing={1} style={{ marginTop: '1em' }}>
         {!data.length ? <GoBackToDashboard /> : data.map((application: Application, index: number) =>
           <Grid item xs={12} sm={7} md={6} lg={4} key={index}>
