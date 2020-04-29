@@ -2,48 +2,57 @@ import { useEffect, useState } from 'react'
 
 import firebase from '../lib/firebase'
 
-export const useFileUpload = (props: { applicationId: string }) => {
+export type UploadFile = {
+  path: string
+  name: string
+  imgUrl: string
+}
+export interface FileUploadProps {
+  files: UploadFile[]
+  removeFile: (file: UploadFile) => any
+  getFiles: () => any
+  handleSubmit: (fileObjects: File[]) => any
+}
+
+export const useFileUpload = (props: { applicationId: string }): FileUploadProps => {
   const storageRef = firebase.storage().ref()
-  const [allFiles, setFiles] = useState([])
+  const [files, setFiles] = useState([] as UploadFile[])
   const [initFiles, setInitFiles] = useState(false)
 
   const getFiles = async () => {
     const ref: any = storageRef.child(`pua-documents/${localStorage.uid}/${props.applicationId}`)
-    const files = await ref.listAll()
-    const downloadFiles = files.items.map((file: any) => {
+    const newFiles: any = []
+    const dbFiles = await ref.listAll()
+    const downloadFiles = dbFiles.items.map((file: any) => {
       return storageRef.child(file.location.path).getDownloadURL().then(url => {
-        setFiles((files: any) => [...new Set([...files, url]) as any] as any)
-        return {
-          ...file,
-          preview: url,
-        }
+        const split = decodeURIComponent(file.location.path).split('/')
+        const name = split[split.length - 1]
+        const mappedFile = { path: file.location.path, imgUrl: url, name, preview: url }
+        newFiles.push(mappedFile)
+        return mappedFile
       })
+      .catch(console.error)
     })
-    return downloadFiles
+    const resolvedFiles = await Promise.all(downloadFiles)
+    setFiles(resolvedFiles as UploadFile[])
+    return resolvedFiles
   }
 
   useEffect(() => {
-    if (!initFiles) {
-      getFiles()
-      setInitFiles(true)
-    }
+    getFiles()
+    setInitFiles(true)
     return () => {}
-  }, [allFiles])
+  }, [initFiles])
 
-  const removeFile = (fileUrl: string, idx: number) => {
-    const path = decodeURIComponent(fileUrl)
-      .replace(
-        'https://firebasestorage.googleapis.com/v0/b/oregon-pua-poc.appspot.com/o/',
-        ''
-      )
-      .split('?')[0]
-    const ref: any = storageRef.child(path)
-    ref.delete().then(() => {
-      console.info('Deleted a blob or file!')
-      delete allFiles[idx];
-      setFiles([...(new Set([...allFiles]) as any)] as any)
-      return getFiles()
-    }).catch(console.error)
+  const removeFile = (file: UploadFile) => {
+    const ref: any = storageRef.child(file.path)
+    ref.delete()
+      .then(async () => {
+        console.info('Deleted a blob or file!')
+        await getFiles()
+        setInitFiles(false)
+      })
+      .catch(console.error)
   }
 
   const handleSubmit = (fileObjects: File[]) => {
@@ -62,7 +71,7 @@ export const useFileUpload = (props: { applicationId: string }) => {
     handleSubmit,
     removeFile,
     getFiles,
-    files: allFiles
+    files
   }
 }
 
