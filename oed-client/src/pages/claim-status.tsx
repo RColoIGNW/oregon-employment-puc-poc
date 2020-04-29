@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from "react"
-import moment from 'moment'
-import Grid from '@material-ui/core/Grid'
-import { navigate, Link } from "gatsby"
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Typography from '@material-ui/core/Typography'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import { Link, navigate } from "gatsby"
+import moment from 'moment'
+import React, { useEffect, useState } from "react"
 
 import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
 import useApplicantFormApi from "../hooks/useApplicantFormApi"
 import Application from '../models/Application'
+
+const GoBackToDashboard = () => (
+  <Grid item style={{flexDirection:'column', display: 'flex'}}>
+    <Typography color={'primary'}>{'You have not yet submitted any claims'}</Typography>
+    <Button variant={'contained'} color={'primary'} onClick={() => navigate('/dashboard')}>{`Go to Dashboard`}</Button>
+  </Grid>
+)
 
 const ClaimsStatusPage = () => {
   const apiClient = useApplicantFormApi()
@@ -57,18 +65,17 @@ const ClaimsStatusPage = () => {
     fetchData()
   }, [])
 
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>, application: Application) => {
     setApplication(application)
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
     setApplication(undefined)
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   if (!data) return (<div>Loading...</div>)
 
@@ -76,7 +83,7 @@ const ClaimsStatusPage = () => {
     <Layout>
       <SEO title={'Dashboard'} />
       <Grid container direction="row" spacing={1} style={{ marginTop: '1em' }}>
-        {data.map((application: Application, index: number) =>
+        {!data.length ? <GoBackToDashboard /> : data.map((application: Application, index: number) =>
           <Grid item xs={12} sm={7} md={6} lg={4} key={index}>
             <Card>
               <CardContent>
