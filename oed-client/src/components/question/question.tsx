@@ -46,7 +46,8 @@ export const Question = (props: QuestionProps) => {
   let focusTimer: NodeJS.Timeout
   //let [detailsInput, setDetailsFocus] = useFocus() 
   let detailsInput = useRef(null)
-  const [answer, setAnswer] = useState(props.question.answer)
+  const {answer} =  props.question
+  //const [answer, setAnswer] = useState(props.question.answer)
   
   const info = {
     yes: 'Yes',
@@ -73,11 +74,13 @@ export const Question = (props: QuestionProps) => {
         }
       }, 10)
     } 
-    setAnswer({...answer, selectedOption: option, detailInfo: props.question.whenShowDetails !== option ? '' : answer.detailInfo })
+    //setAnswer({...answer, selectedOption: option, detailInfo: props.question.whenShowDetails !== option ? '' : answer.detailInfo })
+    props.onChange({...answer, selectedOption: option, detailInfo: props.question.whenShowDetails !== option ? '' : answer.detailInfo })
   }
 
   const handleDetailChange = (event: React.ChangeEvent<HTMLInputElement>) => {        
-    setAnswer({...answer, detailInfo: event.target.value })
+    //setAnswer({...answer, detailInfo: event.target.value })
+    props.onChange({...answer, detailInfo: event.target.value })
   }
 
 
@@ -90,12 +93,13 @@ export const Question = (props: QuestionProps) => {
     } else {
       subAnswers[index] = a
     }
-    setAnswer({...answer, subQuestionsAnwers: subAnswers})    
+    //setAnswer({...answer, subQuestionsAnwers: subAnswers})    
+    props.onChange({...answer, subQuestionsAnwers: subAnswers})        
   }
 
-  useEffect(() => {
-    props.onChange(answer)
-  }, [answer])
+  // useEffect(() => {
+  //   props.onChange(answer)
+  // }, [answer])
 
   useEffect(() => {    
     return () => clearTimeout(focusTimer);
