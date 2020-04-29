@@ -1,5 +1,6 @@
-import { request } from '../util/request'
 import Application from '../models/Application'
+import { request } from '../util/request'
+import { ApplicationStatus } from '../models/ApplicationStatus'
 
 export default () => {
   const getUnapprovedApplications = () => {
@@ -11,24 +12,21 @@ export default () => {
     .catch(console.error)
   }
 
-  const saveApplication = async (application: Partial<Application>): Promise<string> => {
-    let applicationId: string =  application.id || ''    
-    if (applicationId) {
-      await updateApplication(application)
-    } else {
-      const result: any = await createApplication(application)
-      console.log(result)
-      applicationId = result.applicationId as string
-    }
-    return applicationId
+  const submitApplication = (applicationId: string): Promise<any> => {    
+    const requestOptions = {
+      method: 'PATCH',
+      body: JSON.stringify({status: ApplicationStatus.Submitted}),
+      redirect: 'follow',
+    }    
+    return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}`, requestOptions as any)
+      .catch(console.error)
   }
 
-  const createApplication = (application: Partial<Application>) => {
-    // const body = JSON.stringify(formData)
+  const createApplication = () => {
     const userId = localStorage.getItem('uid')
     const requestOptions = {
       method: 'POST',
-      body: JSON.stringify({...application, userId: userId}),
+      body: JSON.stringify({userId: userId}),
       redirect: 'follow',
     }
     return request(`${process.env.REACT_APP_API_HOST}/api/applications`, requestOptions as any)
@@ -45,7 +43,7 @@ export default () => {
       .catch(console.error)
   }
 
-  const getUserApplications = () => {
+  const getUserApplications = (): Promise<Application[]> => {
     const userId = localStorage.getItem('uid')
     return request(`${process.env.REACT_APP_API_HOST}/api/users/${userId}/applications`)
     .then((result: any) => {
@@ -65,9 +63,11 @@ export default () => {
   }
 
   return {
-    saveApplication,
+    getApplication,
+    createApplication,    
+    submitApplication,
+    updateApplication,
     getUnapprovedApplications,
     getUserApplications,
-    getApplication
   }
 }

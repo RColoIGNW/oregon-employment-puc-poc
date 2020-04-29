@@ -7,7 +7,6 @@ import useAuth from '../hooks/useAuth'
 
 const LoginPage = (props: { location: { origin: string } }) => {
   useAuth(props)
-
   return (
     <Layout>
       <SEO title={'Login'} />
@@ -29,3 +28,4 @@ const LoginPage = (props: { location: { origin: string } }) => {
 }
 
 export default LoginPage
+

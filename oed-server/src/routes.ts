@@ -1,7 +1,7 @@
 import type { Router } from 'express'
-import { decodeToken, isAuthorized, hasAdminRole } from './util/token'
+import { decodeToken, isAuthorized, hasAdminRole } from './util/token';
 import applicationService from './services/application.service'
-import { getApplicants } from './services/applicants'
+import weekyApplicationService from './services/weekly-claims'
 
 export const routes = (router: Router) => {
   // app discovery/healthcheck
@@ -29,13 +29,40 @@ export const routes = (router: Router) => {
     .route('/applications/:id')
     .get(decodeToken, isAuthorized, applicationService.getApplicationById)
 
-    router
+  router
     .route('/applications/:id')
-    .delete(decodeToken, isAuthorized, applicationService.deleteApplication)
+    .delete(decodeToken, isAuthorized, hasAdminRole, applicationService.deleteApplication)
 
-    router
+  router
     .route('/applications/:id')
     .put(decodeToken, isAuthorized, applicationService.updateApplication)
+  router
+    .route('/applications/:id')
+    .patch(decodeToken, isAuthorized, applicationService.changeApplicationStatus)
+
+  router
+    .route('/weekly-applications')
+    .post(decodeToken, isAuthorized, weekyApplicationService.createWeeklyApplication)
+
+  router
+    .route('/weekly-applications')
+    .get(decodeToken, isAuthorized, hasAdminRole, weekyApplicationService.getWeeklyApplications)
+
+  router
+    .route('/users/:userId/weekly-applications')
+    .get(decodeToken, isAuthorized, weekyApplicationService.getWeeklyApplicationsByUser)
+
+  router
+    .route('/weekly-applications/:id')
+    .get(decodeToken, isAuthorized, weekyApplicationService.getWeeklyApplicationById)
+
+  router
+    .route('/weekly-applications/:id')
+    .delete(decodeToken, isAuthorized, weekyApplicationService.deleteWeeklyApplication)
+
+  router
+    .route('/weekly-applications/:id')
+    .put(decodeToken, isAuthorized, weekyApplicationService.updateWeeklyApplication)
 }
 
 export default routes

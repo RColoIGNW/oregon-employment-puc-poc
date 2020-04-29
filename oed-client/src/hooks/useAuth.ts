@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { navigate } from 'gatsby';
+import { useEffect, useState } from 'react'
 import  { useContext } from 'react'
 
 import firebase from '../lib/firebase'
@@ -7,6 +8,13 @@ import { TransitionContext } from '../providers/TransitionProvider'
 
 export default (props: { location: { origin: string } }) => {
   const { setState: updateTransition, state: loadingState } = useContext(TransitionContext)
+  const [token, setToken] = useState(typeof window !== 'undefined' && localStorage.token || '')
+
+  useEffect(() => {
+    if (token) {
+      navigate('/dashboard')
+    }
+  }, [token, setToken])
 
   if (typeof window !== 'undefined') {
     useEffect(() => {
@@ -41,8 +49,9 @@ export default (props: { location: { origin: string } }) => {
       firebase.auth().getRedirectResult().then((result: any) => {
         if (result.credential) {
           // This gives you a Google Access Token. You can use it to access the Google API.
-          const token = result.credential.accessToken
-          localStorage.accessToken = token
+          const accessToken = result.credential.accessToken
+          localStorage.accessToken = accessToken
+          setToken(accessToken)
         }
       })
 
