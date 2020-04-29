@@ -150,7 +150,7 @@ export const Application = (props: ApplicationProps) => {
   const { handleSubmit: handleSectionBSubmit } = useSectionB()
 
   const handleChange = (app: ApplicationModel) => {
-    localSave(app)
+    //localSave(app)
     setApplication(app)
   }
 

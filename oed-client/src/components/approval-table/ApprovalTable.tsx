@@ -85,6 +85,10 @@ export default function ApprovalTable(props: any) {
       data={tableProps.data}
       options={{
         actionsColumnIndex: -1,
+        rowStyle: {
+          flexWrap: 'nowrap',
+          textOverflow: 'elipsis'
+        }
       }}
       icons={tableIcons as any}
       actions={[
