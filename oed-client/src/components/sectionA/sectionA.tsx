@@ -1,7 +1,8 @@
 import React from 'react'
-import ApplicantInfo from '../ApplicantInfo'
+
 import Applicant from '../../models/Applicant'
 import { SectionProps } from '../../models/SectionProps'
+import ApplicantInfo from '../ApplicantInfo'
 
 const SectionA = (props: SectionProps) => {
   const { application, onChange } = props
