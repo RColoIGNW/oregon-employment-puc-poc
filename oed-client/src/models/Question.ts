@@ -6,6 +6,7 @@ export interface QuestionModel {
   showOptions: boolean
   note?: string  
   whenShowDetails: 'YES' | 'NO' | 'ALWAYS' | 'NEVER' 
+  whenShowSubQuestions: 'YES' | 'NO' | 'ALWAYS' | 'NEVER' 
   subQuestions?: QuestionModel[]
   isDisabled?:  boolean
   answer: AnswerModel

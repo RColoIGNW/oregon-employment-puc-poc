@@ -56,8 +56,14 @@ export const Question = (props: QuestionProps) => {
   const [disableDetails, setDisableDetails] = useState<boolean>(
     props.question.whenShowDetails !== props.question.answer.selectedOption  && props.question.whenShowDetails !== 'ALWAYS' 
      )
+
+  const [showSubQuestions, setShowSubQuestions] = useState<boolean>(
+    props.question.whenShowSubQuestions === 'ALWAYS' ||
+    props.question.whenShowSubQuestions === props.question.answer.selectedOption 
+  )   
   const handleOptionChange = (option: 'NO' | 'YES') => {
     setDisableDetails(props.question.whenShowDetails !== 'ALWAYS' && props.question.whenShowDetails !== option)
+    setShowSubQuestions(props.question.whenShowSubQuestions === 'ALWAYS' || props.question.whenShowSubQuestions === option)
     
     if (props.question.whenShowDetails === option) {
       //detailsInput.current.focus()
@@ -181,6 +187,7 @@ export const Question = (props: QuestionProps) => {
               }
               {
                 props.question.subQuestions &&
+                showSubQuestions &&
                 props.question.subQuestions.map((sq) => {
                   return (
                     <Grid item key={sq.code}>
