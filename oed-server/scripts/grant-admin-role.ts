@@ -24,7 +24,7 @@ const sendCustomVerificationEmail = async (link: string) => {
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: '"IGNW Admin Script 👻" <foo@example.com>', // sender address
-    to: 'pnw3dev@gmail.com', // list of receivers
+    to: email, // list of receivers
     subject: "Verify Email for Admin Role ✔", // Subject line
     text: "Please verify your email to be granted the admin role", // plain text body
     html: `<b>Hello! Please verify your email to be granted as an admin role</b> <a href="${link}">Click to Verify</a>`, // html body
