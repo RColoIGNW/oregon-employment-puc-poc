@@ -68,7 +68,7 @@ export default function ApprovalTable(props: any) {
       return {
         ...application,
         id: application.id,
-        name: application.applicant?.firstName,
+        name: `${application.applicant?.firstName??''} ${application.applicant?.middleName??''} ${application.applicant?.lastName??''}`,
         date: moment(application.lastModified).format('LLL'),
         phone: application.applicant?.phone,
         ssn: application.applicant?.ssn,
