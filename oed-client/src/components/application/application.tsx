@@ -156,7 +156,7 @@ export const Application = (props: ApplicationProps) => {
 
   const handleSave = async () => {
     application && await save(application)
-    snackbar.showFeedback()
+    snackbar.showFeedback({ message: 'Progress Saved'})
   }
 
   const handleBack = () => {

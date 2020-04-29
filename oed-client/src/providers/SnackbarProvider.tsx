@@ -7,7 +7,7 @@ interface SnackBarContext {
   message: string
   duration: number
   setState: Dispatch<SetStateAction<Context<SnackBarContext>>>
-  showFeedback: (options: { message?: string }) => any
+  showFeedback: (options?: { message?: string }) => any
 }
 
 const SnackbarAlert = ({message = 'Saved!'}) => {
@@ -21,10 +21,10 @@ export const SnackBarContext: Context<SnackBarContext> = createContext<SnackBarC
   message: 'Successfully Saved!',
   duration: 5000,
   setState: () => {},
-  showFeedback: (message?:string) => {
-    toast(<SnackbarAlert message={message || 'Saved!'} />, {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 500000,
+  showFeedback: (options?: { message?:string }) => {
+    toast(<SnackbarAlert message={options?.message || 'Saved!'} />, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
