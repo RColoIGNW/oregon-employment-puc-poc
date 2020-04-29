@@ -292,7 +292,6 @@ export const Application = (props: ApplicationProps) => {
                   StepIconProps={{ icon: step.icon }}
                   onClick={() => {
                     setActiveStep(index)
-                    handleSave()
                   }}
                 >
                   {step.title}
