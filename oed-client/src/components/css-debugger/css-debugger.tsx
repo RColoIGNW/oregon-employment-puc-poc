@@ -39,8 +39,7 @@ background-image: linear-gradient(to right, lightgray 1px, transparent 1px), lin
 `;
 
 interface CSSDebuggerProps {
-  debug?: boolean;
-  showToggle?: boolean;
+  debug?: boolean
   color?: string;
   showGrid?: boolean;
   buttonStyle?: React.CSSProperties;
@@ -48,7 +47,6 @@ interface CSSDebuggerProps {
 
 const CSSDebugger: React.FC<CSSDebuggerProps> = ({
   debug = false,
-  showToggle = typeof window !== 'undefined' && window.location.href.includes('localhost') ? true : false,
   showGrid = true,
   buttonStyle,
   color = "rgba(255, 0, 0, .75)",
@@ -76,16 +74,12 @@ const CSSDebugger: React.FC<CSSDebuggerProps> = ({
     setIsDebug(v => !v);
   };
 
-  const maybeRenderToggleButton = showToggle && (
-    <ToggleDebugButton style={buttonStyle} debug={isDebug} onTap={toggle}>
-      Debug CSS
-    </ToggleDebugButton>
-  );
-
   return (
     <>
       <GlobalStyle debug={isDebug} showGrid={showGrid} color={color} />
-      {maybeRenderToggleButton}
+      <ToggleDebugButton style={buttonStyle} debug={isDebug} onTap={toggle}>
+        Debug CSS
+      </ToggleDebugButton>
     </>
   );
 };

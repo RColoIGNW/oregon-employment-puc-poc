@@ -31,6 +31,7 @@ const Layout: React.FC = ({ children }) => {
   `)
 
   const { signOut, user } = useContext(AuthContext)
+  const showDebugger = typeof window !== 'undefined' && !!window.location.href.includes('localhost')
 
   return (
     <>
@@ -50,13 +51,13 @@ const Layout: React.FC = ({ children }) => {
             justifyContent: 'flex-end',
             position: 'fixed',
             top: '10px',
-            right: '100px',
+            right: showDebugger ? '100px' : '0',
             border: 'none',
             cursor: 'pointer',
             padding: '5px',
           }}>
             {user?.token &&
-              <Button variant={'outlined'} style={{ color: '#fff' }} onClick={() => signOut()}>
+              <Button variant={'outlined'} style={{ color: '#fff', right: 0 }} onClick={() => signOut()}>
                 {`Sign Out`}
               </Button>
             }
@@ -64,12 +65,14 @@ const Layout: React.FC = ({ children }) => {
         </Toolbar>
       </AppBar>
       <Container>
-        <CSSDebugger />
+        {showDebugger &&
+          <CSSDebugger />
+        }
         <Toolbar />
         <main>{children}</main>
       </Container>
     </>
-  );
-};
+  )
+}
 
 export { Layout };

@@ -9,9 +9,10 @@ import { TransitionContext } from '../providers/TransitionProvider'
 export default (props: { location: { origin: string, pathname: string } }) => {
   const { setState: updateTransition, state: loadingState } = useContext(TransitionContext)
   const [token, setToken] = useState(typeof window !== 'undefined' && localStorage.token || '')
+  const isSignedIn = token && props.location.pathname === "/"
 
   useEffect(() => {
-    if (token && props.location.pathname === '/') {
+    if (isSignedIn) {
       navigate('/dashboard')
     }
   }, [token, setToken])
@@ -44,7 +45,10 @@ export default (props: { location: { origin: string, pathname: string } }) => {
         // tosUrl: '<your-tos-url>',
         privacyPolicyUrl: 'https://www.oregon.gov/pages/terms-and-conditions.aspx'
       }
-      ui.start('#firebaseui-auth-container', uiConfig)
+
+      if (!isSignedIn) {
+        ui.start('#firebaseui-auth-container', uiConfig)
+      }
 
       firebase.auth().getRedirectResult().then((result: any) => {
         if (result.credential) {
@@ -63,5 +67,9 @@ export default (props: { location: { origin: string, pathname: string } }) => {
 
       return () => {}
     }, [loadingState])
+  }
+
+  return {
+    isSignedIn,
   }
 }
