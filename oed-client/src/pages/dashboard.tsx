@@ -1,13 +1,14 @@
 import Button from "@material-ui/core/Button"
-import Divider from "@material-ui/core/Divider"
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import Grid from "@material-ui/core/Grid"
-import ListItemText from "@material-ui/core/ListItemText"
 import Paper from "@material-ui/core/Paper"
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 import Typography from "@material-ui/core/Typography"
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { navigate } from "gatsby"
 import React from 'react'
-import { uuid } from 'uuidv4'
 
 import Alerts from '../components/alerts'
 import { Layout } from "../components/layout"
@@ -29,29 +30,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       width: '15em',
-      [theme.breakpoints.down('md')]: {
-        width: '100%'
+      [theme.breakpoints.down('xs')]: {
+        width: '10em'
       }
     },
-    list: {
-      marginLeft: '5em',
-      [theme.breakpoints.down('md')]: {
-        width: '100%',
-        marginLeft: '0'
-      }
-    },
-    container: {
+    row: {
       display: 'flex',
       flexDirection: 'row',
-      marginBottom: '1em',
-      minHeight: '7em',
+      justifyContent: 'space-between',
+      width: '100%',
       alignItems: 'center',
-      wordWrap: 'break-word',
-      [theme.breakpoints.down('sm')]: {
-        flexDirection: 'column',
-        alignItems: 'center',
-      }
-    }
+    },
   }),
 )
 
@@ -61,7 +50,7 @@ export default function DashboardPage() {
 
   const handleNewApplication = async () => {
     try {
-      const result = await api.createApplication() as any      
+      const result = await api.createApplication() as any
       navigate('application', {state: {applicationId: result.applicationId}})
     } catch (e) {
 
@@ -73,8 +62,8 @@ export default function DashboardPage() {
     {
       buttonLabel: 'File your new claim',
       description: 'Establish a new claim for Oregon unemployment benefits. If you are filing due to COVID- 19, please watch this training video.',
-      link: '/application', 
-      handleClick: handleNewApplication     
+      link: '/application',
+      handleClick: handleNewApplication
     },
     {
       buttonLabel: 'Claim a Week of Benefits',
@@ -109,39 +98,48 @@ export default function DashboardPage() {
           </Typography>
         </Grid>
 
-        {menuItems.map((item, index) => (
-          <Paper style={{margin: '1em'}} className={classes.container} key={index}>
-            <Grid item xs={12} md={2} style={{marginLeft: '1em'}}>
-              <Button
-                className={classes.button}
-                color={'primary'}
-                variant={'contained'}
-                size={'large'}
-                onClick={() => item.handleClick(item.link)}
+        <Paper style={{margin: '1em'}}>
+          {menuItems.map((item, index) => (
+            <ExpansionPanel key={index}>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-label="Expand"
+                aria-controls="additional-actions1-content"
+                id="additional-actions1-header"
               >
-                {item.buttonLabel}
-              </Button>
-            </Grid>
-            <Grid item className={classes.list}>
-              <ListItemText
-                primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      className={classes.inline}
-                      color="primary"
+                <Grid item className={classes.row}>
+                  <Grid item style={{display: 'flex'}}>
+                    <Button
+                      className={classes.button}
+                      color={'primary'}
+                      variant={'contained'}
+                      size={'medium'}
+                      fullWidth
+                      onClick={() => item.handleClick(item.link)}
                     >
-                      {item.description}
+                      {item.buttonLabel}
+                    </Button>
+                  </Grid>
+                  <Grid item style={{right: 0, display: 'flex'}}>
+                    <Typography color={'primary'}>
+                      More details
                     </Typography>
-                  </React.Fragment>
-                }
-              />
-            </Grid>
-            <Divider />
-          </Paper>
-        ))}
+                  </Grid>
+                </Grid>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography
+                  component="span"
+                  variant="body2"
+                  className={classes.inline}
+                  color="textSecondary"
+                >
+                  {item.description}
+                </Typography>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          ))}
+        </Paper>
 
       </Grid>
     </Layout>
