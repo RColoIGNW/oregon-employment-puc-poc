@@ -22,8 +22,8 @@ const ApplicationPage = (props: any) => {
 
   return (
     <Layout>
-      <SEO />      
-      <Application applicationId={applicationId} onSubmit={handleSubmit}/>      
+      <SEO />
+      <Application applicationId={applicationId} onSubmit={handleSubmit}/>
     </Layout>
   )
 }
