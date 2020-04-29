@@ -1,9 +1,10 @@
 import {createStyles, makeStyles} from '@material-ui/styles'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useDropzone } from 'react-dropzone'
 import styled from 'styled-components'
 
 import useFileUpload from '../../hooks/useFileUpload'
+import { UploadFile } from '../../hooks/useFileUpload'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -69,37 +70,26 @@ const Container = styled.div`
 
 export default function Dropzone(props: { applicationId: string }) {
   const classes = useStyles()
-  const [ files ] = useState([] as any)
-  const { handleSubmit, removeFile, files: allFiles } = useFileUpload({ applicationId: props.applicationId })
-  const [ fileObjects, setFileObjects ] = useState(allFiles as any)
+  const { handleSubmit, removeFile, files } = useFileUpload({ applicationId: props.applicationId })
   const { getRootProps, getInputProps, isDragActive,
     isDragAccept,
-    isDragReject } = useDropzone({
+    isDragReject
+  } = useDropzone({
     multiple: true,
-    onDrop: (acceptedFiles: any) => {
-      setFileObjects([...fileObjects, ...acceptedFiles])
-      handleSubmit([ ...fileObjects, ...acceptedFiles ])
+    onDrop: async (acceptedFiles: any) => {
+      await handleSubmit([ ...acceptedFiles ])
     }
   })
 
-  const displayFiles: any = []
-
-  const dedupedFiles = [...new Set(allFiles) as any]
-  dedupedFiles.forEach(file => {
-    if (!displayFiles.find(f => f?.split('?')[0] === file?.split('?')[0]) && !!file) {
-      displayFiles.push(file)
-    }
-  })
-
-  const thumbs = displayFiles?.map((file: string, idx: number) => {
-    const name = decodeURIComponent(file).split('?')[0].split('/')[10]
-    return file && (
-      <React.Fragment key={`${file}-${idx}`}>
+  const thumbs = files?.map((file: UploadFile, idx: number) => {
+    const { name } = file
+    return file.imgUrl && (
+      <React.Fragment key={`${name}-${idx}`}>
         {name.includes('.jpg') || name.includes('.png') || name.includes('.jpeg') ?
           <div className={classes.thumb}>
             <div className={classes.thumbInner}>
               <img
-                src={file}
+                src={file.imgUrl}
                 className={classes.img}
                 alt={name}
               />
@@ -109,17 +99,11 @@ export default function Dropzone(props: { applicationId: string }) {
           <span>{name}</span>
         }
         <span style={{ cursor: 'pointer', color: 'red', marginLeft: '4px', marginRight: '1em' }} onClick={() => {
-          removeFile(file, idx)
-          // setFileObjects(allFiles) // TODO: remove file object from state
+          removeFile(file)
         }}>X</span>
       </React.Fragment>
     )
   })
-
-  useEffect(() => () => {
-    // Make sure to revoke the data uris to avoid memory leaks
-    files.forEach((file: any) => URL.revokeObjectURL(file.preview))
-  }, [ files ])
 
   return (
     <div className="container">
