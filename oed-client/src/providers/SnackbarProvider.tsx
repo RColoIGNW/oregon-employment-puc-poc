@@ -23,7 +23,7 @@ export const SnackBarContext: Context<SnackBarContext> = createContext<SnackBarC
   setState: () => {},
   showFeedback: (options?: { message?:string }) => {
     toast(<SnackbarAlert message={options?.message || 'Saved!'} />, {
-      position: toast.POSITION.BOTTOM_RIGHT,
+      position: toast.POSITION.TOP_RIGHT,
       autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
