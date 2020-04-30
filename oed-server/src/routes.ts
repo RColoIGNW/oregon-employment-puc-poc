@@ -1,7 +1,13 @@
 import type { Router } from 'express'
-import { decodeToken, isAuthorized, hasAdminRole } from './util/token';
-import applicationService from './services/application.service'
-import weekyApplicationService from './services/weekly-claims'
+import { decodeToken, isAuthorized, hasAdminRole } from './util/token'
+import applicationService from './services/new-application'
+import weekyApplicationService from './services/weekly-application'
+import applicationApi from './services/application'
+
+enum ENDPOINTS {
+  NEW_APPLICATIONS = 'applications',
+  WEEKLY_APPLICATIONS = 'weekly-applications'
+}
 
 export const routes = (router: Router) => {
   // app discovery/healthcheck
@@ -18,27 +24,26 @@ export const routes = (router: Router) => {
 
   router
     .route('/applications')
-    .get(decodeToken, isAuthorized, applicationService.getApplications)
-    // .get(decodeToken, isAuthorized, hasAdminRole, applicationService.getApplications)
+    .get(decodeToken, isAuthorized, hasAdminRole, applicationApi.getCollectionByName.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 
   router
     .route('/users/:userId/applications')
-    .get(decodeToken, isAuthorized, applicationService.getApplicationsByUser)
+    .get(decodeToken, isAuthorized, applicationApi.getCollectionByUser.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   router
     .route('/applications/:id')
-    .get(decodeToken, isAuthorized, applicationService.getApplicationById)
+    .get(decodeToken, isAuthorized, applicationApi.getDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   router
     .route('/applications/:id')
-    .delete(decodeToken, isAuthorized, hasAdminRole, applicationService.deleteApplication)
+    .delete(decodeToken, isAuthorized, hasAdminRole, applicationApi.deleteDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   router
     .route('/applications/:id')
-    .put(decodeToken, isAuthorized, applicationService.updateApplication)
+    .put(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
   router
     .route('/applications/:id')
-    .patch(decodeToken, isAuthorized, applicationService.changeApplicationStatus)
+    .patch(decodeToken, isAuthorized, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   router
     .route('/weekly-applications')
@@ -46,23 +51,27 @@ export const routes = (router: Router) => {
 
   router
     .route('/weekly-applications')
-    .get(decodeToken, isAuthorized, hasAdminRole, weekyApplicationService.getWeeklyApplications)
+    .get(decodeToken,isAuthorized,hasAdminRole, applicationApi.getCollectionByName.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 
   router
     .route('/users/:userId/weekly-applications')
-    .get(decodeToken, isAuthorized, weekyApplicationService.getWeeklyApplicationsByUser)
+    .get(decodeToken, isAuthorized, applicationApi.getCollectionByUser.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 
   router
     .route('/weekly-applications/:id')
-    .get(decodeToken, isAuthorized, weekyApplicationService.getWeeklyApplicationById)
+    .get(decodeToken, isAuthorized, applicationApi.getDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 
   router
     .route('/weekly-applications/:id')
-    .delete(decodeToken, isAuthorized, weekyApplicationService.deleteWeeklyApplication)
+    .delete(decodeToken, isAuthorized, applicationApi.deleteDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 
   router
     .route('/weekly-applications/:id')
-    .put(decodeToken, isAuthorized, weekyApplicationService.updateWeeklyApplication)
+    .put(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
+
+  router
+    .route('/weekly-applications/:id')
+    .patch(decodeToken, isAuthorized, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 }
 
 export default routes
