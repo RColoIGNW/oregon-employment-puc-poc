@@ -4,12 +4,20 @@ import React from 'react'
 import { Layout } from '../components/layout'
 import { SEO } from '../components/seo'
 import WeeklyForm from '../components/weekly-form'
+import useWeeklyApplication from "../hooks/useWeeklyApplication"
 
 const ApplicationPage = (props: any) => {
   const applicationId = props?.location?.state?.applicationId
+  const {submit} = useWeeklyApplication()
 
-  const handleSubmit = () => {
-    navigate('confirm')
+  const handleSubmit = async (appId: string) => {
+    try {
+      //TODO: Show Progress
+      await submit(appId)
+      navigate('confirm',  { state: {applicationId: applicationId }})
+    } catch (e) {
+      //TODO: Show submit error
+    }
   }
 
   return (

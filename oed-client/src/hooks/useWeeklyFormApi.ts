@@ -1,5 +1,6 @@
 import Application from '../models/Application'
 import { request } from '../util/request'
+import { ApplicationStatus } from "../models/ApplicationStatus"
 
 export default () => {
   const saveApplication = async (application: Partial<Application>): Promise<string> => {
@@ -12,6 +13,18 @@ export default () => {
       applicationId = result?.applicationId as string
     }
     return applicationId
+  }
+
+  const submitApplication = (applicationId: string): Promise<any> => {
+    const requestOptions = {
+      method: 'PATCH',
+      body: JSON.stringify({status: ApplicationStatus.Submitted}),
+      redirect: 'follow',
+    }
+    console.log(requestOptions)
+    //todo whats the right path?
+    // return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}`, requestOptions as any)
+    //   .catch(console.error)
   }
 
   const createApplication = (application: Partial<Application>) => {
@@ -56,6 +69,7 @@ export default () => {
   }
 
   return {
+    submitApplication,
     saveApplication,
     getUserApplications,
     getApplication

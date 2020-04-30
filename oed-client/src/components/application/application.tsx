@@ -200,15 +200,15 @@ export const Application = (props: ApplicationProps) => {
 
     }
 
-    if (isStepValid) {      
+    if (isStepValid) {
       try {
         console.log('test')
-        await handleSave()     
+        await handleSave()
         if (activeStep === steps.length - 1){
           //Submit App
-          props.onSubmit && props.onSubmit(application!.id)  
+          props.onSubmit && props.onSubmit(application!.id)
         } else {
-          setActiveStep((prevActiveStep) => prevActiveStep + 1)              
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
       }
       catch(e){
@@ -252,7 +252,7 @@ export const Application = (props: ApplicationProps) => {
       title: pageInfo.sectionE.title,
       isFirstStep: false,
       component: SectionE
-    },    
+    },
     {
       key: 'F',
       icon: pageInfo.sectionF.icon,

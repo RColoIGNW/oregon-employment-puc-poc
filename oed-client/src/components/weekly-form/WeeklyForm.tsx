@@ -89,7 +89,7 @@ const StepActions = (props: StepActionsProp) => {
 
 interface WeeklyFormProps {
   applicationId?: string
-  onSubmit?: () => void
+  onSubmit?: (appId: string) => Promise<any>
   isDisabled?: boolean
 }
 
@@ -144,7 +144,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
 
-  const handleNext = () => {
+  const handleNext = async () => {
     let isStepValid: boolean = true
     switch (activeStep) {
       case 0:
@@ -158,8 +158,19 @@ export default function WeeklyForm(props: WeeklyFormProps) {
     }
 
     if (isStepValid) {
-      handleSave()
-      setActiveStep((prevActiveStep) => prevActiveStep + 1)
+      try {
+        console.log('test')
+        await handleSave()
+        if (activeStep === steps.length - 1){
+          //Submit App
+          props.onSubmit && props.onSubmit(application!.id)
+        } else {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
+        }
+      }
+      catch(e){
+      }
+
     }
   }
 
@@ -216,7 +227,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
                         <Section applicationId={applicationId} isDisabled={disabled} application={application} onChangeWeekly={handleChange} />
                       </Grid>
                       <Grid item>
-                        <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} />
+                        <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} isLastStep={activeStep === steps.length - 1}/>
                       </Grid>
                     </Grid>
                   </StepContent>

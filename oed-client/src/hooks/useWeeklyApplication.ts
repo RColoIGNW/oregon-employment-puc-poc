@@ -31,7 +31,6 @@ export default () => {
 
   const handleEmploymentChange = (employmentRecords: ApplicationModel) => {
     currentValue.employmentHistory = employmentRecords.employmentRecords
-    console.log(currentValue)
   }
 
   const save = async (application: Application): Promise<string> => {
@@ -42,12 +41,18 @@ export default () => {
     storage.save('weekly-application', weeklyApplication)
   }
 
+  const submit = (applicationId: string) => {
+    console.log('weekly submit')
+    return api.submitApplication(applicationId)
+  }
+
   return {
     currentValue,
     handleChange,
     handleEmploymentChange,
     load,
     localSave,
-    save
+    save,
+    submit
   }
 }
