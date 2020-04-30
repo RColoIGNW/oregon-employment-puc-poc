@@ -3,5 +3,6 @@ import weeklyQuestions from "./weeklyQuestions"
 
 export interface WeeklySectionProps extends SectionProps{
   weeklyQuestions: weeklyQuestions,
-  onChangeWeekly: (weeklyQuestions: weeklyQuestions) => void
+  onChangeWeekly: (weeklyQuestions: weeklyQuestions) => void,
+  status: 'in-progress' | 'submitted' | 'approved'
 }

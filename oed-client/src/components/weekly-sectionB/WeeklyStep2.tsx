@@ -8,6 +8,7 @@ import Radio from "@material-ui/core/Radio"
 import SectionB from "../sectionB/sectionB"
 import weeklyQuestions from "../../models/weeklyQuestions"
 import ApplicationModel from '../../models/Application'
+import useWeeklyApplication from "../../hooks/useWeeklyApplication"
 
 const defaultValue: weeklyQuestions = {
   ableToWork: false,
@@ -46,6 +47,8 @@ interface WeeklyStep2Props {
 export default (props: WeeklyStep2Props) => {
   const [state, setState] = useState(props.weeklyQuestions || defaultValue)
 
+  const {handleEmploymentChange} = useWeeklyApplication()
+
   const { isDisabled } = props
   const disabled = !!isDisabled
 
@@ -62,7 +65,7 @@ export default (props: WeeklyStep2Props) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={7} md={12}>
-        <SectionB application={props.application} onChange={props.onChange}/>
+        <SectionB application={props.application} onChange={handleEmploymentChange}/>
       </Grid>
       <Grid item xs={12} sm={7} md={6}>
         <FormControl component="fieldset">

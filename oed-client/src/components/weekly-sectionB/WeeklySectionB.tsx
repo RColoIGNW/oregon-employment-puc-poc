@@ -9,7 +9,7 @@ const WeeklySectionB = (props: WeeklySectionProps) => {
   const { application, onChange } = props
 
   const handleChange = (weeklyQuestions: weeklyQuestions) => {
-    //todo not sure what should go here
+                                    //todo not sure what should go here
     onChange && onChange({ ...application })
   }
 

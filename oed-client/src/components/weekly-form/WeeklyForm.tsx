@@ -123,14 +123,15 @@ export default function WeeklyForm(props: WeeklyFormProps) {
     }
   }, [applicationId])
 
-  const { save, localSave } = useWeeklyApplication()
+  const { save, localSave, handleChange } = useWeeklyApplication()
   const { handleSubmit: handleSectionASubmit } = useSectionA()
   const { handleSubmit: handleSectionBSubmit } = useSectionB()
 
-  const handleChange = (app: ApplicationModel) => {
-    localSave(app)
-    setApplication(app)
-  }
+  // const handleChange = (app: ApplicationModel) => {
+  //   localSave(app)
+  //   setApplication(app)
+  // }
+
 
   const handleSave = async () => {
     if(application){
@@ -212,7 +213,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
                   <StepContent>
                     <Grid container direction={'column'} spacing={2}>
                       <Grid item>
-                        <Section applicationId={applicationId} isDisabled={disabled} application={application} onChange={handleChange} />
+                        <Section applicationId={applicationId} isDisabled={disabled} application={application} onChangeWeekly={handleChange} />
                       </Grid>
                       <Grid item>
                         <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} />
@@ -231,7 +232,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
               </Paper>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
-                  <ActiveSection applicationId={applicationId} isDisabled={disabled} application={application} onChange={handleChange} />
+                  <ActiveSection applicationId={applicationId} isDisabled={disabled} application={application} onChangeWeekly={handleChange} />
                 </Grid>
               </Grid>
               <MobileStepper

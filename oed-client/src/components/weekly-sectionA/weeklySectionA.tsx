@@ -7,7 +7,7 @@ const WeeklySectionA = (props: WeeklySectionProps) => {
   const { weeklyQuestions, onChangeWeekly } = props
 
   const handleChange = (weeklyQuestions: weeklyQuestions) => {
-    //todo not sure what should go here
+                                                    //todo not sure what should go here
     onChangeWeekly && onChangeWeekly({ ...weeklyQuestions })
   }
 
