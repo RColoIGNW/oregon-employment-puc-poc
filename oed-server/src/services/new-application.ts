@@ -1,46 +1,47 @@
 import { Request, Response } from 'express'
 import fb from 'firebase-admin'
-import Validator from 'validatorjs'
 
 import firebase from '../util/firebase'
 import { logger } from '../util/logger'
+// import Validator from 'validatorjs'
+
 
 const log = logger('api:application-information')
 
 const db = firebase.firestore()
 
-const rules = {
-  'isSubmitted': 'boolean',
-  'address.street': 'string',
-  'address.city': 'string',
-  'address.state': 'string',
-  'address.zipCode': 'string',
-  'firstName': 'string',
-  'middleName': 'string',
-  'lastName': 'string',
-  'ssn': 'string',
-  'dob': 'string',
-  'phone': 'string',
-  'gender': 'string',
-  'isHispanicLatino': 'boolean',
-  'contactMethod.phone': 'string',
-  'contactMethod.email': 'string',
-  'races.*.americanIndianOrAlaskaNative': 'string',
-  'races.*.asian': 'string',
-  'races.*.hawaiianNativeOrOtherPacificIslander': 'string',
-  'races.*.white': 'string',
-  'races.*.blackOrAfricanAmerican': 'string',
-  'races.*.other': 'string',
-  'employmentRecord.*employer.name': 'string',
-  'employmentRecord.*employer.address.street': 'string',
-  'employmentRecord.*employer.address.city': 'string',
-  'employmentRecord.*employer.address.state': 'string',
-  'employmentRecord.*employer.address.zipCode': 'string',
-  'employmentRecord.*employer.phone': 'string',
-  'employmentRecord.started': 'date',
-  'employmentRecord.ended': 'date',
-  'uid': 'required|string',
-}
+// const rules = { // TODO: implement schema
+//   'isSubmitted': 'boolean',
+//   'address.street': 'string',
+//   'address.city': 'string',
+//   'address.state': 'string',
+//   'address.zipCode': 'string',
+//   'firstName': 'string',
+//   'middleName': 'string',
+//   'lastName': 'string',
+//   'ssn': 'string',
+//   'dob': 'string',
+//   'phone': 'string',
+//   'gender': 'string',
+//   'isHispanicLatino': 'boolean',
+//   'contactMethod.phone': 'string',
+//   'contactMethod.email': 'string',
+//   'races.*.americanIndianOrAlaskaNative': 'string',
+//   'races.*.asian': 'string',
+//   'races.*.hawaiianNativeOrOtherPacificIslander': 'string',
+//   'races.*.white': 'string',
+//   'races.*.blackOrAfricanAmerican': 'string',
+//   'races.*.other': 'string',
+//   'employmentRecord.*employer.name': 'string',
+//   'employmentRecord.*employer.address.street': 'string',
+//   'employmentRecord.*employer.address.city': 'string',
+//   'employmentRecord.*employer.address.state': 'string',
+//   'employmentRecord.*employer.address.zipCode': 'string',
+//   'employmentRecord.*employer.phone': 'string',
+//   'employmentRecord.started': 'date',
+//   'employmentRecord.ended': 'date',
+//   'uid': 'required|string',
+// }
 
 const createApplication = async (req: Request, res: Response) => {
   try {

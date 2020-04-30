@@ -4,11 +4,11 @@ import firebase from '../util/firebase'
 
 const db = firebase.firestore()
 
-const getCollectionByName = async (name: string, req: Request, res: Response) => {
+const getCollectionByName = async (collectionName: string, _: Request, res: Response) => {
   try {
     const response: any = [] // TODO: add types
     await db
-      .collection(name)
+      .collection(collectionName)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -25,11 +25,11 @@ const getCollectionByName = async (name: string, req: Request, res: Response) =>
   }
 }
 
-const getCollectionByUser = async (name: string, req: Request, res: Response) => {
+const getCollectionByUser = async (collectionName: string, req: Request, res: Response) => {
   try {
     const response: any = [] // TODO: add types
     await db
-      .collection(name)
+      .collection(collectionName)
       .where('userId', '==', req.params.userId)
       .get()
       .then(querySnapshot => {
@@ -47,11 +47,11 @@ const getCollectionByUser = async (name: string, req: Request, res: Response) =>
   }
 }
 
-const getDocumentById = async (name: string, req: Request, res: Response) => {
+const getDocumentById = async (collectionName: string, req: Request, res: Response) => {
   try {
     let response: any = undefined
     await db
-      .collection(name)
+      .collection(collectionName)
       .doc(req.params.id)
       .get()
       .then(doc => {
@@ -67,10 +67,10 @@ const getDocumentById = async (name: string, req: Request, res: Response) => {
   }
 }
 
-const deleteDocumentById = async (name: string, req: Request, res: Response) => {
+const deleteDocumentById = async (collectionName: string, req: Request, res: Response) => {
   try {
     await db
-      .collection(name)
+      .collection(collectionName)
       .doc(req.params.id)
       .delete()
 
@@ -82,12 +82,12 @@ const deleteDocumentById = async (name: string, req: Request, res: Response) => 
   }
 }
 
-const updateDocumentById = async (name: string, req: Request, res: Response) => {
+const updateDocumentById = async (collectionName: string, req: Request, res: Response) => {
   try {
     const { id, ...applicationInfo } = req.body;
     //TODO: Validate
     await db
-      .collection(name)
+      .collection(collectionName)
       .doc(req.params.id)
       .update(applicationInfo)
 
@@ -99,10 +99,10 @@ const updateDocumentById = async (name: string, req: Request, res: Response) => 
   }
 }
 
-const changeDocumentStatusById = async (name: string, req: Request, res: Response) => {
+const changeDocumentStatusById = async (collectionName: string, req: Request, res: Response) => {
   try {
     await db
-      .collection(name)
+      .collection(collectionName)
       .doc(req.params.id)
       .update(req.body)
 
