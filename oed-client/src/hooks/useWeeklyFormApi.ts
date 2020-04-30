@@ -22,9 +22,9 @@ export default () => {
       redirect: 'follow',
     }
     console.log(requestOptions)
-    //todo whats the right path?
-    // return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}`, requestOptions as any)
-    //   .catch(console.error)
+    console.log(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${applicationId}`)
+    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${applicationId}`, requestOptions as any)
+      .catch(console.error)
   }
 
   const createApplication = (application: Partial<Application>) => {
