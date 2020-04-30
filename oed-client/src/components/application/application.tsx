@@ -13,13 +13,15 @@ import {
   makeStyles
 } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import React, { useEffect, useState } from 'react'
+import { navigate } from "gatsby"
+import React, { useContext, useEffect, useState } from 'react'
 
 import useApplicantFormApi from '../../hooks/useApplicantFormApi'
 import useApplication from "../../hooks/useApplication"
 import useSectionA from "../../hooks/useSectionA"
 import useSectionB from "../../hooks/useSectionB"
 import ApplicationModel from '../../models/Application'
+import { SnackBarContext } from '../../providers/SnackbarProvider'
 import theme from "../../themes/theme-light"
 import SectionA from "../sectionA/sectionA"
 import SectionB from "../sectionB/sectionB"
@@ -111,7 +113,7 @@ const StepActions = (props: StepActionsProp) => {
 }
 
 interface ApplicationProps {
-  applicationId?: string
+  applicationId: string
   onSubmit?: (applicationId: string) => void
   isDisabled?: boolean
 }
@@ -120,6 +122,7 @@ export const Application = (props: ApplicationProps) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const snackbar = useContext(SnackBarContext)
 
   const { applicationId, isDisabled } = props
   const disabled = !!isDisabled
@@ -128,38 +131,32 @@ export const Application = (props: ApplicationProps) => {
 
   useEffect(() => {
     //TODO: Check Application in Progress (check storage) ask Continue or discard?
+    if (!applicationId){
+      navigate('dashboard')
+    }
     const retrieveApplication = async (applicationId: string) => {
-      const application = await api.getApplication(applicationId)
-      setApplication(application)
+      try {
+        const application = await api.getApplication(applicationId)
+        setApplication(application)
+      } catch(e){
+        //TODO: Show Error notification
+      }
     }
-
-    const createApplication = async () => {
-      const app = { userId: localStorage.uid } as ApplicationModel
-      const applicationId = await api.saveApplication(app);
-      setApplication({ ...app, id: applicationId })
-    }
-
-    if (applicationId) {
-      retrieveApplication(applicationId)
-    } else {
-      createApplication()
-    }
-  }, [applicationId])
+    applicationId && retrieveApplication(applicationId)
+  }, [])
 
   const { save, localSave } = useApplication()
   const { handleSubmit: handleSectionASubmit } = useSectionA()
   const { handleSubmit: handleSectionBSubmit } = useSectionB()
 
   const handleChange = (app: ApplicationModel) => {
-    localSave(app)
+    //localSave(app)
     setApplication(app)
   }
 
   const handleSave = async () => {
-    if (application) {
-      const applicationId = await save(application);
-      setApplication({ ...application, id: applicationId })
-    }
+    application && await save(application)
+    snackbar.showFeedback({ message: 'Progress Saved'})
   }
 
   const handleBack = () => {
@@ -202,7 +199,6 @@ export const Application = (props: ApplicationProps) => {
 
     if (isStepValid) {
       try {
-        console.log('test')
         await handleSave()
         if (activeStep === steps.length - 1){
           //Submit App
@@ -272,7 +268,7 @@ export const Application = (props: ApplicationProps) => {
 
   const ActiveSection = steps?.[activeStep]?.component
 
-  if (!application) return (<div>Loading...</div>)
+  if (!application) return (<>Loading...</>)
 
   return (
     <Grid container direction="column" spacing={2}>
@@ -296,7 +292,6 @@ export const Application = (props: ApplicationProps) => {
                   StepIconProps={{ icon: step.icon }}
                   onClick={() => {
                     setActiveStep(index)
-                    handleSave()
                   }}
                 >
                   {step.title}
@@ -307,7 +302,13 @@ export const Application = (props: ApplicationProps) => {
                       <Section application={application} onChange={handleChange} isDisabled={disabled} />
                     </Grid>
                     <Grid item>
-                      <StepActions onBack={handleBack} onNext={handleNext} isFirstStep={!!step.isFirstStep} isDisabled={disabled} isLastStep={activeStep === steps.length - 1}/>
+                      <StepActions
+                        onBack={handleBack}
+                        onNext={handleNext}
+                        isFirstStep={!!step.isFirstStep}
+                        isDisabled={disabled}
+                        isLastStep={activeStep === steps.length - 1}
+                      />
                     </Grid>
                   </Grid>
                 </StepContent>
@@ -317,13 +318,17 @@ export const Application = (props: ApplicationProps) => {
         </Stepper>
 
         {isMobile &&
-          <div>
+          <>
             <Paper square elevation={0}>
               <Typography>{steps[activeStep].title}</Typography>
             </Paper>
             <Grid container direction={'column'} spacing={2}>
               <Grid item>
-                <ActiveSection application={application} onChange={handleChange} isDisabled={disabled} />
+                <ActiveSection
+                  application={application}
+                  onChange={handleChange}
+                  isDisabled={disabled}
+                />
               </Grid>
             </Grid>
             <MobileStepper
@@ -332,7 +337,13 @@ export const Application = (props: ApplicationProps) => {
               variant="text"
               activeStep={activeStep}
               nextButton={
-                <Button disabled={disabled} size="medium" variant="contained" color="primary" onClick={handleNext}>
+                <Button
+                  disabled={disabled}
+                  size="medium"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                >
                   {activeStep === steps.length - 1 ? pageInfo.submit : pageInfo.next}
                 </Button>
               }
@@ -342,9 +353,11 @@ export const Application = (props: ApplicationProps) => {
                 </Button>
               }
             />
-          </div>
+          </>
         }
       </Grid>
     </Grid>
   )
 }
+
+export default Application

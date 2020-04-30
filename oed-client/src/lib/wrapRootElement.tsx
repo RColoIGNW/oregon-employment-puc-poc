@@ -1,9 +1,12 @@
+import 'react-toastify/dist/ReactToastify.css'
+
 import CssBaseline from '@material-ui/core/CssBaseline'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import React, { ReactNode } from "react"
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet'
 
-import AuthProvider from '../providers/AuthProvider';
+import Toast from '../components/toast'
+import AuthProvider from '../providers/AuthProvider'
 import TransitionProvider from '../providers/TransitionProvider'
 import theme from '../themes/theme-light'
 
@@ -24,6 +27,7 @@ const WrapRootElement:React.FC<{ element: ReactNode }> = ({element}) => {
           {element}
         </TransitionProvider>
       </AuthProvider>
+      <Toast />
     </ThemeProvider>
     </React.Fragment>
   )

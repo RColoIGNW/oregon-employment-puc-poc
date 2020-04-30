@@ -21,8 +21,7 @@ export async function request<T>(url: string, options?: RequestOptions) {
   headers.append("Content-Type", "application/json")
 
   let response
-  try {
-    console.log('fetchhhh')
+  try {    
     response = await fetch(url, { headers, ...options })
   } catch (err) {
     log("request: network error making request", err)

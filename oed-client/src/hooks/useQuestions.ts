@@ -9,7 +9,8 @@ const c_2_questions: QuestionModel[]= [
     code: 'C_2_1',
     text: '(1) Unemployment compensation under any State or Federal law?',
     showOptions: true,    
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_2_1'
     }    
@@ -18,7 +19,8 @@ const c_2_questions: QuestionModel[]= [
     code: 'C_2_2',    
     text: '(2) Any amounts for loss of wages due to illness or disability?',
     showOptions: true,    
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_2_2'
     }    
@@ -27,7 +29,8 @@ const c_2_questions: QuestionModel[]= [
     code: 'C_2_3',    
     text: '(3) Any type of private income protection insurance?',
     showOptions: true,    
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_2_3'
     }    
@@ -36,7 +39,8 @@ const c_2_questions: QuestionModel[]= [
     code: 'C_2_4',
     text: '(4) Any amount as a supplemental unemployment benefit (SUB)?',
     showOptions: true,    
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_2_4'
     }    
@@ -47,9 +51,22 @@ const question_6_1: QuestionModel = {
   code: 'D_6_1',
   text: 'If "YES", can you discharge them?',
   showOptions: true,
-  whenShowDetails: 'NEVER',
+  whenShowDetails: 'NEVER', 
+  whenShowSubQuestions: 'NEVER', 
   answer: {
     questionCode: 'D_6_1'
+  }
+}
+
+const questionF_1_1: QuestionModel = {
+  code: 'F_1_1',
+  text: 'If NO, are you in satisfactory immigration status?',
+  showOptions: true,
+  whenShowDetails: 'ALWAYS',
+  whenShowSubQuestions: 'NEVER',
+  note: 'Alien Reg # ',
+  answer: {
+    questionCode: 'F_1_1'
   }
 }
 
@@ -58,7 +75,8 @@ const _questions: QuestionModel[] = [
     code: 'C_1',
     text: 'Are you receiving or will you receive retirement pay (other than Social Security) within the next 12 months?',
     showOptions: true,    
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_1'
     }    
@@ -67,7 +85,8 @@ const _questions: QuestionModel[] = [
     code: 'C_2',
     text: 'Did you apply for or receive, or would you be eligible to receive if you had ever applied for',
     showOptions: false,
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'ALWAYS', 
     answer: {
       questionCode: 'C_2'
     },
@@ -78,7 +97,8 @@ const _questions: QuestionModel[] = [
     text: 'Have you been diagnosed with COVID–19 or are you experiencing symptoms of COVID–19 and seeking a medical diagnosis?',
     showOptions: true,
     note: 'If "YES", please enter the date you were diagnosed or when you began experiencing symptoms',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_3'
     }
@@ -88,7 +108,8 @@ const _questions: QuestionModel[] = [
     text: 'Has a member of your household has been diagnosed with COVID–19?',
     showOptions: true,
     note: 'If "YES", please enter the date the household member was diagnosed.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_4'
     }
@@ -98,7 +119,8 @@ const _questions: QuestionModel[] = [
     text: 'Are you caring for a family member or a member of your household who has been diagnosed with COVID–19?',
     showOptions: true,
     note: 'If "YES", please enter the date the household member was diagnosed.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_5'
     }    
@@ -108,7 +130,8 @@ const _questions: QuestionModel[] = [
     text: 'Is there a child or other person in the household for which you have primary caregiving responsibility that is unable to attend school or another facility that is closed as a direct result of the COVID-19 public health emergency and such school or facility care is required?',
     showOptions: true,
     note: 'If "YES", please enter the name of the facility that closed and the date of the closure.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_6'
     }
@@ -118,7 +141,8 @@ const _questions: QuestionModel[] = [
     text: 'Have you become the breadwinner or provider of major support for a household because the head of the household has died as a direct result of COVID–19?',
     showOptions: true,
     note: 'If "YES", please enter the date you became the provider for a household.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_7'
     }    
@@ -128,7 +152,8 @@ const _questions: QuestionModel[] = [
     text: 'Has your place of employment closed as a direct result of the COVID–19 public health emergency?',
     showOptions: true,
     note: 'If "YES", please enter the date your place of employment closed and the name of the business.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_8'
     }    
@@ -138,7 +163,8 @@ const _questions: QuestionModel[] = [
     text: 'Have you quit a job as a direct result of COVID–19?',
     showOptions: true,
     note: 'If "YES", please enter the date you quit, the name of the business, and the reason you voluntarily left work.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_9'
     }
@@ -148,7 +174,8 @@ const _questions: QuestionModel[] = [
     text: 'Were you scheduled to start a new job that has since closed as a direct result of the COVID-19 public health emergency?',
     showOptions: true,
     note: 'If "YES", please enter the date you were expected to start work, the date your new job closed, and the name of the business.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_10'
     }    
@@ -158,7 +185,8 @@ const _questions: QuestionModel[] = [
     text: 'Are you unable to reach your place of employment because you have been advised by a health care provider to self-quarantine due to concerns related to COVID–19?',
     showOptions: true,
     note: 'If "YES", please enter the reason why you are unable to reach your place of employment and the date this began.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_11'
     }    
@@ -168,7 +196,8 @@ const _questions: QuestionModel[] = [
     text: 'Are you unable to reach your place of employment because of a quarantine imposed as a direct result of the COVID-19 public health emergency?',
     showOptions: true,
     note: 'If "YES", please enter the reason why you are unable to reach your place of employment and the date this began.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_12'
     }    
@@ -178,7 +207,8 @@ const _questions: QuestionModel[] = [
     text: 'Do you have the ability to continue to receive payment from your employer while working from home?',
     showOptions: true,
     note: 'If "YES", please enter the reason why you have refused to accept a teleworking option from your employer.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_13'
     }    
@@ -188,7 +218,8 @@ const _questions: QuestionModel[] = [
     text: 'Are you receiving paid sick leave or other paid leave benefits?',
     showOptions: true,
     note: 'If "YES", please enter the date you began to receive paid sick leave or paid leave benefits and who you are receiving this payment from, if you know an end date please include that.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_14'
     }    
@@ -198,7 +229,8 @@ const _questions: QuestionModel[] = [
     text: 'Are you currently self-employed?',
     showOptions: true,
     note: 'If "YES", you MUST answer the questions in section D.',
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'C_15'
     }    
@@ -209,6 +241,7 @@ const _questions: QuestionModel[] = [
     note: 'If "NO", explain.',
     showOptions: true,
     whenShowDetails: 'NO',
+    whenShowSubQuestions: 'NEVER',
     answer: {
       questionCode: 'D_1'
     } 
@@ -219,6 +252,7 @@ const _questions: QuestionModel[] = [
     note: '',
     showOptions: false,
     whenShowDetails: 'ALWAYS',
+    whenShowSubQuestions: 'NEVER',
     answer: {
       questionCode: 'D_2'
     } 
@@ -228,7 +262,8 @@ const _questions: QuestionModel[] = [
     text: 'Do you have a business name?',
     note: 'If "YES", what is your business name?',
     showOptions: true,
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'D_3'
     } 
@@ -238,7 +273,8 @@ const _questions: QuestionModel[] = [
     text: 'Do you file a business return? (Ex: Schedule C, 1120 or a 1065)',
     note: 'If "YES", please list what returns you file.',
     showOptions: true,
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'D_4'
     } 
@@ -247,7 +283,8 @@ const _questions: QuestionModel[] = [
     code: 'D_5',
     text: 'Do you determine how the work is to be performed?',
     showOptions: true,
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'D_5'
     }
@@ -256,7 +293,8 @@ const _questions: QuestionModel[] = [
     code: 'D_6',
     text: 'Do you have the right to hire someone to help you perform your services?',      
     showOptions: true,
-    whenShowDetails: 'NEVER',    
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'ALWAYS',     
     answer: {
       questionCode: 'D_6'
     },
@@ -266,7 +304,8 @@ const _questions: QuestionModel[] = [
     code: 'D_7',
     text: 'Do you determine where the work is going to be performed?',
     showOptions: true,
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'D_7'
     }
@@ -275,7 +314,8 @@ const _questions: QuestionModel[] = [
     code: 'D_8',
     text: 'Do you determine your rate of compensation?',
     showOptions: true,
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'D_8'
     }
@@ -285,7 +325,8 @@ const _questions: QuestionModel[] = [
     text: 'Do you have an investment in tools, equipment, etc.?',
     note: 'If "YES", how much?',
     showOptions: true,
-    whenShowDetails: 'YES',
+    whenShowDetails: 'YES', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'D_9'
     }
@@ -294,7 +335,8 @@ const _questions: QuestionModel[] = [
     code: 'D_10',
     text: 'Can the company you provide services to terminate you?',
     showOptions: true,
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'D_10'
     }
@@ -304,7 +346,8 @@ const _questions: QuestionModel[] = [
     text: 'Do you have more than one client?',
     note: 'If "YES", how many clients do you have?',
     showOptions: true,
-    whenShowDetails: 'YES',
+    whenShowDetails: 'ALWAYS',
+    whenShowSubQuestions: 'NEVER',
     answer: {
       questionCode: 'D_11'
     }
@@ -313,7 +356,8 @@ const _questions: QuestionModel[] = [
     code: 'E_1',
     text: 'Do you choose to have 10% of your unemployment benefits withheld for federal income taxes?',
     showOptions: true,
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'E_1'
     },
@@ -322,9 +366,21 @@ const _questions: QuestionModel[] = [
     code: 'E_2',
     text: 'Do you choose to have 6% of your unemployment benefits withheld for state income taxes?',
     showOptions: true,
-    whenShowDetails: 'NEVER',
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NEVER', 
     answer: {
       questionCode: 'E_2'
+    }
+  },
+  {
+    code: 'F_1',
+    text: 'I am a citizen or national of the United States',
+    showOptions: true,
+    whenShowDetails: 'NEVER', 
+    whenShowSubQuestions: 'NO', 
+    subQuestions: [questionF_1_1],
+    answer: {
+      questionCode: 'F_1'
     }
   }
 ]
@@ -352,8 +408,7 @@ export default (answers: AnswerModel[]) => {
   let questions: QuestionModel[] = prepareQuestions(answers)  
 
   const getQuestions = (section: SECTION): QuestionModel[] => {
-    const sectionCode = getSectionLetter(section)
-    console.log('Get quetions')
+    const sectionCode = getSectionLetter(section)    
     return questions.filter(q => q.code.startsWith(sectionCode))
   }
 

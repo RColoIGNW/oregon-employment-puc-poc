@@ -83,7 +83,7 @@ export default (props: EmploymentRecordEditProps) => {
     value && setState({value: { ...state.value, ended: value.toDate() }, errors: { ...state.errors}})
   }
 
-  const onAddressCompleted = (address: Address) => {
+  const handleAddressChange = (address: Address) => {
     setState({ value: { ...state.value, address: address }, errors: { ...state.errors } })
   }
 
@@ -120,7 +120,7 @@ export default (props: EmploymentRecordEditProps) => {
                   <PhoneTextField fullWidth value={state.value.phone} name="phone" onChange={onChange} label="Phone Number" variant="outlined" disabled={props.isDisabled} />
                 </Grid>
                 <Grid item xs={12}>
-                  <AddressEdit onCompletion={onAddressCompleted} />
+                  <AddressEdit address={state.value.address} onChange={handleAddressChange} />
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={2}>
