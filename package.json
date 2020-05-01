@@ -1,9 +1,9 @@
 {
-  "name": "@pregon-state/oed-pua-claim-poc",
+  "name": "@oregon-state/pua-poc",
   "workspaces": [
     "packages/*",
-    "oed-client",
-    "oed-server"
+    "client",
+    "server"
   ],
   "devDependencies": {
     "@types/styled-components": "^5.1.0",
