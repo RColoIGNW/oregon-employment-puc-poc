@@ -13,8 +13,28 @@ import { AuthContext } from '../../providers/AuthProvider'
 import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
 import { CSSDebugger } from "../css-debugger"
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Hidden from "@material-ui/core/Hidden";
+import UserMenu from "./UserMenu"
 
-const Layout = (props : { children: React.ReactNode, alert?: AlertProps|false }) => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+      [theme.breakpoints.down('xs')]: {
+        fontSize: 'small',
+      },
+    },
+  }),
+);
+
+const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }) => {
   const data = useStaticQuery(graphql`
     query MyQuery {
       file(relativePath: { eq: "orgov_logo.png" }) {
@@ -32,36 +52,19 @@ const Layout = (props : { children: React.ReactNode, alert?: AlertProps|false })
   const { children, alert } = props
   const { signOut, user } = useContext(AuthContext)
   const showDebugger = typeof window !== 'undefined' && !!window.location.href.includes('localhost')
+  const classes = useStyles()
 
   return (
     <>
       <AppBar position="fixed">
         <Toolbar>
-          <Box mr={2}>
+          <Hidden xsDown>
             <Img loading="eager" fixed={data.file.childImageSharp.fixed} placeholderStyle={{ visibility: "hidden" }} />
-          </Box>
-          <Box display={{ xs: 'none', sm: 'block' }}>
-            <Typography variant={'h6'}>Pandemic Unemployment Assistance</Typography>
-          </Box>
-          <Box display={{ xs: 'block', sm: 'none' }}>
-            <Typography variant={'subtitle2'} style={{lineHeight: 1}}>Pandemic Unemployment Assistance</Typography>
-          </Box>
-          <Box display={{xs: 'flex', sm: 'flex'}} style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            position: 'fixed',
-            top: '10px',
-            right: showDebugger ? '100px' : '0',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '5px',
-          }}>
-            {user?.token &&
-              <Button variant={'outlined'} style={{ color: '#fff', right: 0 }} onClick={() => signOut()}>
-                {`Sign Out`}
-              </Button>
-            }
-          </Box>
+          </Hidden>
+          <Typography variant={'h6'} className={classes.title}>Pandemic Unemployment Assistance</Typography>
+          {user?.token &&
+            <UserMenu />
+          }
         </Toolbar>
       </AppBar>
       <Container>
