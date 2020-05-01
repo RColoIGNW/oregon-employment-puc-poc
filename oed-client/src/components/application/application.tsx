@@ -2,7 +2,6 @@ import {
   Button,
   Grid,
   MobileStepper,
-  Paper,
   Step,
   StepContent,
   StepLabel,
@@ -70,6 +69,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appStepper: {
       padding: theme.spacing(1),
+    },
+    stepContainer: {
+      marginBottom: 52
     }
   }),
 )
@@ -131,14 +133,14 @@ export const Application = (props: ApplicationProps) => {
 
   useEffect(() => {
     //TODO: Check Application in Progress (check storage) ask Continue or discard?
-    if (!applicationId){
+    if (!applicationId) {
       navigate('dashboard')
     }
     const retrieveApplication = async (applicationId: string) => {
       try {
         const application = await api.getApplication(applicationId)
         setApplication(application)
-      } catch(e){
+      } catch (e) {
         //TODO: Show Error notification
       }
     }
@@ -156,7 +158,7 @@ export const Application = (props: ApplicationProps) => {
 
   const handleSave = async () => {
     application && await save(application)
-    snackbar.showFeedback({ message: 'Progress Saved'})
+    snackbar.showFeedback({ message: 'Progress Saved' })
   }
 
   const handleBack = () => {
@@ -200,14 +202,14 @@ export const Application = (props: ApplicationProps) => {
     if (isStepValid) {
       try {
         await handleSave()
-        if (activeStep === steps.length - 1){
+        if (activeStep === steps.length - 1) {
           //Submit App
           props.onSubmit && props.onSubmit(application!.id)
         } else {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
       }
-      catch(e){
+      catch (e) {
       }
 
     }
@@ -318,11 +320,11 @@ export const Application = (props: ApplicationProps) => {
         </Stepper>
 
         {isMobile &&
-          <>
-            <Paper square elevation={0}>
-              <Typography>{steps[activeStep].title}</Typography>
-            </Paper>
+          <div className={classes.stepContainer}>
             <Grid container direction={'column'} spacing={2}>
+              <Grid item>
+                <Typography>{steps[activeStep].title}</Typography>
+              </Grid>
               <Grid item>
                 <ActiveSection
                   application={application}
@@ -353,7 +355,7 @@ export const Application = (props: ApplicationProps) => {
                 </Button>
               }
             />
-          </>
+          </div>
         }
       </Grid>
     </Grid>
