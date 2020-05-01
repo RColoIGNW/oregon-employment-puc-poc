@@ -1,6 +1,6 @@
 import Application from '../models/Application'
-import { request } from '../util/request'
 import { ApplicationStatus } from '../models/ApplicationStatus'
+import { request } from '../util/request'
 
 export default () => {
   const getUnapprovedApplications = () => {
@@ -12,20 +12,20 @@ export default () => {
     .catch(console.error)
   }
 
-  const submitApplication = (applicationId: string): Promise<any> => {    
+  const submitApplication = (applicationId: string): Promise<any> => {
     const requestOptions = {
       method: 'PATCH',
       body: JSON.stringify({status: ApplicationStatus.Submitted}),
       redirect: 'follow',
-    }    
-    return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}`, requestOptions as any)
+    }
+    return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}/submit`, requestOptions as any)
       .catch(console.error)
   }
 
   const createApplication = () => {
     const userId = localStorage.getItem('uid')
     const requestOptions = {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify({userId: userId}),
       redirect: 'follow',
     }
@@ -35,7 +35,7 @@ export default () => {
 
   const updateApplication = (application: Partial<Application>) => {
     const requestOptions = {
-      method: 'PUT',
+      method: 'PATCH',
       body: JSON.stringify(application),
       redirect: 'follow',
     }
@@ -64,7 +64,7 @@ export default () => {
 
   return {
     getApplication,
-    createApplication,    
+    createApplication,
     submitApplication,
     updateApplication,
     getUnapprovedApplications,
