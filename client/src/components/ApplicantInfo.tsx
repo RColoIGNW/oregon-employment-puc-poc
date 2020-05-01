@@ -1,16 +1,16 @@
-import React from 'react'
 import MomentUtils from '@date-io/moment';
-import Grid from '@material-ui/core/Grid'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControl from '@material-ui/core/FormControl'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormLabel from '@material-ui/core/FormLabel'
+import Grid from '@material-ui/core/Grid'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
 import TextField from '@material-ui/core/TextField'
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import React from 'react'
 
 import Address from '../models/Address'
 import Applicant from '../models/Applicant'
@@ -68,7 +68,7 @@ export default (props: ApplicantInfoProps) => {
   }
 
   const handleDOBChange = (value: MaterialUiPickersDate) => {
-    value && props.onChange({ ...applicant, dob: value.toDate() })
+    value && props.onChange({ ...applicant, dob: new Date(value.toDate()) })
   }
 
   const handleAddressChange = (address: Address) => {
