@@ -1,20 +1,19 @@
 import React from 'react'
 import { WeeklySectionProps } from '../../models/WeeklySectionProps'
-
-
 import WeeklyStep2 from "./WeeklyStep2"
 import weeklyQuestions from "../../models/weeklyQuestions"
+import WeeklyStep1 from "../weekly-sectionA/WeeklyStep1"
 
 const WeeklySectionB = (props: WeeklySectionProps) => {
-  const { application, onChange } = props
+  const { weeklyQuestions, onChangeWeekly } = props
 
   const handleChange = (weeklyQuestions: weeklyQuestions) => {
                                     //todo not sure what should go here
-    onChange && onChange({ ...application })
+    onChangeWeekly && onChangeWeekly({ ...weeklyQuestions })
   }
 
   return (
-    <WeeklyStep2 onChangeWeekly={handleChange} application={props.application} onChange={props.onChange} isDisabled={props.isDisabled}/>
+    <WeeklyStep2 onChange={handleChange} isDisabled={props.isDisabled}/>
   )
 }
 

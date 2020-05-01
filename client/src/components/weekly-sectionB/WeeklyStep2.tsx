@@ -38,17 +38,15 @@ const defaultValue: weeklyQuestions = {
 
 interface WeeklyStep2Props {
   weekly?: weeklyQuestions,
-  onChangeWeekly: (weeklyQuestions: weeklyQuestions) => void
   isDisabled?: boolean,
   //todo fix
-  onChange: (application: ApplicationModel) => void,
-  application: ApplicationModel,
+  onChange: (weeklyQuestions: weeklyQuestions) => void
 }
 
 export default (props: WeeklyStep2Props) => {
   const [state, setState] = useState(props.weekly || defaultValue)
 
-  const {handleEmploymentChange} = useWeeklyApplication()
+  const {handleEmploymentChange, application} = useWeeklyApplication()
 
   const { isDisabled } = props
   const disabled = !!isDisabled
@@ -60,14 +58,13 @@ export default (props: WeeklyStep2Props) => {
 
 
   useEffect(() => {
-    //todo fix
-    props.onChangeWeekly(state)
+    props.onChange(state)
   }, [state])
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={7} md={12}>
-        <SectionB application={props.application} onChange={handleEmploymentChange}/>
+        <SectionB application={application} onChange={handleEmploymentChange}/>
       </Grid>
       <Grid item xs={12} sm={7} md={6}>
         <FormControl component="fieldset">

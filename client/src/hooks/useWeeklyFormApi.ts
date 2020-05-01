@@ -1,6 +1,5 @@
 import Application from '../models/Application'
 import { request } from '../util/request'
-import { ApplicationStatus } from "../models/ApplicationStatus"
 
 export default () => {
   const saveApplication = async (application: Partial<Application>): Promise<string> => {
@@ -15,13 +14,24 @@ export default () => {
     return applicationId
   }
 
-  const submitApplication = (applicationId: string): Promise<any> => {
+  // todo can I get rid of this?
+  // const submitApplication = (applicationId: string): Promise<any> => {
+  //   const requestOptions = {
+  //     method: 'PATCH',
+  //     body: JSON.stringify({status: ApplicationStatus.Submitted}),
+  //     redirect: 'follow',
+  //   }
+  //   return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${applicationId}`, requestOptions as any)
+  //     .catch(console.error)
+  // }
+
+  const submitApplication = (application: Partial<Application>) => {
     const requestOptions = {
       method: 'PATCH',
-      body: JSON.stringify({status: ApplicationStatus.Submitted}),
+      body: JSON.stringify(application),
       redirect: 'follow',
     }
-    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${applicationId}`, requestOptions as any)
+    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.id}/submit`, requestOptions as any)
       .catch(console.error)
   }
 
@@ -44,16 +54,6 @@ export default () => {
       redirect: 'follow',
     }
     return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.id}`, requestOptions as any)
-      .catch(console.error)
-  }
-
-  const submitApplication = (application: Partial<Application>) => {
-    const requestOptions = {
-      method: 'PATCH',
-      body: JSON.stringify(application),
-      redirect: 'follow',
-    }
-    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.id}/submit`, requestOptions as any)
       .catch(console.error)
   }
 
@@ -81,6 +81,5 @@ export default () => {
     saveApplication,
     getUserApplications,
     getApplication,
-    submitApplication,
   }
 }

@@ -22,7 +22,8 @@ export default () => {
     seekedEmployment: true,
     veteran: false,
     temporaryUnemployment: false,
-    employmentHistory: []
+    employmentHistory: [],
+    applicationId: ''
   }
 
   let currentValue: Partial<weeklyQuestions>  =  defaultValue
@@ -39,7 +40,7 @@ export default () => {
 
   }
 
-  const save = async (application: Application): Promise<string> => {
+  const save = async (application: Partial<weeklyQuestions>): Promise<string> => {
     return  await api.saveApplication(application)
   }
 
@@ -47,10 +48,10 @@ export default () => {
     storage.save('weekly-application', weeklyApplication)
   }
 
-  const submit = (applicationId: string) => {
+  const submit = (application: Partial<weeklyQuestions>) => {
     console.log('weekly submit')
     console.log(currentValue)
-    return api.submitApplication(applicationId)
+    return api.submitApplication(application)
   }
 
   const application = {
