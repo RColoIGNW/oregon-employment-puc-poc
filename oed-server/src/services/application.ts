@@ -140,7 +140,12 @@ const createDocument = async (collectionName: string, subCollectionName: string,
       .runTransaction(async (t) => {
         const countDoc = await t.get(countRef)
         const increment = fbAdmin.firestore.FieldValue.increment(1)
-        t[countDoc.data() ? 'update' : 'set'](countRef, { applicationCount: increment, lastModified: fbAdmin.firestore.Timestamp.now(), status: ApplicationStatus.IN_PROGRESS })
+        t[countDoc.data() ? "update" : "set"](countRef, {
+          applicationCount: increment,
+          lastModified: fbAdmin.firestore.Timestamp.now(),
+          status: ApplicationStatus.IN_PROGRESS,
+          dateCreated: fbAdmin.firestore.Timestamp.now(),
+        });
         t.set(applicationRef, requestBody)
         return Promise.resolve('Transaction Successful!')
       })
