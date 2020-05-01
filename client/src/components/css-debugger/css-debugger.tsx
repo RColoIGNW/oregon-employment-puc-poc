@@ -8,8 +8,8 @@ const ToggleDebugButton = styled(motion.button).attrs(() => ({
   whileHover: { scale: 1.05 },
 }))<{ debug?: boolean }>`
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 0px;
+  right: 100px;
   border: none;
   cursor: pointer;
   padding: 5px;
