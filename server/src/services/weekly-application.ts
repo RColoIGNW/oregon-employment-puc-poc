@@ -26,7 +26,7 @@ const submitWeeklyApplication = async (req: Request, res: Response) => {
           applicationCount: increment,
           lastModified: fb.firestore.Timestamp.now(),
         })
-        t.set(applicationRef, requestBody)
+        t.update(applicationRef, requestBody)
         return Promise.resolve('Transaction Successful!')
       })
       .then(async () => {
@@ -39,9 +39,10 @@ const submitWeeklyApplication = async (req: Request, res: Response) => {
         // }
         return res.status(200).json({ success: true })
       })
-      .finally(() => log('SubmitWeeklyApplication Transaction Finished!'))
   } catch (error) {
     res.status(400).json({ error })
+  } finally {
+    log('SubmitWeeklyApplication Transaction Finished!')
   }
 }
 

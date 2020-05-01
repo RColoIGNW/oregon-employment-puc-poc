@@ -23,11 +23,11 @@ const submitApplication = async (req: Request, res: Response) => {
     return db
       .runTransaction(async (t) => {
         const increment = fb.firestore.FieldValue.increment(1)
-        t.update(countRef, {
+        t.set(countRef, {
           applicationCount: increment,
           lastModified: fb.firestore.Timestamp.now(),
         })
-        t.set(applicationRef, requestBody)
+        t.update(applicationRef, requestBody)
         return Promise.resolve('Transaction Successful!')
       })
       .then(async () => {
