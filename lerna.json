@@ -1,4 +1,4 @@
 {
-  "packages": ["packages/*", "oed-client", "oed-server"],
+  "packages": ["packages/*", "client", "server"],
   "version": "independent"
 }

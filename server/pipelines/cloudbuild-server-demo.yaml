@@ -1,13 +1,13 @@
 steps:
   # Install NPM
   - name: node:12.16.2-alpine3.11
-    dir: 'oed-server'
+    dir: 'server'
     entrypoint: npm
     args: ['install']
 
   # Run Build
   - name: node:12.16.2-alpine3.11
-    dir: 'oed-server'
+    dir: 'server'
     entrypoint: npm
     args: ['run', 'build']
     env:
@@ -15,19 +15,19 @@ steps:
 
   # Run Prune
   - name: node:12.16.2-alpine3.11
-    dir: 'oed-server'
+    dir: 'server'
     entrypoint: npm
     args: ['prune', '--production']
 
   # View Directory
 #  - name: node:12.16.2-alpine3.11
-#    dir: 'oed-server'
+#    dir: 'server'
 #    entrypoint: "bash"
 #    args: [ '-c', 'ls -la']
 
   # build container
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', './oed-server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-demo-server:$COMMIT_SHA', '.']
+    args: ['build', '-f', './server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-demo-server:$COMMIT_SHA', '.']
 
   # push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'

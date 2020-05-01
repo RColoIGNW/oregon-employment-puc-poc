@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-starter-typescript-deluxe",
+  "name": "@oregon-state/client",
   "description": "A Gatsby starter with TypeScript, Storybook, Styled Components, Jest, and more.",
   "version": "0.0.3",
   "license": "MIT",
