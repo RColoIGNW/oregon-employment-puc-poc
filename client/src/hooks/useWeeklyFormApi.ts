@@ -3,7 +3,7 @@ import { request } from '../util/request'
 import weeklyQuestions from "../models/weeklyQuestions"
 
 export default () => {
-  const saveApplication = async (application: Partial<Application>): Promise<string> => {
+  const saveApplication = async (application: Partial<weeklyQuestions>): Promise<string> => {
     let applicationId: string =  application.id || ''
     if (applicationId) {
       await updateApplication(application)
@@ -21,11 +21,11 @@ export default () => {
       body: JSON.stringify(application),
       redirect: 'follow',
     }
-    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.applicationID}/submit`, requestOptions as any)
+    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.applicationId}/submit`, requestOptions as any)
       .catch(console.error)
   }
 
-  const createApplication = (application: Partial<Application>) => {
+  const createApplication = (application: Partial<weeklyQuestions>) => {
     // const body = JSON.stringify(formData)
     const userId = localStorage.getItem('uid')
     const requestOptions = {
@@ -37,7 +37,7 @@ export default () => {
       .catch(console.error)
   }
 
-  const updateApplication = (application: Partial<Application>) => {
+  const updateApplication = (application: Partial<weeklyQuestions>) => {
     const requestOptions = {
       method: 'PUT',
       body: JSON.stringify(application),

@@ -1,18 +1,23 @@
 import React from 'react'
-import { WeeklySectionProps } from '../../models/WeeklySectionProps'
 import WeeklyStep1 from "./WeeklyStep1"
 import weeklyQuestions from "../../models/weeklyQuestions"
+import ApplicationModel from "../../models/Application"
 
-const WeeklySectionA = (props: WeeklySectionProps) => {
-  const { weeklyQuestions, onChangeWeekly } = props
+interface WeeklyFormProps {
+  applicationId?: string
+  onSubmit?: (appId: string) => Promise<any>
+  isDisabled?: boolean,
+  currentValue: Partial<weeklyQuestions>,
+  handleChange: (weeklyApplication: Partial<weeklyQuestions>) => null,
+  handleEmploymentChange: (employmentRecords: ApplicationModel) => null,
+  save: (application: Partial<weeklyQuestions>) => Promise<string>,
+  localSave: (weeklyApplication:  weeklyQuestions) => null
+}
 
-  const handleChange = (weeklyQuestions: weeklyQuestions) => {
-                                                    //todo not sure what should go here
-    onChangeWeekly && onChangeWeekly({ ...weeklyQuestions })
-  }
+const WeeklySectionA = (props: WeeklyFormProps) => {
 
   return (
-    <WeeklyStep1 onChange={handleChange} isDisabled={props.isDisabled}/>
+    <WeeklyStep1 {...props}/>
   )
 }
 

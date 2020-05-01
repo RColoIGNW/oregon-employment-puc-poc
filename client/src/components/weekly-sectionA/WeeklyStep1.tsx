@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import FormControl from "@material-ui/core/FormControl"
 import FormLabel from "@material-ui/core/FormLabel"
@@ -6,36 +6,41 @@ import RadioGroup from "@material-ui/core/RadioGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Radio from "@material-ui/core/Radio"
 import weeklyQuestions from "../../models/weeklyQuestions"
+import ApplicationModel from "../../models/Application"
 
-const defaultValue: weeklyQuestions = {
-  ableToWork: false,
+const defaultValue = {
+  ableToWork: true,
   awayFromResidence: false,
   seekedEmployment: true,
   veteran: false,
   temporaryUnemployment: false,
+  employmentHistory: [],
+  applicationId: ''
 }
 
-interface WeeklyStep1Props {
-  weekly?: weeklyQuestions,
-  onChange: (weeklyQuestions: weeklyQuestions) => void,
-  isDisabled?: boolean
+interface WeeklyFormProps {
+  applicationId?: string
+  applicant?: weeklyQuestions,
+  isDisabled?: boolean,
+  onChange: (application: weeklyQuestions) => void
+  handleEmploymentChange: (employmentRecords: ApplicationModel) => void,
 }
 
-export default (props: WeeklyStep1Props) => {
-  const [state, setState] = useState(props.weekly || defaultValue)
+export default (props: WeeklyFormProps) => {
+  const applicant = props.applicant || defaultValue
 
   const { isDisabled } = props
   const disabled = !!isDisabled
 
   const handleBooleanSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = event.target
-    setState({ ...state, [name]: checked && value === 'true' })
+    props.onChange({ ...applicant, [name]: checked && value === 'true' })
   }
 
 
   useEffect(() => {
-    props.onChange(state)
-  }, [state])
+    props.onChange(applicant)
+  }, [applicant])
 
   return (
       <Grid container spacing={2}>
@@ -44,11 +49,11 @@ export default (props: WeeklyStep1Props) => {
             <FormLabel component="legend">Were you physically able and willing to work last week?</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={state.ableToWork === true} onChange={handleBooleanSelection} name="ableToWork" value={true} disabled={disabled} />}
+                control={<Radio checked={applicant.ableToWork === true} onChange={handleBooleanSelection} name="ableToWork" value={true} disabled={disabled} />}
                 label="Yes"
               />
               <FormControlLabel
-                control={<Radio checked={state.ableToWork === false} onChange={handleBooleanSelection} name="ableToWork" value={false} disabled={disabled} />}
+                control={<Radio checked={applicant.ableToWork === false} onChange={handleBooleanSelection} name="ableToWork" value={false} disabled={disabled} />}
                 label="No"
               />
             </RadioGroup>
@@ -59,11 +64,11 @@ export default (props: WeeklyStep1Props) => {
             <FormLabel component="legend">Were you away from your primary residence for more than 3 days?</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={state.awayFromResidence === true} onChange={handleBooleanSelection} name="awayFromResidence" value={true} disabled={disabled} />}
+                control={<Radio checked={applicant.awayFromResidence === true} onChange={handleBooleanSelection} name="awayFromResidence" value={true} disabled={disabled} />}
                 label="Yes"
               />
               <FormControlLabel
-                control={<Radio checked={state.awayFromResidence === false} onChange={handleBooleanSelection} name="awayFromResidence" value={false} disabled={disabled} />}
+                control={<Radio checked={applicant.awayFromResidence === false} onChange={handleBooleanSelection} name="awayFromResidence" value={false} disabled={disabled} />}
                 label="No"
               />
             </RadioGroup>
@@ -74,11 +79,11 @@ export default (props: WeeklyStep1Props) => {
             <FormLabel component="legend">Did you seek unemployment last week?</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={state.seekedEmployment === true} onChange={handleBooleanSelection} name="seekedEmployment" value={true} disabled={disabled} />}
+                control={<Radio checked={applicant.seekedEmployment === true} onChange={handleBooleanSelection} name="seekedEmployment" value={true} disabled={disabled} />}
                 label="Yes"
               />
               <FormControlLabel
-                control={<Radio checked={state.seekedEmployment === false} onChange={handleBooleanSelection} name="seekedEmployment" value={false} disabled={disabled} />}
+                control={<Radio checked={applicant.seekedEmployment === false} onChange={handleBooleanSelection} name="seekedEmployment" value={false} disabled={disabled} />}
                 label="No"
               />
             </RadioGroup>

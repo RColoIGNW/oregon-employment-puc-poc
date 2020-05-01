@@ -15,17 +15,18 @@ import {
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import React, { useEffect, useState } from 'react'
 
-import useSectionA from "../../hooks/useSectionA"
-import useSectionB from "../../hooks/useSectionB"
-import useWeeklyApplication from "../../hooks/useWeeklyApplication"
+
 import useWeeklyFormApi from '../../hooks/useWeeklyFormApi'
 import ApplicationModel from '../../models/Application'
 import theme from "../../themes/theme-light"
-import SectionA from "../sectionA/sectionA" // TODO: replace with new sections for weekly benefits
-import SectionB from "../sectionB/sectionB" // TODO: replace with new sections for weekly benefits
+
 
 import WeeklySectionA from "../weekly-sectionA/weeklySectionA"
 import WeeklySectionB from "../weekly-sectionB/WeeklySectionB"
+import weeklyQuestions from "../../models/weeklyQuestions"
+import WeeklyStep1 from "../weekly-sectionA/WeeklyStep1"
+import WeeklyStep2 from "../weekly-sectionB/WeeklyStep2"
+
 
 const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
@@ -90,7 +91,10 @@ const StepActions = (props: StepActionsProp) => {
 interface WeeklyFormProps {
   applicationId?: string
   onSubmit?: (appId: string) => Promise<any>
-  isDisabled?: boolean
+  isDisabled?: boolean,
+  currentValue: Partial<weeklyQuestions>,
+  handleEmploymentChange: (employmentRecords: ApplicationModel) => void,
+  save: (application: Partial<weeklyQuestions>) => Promise<string>,
 }
 
 export default function WeeklyForm(props: WeeklyFormProps) {
@@ -101,7 +105,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
   const { applicationId, isDisabled } = props
   const disabled = !!isDisabled
   const api = useWeeklyFormApi()
-  const [application, setApplication] = useState<ApplicationModel>()
+  const [application, setApplication] = useState<weeklyQuestions>()
 
   useEffect(() => {
     //TODO: Check Application in Progress (check storage) ask Continue or discard?
@@ -113,7 +117,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
     const createApplication = async () => {
       const app = {userId: localStorage.uid}
       const applicationId = await api.saveApplication(app) // TODO: create a new method to save weeklyForm app
-      setApplication({...app, id: applicationId })
+      setApplication({ ...application, applicationId: applicationId })
     }
 
     if (applicationId) {
@@ -123,20 +127,21 @@ export default function WeeklyForm(props: WeeklyFormProps) {
     }
   }, [applicationId])
 
-  const { save, localSave, handleChange } = useWeeklyApplication()
-  const { handleSubmit: handleSectionASubmit } = useSectionA()
-  const { handleSubmit: handleSectionBSubmit } = useSectionB()
+  // const { handleSubmit: handleSectionASubmit } = useSectionA()
+  // const { handleSubmit: handleSectionBSubmit } = useSectionB()
 
-  // const handleChange = (app: ApplicationModel) => {
-  //   localSave(app)
-  //   setApplication(app)
-  // }
+  const handleChange = (app: weeklyQuestions) => {
+    //localSave(app)
+    console.log(app)
+    setApplication(app)
+    console.log(application)
+  }
 
 
   const handleSave = async () => {
     if(application){
-      const applicationId = await save(application);
-      setApplication({ ...application, id: applicationId })
+      const applicationId = await props.save(application);
+      setApplication({ ...application, applicationId: applicationId })
     }
   }
 
@@ -146,16 +151,6 @@ export default function WeeklyForm(props: WeeklyFormProps) {
 
   const handleNext = async () => {
     let isStepValid: boolean = true
-    switch (activeStep) {
-      case 0:
-        const { hasErrors: sectionAHasErrors } = handleSectionASubmit()
-        isStepValid = !sectionAHasErrors
-        break
-      case 1:
-        const { hasErrors: sectionBHasErrors } = handleSectionBSubmit()
-        isStepValid = !sectionBHasErrors
-        break
-    }
 
     if (isStepValid) {
       try {
@@ -180,14 +175,14 @@ export default function WeeklyForm(props: WeeklyFormProps) {
       icon: pageInfo.sectionA.icon,
       title: pageInfo.sectionA.title,
       isFirstStep: true,
-      component: WeeklySectionA
+      component: WeeklyStep1
     },
     {
       key: 'B',
       icon: pageInfo.sectionB.icon,
       title: pageInfo.sectionB.title,
       isFirstStep: false,
-      component: WeeklySectionB
+      component: WeeklyStep2
     },
   ]
 
@@ -224,7 +219,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
                   <StepContent>
                     <Grid container direction={'column'} spacing={2}>
                       <Grid item>
-                        <Section applicationId={applicationId} isDisabled={disabled} application={application} onChangeWeekly={handleChange} />
+                        <Section onChange={handleChange} handleEmploymentChange={props.handleEmploymentChange} currentValue={application} save={props.save}/>
                       </Grid>
                       <Grid item>
                         <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} isLastStep={activeStep === steps.length - 1}/>
@@ -243,7 +238,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
               </Paper>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
-                  <ActiveSection applicationId={applicationId} isDisabled={disabled} application={application} onChangeWeekly={handleChange} />
+                  <ActiveSection onChange={handleChange} handleEmploymentChange={props.handleEmploymentChange} currentValue={application} save={props.save} />
                 </Grid>
               </Grid>
               <MobileStepper

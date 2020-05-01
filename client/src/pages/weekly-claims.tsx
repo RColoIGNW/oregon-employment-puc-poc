@@ -8,13 +8,13 @@ import useWeeklyApplication from "../hooks/useWeeklyApplication"
 
 const ApplicationPage = (props: any) => {
   const applicationId = props?.location?.state?.applicationId
-  const {submit} = useWeeklyApplication()
+  const {submit, currentValue, handleChange, handleEmploymentChange, save} = useWeeklyApplication()
 
   const handleSubmit = async (appId: string) => {
     try {
       //TODO: Show Progress
       const {currentValue} = useWeeklyApplication()
-      currentValue.applicationID = appId
+      currentValue.applicationId = appId
       console.log('current value')
       console.log(currentValue)
 
@@ -28,7 +28,8 @@ const ApplicationPage = (props: any) => {
   return (
     <Layout>
       <SEO title={'Weekly Benefits - Oregon Pandemic Unemployment Assistance'} />
-      <WeeklyForm applicationId={applicationId} onSubmit={handleSubmit} />
+      <WeeklyForm applicationId={applicationId} onSubmit={handleSubmit} currentValue={currentValue}
+                  handleChange={handleChange} handleEmploymentChange={handleEmploymentChange} save={save}/>
     </Layout>
   )
 }

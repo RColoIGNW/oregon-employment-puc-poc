@@ -5,6 +5,8 @@ enum StorageKey {
   SectionD = 'SectionD',
   SectionE = 'SectionE',
   SectionF = 'SectionF',
+  WeeklySection1 = 'WeeklySection1',
+  WeeklySection2 = 'WeeklySection2',
 }
 
 const save = (key: string, value: any) => {
