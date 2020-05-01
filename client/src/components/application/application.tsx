@@ -131,6 +131,7 @@ export const Application = (props: ApplicationProps) => {
   const api = useApplicantFormApi()
   const [application, setApplication] = useState<ApplicationModel>()
 
+
   useEffect(() => {
     //TODO: Check Application in Progress (check storage) ask Continue or discard?
     if (!applicationId) {
@@ -152,7 +153,6 @@ export const Application = (props: ApplicationProps) => {
   const { handleSubmit: handleSectionBSubmit } = useSectionB()
 
   const handleChange = (app: ApplicationModel) => {
-    //localSave(app)
     setApplication(app)
   }
 
@@ -283,38 +283,40 @@ export const Application = (props: ApplicationProps) => {
           {pageInfo.title}
         </Typography>
       </Grid>
+
       <Grid item >
         <Stepper activeStep={activeStep} orientation="vertical" className={classes.appStepper}>
           {!isMobile && steps.map(((step, index) => {
             const Section = step.component
             return (
-              <Step key={step.key}>
-                <StepLabel
-                  style={{ cursor: 'pointer' }}
-                  StepIconProps={{ icon: step.icon }}
-                  onClick={() => {
-                    setActiveStep(index)
-                  }}
-                >
-                  {step.title}
-                </StepLabel>
-                <StepContent>
-                  <Grid container direction={'column'} spacing={2}>
-                    <Grid item>
-                      <Section application={application} onChange={handleChange} isDisabled={disabled} />
+
+                <Step key={step.key}>
+                  <StepLabel
+                    style={{ cursor: 'pointer' }}
+                    StepIconProps={{ icon: step.icon }}
+                    onClick={() => {
+                      setActiveStep(index)
+                    }}
+                  >
+                    {step.title}
+                  </StepLabel>
+                  <StepContent>
+                    <Grid container direction={'column'} spacing={2}>
+                      <Grid item>
+                        <Section application={application} onChange={handleChange} isDisabled={disabled} />
+                      </Grid>
+                      <Grid item>
+                        <StepActions
+                          onBack={handleBack}
+                          onNext={handleNext}
+                          isFirstStep={!!step.isFirstStep}
+                          isDisabled={disabled}
+                          isLastStep={activeStep === steps.length - 1}
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <StepActions
-                        onBack={handleBack}
-                        onNext={handleNext}
-                        isFirstStep={!!step.isFirstStep}
-                        isDisabled={disabled}
-                        isLastStep={activeStep === steps.length - 1}
-                      />
-                    </Grid>
-                  </Grid>
-                </StepContent>
-              </Step>
+                  </StepContent>
+                </Step>
             )
           }))}
         </Stepper>

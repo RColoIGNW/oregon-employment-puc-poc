@@ -153,9 +153,10 @@ const createDocument = async (collectionName: string, subCollectionName: string,
         const doc = await applicationRef.get()
         return res.status(200).json({ success: true, applicationId: doc.id })
       })
-      .finally(() => console.info('Create Application Document Transaction Finished!'))
   } catch (error) {
     res.status(400).json({ error })
+  } finally {
+    console.info('SubmitApplication Transaction Finished!')
   }
 }
 

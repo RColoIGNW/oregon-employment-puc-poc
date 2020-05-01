@@ -1,0 +1,818 @@
+{
+  'Name of Employer or Self EmploymentRow1': {
+    type: 'Text',
+    namealt: 'Name of Employer (or Self Employment)_Row_1',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Phone NumberRow1': {
+    type: 'Text',
+    namealt: 'Phone Number_Row_1',
+    flags: '0',
+    justification: 'Center'
+  },
+  FromRow1: {
+    type: 'Text',
+    namealt: 'From_Row_1',
+    flags: '0',
+    justification: 'Center'
+  },
+  ToRow1: {
+    type: 'Text',
+    namealt: 'To_Row_1',
+    flags: '0',
+    justification: 'Center'
+  },
+  'Name of Employer or Self EmploymentRow2': {
+    type: 'Text',
+    namealt: 'Name of Employer (or Self Employment)_Row_2',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Phone NumberRow2': {
+    type: 'Text',
+    namealt: 'Phone Number_Row_2',
+    flags: '0',
+    justification: 'Center'
+  },
+  FromRow2: {
+    type: 'Text',
+    namealt: 'From_Row_2',
+    flags: '0',
+    justification: 'Center'
+  },
+  ToRow2: {
+    type: 'Text',
+    namealt: 'To_Row_2',
+    flags: '0',
+    justification: 'Center'
+  },
+  'Name of Employer or Self EmploymentRow3': {
+    type: 'Text',
+    namealt: 'Name of Employer (or Self Employment)_Row_3',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Phone NumberRow3': {
+    type: 'Text',
+    namealt: 'Phone Number_Row_3',
+    flags: '0',
+    justification: 'Center'
+  },
+  FromRow3: {
+    type: 'Text',
+    namealt: 'From_Row_3',
+    flags: '0',
+    justification: 'Center'
+  },
+  ToRow3: {
+    type: 'Text',
+    namealt: 'To_Row_3',
+    flags: '0',
+    justification: 'Center'
+  },
+  'Name of Employer or Self EmploymentRow4': {
+    type: 'Text',
+    namealt: 'Name of Employer (or Self Employment)_Row_4',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Employer AddressRow4': {
+    type: 'Text',
+    namealt: 'Employer Address_Row_4',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Phone NumberRow4': {
+    type: 'Text',
+    namealt: 'Phone Number_Row_4',
+    flags: '0',
+    justification: 'Center'
+  },
+  FromRow4: {
+    type: 'Text',
+    namealt: 'From_Row_4',
+    flags: '0',
+    justification: 'Center'
+  },
+  ToRow4: {
+    type: 'Text',
+    namealt: 'To_Row_4',
+    flags: '0',
+    justification: 'Center'
+  },
+  'Name of Employer or Self EmploymentRow5': {
+    type: 'Text',
+    namealt: 'Name of Employer (or Self Employment)_Row_5',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Employer AddressRow5': {
+    type: 'Text',
+    namealt: 'Employer Address_Row_5',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Phone NumberRow5': {
+    type: 'Text',
+    namealt: 'Phone Number_Row_5',
+    flags: '0',
+    justification: 'Center'
+  },
+  FromRow5: {
+    type: 'Text',
+    namealt: 'From_Row_5',
+    flags: '0',
+    justification: 'Center'
+  },
+  ToRow5: {
+    type: 'Text',
+    namealt: 'To_Row_5',
+    flags: '0',
+    justification: 'Center'
+  },
+  'Has a member of your household been diagnosed with COVID19 YES NO If YES please enter the date the household member was diagnosed': {
+    type: 'Text',
+    namealt: 'Has a member of your household been diagnosed with COVID–19? YES NO If “YES”, please enter the date the household member was diagnosed.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Are you caring for a family member or a member of your household who has been diagnosed with COVID19 YES NO If YES please enter the date the household member was diagnosed': {
+    type: 'Text',
+    namealt: 'Are you caring for a family member or a member of your household who has been diagnosed with COVID–19? YES NO If “YES”, please enter the date the household member was diagnosed.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Is there a child or other person in the household for whom you have the primary caregiving responsibility for that is unable to attend school or another facility that closed as a direct result of the COVID19 public health emergency and such school or facility care is required for you to work YES NO If YES please enter the name of the facility that closed and the date of the closure': {
+    type: 'Text',
+    namealt: 'Is there a child or other person in the household, for whom you have the primary caregiving responsibility for, that is unable to attend school or another facility that closed as a direct result of the COVID-19 public health emergency and such school or facility care is required for you to work? YES NO If “YES”, please enter the name of the facility that closed and the date of the closure.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Have you become the breadwinner or provider of major support for a household because the head of the household has died as a direct result of COVID19 YES NO If YES please enter the date you became the provider for a household': {
+    type: 'Text',
+    namealt: 'Have you become the breadwinner or provider of major support for a household because the head of the household has died as a direct result of COVID–19? YES NO If “YES”, please enter the date you became the provider for a household.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Has your place of employment closed as a direct result of the COVID19 public health emergency YES NO If YES please enter the date your place of employment closed and the name of the business': {
+    type: 'Text',
+    namealt: 'Has your place of employment closed as a direct result of the COVID–19 public health emergency? YES NO If “YES”, please enter the date your place of employment closed and the name of the business.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Have you quit a job as a direct result of COVID19 YES NO If YES please enter the date you quit the name of the business and the reason you voluntarily left work': {
+    type: 'Text',
+    namealt: 'Have you quit a job as a direct result of COVID–19? YES NO If “YES”, please enter the date you quit, the name of the business, and the reason you voluntarily left work.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Are you unable to reach your place of employment because you have been advised by a health care provider to self quarantine due to concerns related to COVID19 YES NO If YES please enter the reason why you are unable to reach your place of employment and the date this began': {
+    type: 'Text',
+    namealt: 'Are you unable to reach your place of employment because you have been advised by a health care provider to self- quarantine due to concerns related to COVID–19? YES NO If “YES”, please enter the reason why you are unable to reach your place of employment and the date this began.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Do you have the ability to continue to receive payment from your employer while working from home YES NO If YES please enter the reason why you have refused to accept a teleworking option from your employer': {
+    type: 'Text',
+    namealt: 'Do you have the ability to continue to receive payment from your employer while working from home? YES NO If “YES”, please enter the reason why you have refused to accept a teleworking option from your employer.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Are you receiving paid sick leave or other paid leave benefits YES NO If YES please enter the date you began to receive paid sick leave or paid leave benefits and who you are receiving this payment from if you know an end date please include that': {
+    type: 'Text',
+    namealt: 'Are you receiving paid sick leave or other paid leave benefits? YES NO If “YES”, please enter the date you began to receive paid sick leave or paid leave benefits and who you are receiving this payment from, if you know an end date please include that.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'At the time of the pandemic was this selfemployment your primary occupation and primary means of livelihood YES NO If NO explain': {
+    type: 'Text',
+    namealt: 'At the time of the pandemic, was this self-employment your primary occupation and primary means of livelihood? YES NO If "NO", explain.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'What services did you perform': {
+    type: 'Text',
+    namealt: 'What services did you perform?',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Do you have a business name YES NO If YES what is your business name': {
+    type: 'Text',
+    namealt: 'Do you have a business name? YES NO If “YES”, what is your business name?',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Do you file a business return Ex Schedule C 1120 or a 1065 YES NO If YES please list what returns you file': {
+    type: 'Text',
+    namealt: 'Do you file a business return? (Ex: Schedule C, 1120 or a 1065) YES NO If “YES”, please list what returns you file.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Do you have an investment in tools equipment etc YES NO If YES how much': {
+    type: 'Text',
+    namealt: 'Do you have an investment in tools, equipment, etc.? YES NO If “YES”, how much?',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Check Box1': {
+    type: 'Button',
+    flags: '0',
+    justification: 'Left',
+    options: [ 'Female', 'Male', 'Off' ]
+  },
+  'Check Box2': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box3': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box5': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box6': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box7': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box8': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box9': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box10': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box11': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box12': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box13': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box14': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box15': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box16': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box17': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box18': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box19': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box20': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box21': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box22': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box23': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box24': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box25': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box26': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box27': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box28': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box29': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box30': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box33': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box34': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box38': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ '1', 'Off' ]
+  },
+  'Check Box39': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ '2', 'Off' ]
+  },
+  'Check Box40': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ '1', 'Off' ]
+  },
+  'Check Box41': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ '1', 'Off' ]
+  },
+  'Check Box42': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ '1', 'Off' ]
+  },
+  'Check Box43': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ '1', 'Off' ]
+  },
+  'Employer AddressRow1': {
+    type: 'Text',
+    namealt: 'Employer Address_Row_1',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Employer AddressRow2': {
+    type: 'Text',
+    namealt: 'Employer Address_Row_2',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Employer AddressRow3': {
+    type: 'Text',
+    namealt: 'Employer Address_Row_3',
+    flags: '4096',
+    justification: 'Center'
+  },
+  'Do you have more than one client YES NO If YES how many clients do you have': {
+    type: 'Text',
+    namealt: 'Do you have more than one client? YES NO If “YES”, how many clients do you have?',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Check Box32': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Are you unable to reach your place of employment because of a quarantine imposed as a direct result of the COVID19 public health emergency YES NO If YES please enter the reason why you are unable to reach your place of employment and the date this began': {
+    type: 'Text',
+    namealt: 'Are you unable to reach your place of employment because of a quarantine imposed as a direct result of the COVID-19 public health emergency? YES NO If “YES”, please enter the reason why you are unable to reach your place of employment and the date this began.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Were you scheduled to start a new job that has since closed as a direct result of the COVID19 public health emergency YES NO If YES please enter the date you were expected to start work the date your new job closed and the name of the business': {
+    type: 'Text',
+    namealt: 'Were you scheduled to start a new job that has since closed as a direct result of the COVID-19 public health emergency? YES NO If “YES”, please enter the date you were expected to start work, the date your new job closed, and the name of the business.',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Are you receiving or will you receive retirement pay other than Social Security within the next 12 months YES NO If YES please provide the name of the employer that maintained or contributed to this retirement plan': {
+    type: 'Text',
+    namealt: 'Are you receiving or will you receive retirement pay (other than Social Security) within the next 12 months? YES NO If “YES”, please provide the name of the employer that maintained or contributed to this retirement plan?',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Have you been diagnosed with COVID19 or are you experiencing symptoms of COVID19 and seeking a medical diagnosis YES NO If YES please enter the date you were diagnosed or when you began experiencing symptoms': {
+    type: 'Text',
+    namealt: 'Have you been diagnosed with COVID–19, or are you experiencing symptoms of COVID–19 and seeking a medical diagnosis? YES NO If “YES”, please enter the date you were diagnosed or when you began experiencing symptoms',
+    flags: '4096',
+    justification: 'Left'
+  },
+  'Check Box4': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box31': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box70': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'Off', 'Yes' ]
+  },
+  'Check Box35': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'Off', 'Yes' ]
+  },
+  'Check Box36.Check Box36': {
+    type: 'Button',
+    flags: '0',
+    value: 'Off',
+    justification: 'Left',
+    options: [ 'Off', 'Yes' ]
+  },
+  'Check Box37': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Alien Reg': {
+    type: 'Text',
+    namealt: 'Alien Reg',
+    flags: '0',
+    justification: 'Left'
+  },
+  'Date Month Day Year': {
+    type: 'Text',
+    namealt: 'Date (Month, Day, Year',
+    flags: '0',
+    justification: 'Left'
+  },
+  'Check Box48': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box49': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box50': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box51': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Type of each Payment 1.1': {
+    type: 'Text',
+    namealt: 'Type of each Payment Amount_Row_1',
+    flags: '0',
+    justification: 'Center'
+  },
+  'Type of each Payment 1.2': {
+    type: 'Text',
+    namealt: 'Type of each Payment Amount_Row_2',
+    flags: '0',
+    justification: 'Center'
+  },
+  'Type of each Payment 1.3': {
+    type: 'Text',
+    namealt: 'Type of each Payment Amount_Row_3',
+    flags: '0',
+    justification: 'Center'
+  },
+  'Type of each Payment 1.4': {
+    type: 'Text',
+    namealt: 'Type of each Payment Amount_Row_3',
+    flags: '0',
+    justification: 'Center'
+  },
+  'From 1.1': {
+    type: 'Text',
+    namealt: 'From_Row_1',
+    flags: '0',
+    justification: 'Center'
+  },
+  'From 1.2': {
+    type: 'Text',
+    namealt: 'From_Row_2',
+    flags: '0',
+    justification: 'Center'
+  },
+  'From 1.3': {
+    type: 'Text',
+    namealt: 'From_Row_3',
+    flags: '0',
+    justification: 'Center'
+  },
+  'From 1.4': {
+    type: 'Text',
+    namealt: 'From_Row_3',
+    flags: '0',
+    justification: 'Center'
+  },
+  'To 1.1': {
+    type: 'Text',
+    namealt: 'To_Row_1',
+    flags: '0',
+    justification: 'Center'
+  },
+  'To 1.2': {
+    type: 'Text',
+    namealt: 'To_Row_2',
+    flags: '0',
+    justification: 'Center'
+  },
+  'To 1.3': {
+    type: 'Text',
+    namealt: 'To_Row_3',
+    flags: '0',
+    justification: 'Center'
+  },
+  'To 1.4': {
+    type: 'Text',
+    namealt: 'To_Row_3',
+    flags: '0',
+    justification: 'Center'
+  },
+  'Check Box52': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Check Box53': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'How are you impacted by COVID-19 1.1': { type: 'Text', flags: '4096', justification: 'Left' },
+  'Check Box54': {
+    type: 'Button',
+    flags: '0',
+    value: 'Female',
+    justification: 'Left',
+    options: [ 'No', 'Off', 'Yes' ]
+  },
+  'Week Ending 1': { type: 'Text', flags: '0', justification: 'Left' },
+  'Week Ending 2': { type: 'Text', flags: '0', justification: 'Left' },
+  'Week Ending 3': { type: 'Text', flags: '0', justification: 'Left' },
+  'Week Ending 4': { type: 'Text', flags: '0', justification: 'Left' },
+  'Week Ending 5': { type: 'Text', flags: '0', justification: 'Left' },
+  'Week Ending 6': { type: 'Text', flags: '0', justification: 'Left' },
+  'Hours Worked 1': { type: 'Text', flags: '0', justification: 'Left' },
+  'Hours Worked 2': { type: 'Text', flags: '0', justification: 'Left' },
+  'Hours Worked 3': { type: 'Text', flags: '0', justification: 'Left' },
+  'Hours Worked 4': { type: 'Text', flags: '0', justification: 'Left' },
+  'Hours Worked 5': { type: 'Text', flags: '0', justification: 'Left' },
+  'Hours Worked 6': { type: 'Text', flags: '0', justification: 'Left' },
+  'Earnings 1': { type: 'Text', flags: '0', justification: 'Left' },
+  'Earnings 3': { type: 'Text', flags: '0', justification: 'Left' },
+  'Earnings 2': { type: 'Text', flags: '0', justification: 'Left' },
+  'Earnings 4': { type: 'Text', flags: '0', justification: 'Left' },
+  'Earnings 5': { type: 'Text', flags: '0', justification: 'Left' },
+  'Earnings 6': { type: 'Text', flags: '0', justification: 'Left' },
+  'Type of earnings 2': {
+    type: 'Choice',
+    flags: '131072',
+    value: '- select one -',
+    valuedefault: '- select one -',
+    justification: 'Left',
+    options: [ '- select one -', 'Both', 'Other employment', 'Self-employment' ]
+  },
+  'Type of earnings 3': {
+    type: 'Choice',
+    flags: '131072',
+    value: '- select one -',
+    valuedefault: '- select one -',
+    justification: 'Left',
+    options: [ '- select one -', 'Both', 'Other employment', 'Self-employment' ]
+  },
+  'Type of earnings 1': {
+    type: 'Choice',
+    flags: '131072',
+    value: '- select one -',
+    valuedefault: '- select one -',
+    justification: 'Left',
+    options: [ '- select one -', 'Both', 'Other employment', 'Self-employment' ]
+  },
+  'Type of earnings 4': {
+    type: 'Choice',
+    flags: '131072',
+    value: '- select one -',
+    valuedefault: '- select one -',
+    justification: 'Left',
+    options: [ '- select one -', 'Both', 'Other employment', 'Self-employment' ]
+  },
+  'Type of earnings 5': {
+    type: 'Choice',
+    flags: '131072',
+    value: '- select one -',
+    valuedefault: '- select one -',
+    justification: 'Left',
+    options: [ '- select one -', 'Both', 'Other employment', 'Self-employment' ]
+  },
+  'Type of earnings 6': {
+    type: 'Choice',
+    flags: '131072',
+    value: '- select one -',
+    valuedefault: '- select one -',
+    justification: 'Left',
+    options: [ '- select one -', 'Both', 'Other employment', 'Self-employment' ]
+  },
+  Signature: { type: 'Text', flags: '0', justification: 'Left' },
+  'Social Security Number': {
+    type: 'Text',
+    namealt: 'Social Security Number',
+    flags: '0',
+    justification: 'Left'
+  },
+  'Applicants Mailing Address Street or PO': {
+    type: 'Text',
+    namealt: "Applicant's Mailing Address: (Street or P.O.)",
+    flags: '0',
+    justification: 'Left'
+  },
+  City: { type: 'Text', namealt: 'City', flags: '0', justification: 'Left' },
+  State: { type: 'Text', namealt: 'State', flags: '0', justification: 'Left' },
+  'Zip Code': {
+    type: 'Text',
+    namealt: 'Zip Code',
+    flags: '0',
+    justification: 'Left'
+  },
+  'Applicant Email Address': {
+    type: 'Text',
+    namealt: 'Applicant Email Address',
+    flags: '0',
+    justification: 'Left'
+  },
+  'Phone Number': {
+    type: 'Text',
+    namealt: 'Phone Number',
+    flags: '0',
+    justification: 'Left'
+  },
+  'Applicants Name Last First Middle': {
+    type: 'Text',
+    namealt: "Applicant's Name (Last, First, Middle)",
+    flags: '0',
+    justification: 'Left'
+  },
+  'Date of Birth Mo Day Yr': {
+    type: 'Text',
+    namealt: 'Date of Birth (Mo., Day, Yr.)',
+    flags: '0',
+    justification: 'Left'
+  }
+}

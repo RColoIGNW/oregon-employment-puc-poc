@@ -16,5 +16,6 @@
   "scripts": {
     "start": "lerna run start",
     "bootstrap": "lerna bootstrap"
-  }
+  },
+  "dependencies": {}
 }
