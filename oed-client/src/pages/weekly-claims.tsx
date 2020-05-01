@@ -14,7 +14,7 @@ const ApplicationPage = (props: any) => {
     try {
       //TODO: Show Progress
       await submit(appId)
-      navigate('confirm',  { state: {applicationId: applicationId }})
+      navigate('confirm',  { state: {applicationId: appId }})
     } catch (e) {
       //TODO: Show submit error
     }

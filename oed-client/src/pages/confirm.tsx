@@ -13,6 +13,8 @@ const pageInfo = {
 
 const ApplicationSubmittedPage = (props: any) => {
   const applicationId = props.location?.state?.applicationId
+  console.log(applicationId)
+  console.log(props.location)
 
   return (
     <Layout>
@@ -27,11 +29,6 @@ const ApplicationSubmittedPage = (props: any) => {
           <Typography variant={'h4'}>
             {applicationId}
           </Typography>
-        </Grid>
-        <Grid item>
-          <Button color={'primary'} variant={'contained'} size={'large'} onClick={() => navigate('claim-status')}>
-            {pageInfo.button}
-          </Button>
         </Grid>
       </Grid>
     </Layout>
