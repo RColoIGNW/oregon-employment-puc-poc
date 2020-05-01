@@ -1,12 +1,10 @@
-import Application from '../models/Application'
-import storage from '../util/storage'
+
 import useWeeklyFormApi from "./useWeeklyFormApi"
 import weeklyQuestions from "../models/weeklyQuestions"
-import Applicant from "../models/Applicant"
-import EmploymentRecord from "../models/EmploymentRecord"
+
 import ApplicationModel from '../models/Application'
-import { ApplicationStatus } from "../models/ApplicationStatus"
-import { AnswerModel } from "../models/Answer"
+import { useState } from "react"
+
 
 export default () => {
   const api = useWeeklyFormApi()
@@ -26,17 +24,16 @@ export default () => {
     applicationId: ''
   }
 
-  let currentValue: Partial<weeklyQuestions> = defaultValue;
+  const [application, setApplication] = useState(defaultValue)
 
-
-  const handleChange = (weeklyApplication: Partial<weeklyQuestions>) => {
-    currentValue = weeklyApplication
-    console.log(currentValue)
+  const handleChange = (weeklyApplication: weeklyQuestions) => {
+    setApplication({...weeklyApplication})
+    console.log(application)
   }
 
   const handleEmploymentChange = (employmentRecords: ApplicationModel) => {
-    currentValue.employmentHistory = employmentRecords.employmentRecords
-    console.log(currentValue)
+    setApplication({...application, employmentHistory: employmentRecords.employmentRecords})
+    console.log(application)
   }
 
   const save = async (application: Partial<weeklyQuestions>): Promise<string> => {
@@ -50,14 +47,12 @@ export default () => {
   // }
 
   const submit = (application: Partial<weeklyQuestions>) => {
-    console.log('weekly submit')
-    console.log(currentValue)
     return api.submitApplication(application)
   }
 
 
   return {
-    currentValue,
+    application,
     handleChange,
     handleEmploymentChange,
     load,

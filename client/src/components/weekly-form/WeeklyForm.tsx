@@ -13,7 +13,7 @@ import {
   makeStyles
 } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 
 import useWeeklyFormApi from '../../hooks/useWeeklyFormApi'
@@ -89,10 +89,11 @@ const StepActions = (props: StepActionsProp) => {
 }
 
 interface WeeklyFormProps {
-  applicationId?: string
-  onSubmit?: (appId: string) => Promise<any>
+  application: weeklyQuestions,
+  applicationId: string,
   isDisabled?: boolean,
-  currentValue: Partial<weeklyQuestions>,
+  handleSubmit: (appId: string) => void,
+  handleChange: (weeklyApplication: weeklyQuestions) => void,
   handleEmploymentChange: (employmentRecords: ApplicationModel) => void,
   save: (application: Partial<weeklyQuestions>) => Promise<string>,
 }
@@ -102,22 +103,22 @@ export default function WeeklyForm(props: WeeklyFormProps) {
   const [activeStep, setActiveStep] = React.useState(0)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const { applicationId, isDisabled } = props
+  const { application, applicationId, isDisabled, handleChange, handleEmploymentChange, handleSubmit } = props
   const disabled = !!isDisabled
   const api = useWeeklyFormApi()
-  const [application, setApplication] = useState<weeklyQuestions>()
 
   useEffect(() => {
     //TODO: Check Application in Progress (check storage) ask Continue or discard?
     const retrieveApplication = async (applicationId: string) => {
       const application = await api.getApplication(applicationId) // TODO: create new method to get weeklyForm app
-      setApplication(application)
+      handleChange(application)
     }
 
     const createApplication = async () => {
       const app = {userId: localStorage.uid}
       const applicationId = await api.saveApplication(app) // TODO: create a new method to save weeklyForm app
-      setApplication({ ...application, applicationId: applicationId })
+      handleChange({ ...application, applicationId: applicationId })
+
     }
 
     if (applicationId) {
@@ -130,18 +131,16 @@ export default function WeeklyForm(props: WeeklyFormProps) {
   // const { handleSubmit: handleSectionASubmit } = useSectionA()
   // const { handleSubmit: handleSectionBSubmit } = useSectionB()
 
-  const handleChange = (app: weeklyQuestions) => {
-    //localSave(app)
-    console.log(app)
-    setApplication(app)
-    console.log(application)
-  }
+  // const handleChange = (app: weeklyQuestions) => {
+  //   //localSave(app)
+  //   setApplication(app)
+  // }
 
 
   const handleSave = async () => {
     if(application){
       const applicationId = await props.save(application);
-      setApplication({ ...application, applicationId: applicationId })
+      handleChange({ ...application, applicationId: applicationId })
     }
   }
 
@@ -154,11 +153,13 @@ export default function WeeklyForm(props: WeeklyFormProps) {
 
     if (isStepValid) {
       try {
-        console.log('test')
+
         await handleSave()
         if (activeStep === steps.length - 1){
           //Submit App
-          props.onSubmit && props.onSubmit(application!.id)
+          if(application.applicationId) {
+            handleSubmit(application.applicationId)
+          }
         } else {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
@@ -188,7 +189,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
 
   const ActiveSection = steps?.[activeStep]?.component
 
-  if (application) {
+  if (props.application) {
     return (
       <Grid container direction="column" spacing={2}>
         <Grid item style={{
@@ -219,7 +220,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
                   <StepContent>
                     <Grid container direction={'column'} spacing={2}>
                       <Grid item>
-                        <Section onChange={handleChange} handleEmploymentChange={props.handleEmploymentChange} currentValue={application} save={props.save}/>
+                        <Section onChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={application} />
                       </Grid>
                       <Grid item>
                         <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} isLastStep={activeStep === steps.length - 1}/>
@@ -238,7 +239,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
               </Paper>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
-                  <ActiveSection onChange={handleChange} handleEmploymentChange={props.handleEmploymentChange} currentValue={application} save={props.save} />
+                  <ActiveSection onChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={application} />
                 </Grid>
               </Grid>
               <MobileStepper

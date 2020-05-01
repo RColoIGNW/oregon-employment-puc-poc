@@ -23,7 +23,7 @@ interface WeeklyFormProps {
   applicant?: weeklyQuestions,
   isDisabled?: boolean,
   onChange: (application: weeklyQuestions) => void
-  handleEmploymentChange: (employmentRecords: ApplicationModel) => void,
+  handleEmploymentChange?: (employmentRecords: ApplicationModel) => void,
 }
 
 export default (props: WeeklyFormProps) => {
@@ -38,9 +38,9 @@ export default (props: WeeklyFormProps) => {
   }
 
 
-  useEffect(() => {
-    props.onChange(applicant)
-  }, [applicant])
+  // useEffect(() => {
+  //   props.onChange(applicant)
+  // }, [applicant])
 
   return (
       <Grid container spacing={2}>

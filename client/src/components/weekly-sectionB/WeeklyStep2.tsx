@@ -45,10 +45,6 @@ export default (props: WeeklyFormProps) => {
     certifiedBy: ''
   }
 
-  useEffect(() => {
-    props.onChange(applicant)
-  }, [applicant])
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={7} md={12}>

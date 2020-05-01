@@ -8,17 +8,18 @@ import useWeeklyApplication from "../hooks/useWeeklyApplication"
 
 const ApplicationPage = (props: any) => {
   const applicationId = props?.location?.state?.applicationId
-  const {submit, currentValue, handleChange, handleEmploymentChange, save} = useWeeklyApplication()
+  const {submit, application, handleChange, handleEmploymentChange, save} = useWeeklyApplication()
 
   const handleSubmit = async (appId: string) => {
+    console.log('got there')
     try {
       //TODO: Show Progress
-      const {currentValue} = useWeeklyApplication()
-      currentValue.applicationId = appId
-      console.log('current value')
-      console.log(currentValue)
 
-      await submit(currentValue)
+      application.applicationId = appId
+      console.log('current value')
+      console.log(application)
+
+      await submit(application)
       navigate('confirm',  { state: {applicationId: appId }})
     } catch (e) {
       //TODO: Show submit error
@@ -28,7 +29,7 @@ const ApplicationPage = (props: any) => {
   return (
     <Layout>
       <SEO title={'Weekly Benefits - Oregon Pandemic Unemployment Assistance'} />
-      <WeeklyForm applicationId={applicationId} onSubmit={handleSubmit} currentValue={currentValue}
+      <WeeklyForm applicationId={applicationId} handleSubmit={handleSubmit} application={application}
                   handleChange={handleChange} handleEmploymentChange={handleEmploymentChange} save={save}/>
     </Layout>
   )
