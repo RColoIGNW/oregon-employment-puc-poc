@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import fbAdmin from 'firebase-admin'
 
 import firebase from '../util/firebase'
 
@@ -6,7 +7,7 @@ const db = firebase.firestore()
 
 const getCollectionByName = async (collectionName: string, _: Request, res: Response) => {
   try {
-    const response: any = [] // TODO: add types
+    const response: any = []
     await db
       .collection(collectionName)
       .get()
@@ -27,7 +28,7 @@ const getCollectionByName = async (collectionName: string, _: Request, res: Resp
 
 const getCollectionByUser = async (collectionName: string, req: Request, res: Response) => {
   try {
-    const response: any = [] // TODO: add types
+    const response: any = []
     await db
       .collection(collectionName)
       .where('userId', '==', req.params.userId)
@@ -89,7 +90,10 @@ const updateDocumentById = async (collectionName: string, req: Request, res: Res
     await db
       .collection(collectionName)
       .doc(req.params.id)
-      .update(applicationInfo)
+      .update({
+        ...applicationInfo,
+        lastModified: fbAdmin.firestore.Timestamp.now(),
+      })
 
     return res.status(204).send({
       success: true
@@ -104,11 +108,47 @@ const changeDocumentStatusById = async (collectionName: string, req: Request, re
     await db
       .collection(collectionName)
       .doc(req.params.id)
-      .update(req.body)
+      .update({
+        ...req.body,
+        lastModified: fbAdmin.firestore.Timestamp.now()
+      })
 
     return res.status(204).send({
       success: true
     })
+  } catch (error) {
+    res.status(400).json({ error })
+  }
+}
+
+export enum ApplicationStatus {
+  IN_PROGRESS = 'in progress',
+  SUBMITTED = 'submitted',
+  DENY = 'deny',
+  APPROVED = 'approved'
+}
+
+const createDocument = async (collectionName: string, subCollectionName: string, req: Request, res: Response) => {
+  try {
+    if (!req.body) { throw new Error('Request Body Required') }
+
+    const requestBody = { ...req.body, lastModified: fbAdmin.firestore.Timestamp.now() }
+    const countRef = db.collection(collectionName).doc(subCollectionName)
+    const applicationRef = db.collection(collectionName).doc()
+
+    return db
+      .runTransaction(async (t) => {
+        const countDoc = await t.get(countRef)
+        const increment = fbAdmin.firestore.FieldValue.increment(1)
+        t[countDoc.data() ? 'update' : 'set'](countRef, { applicationCount: increment, lastModified: fbAdmin.firestore.Timestamp.now(), status: ApplicationStatus.IN_PROGRESS })
+        t.set(applicationRef, requestBody)
+        return Promise.resolve('Transaction Successful!')
+      })
+      .then(async () => {
+        const doc = await applicationRef.get()
+        return res.status(200).json({ success: true, applicationId: doc.id })
+      })
+      .finally(() => console.info('Create Application Document Transaction Finished!'))
   } catch (error) {
     res.status(400).json({ error })
   }
@@ -121,4 +161,5 @@ export default {
   deleteDocumentById,
   updateDocumentById,
   changeDocumentStatusById,
+  createDocument,
 }

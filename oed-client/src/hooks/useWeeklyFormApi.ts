@@ -18,7 +18,7 @@ export default () => {
     // const body = JSON.stringify(formData)
     const userId = localStorage.getItem('uid')
     const requestOptions = {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify({...application, userId: userId}),
       redirect: 'follow',
     }
@@ -33,6 +33,16 @@ export default () => {
       redirect: 'follow',
     }
     return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.id}`, requestOptions as any)
+      .catch(console.error)
+  }
+
+  const submitApplication = (application: Partial<Application>) => {
+    const requestOptions = {
+      method: 'PATCH',
+      body: JSON.stringify(application),
+      redirect: 'follow',
+    }
+    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.id}/submit`, requestOptions as any)
       .catch(console.error)
   }
 
@@ -58,6 +68,7 @@ export default () => {
   return {
     saveApplication,
     getUserApplications,
-    getApplication
+    getApplication,
+    submitApplication,
   }
 }
