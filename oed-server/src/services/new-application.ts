@@ -12,13 +12,21 @@ const submitApplication = async (req: Request, res: Response) => {
   try {
     if (!req.body) { throw new Error('Request Body Required') }
 
-    const requestBody = { ...req.body, lastModified: fb.firestore.Timestamp.now() }
+    const requestBody = {
+      ...req.body,
+      lastModified: fb.firestore.Timestamp.now(),
+      status: 'submitted',
+      dateApplied: fb.firestore.Timestamp.now(),
+    }
     const countRef = db.collection('applications-count').doc('pua-applications')
     const applicationRef = db.collection('applications').doc(req.params.id)
     return db
       .runTransaction(async (t) => {
         const increment = fb.firestore.FieldValue.increment(1)
-        t.update(countRef, { applicationCount: increment, status: 'submitted' })
+        t.update(countRef, {
+          applicationCount: increment,
+          lastModified: fb.firestore.Timestamp.now(),
+        })
         t.set(applicationRef, requestBody)
         return Promise.resolve('Transaction Successful!')
       })
