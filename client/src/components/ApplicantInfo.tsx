@@ -100,7 +100,7 @@ export default (props: ApplicantInfoProps) => {
           <SSNTextField name="ssn" value={applicant.ssn} onChange={handleChange} fullWidth label="SSN" variant="outlined" disabled={disabled} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <KeyboardDatePicker name="dob" value={applicant.dob} onChange={handleDOBChange} fullWidth format="MM/DD/YYYY" inputVariant="outlined" disabled={disabled} />
+          <KeyboardDatePicker name="dob" value={applicant.dob} onChange={handleDOBChange} fullWidth label="DOB" format="MM/DD/YYYY" inputVariant="outlined" disabled={disabled} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <AddressEdit isDisabled={disabled} address={applicant.address} onChange={handleAddressChange} />
@@ -120,11 +120,11 @@ export default (props: ApplicantInfoProps) => {
             <FormLabel component="legend">Preferred Method of Contact</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={applicant.contactMethod === ContactMethod.Phone} onChange={handleSelection} name="contactMethod" value={ContactMethod.Phone} disabled={disabled} />}
+                control={<Radio checked={applicant.contactMethod === ContactMethod.Phone} onChange={handleSelection} name="contactMethod" value={ContactMethod.Phone} color="primary" disabled={disabled} />}
                 label={ContactMethod.Phone}
               />
               <FormControlLabel
-                control={<Radio checked={applicant.contactMethod === ContactMethod.Email} onChange={handleSelection} name="contactMethod" value={ContactMethod.Email} disabled={disabled} />}
+                control={<Radio checked={applicant.contactMethod === ContactMethod.Email} onChange={handleSelection} name="contactMethod" value={ContactMethod.Email} color="primary" disabled={disabled} />}
                 label={ContactMethod.Email}
               />
             </RadioGroup>
@@ -135,11 +135,11 @@ export default (props: ApplicantInfoProps) => {
             <FormLabel component="legend">Gender</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={applicant.gender === Gender.Male} onChange={handleSelection} name="gender" value={Gender.Male} disabled={disabled} />}
+                control={<Radio checked={applicant.gender === Gender.Male} onChange={handleSelection} name="gender" value={Gender.Male} color="primary" disabled={disabled} />}
                 label={Gender.Male}
               />
               <FormControlLabel
-                control={<Radio checked={applicant.gender === Gender.Female} onChange={handleSelection} name="gender" value={Gender.Female} disabled={disabled} />}
+                control={<Radio checked={applicant.gender === Gender.Female} onChange={handleSelection} name="gender" value={Gender.Female} color="primary" disabled={disabled} />}
                 label={Gender.Female}
               />
             </RadioGroup>
@@ -150,11 +150,11 @@ export default (props: ApplicantInfoProps) => {
             <FormLabel component="legend">Are you of Hispanic or Latino ethnicity?</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={applicant.isHispanicLatino === true} onChange={handleBooleanSelection} name="isHispanicLatino" value={true} disabled={disabled} />}
+                control={<Radio checked={applicant.isHispanicLatino === true} onChange={handleBooleanSelection} name="isHispanicLatino" value={true} color="primary" disabled={disabled} />}
                 label="Yes"
               />
               <FormControlLabel
-                control={<Radio checked={applicant.isHispanicLatino === false} onChange={handleBooleanSelection} name="isHispanicLatino" value={false} disabled={disabled} />}
+                control={<Radio checked={applicant.isHispanicLatino === false} onChange={handleBooleanSelection} name="isHispanicLatino" value={false} color="primary" disabled={disabled} />}
                 label="No"
               />
             </RadioGroup>
@@ -167,7 +167,7 @@ export default (props: ApplicantInfoProps) => {
               {
                 Races.map(race => (
                   <FormControlLabel key={race}
-                    control={<Checkbox checked={!!applicant.races?.find(r => r === race)} onChange={handleRaceSelection} name="races" value={race} disabled={disabled} />}
+                    control={<Checkbox checked={!!applicant.races?.find(r => r === race)} onChange={handleRaceSelection} name="races" value={race} color="primary" disabled={disabled} />}
                     label={race}
                   />
                 ))
