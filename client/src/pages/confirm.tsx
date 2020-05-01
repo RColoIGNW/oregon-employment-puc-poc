@@ -5,6 +5,7 @@ import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
 import Button from "@material-ui/core/Button"
 import { navigate } from "gatsby"
+import storage from "../util/storage"
 
 const pageInfo = {
   successMessage: 'Your application has been successfully submitted. Here is your application ID',
@@ -29,7 +30,7 @@ const ApplicationSubmittedPage = (props: any) => {
           </Typography>
         </Grid>
         <Grid item>
-          <Button color={'primary'} variant={'contained'} size={'large'} onClick={() => navigate('dashboard')}>
+          <Button color={'primary'} variant={'contained'} size={'large'} onClick={() => {navigate('dashboard')}}>
             {pageInfo.button}
           </Button>
         </Grid>

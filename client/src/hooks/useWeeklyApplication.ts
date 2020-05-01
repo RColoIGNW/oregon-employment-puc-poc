@@ -5,6 +5,8 @@ import weeklyQuestions from "../models/weeklyQuestions"
 import ApplicationModel from '../models/Application'
 import { useState } from "react"
 
+import storage from '../util/storage'
+
 
 export default () => {
   const api = useWeeklyFormApi()
@@ -27,13 +29,14 @@ export default () => {
   const [application, setApplication] = useState(defaultValue)
 
   const handleChange = (weeklyApplication: weeklyQuestions) => {
+    localSave({...weeklyApplication})
     setApplication({...weeklyApplication})
-    console.log(application)
   }
 
   const handleEmploymentChange = (employmentRecords: ApplicationModel) => {
+    localSave({...application, employmentHistory: employmentRecords.employmentRecords})
+
     setApplication({...application, employmentHistory: employmentRecords.employmentRecords})
-    console.log(application)
   }
 
   const save = async (application: Partial<weeklyQuestions>): Promise<string> => {
@@ -41,10 +44,9 @@ export default () => {
     return  await api.saveApplication(application)
   }
 
-  // todo getting rid of this, not sure if I can yet though
-  // const localSave = (weeklyApplication:  weeklyQuestions) => {
-  //   storage.save('weekly-application', weeklyApplication)
-  // }
+  const localSave = (weeklyApplication:  weeklyQuestions) => {
+    storage.save('weekly-application', weeklyApplication)
+  }
 
   const submit = (application: Partial<weeklyQuestions>) => {
     return api.submitApplication(application)
