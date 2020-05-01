@@ -37,15 +37,16 @@ const defaultValue: weeklyQuestions = {
 }
 
 interface WeeklyStep2Props {
-  weeklyQuestions?: weeklyQuestions,
+  weekly?: weeklyQuestions,
   onChangeWeekly: (weeklyQuestions: weeklyQuestions) => void
   isDisabled?: boolean,
+  //todo fix
   onChange: (application: ApplicationModel) => void,
   application: ApplicationModel,
 }
 
 export default (props: WeeklyStep2Props) => {
-  const [state, setState] = useState(props.weeklyQuestions || defaultValue)
+  const [state, setState] = useState(props.weekly || defaultValue)
 
   const {handleEmploymentChange} = useWeeklyApplication()
 
@@ -59,6 +60,7 @@ export default (props: WeeklyStep2Props) => {
 
 
   useEffect(() => {
+    //todo fix
     props.onChangeWeekly(state)
   }, [state])
 

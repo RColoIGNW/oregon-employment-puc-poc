@@ -21,8 +21,6 @@ export default () => {
       body: JSON.stringify({status: ApplicationStatus.Submitted}),
       redirect: 'follow',
     }
-    console.log(requestOptions)
-    console.log(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${applicationId}`)
     return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${applicationId}`, requestOptions as any)
       .catch(console.error)
   }

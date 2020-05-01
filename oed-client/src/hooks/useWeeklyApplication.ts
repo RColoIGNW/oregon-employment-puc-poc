@@ -5,6 +5,8 @@ import weeklyQuestions from "../models/weeklyQuestions"
 import Applicant from "../models/Applicant"
 import EmploymentRecord from "../models/EmploymentRecord"
 import ApplicationModel from '../models/Application'
+import { ApplicationStatus } from "../models/ApplicationStatus"
+import { AnswerModel } from "../models/Answer"
 
 export default () => {
   const api = useWeeklyFormApi()
@@ -27,10 +29,14 @@ export default () => {
 
   const handleChange = (weeklyApplication: Partial<weeklyQuestions>) => {
     currentValue = weeklyApplication
+    console.log(currentValue)
+
   }
 
   const handleEmploymentChange = (employmentRecords: ApplicationModel) => {
     currentValue.employmentHistory = employmentRecords.employmentRecords
+    console.log(currentValue)
+
   }
 
   const save = async (application: Application): Promise<string> => {
@@ -43,7 +49,15 @@ export default () => {
 
   const submit = (applicationId: string) => {
     console.log('weekly submit')
+    console.log(currentValue)
     return api.submitApplication(applicationId)
+  }
+
+  const application = {
+    id: '',
+    userId: '',
+    isCertified: false,
+    certifiedBy: ''
   }
 
   return {
@@ -53,6 +67,7 @@ export default () => {
     load,
     localSave,
     save,
-    submit
+    submit,
+    application
   }
 }
