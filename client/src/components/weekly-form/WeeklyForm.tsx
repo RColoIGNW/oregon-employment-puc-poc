@@ -13,12 +13,13 @@ import {
   makeStyles
 } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from "react"
 
 
 import useWeeklyFormApi from '../../hooks/useWeeklyFormApi'
 import ApplicationModel from '../../models/Application'
 import theme from "../../themes/theme-light"
+import { SnackBarContext } from '../../providers/SnackbarProvider'
 
 
 import WeeklySectionA from "../weekly-sectionA/weeklySectionA"
@@ -102,6 +103,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const snackbar = useContext(SnackBarContext)
 
   const { application, applicationId, isDisabled, handleChange, handleEmploymentChange, handleSubmit } = props
   const disabled = !!isDisabled
@@ -141,6 +143,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
     if(application){
       const applicationId = await props.save(application);
       handleChange({ ...application, applicationId: applicationId })
+      snackbar.showFeedback({ message: 'Progress Saved' })
     }
   }
 
