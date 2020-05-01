@@ -1,5 +1,6 @@
 import Application from '../models/Application'
 import { request } from '../util/request'
+import weeklyQuestions from "../models/weeklyQuestions"
 
 export default () => {
   const saveApplication = async (application: Partial<Application>): Promise<string> => {
@@ -14,24 +15,13 @@ export default () => {
     return applicationId
   }
 
-  // todo can I get rid of this?
-  // const submitApplication = (applicationId: string): Promise<any> => {
-  //   const requestOptions = {
-  //     method: 'PATCH',
-  //     body: JSON.stringify({status: ApplicationStatus.Submitted}),
-  //     redirect: 'follow',
-  //   }
-  //   return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${applicationId}`, requestOptions as any)
-  //     .catch(console.error)
-  // }
-
-  const submitApplication = (application: Partial<Application>) => {
+  const submitApplication = (application: Partial<weeklyQuestions>) => {
     const requestOptions = {
       method: 'PATCH',
       body: JSON.stringify(application),
       redirect: 'follow',
     }
-    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.id}/submit`, requestOptions as any)
+    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.applicationID}/submit`, requestOptions as any)
       .catch(console.error)
   }
 

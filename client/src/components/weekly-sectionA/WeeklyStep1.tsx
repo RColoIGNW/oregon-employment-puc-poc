@@ -13,24 +13,6 @@ const defaultValue: weeklyQuestions = {
   seekedEmployment: true,
   veteran: false,
   temporaryUnemployment: false,
-  firstName: '',
-  middleName: '',
-  lastName: '',
-  ssn: '',
-  dob: undefined,
-  address: {
-    street: '',
-    city: '',
-    state: '',
-    zipCode: ''
-  },
-  phone: '',
-  email: '',
-  gender: undefined,
-  isHispanicLatino: undefined,
-  contactMethod: undefined,
-  races: [],
-  adminNote: ''
 }
 
 interface WeeklyStep1Props {

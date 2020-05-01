@@ -13,7 +13,12 @@ const ApplicationPage = (props: any) => {
   const handleSubmit = async (appId: string) => {
     try {
       //TODO: Show Progress
-      await submit(appId)
+      const {currentValue} = useWeeklyApplication()
+      currentValue.applicationID = appId
+      console.log('current value')
+      console.log(currentValue)
+
+      await submit(currentValue)
       navigate('confirm',  { state: {applicationId: appId }})
     } catch (e) {
       //TODO: Show submit error
