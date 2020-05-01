@@ -3,6 +3,8 @@ import TextField from '@material-ui/core/TextField'
 import React from 'react'
 
 import Address from '../models/Address'
+import ZipCodeTextField from './ZipCodeTextField'
+import StateSelect from './StateSelect'
 
 const defaultValue: Address = {
   street: '',
@@ -51,7 +53,7 @@ export default (props: AddressEditProps) => {
         />
       </Grid>
       <Grid item xs={6} md={3}>
-        <TextField
+        <StateSelect
           name="state"
           value={address.state}
           onChange={onChange}
@@ -62,7 +64,7 @@ export default (props: AddressEditProps) => {
         />
       </Grid>
       <Grid item xs={6} md={4}>
-        <TextField
+        <ZipCodeTextField
           name="zipCode"
           value={address.zipCode}
           onChange={onChange}
