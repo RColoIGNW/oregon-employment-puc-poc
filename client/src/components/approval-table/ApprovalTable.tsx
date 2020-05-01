@@ -67,7 +67,7 @@ export default function ApprovalTable(props: any) {
   const { updateApplication } = useApplicantFormApi()
   const tableProps: TableState = {
     columns: [
-      { title: 'Date Applied', field: 'date' },
+      { title: 'Date Applied', field: 'date', defaultSort: 'asc' },
       { title: 'Name', field: 'name' },
       { title: 'Phone', field: 'phone' },
       { title: 'SSN', field: 'ssn' },

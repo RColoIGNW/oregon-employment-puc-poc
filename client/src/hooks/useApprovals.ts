@@ -21,7 +21,7 @@ export default () => {
             const segments: any = doc?.Rm?.key?.path?.segments || []
             data.push({...doc.data(), id: segments[segments.length - 1]})
           })
-          setTableData(data.reverse())
+          setTableData(data)
         })
     }
 
