@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid'
 import { useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { DatePicker, MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 
 import Address from '../models/Address'
@@ -76,11 +76,11 @@ export default (props: EmploymentRecordEditProps) => {
   }
 
   const handleStartedChange = (value: MaterialUiPickersDate) => {
-    value && setState({value: { ...state.value, started: value.toDate() }, errors: { ...state.errors}})
+    value && setState({ value: { ...state.value, started: value.toDate() }, errors: { ...state.errors } })
   }
 
   const handleEndedChange = (value: MaterialUiPickersDate) => {
-    value && setState({value: { ...state.value, ended: value.toDate() }, errors: { ...state.errors}})
+    value && setState({ value: { ...state.value, ended: value.toDate() }, errors: { ...state.errors } })
   }
 
   const handleAddressChange = (address: Address) => {
@@ -124,11 +124,11 @@ export default (props: EmploymentRecordEditProps) => {
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      <DatePicker fullWidth value={state.value.started} onChange={handleStartedChange} format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
+                    <Grid item xs={12} sm={6}>
+                      <KeyboardDatePicker fullWidth value={state.value.started} onChange={handleStartedChange} label="Started" format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
                     </Grid>
-                    <Grid item xs={6}>
-                      <DatePicker fullWidth value={state.value.ended} onChange={handleEndedChange} format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
+                    <Grid item xs={12} sm={6}>
+                      <KeyboardDatePicker fullWidth value={state.value.ended} onChange={handleEndedChange} label="Ended" format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
                     </Grid>
                   </Grid>
                 </Grid>
