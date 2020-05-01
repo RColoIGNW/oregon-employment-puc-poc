@@ -28,21 +28,20 @@ FROM node:12.16.2
 #RUN chmod +x /usr/bin/firebase.bash
 
 WORKDIR /app
-# RUN mkdir oed-client
-# WORKDIR /app/oed-client
-COPY oed-client/package*.json ./
+# RUN mkdir client
+# WORKDIR /app/client
+COPY client/package*.json ./
 RUN npm install
-COPY oed-client/ .
+COPY client/ .
 # RUN npm install
 # RUN ls -af
 #RUN npm run build
 #RUN npm run deploy
 
-# WORKDIR /app/oed-client
+# WORKDIR /app/client
 
 # THIS WORKS
 #
 #WORKDIR /app
 #COPY . .
 #RUN ls -af
-
