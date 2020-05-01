@@ -53,7 +53,7 @@ export const routes = (router: Router) => {
     .route('/weekly-applications')
     .put(decodeToken, isAuthorized, applicationApi.createDocument.bind(null, 'weekly-applications', 'weekly-claims'))
 
-  router // TODO: depricate
+  router // TODO: depricate - we shouldn't ever need to replace the entire record unless it's on create
     .route('/weekly-applications/:id')
     .put(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 
