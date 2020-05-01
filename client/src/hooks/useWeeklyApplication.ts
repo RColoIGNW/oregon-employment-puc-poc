@@ -1,6 +1,12 @@
-import Application from '../models/Application'
-import storage from '../util/storage'
+
 import useWeeklyFormApi from "./useWeeklyFormApi"
+import weeklyQuestions from "../models/weeklyQuestions"
+
+import ApplicationModel from '../models/Application'
+import { useState } from "react"
+
+import storage from '../util/storage'
+
 
 export default () => {
   const api = useWeeklyFormApi()
@@ -10,17 +16,49 @@ export default () => {
     //save to localstorage
   }
 
-  const save = async (application: Application): Promise<string> => {
+  const defaultValue = {
+    ableToWork: true,
+    awayFromResidence: false,
+    seekedEmployment: true,
+    veteran: false,
+    temporaryUnemployment: false,
+    employmentHistory: [],
+    applicationId: ''
+  }
+
+  const [application, setApplication] = useState(defaultValue)
+
+  const handleChange = (weeklyApplication: weeklyQuestions) => {
+    localSave({...weeklyApplication})
+    setApplication({...weeklyApplication})
+  }
+
+  const handleEmploymentChange = (employmentRecords: ApplicationModel) => {
+    localSave({...application, employmentHistory: employmentRecords.employmentRecords})
+
+    setApplication({...application, employmentHistory: employmentRecords.employmentRecords})
+  }
+
+  const save = async (application: Partial<weeklyQuestions>): Promise<string> => {
+
     return  await api.saveApplication(application)
   }
 
-  const localSave = (application:  Application) => {
-    storage.save('weekly-application', application)
+  const localSave = (weeklyApplication:  weeklyQuestions) => {
+    storage.save('weekly-application', weeklyApplication)
   }
 
+  const submit = (application: Partial<weeklyQuestions>) => {
+    return api.submitApplication(application)
+  }
+
+
   return {
+    application,
+    handleChange,
+    handleEmploymentChange,
     load,
-    localSave,
-    save
+    save,
+    submit,
   }
 }
