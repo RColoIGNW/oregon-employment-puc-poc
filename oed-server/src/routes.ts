@@ -1,7 +1,7 @@
 import type { Router } from 'express'
 import { decodeToken, isAuthorized, hasAdminRole } from './util/token'
-import applicationService from './services/new-application'
-import weekyApplicationService from './services/weekly-application'
+import newApplicationService from './services/new-application'
+import weeklyApplicationService from './services/weekly-application'
 import applicationApi from './services/application'
 
 enum ENDPOINTS {
@@ -20,7 +20,7 @@ export const routes = (router: Router) => {
 
   router
     .route('/applications')
-    .post(decodeToken, isAuthorized, applicationService.createApplication)
+    .put(decodeToken, isAuthorized, applicationApi.createDocument.bind(null, 'applications', 'pua-applications'))
 
   router
     .route('/applications')
@@ -46,8 +46,20 @@ export const routes = (router: Router) => {
     .patch(decodeToken, isAuthorized, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   router
+    .route('/applications/:id/submit')
+    .patch(decodeToken, isAuthorized, newApplicationService.submitApplication)
+
+  router
     .route('/weekly-applications')
-    .post(decodeToken, isAuthorized, weekyApplicationService.createWeeklyApplication)
+    .put(decodeToken, isAuthorized, applicationApi.createDocument.bind(null, 'weekly-applications', 'weekly-claims'))
+
+  router // TODO: depricate
+    .route('/weekly-applications/:id')
+    .put(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
+
+  router
+    .route('/weekly-applications/:id')
+    .get(decodeToken, isAuthorized, applicationApi.getDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 
   router
     .route('/weekly-applications')
@@ -59,19 +71,15 @@ export const routes = (router: Router) => {
 
   router
     .route('/weekly-applications/:id')
-    .get(decodeToken, isAuthorized, applicationApi.getDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
+    .patch(decodeToken, isAuthorized, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
+
+  router
+    .route('/weekly-applications/:id/submit')
+    .patch(decodeToken, isAuthorized, weeklyApplicationService.submitWeeklyApplication)
 
   router
     .route('/weekly-applications/:id')
     .delete(decodeToken, isAuthorized, applicationApi.deleteDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
-
-  router
-    .route('/weekly-applications/:id')
-    .put(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
-
-  router
-    .route('/weekly-applications/:id')
-    .patch(decodeToken, isAuthorized, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 }
 
 export default routes

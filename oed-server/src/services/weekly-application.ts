@@ -5,40 +5,38 @@ import firebase from '../util/firebase'
 import { logger } from '../util/logger'
 
 const log = logger('api:application-information')
-
 const db = firebase.firestore()
 
-const createWeeklyApplication = async (req: Request, res: Response) => {
+const submitWeeklyApplication = async (req: Request, res: Response) => {
   try {
     if (!req.body) { throw new Error('Request Body Required') }
 
-    const requestBody = { ...req.body, lastModified: new Date().toISOString() }
+    const requestBody = { ...req.body, lastModified: fb.firestore.Timestamp.now() }
     const countRef = db.collection('weekly-applications-count').doc('pua-applications')
-    const applicationRef = db.collection('weekly-applications').doc()
-
+    const applicationRef = db.collection('weekly-applications').doc(req.params.id)
     return db
       .runTransaction(async (t) => {
-        const countDoc = await t.get(countRef)
         const increment = fb.firestore.FieldValue.increment(1)
-        t[countDoc.data() ? 'update' : 'set'](countRef, { applicationCount: increment })
+        t.update(countRef, { applicationCount: increment, status: 'submitted' })
         t.set(applicationRef, requestBody)
         return Promise.resolve('Transaction Successful!')
       })
       .then(async () => {
-        const doc = await applicationRef.get()
-        const application = doc.data()
-        if (application.isSubmitted){
-          // publish to pub/sub for downstream services
-          log(JSON.stringify(application), 'Published to pub/sub!')
-        }
-        return res.status(200).json({ success: true, applicationId: doc.id })
+        // TODO: add downstream service notification
+        // const doc = await applicationRef.get()
+        // const application = doc.data()
+        // if (application.isSubmitted){
+        //   // publish to pub/sub for downstream services
+        //   log(JSON.stringify(application), 'Published to pub/sub!')
+        // }
+        return res.status(200).json({ success: true })
       })
-      .finally(() => log('SubmitApplicationInformation Transaction Finished!'))
+      .finally(() => log('SubmitWeeklyApplication Transaction Finished!'))
   } catch (error) {
     res.status(400).json({ error })
   }
 }
 
 export default {
-  createWeeklyApplication,
+  submitWeeklyApplication,
 }
