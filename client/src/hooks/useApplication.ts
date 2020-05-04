@@ -29,7 +29,6 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     applicationId && load(applicationId)
     return () => {
       resetState()
-      window.alert('resetState called')
     }
   }, [])
 
