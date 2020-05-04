@@ -8,7 +8,7 @@ import useApplication from '../hooks/useApplication'
 
 const ApplicationPage = (props: any) => {
   const applicationId = props.location?.state?.applicationId
-  const { submit } = useApplication()
+  const { submit } = useApplication({ applicationId })
 
   const handleSubmit = async (appId: string) => {
     try {
