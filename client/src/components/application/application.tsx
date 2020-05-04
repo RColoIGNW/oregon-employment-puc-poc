@@ -24,7 +24,7 @@ import SectionE from '../sectionE/sectionE'
 import SectionF from '../sectionF/sectionF'
 import SectionG from '../sectionG/sectionG'
 
-const pageInfo = {
+export const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
   sectionA: {
     icon: 'A',
