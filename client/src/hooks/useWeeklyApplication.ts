@@ -53,6 +53,12 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     }
   }, [application?.applicationId])
 
+  useEffect(() => {
+    return () => {
+      resetState()
+    }
+  }, [])
+
   const saveActiveStep = (step: number) => {
     storage.save('weeklyActiveStep', step)
     setActiveStep(step)
