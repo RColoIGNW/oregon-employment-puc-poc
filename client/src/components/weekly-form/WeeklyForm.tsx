@@ -13,23 +13,15 @@ import {
   makeStyles
 } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import React, { useContext, useEffect } from "react"
+import React from "react"
 
-
-import useWeeklyFormApi from '../../hooks/useWeeklyFormApi'
 import ApplicationModel from '../../models/Application'
-import theme from "../../themes/theme-light"
-import { SnackBarContext } from '../../providers/SnackbarProvider'
-
-
-import WeeklySectionA from "../weekly-sectionA/weeklySectionA"
-import WeeklySectionB from "../weekly-sectionB/WeeklySectionB"
 import weeklyQuestions from "../../models/weeklyQuestions"
+import theme from "../../themes/theme-light"
 import WeeklyStep1 from "../weekly-sectionA/WeeklyStep1"
 import WeeklyStep2 from "../weekly-sectionB/WeeklyStep2"
 
-
-const pageInfo = {
+export const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
   sectionA: {
     icon: 'A',
@@ -43,6 +35,23 @@ const pageInfo = {
   next: 'Next',
   submit: 'Submit',
 }
+
+export const steps = [
+  {
+    key: 'A',
+    icon: pageInfo.sectionA.icon,
+    title: pageInfo.sectionA.title,
+    isFirstStep: true,
+    component: WeeklyStep1
+  },
+  {
+    key: 'B',
+    icon: pageInfo.sectionB.icon,
+    title: pageInfo.sectionB.title,
+    isFirstStep: false,
+    component: WeeklyStep2
+  },
+]
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,105 +99,33 @@ const StepActions = (props: StepActionsProp) => {
 }
 
 interface WeeklyFormProps {
-  application: weeklyQuestions,
-  applicationId: string,
-  isDisabled?: boolean,
-  handleSubmit: (appId: string) => void,
-  handleChange: (weeklyApplication: weeklyQuestions) => void,
-  handleEmploymentChange: (employmentRecords: ApplicationModel) => void,
-  save: (application: Partial<weeklyQuestions>) => Promise<string>,
+  application: weeklyQuestions
+  applicationId: string
+  isDisabled?: boolean
+  handleChange: (weeklyApplication: weeklyQuestions) => void
+  handleEmploymentChange: (employmentRecords: ApplicationModel) => void
+  save: (application: Partial<weeklyQuestions>) => Promise<string>
+  activeStep: number
+  setActiveStep: (step: number) => void
+  handleSave: () => any
+  handleBack: () => any
+  handleNext: () => any
 }
 
 export default function WeeklyForm(props: WeeklyFormProps) {
   const classes = useStyles()
-  const [activeStep, setActiveStep] = React.useState(0)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const snackbar = useContext(SnackBarContext)
-
-  const { application, applicationId, isDisabled, handleChange, handleEmploymentChange, handleSubmit } = props
-  const disabled = !!isDisabled
-  const api = useWeeklyFormApi()
-
-  useEffect(() => {
-    //TODO: Check Application in Progress (check storage) ask Continue or discard?
-    const retrieveApplication = async (applicationId: string) => {
-      const application = await api.getApplication(applicationId) // TODO: create new method to get weeklyForm app
-      handleChange(application)
-    }
-
-    const createApplication = async () => {
-      const app = {userId: localStorage.uid}
-      const applicationId = await api.saveApplication(app) // TODO: create a new method to save weeklyForm app
-      handleChange({ ...application, applicationId: applicationId })
-
-    }
-
-    if (applicationId) {
-      retrieveApplication(applicationId)
-    } else {
-      createApplication()
-    }
-  }, [applicationId])
-
-  // const { handleSubmit: handleSectionASubmit } = useSectionA()
-  // const { handleSubmit: handleSectionBSubmit } = useSectionB()
-
-  // const handleChange = (app: weeklyQuestions) => {
-  //   //localSave(app)
-  //   setApplication(app)
-  // }
-
-
-  const handleSave = async () => {
-    if(application){
-      const applicationId = await props.save(application);
-      handleChange({ ...application, applicationId: applicationId })
-      snackbar.showFeedback({ message: 'Progress Saved' })
-    }
-  }
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
-
-  const handleNext = async () => {
-    let isStepValid: boolean = true
-
-    if (isStepValid) {
-      try {
-
-        await handleSave()
-        if (activeStep === steps.length - 1){
-          //Submit App
-          if(application.applicationId) {
-            handleSubmit(application.applicationId)
-          }
-        } else {
-          setActiveStep((prevActiveStep) => prevActiveStep + 1)
-        }
-      }
-      catch(e){
-      }
-
-    }
-  }
-
-  const steps = [
-    {
-      key: 'A',
-      icon: pageInfo.sectionA.icon,
-      title: pageInfo.sectionA.title,
-      isFirstStep: true,
-      component: WeeklyStep1
-    },
-    {
-      key: 'B',
-      icon: pageInfo.sectionB.icon,
-      title: pageInfo.sectionB.title,
-      isFirstStep: false,
-      component: WeeklyStep2
-    },
-  ]
+  const {
+    application,
+    isDisabled: disabled,
+    activeStep,
+    setActiveStep,
+    handleSave,
+    handleChange,
+    handleEmploymentChange,
+    handleBack,
+    handleNext,
+  } = props
 
   const ActiveSection = steps?.[activeStep]?.component
 
