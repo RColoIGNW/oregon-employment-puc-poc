@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid'
 import { useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { DatePicker, MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 
 import Address from '../models/Address'
@@ -17,86 +17,39 @@ import EmploymentRecord from '../models/EmploymentRecord'
 import AddressEdit from './AddressEdit'
 import PhoneTextField from './PhoneTextField';
 
-const validate = (name: string, value: string): string => {
-  switch (name) {
-    case 'name':
-      if (!value.trim()) return 'Enter employer name'
-      break
-    case 'phone':
-      if (!value.trim()) return 'Enter employer phone'
-      break
-    default: return ''
-  }
-  return ''
-}
-
 interface EmploymentRecordEditProps {
-  employmentRecord?: EmploymentRecord
+  employmentRecord: EmploymentRecord
   open: boolean
   onAccept?: (employmentRecord: EmploymentRecord) => void
   onCancel?: () => void
   isDisabled?: boolean
 }
 
-const defaultValue: EmploymentRecord = {
-  employer: {
-    name: '',
-    phone: '',
-    address: {
-      street: '',
-      city: '',
-      state: '',
-      zipCode: ''
-    },
-  },
-  started: new Date(),
-  ended: new Date()
-}
-
 export default (props: EmploymentRecordEditProps) => {
-  const employmentRecord = props.employmentRecord || defaultValue
   const { open, onAccept, onCancel } = props
+  const [state, setState] = useState<EmploymentRecord>(props.employmentRecord)
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [state, setState] = useState(
-    {
-      value: {
-        ...employmentRecord.employer,
-        started: employmentRecord.started,
-        ended: employmentRecord.ended,
-      },
-      errors: {}
-    }
-  )
-
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmployerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    setState({ value: { ...state.value, [name]: value }, errors: { ...state.errors, [name]: validate(name, value) } })
-  }
-
-  const handleStartedChange = (value: MaterialUiPickersDate) => {
-    value && setState({ value: { ...state.value, started: value.toDate() }, errors: { ...state.errors } })
-  }
-
-  const handleEndedChange = (value: MaterialUiPickersDate) => {
-    value && setState({ value: { ...state.value, ended: value.toDate() }, errors: { ...state.errors } })
+    setState({ ...state, employer: { ...state.employer, [name]: value } })
   }
 
   const handleAddressChange = (address: Address) => {
-    setState({ value: { ...state.value, address: address }, errors: { ...state.errors } })
+    setState({ ...state, employer: { ...state.employer, address: address } })
+  }
+
+  const handleStartedChange = (value: MaterialUiPickersDate) => {
+    value && setState({ ...state, started: value.toDate() })
+  }
+
+  const handleEndedChange = (value: MaterialUiPickersDate) => {
+    value && setState({ ...state, ended: value.toDate() })
   }
 
   const handleAccept = () => {
-    onAccept && onAccept({
-      employer: {
-        name: state.value.name,
-        address: state.value.address,
-        phone: state.value.phone
-      },
-      started: state.value.started,
-      ended: state.value.ended
-    })
+    onAccept && onAccept(state)
   }
 
   const handleCancel = () => {
@@ -114,21 +67,21 @@ export default (props: EmploymentRecordEditProps) => {
             <Grid item>
               <Grid container spacing={2} direction="column">
                 <Grid item xs={12}>
-                  <TextField fullWidth value={state.value.name} name="name" onChange={onChange} label="Name of Employer" variant="outlined" disabled={props.isDisabled} />
+                  <TextField fullWidth value={state.employer.name} name="name" onChange={handleEmployerChange} label="Name of Employer" variant="outlined" disabled={props.isDisabled} />
                 </Grid>
                 <Grid item xs={12}>
-                  <PhoneTextField fullWidth value={state.value.phone} name="phone" onChange={onChange} label="Phone Number" variant="outlined" disabled={props.isDisabled} />
+                  <PhoneTextField fullWidth value={state.employer.phone} name="phone" onChange={handleEmployerChange} label="Phone Number" variant="outlined" disabled={props.isDisabled} />
                 </Grid>
                 <Grid item xs={12}>
-                  <AddressEdit address={state.value.address} onChange={handleAddressChange} />
+                  <AddressEdit address={state.employer.address} onChange={handleAddressChange} />
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                      <KeyboardDatePicker fullWidth value={state.value.started} onChange={handleStartedChange} label="Started" format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
+                      <KeyboardDatePicker fullWidth value={state.started} onChange={handleStartedChange} label="Started" format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                      <KeyboardDatePicker fullWidth value={state.value.ended} onChange={handleEndedChange} label="Ended" format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
+                      <KeyboardDatePicker fullWidth value={state.ended} onChange={handleEndedChange} label="Ended" format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
                     </Grid>
                   </Grid>
                 </Grid>

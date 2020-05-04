@@ -8,6 +8,21 @@ import EmploymentRecord from '../models/EmploymentRecord'
 import EmploymentRecordEdit from './EmploymentRecordEdit'
 import EmploymentRecordItem from './EmploymentRecordItem'
 
+const defaultValue: EmploymentRecord = {
+  employer: {
+    name: '',
+    phone: '',
+    address: {
+      street: '',
+      city: '',
+      state: '',
+      zipCode: ''
+    },
+  },
+  started: new Date(),
+  ended: new Date()
+}
+
 interface EmploymentRecordListProps {
   employmentRecords: EmploymentRecord[]
   onAddEmploymentRecord: (employmentRecord: EmploymentRecord) => void
@@ -17,16 +32,17 @@ interface EmploymentRecordListProps {
 
 export default (props: EmploymentRecordListProps) => {
   const { employmentRecords } = props
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<EmploymentRecord>()
 
   const handleOpen = (employmentRecord?: EmploymentRecord) => {
-    setSelectedRecord(employmentRecord)
+    setSelectedRecord(employmentRecord || defaultValue)
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setSelectedRecord(undefined)
   };
 
   const onAddEmploymentRecord = (employmentRecord: EmploymentRecord) => {
@@ -40,7 +56,7 @@ export default (props: EmploymentRecordListProps) => {
 
   return (
     <>
-      <Grid container spacing={2} justify="flex-start" alignItems="center" >
+      <Grid container spacing={1} justify="flex-start" >
         {
           employmentRecords?.map((employmentRecord, index) =>
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
@@ -53,21 +69,20 @@ export default (props: EmploymentRecordListProps) => {
             </Grid>
           )
         }
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Grid container justify="center" alignItems="center">
-            <Grid item>
-              <Button component="div" variant="contained" size="large" disabled={!!props.isDisabled} color="primary" onClick={() => handleOpen()}>
-                <Grid container direction="column" alignItems="center">
-                  <Grid item><AddIcon /></Grid>
-                  <Grid item><Typography>Add employment record</Typography></Grid>
-                </Grid>
-              </Button>
-            </Grid>
+        {!props.isDisabled &&
+          <Grid item xs={12} sm={6} md={4} lg={3}>
+            <Button fullWidth component="div" variant="contained" size="large" color="primary" onClick={() => handleOpen()}>
+              <Grid container direction="column" alignItems="center">
+                <Grid item><AddIcon /></Grid>
+                <Grid item><Typography>Add employment record</Typography></Grid>
+              </Grid>
+            </Button>
           </Grid>
-        </Grid>
+        }
       </Grid>
-
-      <EmploymentRecordEdit isDisabled={props.isDisabled} open={open} employmentRecord={selectedRecord} onAccept={onAddEmploymentRecord} onCancel={handleClose} />
+      {!props.isDisabled && selectedRecord &&
+        <EmploymentRecordEdit open={open} employmentRecord={selectedRecord} onAccept={onAddEmploymentRecord} onCancel={handleClose} />
+      }
     </>
   )
 }
