@@ -17,7 +17,7 @@ export const generatePdf = async (collectionName: string, req: Request, res: Res
       fillPdf.generatePdf(mappedForm, pdfTemplatePath, [], (err: Error, output: Buffer): void => {
         if (err) { throw new Error('Failed to generate pdf') }
         res.setHeader('Content-Type', 'application/pdf')
-        res.setHeader('Content-disposition', 'attachment; filename=app.pdf')
+        res.setHeader('Content-disposition', 'attachment; filename=application.pdf')
         res.send(output)
       })
     })
