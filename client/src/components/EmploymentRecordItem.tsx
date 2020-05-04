@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Typography } from '@material-ui/core'
+import { Button, Card, CardContent, Typography, CardActions } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
@@ -31,9 +31,9 @@ export default (props: EmploymentRecordItemProps) => {
   return (
     <Card>
       <CardContent>
-        <Grid container direction="column" spacing={2}>
+        <Grid container direction="column">
           <Grid item>
-            <Typography variant="h6">{employer.name}</Typography>
+            <Typography variant="body1" style={{ fontWeight: 'bold' }}>{employer.name}</Typography>
           </Grid>
           <Grid item style={{ alignSelf: "flex-end" }}>
             <AddressDisplay address={employer.address} />
@@ -51,22 +51,24 @@ export default (props: EmploymentRecordItemProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item>
+        </Grid>
+      </CardContent>
+      {!props.isDisabled &&
+        <CardActions>
             <Grid container justify="flex-end" spacing={2}>
               <Grid item>
-                <Button disabled={props.isDisabled} onClick={handleEdit} variant="contained" startIcon={<EditIcon color={props.isDisabled ? 'disabled' : 'inherit'} />}>
+                <Button onClick={handleEdit} startIcon={<EditIcon />} color="primary">
                   Edit
                 </Button>
               </Grid>
               <Grid item>
-                <Button disabled={props.isDisabled} onClick={handleDelete} variant="contained" startIcon={<DeleteIcon color={props.isDisabled ? 'disabled' : 'inherit'} />}>
+                <Button onClick={handleDelete} startIcon={<DeleteIcon />} color="primary">
                   Delete
                 </Button>
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-      </CardContent>
+        </CardActions>
+      }
     </Card>
   )
 }
