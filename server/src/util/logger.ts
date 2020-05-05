@@ -1,4 +1,5 @@
 import fs from 'fs'
+
 import bunyan, { LogLevel } from 'bunyan'
 
 const filePath =  process.env.NODE_ENV === 'production'
