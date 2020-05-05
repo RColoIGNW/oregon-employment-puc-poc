@@ -48,6 +48,7 @@
     "validatorjs": "^3.18.1"
   },
   "scripts": {
+    "predocker:start": "mkdir -p logs",
     "docker:start": "make up",
     "docker:poststart": "docker-compose down",
     "docker:test": "make test",
@@ -57,6 +58,7 @@
     "build": "tsc",
     "run": "node dist/server.js",
     "dev": "ts-node-dev ./src/server.ts",
+    "prestart": "mkdir -p logs",
     "start": "npm run dev",
     "grant:admin": "export GOOGLE_APPLICATION_CREDENTIALS=./sa.json && ts-node ./scripts/grant-admin-role.ts",
     "debug:pdf": "node ./scripts/debug-pdf.js"
