@@ -1,4 +1,4 @@
-import fs from 'fs'
+// import fs from 'fs'
 
 import { Request, Response } from 'express'
 import fillPdf from 'fill-pdf'
@@ -18,17 +18,25 @@ export const generatePdf = (collectionName: string, req: Request, res: Response)
       const mappedForm = getMappings(doc.data())
       const extendArgs = ['approved', 'submitted', 'deny'].includes(doc?.data()?.status?.toLowerCase?.()) ? ['flatten'] : []
       fillPdf.generatePdf(mappedForm, pdfTemplatePath, extendArgs, (err: Error, output: Buffer): void => {
-        if (err) { throw new Error('Failed to generate pdf') }
+        if (err) {
+          console.log(err);
+          throw new Error('Failed to generate pdf')
+        }
+
         res.setHeader('Content-Type', 'application/pdf')
+        res.setHeader('Content-Length', output.length)
         res.setHeader('Content-disposition', 'attachment; filename=application.pdf')
-        fs.writeFile('./temp.pdf', output, err => {
-          if (err) {
-            console.error(err)
-            throw new Error('Failed to write temp file')
-          }
-        })
-        const file = fs.createReadStream('./temp.pdf');
-        file.pipe(res)
+
+        // fs.writeFile('./temp.pdf', output, err => {
+        //   if (err) {
+        //     console.error(err)
+        //     throw new Error('Failed to write temp file')
+        //   }
+        // })
+
+        // const file = fs.createReadStream('./temp.pdf');
+        // file.pipe(res)
+        res.send(output)
       })
     })
     .catch((error) => {
