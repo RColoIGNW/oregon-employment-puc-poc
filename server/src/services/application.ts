@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import fbAdmin from 'firebase-admin'
 
 import firebase from '../util/firebase'
+import log from '../util/logger'
 
 const db = firebase.firestore()
 
@@ -156,7 +157,7 @@ const createDocument = async (collectionName: string, subCollectionName: string,
   } catch (error) {
     res.status(400).json({ error })
   } finally {
-    console.info('SubmitApplication Transaction Finished!')
+    log.info('SubmitApplication Transaction Finished!')
   }
 }
 
