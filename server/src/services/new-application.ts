@@ -2,9 +2,7 @@ import { Request, Response } from 'express'
 import fb from 'firebase-admin'
 
 import firebase from '../util/firebase'
-import { logger } from '../util/logger'
-
-const log = logger('api:application-information')
+import log from '../util/logger'
 
 const db = firebase.firestore()
 
@@ -20,6 +18,7 @@ const submitApplication = async (req: Request, res: Response) => {
     }
     const countRef = db.collection('applications-count').doc('pua-applications')
     const applicationRef = db.collection('applications').doc(req.params.id)
+
     return db
       .runTransaction(async (t) => {
         const increment = fb.firestore.FieldValue.increment(1)
@@ -35,11 +34,11 @@ const submitApplication = async (req: Request, res: Response) => {
         const application = doc.data()
         if (application.isSubmitted){
           // publish to pub/sub for downstream services
-          log(JSON.stringify(application), 'Published to pub/sub!')
+          log.info(JSON.stringify(application), 'Published to pub/sub!')
         }
         return res.status(200).json({ success: true })
       })
-      .finally(() => log('SubmitWeeklyApplication Transaction Finished!'))
+      .finally(() => log.info('SubmitWeeklyApplication Transaction Finished!'))
   } catch (error) {
     res.status(400).json({ error })
   }

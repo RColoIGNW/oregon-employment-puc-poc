@@ -1,8 +1,6 @@
 import fetch, { RequestInit, Response } from 'node-fetch'
 
-import { logger } from './logger'
-
-const log = logger('app:util:request')
+import log from './logger'
 
 export interface RequestOptions extends RequestInit {
   requireJSON?: boolean
@@ -18,16 +16,16 @@ export async function request(
 ): Promise<string>
 
 export async function request<T>(url: string, options: RequestOptions) {
-  log('request: fetching', url)
+  log.info('request: fetching', url)
   let response
   try {
     response = await fetch(url, options)
   } catch (err) {
-    log('request: network error making request', err)
+    log.info('request: network error making request', err)
     throw err
   }
   const result = await parseResponse<T>(response, options.requireJSON)
-  log('request: result', result)
+  log.info('request: result', result)
   return result
 }
 
@@ -42,7 +40,7 @@ export async function parseResponse(
 
 export async function parseResponse(res: Response, requireJSON?: boolean) {
   const text = await res.text()
-  log('response status: ', res.status, text)
+  log.info('response status: ', res.status, text)
   if (res.status >= 300) {
     throw new Error(`${res.status} ${text}`)
   }
