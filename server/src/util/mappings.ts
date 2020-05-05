@@ -50,7 +50,7 @@ export default (application: any) => {
       a.answers?.subQuestionsAnwers &&  // TODO: fix typo in field name
       a.answers?.subQuestionsAnwers.find((answer: Answer) => answer.questionCode === subQuestionCode) // TODO: fix typo in field name
 
-    if (!a.answers.length || (!rootAnswer && !subQuestionAnswer) ) {
+    if (!a.answers?.length || (!rootAnswer && !subQuestionAnswer) ) {
       return ''
     }
     if (subQuestionAnswer) {
