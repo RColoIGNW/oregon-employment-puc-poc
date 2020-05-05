@@ -27,6 +27,6 @@ export default console
 //       count: 3, // keep 3 back copies
 //     },
 //   ],
-})
+// })
 
-export default log
+// export default log
