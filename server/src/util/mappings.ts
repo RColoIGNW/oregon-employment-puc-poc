@@ -66,7 +66,7 @@ export default (application: any) => {
     : ''
 
   const mappedForm: any = {
-    'Applicants Name Last First Middle': `${applicant.lastName}, ${applicant.firstName}, ${applicant.middleName}`,
+    'Applicants Name Last First Middle': `${applicant.lastName + ',' || ''} ${applicant.firstName + ',' || ''} ${applicant.middleName || ''}`,
     'Social Security Number': applicant.ssn,
     'Date of Birth Mo Day Yr': moment(applicant.dob).format('LL'),
     'Applicants Mailing Address Street or PO': applicant.address?.street,
