@@ -7,7 +7,7 @@ const filePath =  process.env.NODE_ENV === 'production'
 
 const logDir = `${__dirname}/../../logs/`
 
-create directory if it doesn't exist
+// create directory if it doesn't exist
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir)
 }
