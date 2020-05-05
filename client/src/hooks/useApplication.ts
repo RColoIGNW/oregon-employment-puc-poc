@@ -1,4 +1,4 @@
-// import { navigate } from 'gatsby'
+import { navigate } from 'gatsby'
 import { useContext, useEffect, useState } from 'react'
 
 import { steps } from  '../components/application/application'
@@ -22,10 +22,6 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   const disabled = !!isDisabled
 
   useEffect(() => {
-    //TODO: Check Application in Progress (check storage) ask Continue or discard?
-    // if (!applicationId) {
-    //   navigate('dashboard')
-    // }
     applicationId && load(applicationId)
     return () => {
       resetState()
@@ -84,7 +80,6 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
       //   const { hasErrors: sectionGHasErrors } = handleSectionGSubmit()
       //   isStepValid = !sectionGHasErrors
       // break
-
     }
 
     if (isStepValid) {
@@ -92,7 +87,7 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
         await handleSave()
         if (activeStep === steps.length - 1) {
           //Submit App
-          submit && submit(application!.id)
+          submit && submit(application?.id)
         } else {
           saveActiveStep(activeStep + 1)
         }
@@ -107,7 +102,6 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
       const application = await api.getApplication(applicationId)
       setApplication(application)
     } catch (e) {
-      //TODO: Show Error notification
       snackbar.showFeedback({ message: 'Failed to load application', severity: 'error' })
     }
   }
@@ -130,8 +124,9 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     }
   }
 
-  const submit = (applicationId: string) => {
-    return api.submitApplication(applicationId)
+  const submit = async (applicationId: string) => {
+    await api.submitApplication(applicationId)
+    return navigate('application-submitted',  { state: { applicationId }})
   }
 
   return {

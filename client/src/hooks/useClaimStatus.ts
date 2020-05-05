@@ -6,7 +6,7 @@ import { request } from '../util/request'
 export default () => {
   const snackbar = useContext(SnackBarContext)
 
-  const downloadApplication = (applicationId: string) => {
+  const downloadApplication = async (applicationId: string) => {
     const headers = new Headers()
     headers.append("Content-Type", "application/pdf")
     headers.append("Authorization", `Bearer ${localStorage.token || ""}`)
@@ -17,17 +17,17 @@ export default () => {
       redirect: 'follow'
     } as any
 
-    return request(`${process.env.REACT_APP_API_HOST}/api/generate-pdf/${applicationId}`, requestOptions, 'blob')
-    .then((result: any) => {
-      const file = new Blob([result], { type: 'application/pdf' })
+    try {
+      const result = await request(`${process.env.REACT_APP_API_HOST}/api/generate-pdf/${applicationId}`, requestOptions, 'blob')
+      const file = new Blob([ result as Blob ], { type: 'application/pdf' })
       const fileURL = URL.createObjectURL(file)
       window.open(fileURL, '_blank')
       snackbar.showFeedback({ message: 'Download Complete' })
-    })
-    .catch(error => {
+    }
+    catch (error) {
       console.error(error)
       snackbar.showFeedback({ message: 'Form Download Failed', severity: 'error' })
-    })
+    }
   }
 
   return {
