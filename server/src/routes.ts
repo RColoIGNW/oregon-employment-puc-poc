@@ -86,7 +86,7 @@ export const routes = (router: Router) => {
 
   router
     .route('/generate-pdf/:applicationId')
-    .get(decodeToken, isAuthorized, pdfApi.generatePdf.bind(null, 'applications'))
+    .get(pdfApi.generatePdf.bind(null, 'applications'))
 }
 
 export default routes

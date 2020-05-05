@@ -13,12 +13,13 @@ export const generatePdf = async (collectionName: string, req: Request, res: Res
     .doc(req.params.applicationId)
     .get()
     .then((doc) => {
-      const mappedForm = getMappings(doc.data());
-      fillPdf.generatePdf(mappedForm, pdfTemplatePath, (err, output) => {
-        if (err) { throw new Error(err) }
-
-        res.type('application/pdf')
-        return res.send(output)
+      const mappedForm = getMappings(doc.data())
+      const extendArgs = ['approved', 'submitted', 'deny'].includes(doc?.data()?.status?.toLowerCase?.()) ? ['flatten'] : []
+      fillPdf.generatePdf(mappedForm, pdfTemplatePath, extendArgs, (err: Error, output: Buffer): void => {
+        if (err) { throw new Error('Failed to generate pdf') }
+        res.setHeader('Content-Type', 'application/pdf')
+        res.setHeader('Content-disposition', 'attachment; filename=application.pdf')
+        res.send(output)
       })
     })
     .catch((error) => {

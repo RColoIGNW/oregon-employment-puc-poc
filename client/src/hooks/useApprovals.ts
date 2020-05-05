@@ -26,12 +26,15 @@ export default () => {
     }
 
     if (!tableData?.length) { getData() }
-    return () => {} // TODO: unsubscribe on unmount
+    return () => {
+      setAdminNote('')
+    } // TODO: unsubscribe on unmount
   }, [tableData])
 
   const openModal = (rowData: any) => {
     toggleModal(true)
     setAppId(rowData.id)
+    setAdminNote(rowData?.applicant?.adminNote??'')
   }
 
   const handleChange = (event: { target: { value: string }}): void => {
@@ -41,10 +44,11 @@ export default () => {
   const handleSubmit = async () => {
     const application = await getApplication(appId)
     const { applicant = {} } = application
-    return updateApplication({ ...application, applicant: { ...applicant, adminNote: '' } })
+    return updateApplication({ ...application, applicant: { ...applicant, adminNote } })
     .then(() => {
       toggleModal(false)
       setAppId('')
+      setAdminNote('')
     })
     .catch(console.error)
   }
@@ -57,5 +61,6 @@ export default () => {
     handleChange,
     openModal,
     handleSubmit,
+    setAdminNote,
   }
 }
