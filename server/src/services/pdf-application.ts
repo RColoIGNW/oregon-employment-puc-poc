@@ -14,7 +14,8 @@ export const generatePdf = async (collectionName: string, req: Request, res: Res
     .get()
     .then((doc) => {
       const mappedForm = getMappings(doc.data())
-      fillPdf.generatePdf(mappedForm, pdfTemplatePath, [], (err: Error, output: Buffer): void => {
+      const extendArgs = ['approved', 'submitted', 'deny'].includes(doc?.data()?.status?.toLowerCase?.()) ? ['flatten'] : []
+      fillPdf.generatePdf(mappedForm, pdfTemplatePath, extendArgs, (err: Error, output: Buffer): void => {
         if (err) { throw new Error('Failed to generate pdf') }
         res.setHeader('Content-Type', 'application/pdf')
         res.setHeader('Content-disposition', 'attachment; filename=application.pdf')
