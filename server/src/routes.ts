@@ -4,6 +4,7 @@ import newApplicationService from './services/new-application'
 import weeklyApplicationService from './services/weekly-application'
 import applicationApi from './services/application'
 import pdfApi from './services/pdf-application'
+import { validateApplicationRequest } from './util/application.middleware'
 
 enum ENDPOINTS {
   NEW_APPLICATIONS = 'applications',
@@ -42,14 +43,14 @@ export const routes = (router: Router) => {
 
   router
     .route('/applications/:id')
-    .put(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
+    .put(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
   router
     .route('/applications/:id')
-    .patch(decodeToken, isAuthorized, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
+    .patch(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   router
     .route('/applications/:id/submit')
-    .patch(decodeToken, isAuthorized, newApplicationService.submitApplication)
+    .patch(decodeToken, isAuthorized, validateApplicationRequest, newApplicationService.submitApplication)
 
   /* WEEKLY APPLICATION ROUTES */
   router

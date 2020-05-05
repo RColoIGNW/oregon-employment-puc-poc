@@ -1,4 +1,17 @@
+import fs from 'fs'
+
 import bunyan, { LogLevel } from 'bunyan'
+
+const filePath =  process.env.NODE_ENV === 'production'
+? '/var/log/OregonState-PUA-BFF.log'
+: `${__dirname}/../../logs/OregonState-PUA-BFF.log`
+
+const logDir = `${__dirname}/../../logs/`
+
+// create directory if it doesn't exist
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir)
+}
 
 const log = bunyan.createLogger({
   name: 'OregonState-PUA-BFF:App',
@@ -9,10 +22,7 @@ const log = bunyan.createLogger({
     },
     {
       type: 'rotating-file',
-      path:
-        process.env.NODE_ENV === 'production'
-          ? '/var/log/OregonState-PUA-BFF.log'
-          : './logs/OregonState-PUA-BFF.log',
+      path: filePath,
       period: '1d', // daily rotation
       count: 3, // keep 3 back copies
     },
