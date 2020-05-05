@@ -5,7 +5,7 @@
 #RUN tsc
 #RUN npm prune --production
 
-FROM node:12.16.2-alpine3.11
+FROM node:12.16.2
 
 RUN apt-get -qq update && \
   apt-get -qq dist-upgrade && \
