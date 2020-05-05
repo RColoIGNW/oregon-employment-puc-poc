@@ -1,9 +1,8 @@
-// import fs from 'fs'
-
 import { Request, Response } from 'express'
 import fillPdf from 'fill-pdf'
 
 import firebase from '../util/firebase'
+import log from '../util/logger'
 import getMappings from '../util/mappings'
 
 const db = firebase.firestore()
@@ -19,7 +18,7 @@ export const generatePdf = (collectionName: string, req: Request, res: Response)
       const extendArgs = ['approved', 'submitted', 'deny'].includes(doc?.data()?.status?.toLowerCase?.()) ? ['flatten'] : []
       fillPdf.generatePdf(mappedForm, pdfTemplatePath, extendArgs, (err: Error, output: Buffer): void => {
         if (err) {
-          console.log(err);
+          log.error(err)
           throw new Error('Failed to generate pdf')
         }
 
@@ -27,20 +26,11 @@ export const generatePdf = (collectionName: string, req: Request, res: Response)
         res.setHeader('Content-Length', output.length)
         res.setHeader('Content-disposition', 'attachment; filename=application.pdf')
 
-        // fs.writeFile('./temp.pdf', output, err => {
-        //   if (err) {
-        //     console.error(err)
-        //     throw new Error('Failed to write temp file')
-        //   }
-        // })
-
-        // const file = fs.createReadStream('./temp.pdf');
-        // file.pipe(res)
         res.send(output)
       })
     })
     .catch((error) => {
-      console.error(error)
+      log.error(error)
       res.status(400).send(error)
     })
 }

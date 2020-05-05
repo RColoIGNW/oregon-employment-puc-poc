@@ -1,10 +1,3 @@
-#FROM node:12.16.2-alpine3.11 as build-image
-#
-#COPY server/ .
-#RUN npm install
-#RUN tsc
-#RUN npm prune --production
-
 FROM node:12.16.2
 
 RUN apt-get -qq update && \
@@ -13,6 +6,7 @@ RUN apt-get -qq update && \
   apt-get -qq clean
 
 COPY ./server/dist ./dist
+COPY ./server/templates ./dist/templates
 COPY ./server/node_modules ./node_modules
 COPY ./server/package.json .package.json
 COPY ./server/.env .env
