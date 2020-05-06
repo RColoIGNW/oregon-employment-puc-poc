@@ -20,6 +20,7 @@ export default () => {
     isHispanicLatino: undefined,
     contactMethod: undefined,
     races: [],
+    adminNote: ''
   }
 
   let currentValue: Partial<Applicant>  = storage.load(storage.StorageKey.SectionA) || defaultValue

@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react"
 import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
 import useApplicantFormApi from "../hooks/useApplicantFormApi"
+import useClaimStatus from '../hooks/useClaimStatus'
 import Application from '../models/Application'
 import { InputAdornment, TextField } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -30,6 +31,7 @@ const ClaimsStatusPage = () => {
   const [application, setApplication] = useState<Application>()
   const [searchText, setSearchText] = useState<string>('')
   const [filterList, setFilterList] = useState<Application[]>([])
+  const { downloadApplication } = useClaimStatus()
 
   const handleEdit = () => {
     application && navigate('application', { state: { applicationId: application.id } })
@@ -40,8 +42,8 @@ const ClaimsStatusPage = () => {
     handleClose()
   }
 
-  const handleDownload = () => {
-    console.log('onDownload')
+  const handleDownload = async () => {
+    await downloadApplication(application?.id as string)
     handleClose()
   }
 

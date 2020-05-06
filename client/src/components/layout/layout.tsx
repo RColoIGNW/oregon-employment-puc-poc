@@ -1,11 +1,11 @@
-import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button"
+import AppBar from "@material-ui/core/AppBar"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
+import Hidden from "@material-ui/core/Hidden";
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from '@material-ui/core/Typography'
-import { graphql, useStaticQuery } from "gatsby"
+import { graphql, navigate, useStaticQuery } from 'gatsby'
 import Img from "gatsby-image"
 import React, { useContext } from "react"
 
@@ -13,8 +13,6 @@ import { AuthContext } from '../../providers/AuthProvider'
 import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
 import { CSSDebugger } from "../css-debugger"
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import Hidden from "@material-ui/core/Hidden";
 import UserMenu from "./UserMenu"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,11 +24,17 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
+      cursor: 'pointer',
       flexGrow: 1,
       [theme.breakpoints.down('xs')]: {
         fontSize: 'small',
       },
     },
+    image: {
+      cursor: 'pointer',
+      display: 'flex',
+      justifyContent: 'center'
+    }
   }),
 );
 
@@ -50,18 +54,21 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
   `)
 
   const { children, alert } = props
-  const { signOut, user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const showDebugger = typeof window !== 'undefined' && !!window.location.href.includes('localhost')
   const classes = useStyles()
+  const onHomeClick = () => navigate('/')
 
   return (
     <>
       <AppBar position="fixed">
         <Toolbar>
           <Hidden xsDown>
-            <Img loading="eager" fixed={data.file.childImageSharp.fixed} placeholderStyle={{ visibility: "hidden" }} />
+            <div onClick={onHomeClick} className={classes.image}>
+              <Img loading="eager" fixed={data.file.childImageSharp.fixed} placeholderStyle={{ visibility: "hidden" }} />
+            </div>
           </Hidden>
-          <Typography variant={'h6'} className={classes.title}>Pandemic Unemployment Assistance</Typography>
+          <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>Pandemic Unemployment Assistance</Typography>
           {user?.token &&
             <UserMenu />
           }

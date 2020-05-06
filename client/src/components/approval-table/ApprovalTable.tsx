@@ -85,7 +85,6 @@ export default function ApprovalTable(props: any) {
         status: application.status || 'In Progress'
       }
     })
-    .reverse()
   }
 
   return (

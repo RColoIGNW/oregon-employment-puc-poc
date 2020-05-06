@@ -1,47 +1,137 @@
+import { navigate } from "gatsby"
+import { useContext, useEffect, useState } from "react"
 
-import useWeeklyFormApi from "./useWeeklyFormApi"
-import weeklyQuestions from "../models/weeklyQuestions"
-
+import { steps } from '../components/weekly-form/WeeklyForm'
 import ApplicationModel from '../models/Application'
-import { useState } from "react"
-
+import weeklyQuestions from "../models/weeklyQuestions"
+import { SnackBarContext } from "../providers/SnackbarProvider"
 import storage from '../util/storage'
+import useWeeklyFormApi from "./useWeeklyFormApi"
 
-
-export default () => {
+export default (props: { applicationId: string, isDisabled?: boolean }) => {
   const api = useWeeklyFormApi()
+  const [activeStep, setActiveStep] = useState(parseInt(storage.load('weeklyActiveStep')) || 0)
+  const snackbar = useContext(SnackBarContext)
+  const defaultValue = {
+    ableToWork: null,
+    awayFromResidence: null,
+    seekedEmployment: null,
+    veteran: null,
+    temporaryUnemployment: null,
+    employmentHistory: [],
+    applicationId: props?.applicationId || ''
+  }
+  const [application, setApplication] = useState(storage.load('weekly-application') || defaultValue)
+  const { isDisabled } = props
+  const disabled = !!isDisabled
 
   const load = () => {
-    //load from API
-    //save to localstorage
+    //TODO: Check Application in Progress (check storage) ask Continue or discard?
+    const retrieveApplication = async (applicationId: string) => {
+      const application = await api.getApplication(applicationId) // TODO: create new method to get weeklyForm app
+      handleChange(application)
+    }
+
+    const createApplication = async () => {
+      const app = {userId: localStorage.uid}
+      const applicationId = await api.saveApplication(app as any) // TODO: create a new method to save weeklyForm app
+      handleChange({ ...application, applicationId })
+
+    }
+
+    if (application?.applicationId) {
+      retrieveApplication(application?.applicationId)
+    } else {
+      createApplication()
+    }
   }
 
-  const defaultValue = {
-    ableToWork: true,
-    awayFromResidence: false,
-    seekedEmployment: true,
-    veteran: false,
-    temporaryUnemployment: false,
-    employmentHistory: [],
-    applicationId: ''
+  useEffect(() => {
+    load()
+    return () => {
+      resetState()
+    }
+  }, [application?.applicationId])
+
+  useEffect(() => {
+    return () => {
+      resetState()
+    }
+  }, [])
+
+  const saveActiveStep = (step: number) => {
+    storage.save('weeklyActiveStep', step)
+    setActiveStep(step)
   }
 
-  const [application, setApplication] = useState(defaultValue)
+  const resetState = () => {
+    setApplication({} as any)
+    saveActiveStep(0)
+  }
+
+  const handleSave = async () => {
+    if(application){
+      const applicationId = await save(application)
+      handleChange({ ...application, applicationId })
+      localSave({...application, applicationId })
+      snackbar.showFeedback({ message: 'Progress Saved' })
+    }
+  }
+
+  const handleSubmit = async () => {
+    try {
+      //TODO: Show Progress
+      await submit(application)
+      navigate('confirm',  { state: { applicationId: application.applicationId }})
+    } catch (e) {
+      //TODO: Show submit error
+    }
+  }
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  }
+
+  const handleNext = async () => {
+    let isStepValid: boolean = true
+
+    if (isStepValid) {
+      try {
+        await handleSave()
+        if (activeStep === steps.length - 1){
+          //Submit App
+          if(application.applicationId) {
+            handleSubmit()
+          }
+        } else {
+          saveActiveStep(activeStep + 1)
+        }
+      }
+      catch(e) {
+        console.error(e)
+      }
+    }
+  }
 
   const handleChange = (weeklyApplication: weeklyQuestions) => {
     localSave({...weeklyApplication})
-    setApplication({...weeklyApplication})
+    // setApplication({...weeklyApplication as any}) // debounce to fix lag
   }
 
   const handleEmploymentChange = (employmentRecords: ApplicationModel) => {
     localSave({...application, employmentHistory: employmentRecords.employmentRecords})
-
-    setApplication({...application, employmentHistory: employmentRecords.employmentRecords})
+    setApplication({...application, employmentHistory: employmentRecords.employmentRecords as any})
   }
 
   const save = async (application: Partial<weeklyQuestions>): Promise<string> => {
-
-    return  await api.saveApplication(application)
+    return api.saveApplication(application).then((result: any) => {
+      setApplication((application: any) => ({
+        ...application,
+        applicationId: result.applicationId
+      } as any))
+      return result
+    })
+    .catch(console.error)
   }
 
   const localSave = (weeklyApplication:  weeklyQuestions) => {
@@ -60,5 +150,11 @@ export default () => {
     load,
     save,
     submit,
+    handleBack,
+    handleNext,
+    isDisabled: disabled,
+    handleSave,
+    activeStep,
+    setActiveStep: saveActiveStep,
   }
 }

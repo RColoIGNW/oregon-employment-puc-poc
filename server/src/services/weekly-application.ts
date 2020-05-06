@@ -2,9 +2,8 @@ import { Request, Response } from 'express'
 import fb from 'firebase-admin'
 
 import firebase from '../util/firebase'
-import { logger } from '../util/logger'
+import log from '../util/logger'
 
-const log = logger('api:application-information')
 const db = firebase.firestore()
 
 const submitWeeklyApplication = async (req: Request, res: Response) => {
@@ -42,7 +41,7 @@ const submitWeeklyApplication = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400).json({ error })
   } finally {
-    log('SubmitWeeklyApplication Transaction Finished!')
+    log.info('SubmitWeeklyApplication Transaction Finished!')
   }
 }
 
