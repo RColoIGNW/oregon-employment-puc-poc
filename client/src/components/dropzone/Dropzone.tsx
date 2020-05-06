@@ -82,10 +82,10 @@ export default function Dropzone(props: { applicationId: string }) {
   })
 
   const thumbs = files?.map((file: UploadFile, idx: number) => {
-    const { name } = file
+    const { name = '' } = file
     return file.imgUrl && (
       <React.Fragment key={`${name}-${idx}`}>
-        {name.includes('.jpg') || name.includes('.png') || name.includes('.jpeg') ?
+        {name.toLowerCase().includes('.jpg') || name.toLowerCase().includes('.png') || name.toLowerCase().includes('.jpeg') ?
           <div className={classes.thumb}>
             <div className={classes.thumbInner}>
               <img

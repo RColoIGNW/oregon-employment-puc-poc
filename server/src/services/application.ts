@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import fbAdmin from 'firebase-admin'
 
 import firebase from '../util/firebase'
+import log from '../util/logger'
 
 const db = firebase.firestore()
 
@@ -16,7 +17,6 @@ const getCollectionByName = async (collectionName: string, _: Request, res: Resp
           response.push({id: doc.id, ...doc.data()})
         })
       })
-
     return res.status(200).send({
       success: true,
       response
@@ -86,7 +86,6 @@ const deleteDocumentById = async (collectionName: string, req: Request, res: Res
 const updateDocumentById = async (collectionName: string, req: Request, res: Response) => {
   try {
     const { id, ...applicationInfo } = req.body;
-    //TODO: Validate
     await db
       .collection(collectionName)
       .doc(req.params.id)
@@ -136,7 +135,7 @@ const createDocument = async (collectionName: string, subCollectionName: string,
     const countRef = db.collection(collectionName).doc(subCollectionName)
     const applicationRef = db.collection(collectionName).doc()
 
-    return db
+    await db
       .runTransaction(async (t) => {
         const countDoc = await t.get(countRef)
         const increment = fbAdmin.firestore.FieldValue.increment(1)
@@ -149,14 +148,13 @@ const createDocument = async (collectionName: string, subCollectionName: string,
         t.set(applicationRef, requestBody)
         return Promise.resolve('Transaction Successful!')
       })
-      .then(async () => {
-        const doc = await applicationRef.get()
-        return res.status(200).json({ success: true, applicationId: doc.id })
-      })
+
+    const doc = await applicationRef.get()
+    return res.status(200).json({ success: true, applicationId: doc.id })
   } catch (error) {
     res.status(400).json({ error })
   } finally {
-    console.info('SubmitApplication Transaction Finished!')
+    log.info('createApplication Transaction Finished!')
   }
 }
 

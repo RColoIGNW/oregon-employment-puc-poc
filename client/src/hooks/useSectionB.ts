@@ -1,5 +1,5 @@
-import EmploymentRecord from '../models/EmploymentRecord'
 import SaveApplicantForm from '../models/Application'
+import EmploymentRecord from '../models/EmploymentRecord'
 import storage from '../util/storage'
 
 export default (formData?: Partial<SaveApplicantForm>) => {

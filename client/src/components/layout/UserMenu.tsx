@@ -3,15 +3,15 @@ import IconButton from '@material-ui/core/IconButton'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import { AuthContext } from '../../providers/AuthProvider'
 import { Divider, Hidden } from '@material-ui/core'
 import PersonIcon from '@material-ui/icons/Person'
 import Button from '@material-ui/core/Button'
+import { AuthContext } from '../../providers/AuthProvider';
 
 export const UserMenu = () => {
   const { signOut, user } = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
+  const open = Boolean(anchorEl)    
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)

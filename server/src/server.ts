@@ -1,11 +1,19 @@
 import app from './app'
-import { logger } from './util/logger'
-
-const log = logger('app:service')
+import log from './util/logger'
 
 const port = process.env.PORT || 4000
 
-// start the app by using heroku port
-app.listen(port as number, () => {
-  log('App started on port: ' + port)
+const server = app.listen(port as number, () => {
+  log.info('App started on port: ' + port)
+})
+
+server.on('connection', function(socket) {
+  log.info("A new connection was made by a client.")
+  socket.setTimeout(30 * 1000)
+  // 30 second timeout. Change this as you see fit.
+})
+
+process.on('uncaughtException', (err) => {
+  log.error('App Crashed')
+  log.error(err)
 })

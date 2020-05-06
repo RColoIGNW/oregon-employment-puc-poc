@@ -13,7 +13,7 @@ const LoginPage = (props: { location: { origin: string, pathname: string } }) =>
   }
 
   return (
-    <Layout>
+    <Layout hideMenu={true}>
       <SEO title={'Login - Oregon Employment Department Pandemic Unemployment Assistance'} />
       <Grid container direction="row" spacing={3} style={{
         display: 'flex',

@@ -1,25 +1,25 @@
 import React, { useContext } from "react"
-import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import AppBar from "@material-ui/core/AppBar";
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
+import Hidden from "@material-ui/core/Hidden";
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, Theme, createStyles, useTheme } from "@material-ui/core/styles";
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Divider from "@material-ui/core/Divider";
+import { graphql, navigate, useStaticQuery } from 'gatsby'
+import Drawer from "@material-ui/core/Drawer";
+import MainMenu from "./MainMenu";
+import { UserMenu, UserMenuMobile } from './UserMenu';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { AuthContext } from '../../providers/AuthProvider'
 import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
 import { CSSDebugger } from "../css-debugger"
-import Hidden from "@material-ui/core/Hidden";
-import Drawer from "@material-ui/core/Drawer";
-import MainMenu from "./MainMenu";
-import { UserMenu, UserMenuMobile } from './UserMenu';
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const drawerWidth = 240;
 
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
+      cursor: 'pointer',
       flexGrow: 1,
       [theme.breakpoints.down('xs')]: {
         fontSize: 'small',
@@ -47,10 +48,15 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerPaper: {
       width: drawerWidth,
     },
+    image: {
+      cursor: 'pointer',
+      display: 'flex',
+      justifyContent: 'center'
+    }
   }),
 );
 
-const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }) => {
+const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false, hideMenu?: boolean | false }) => {
   const data = useStaticQuery(graphql`
     query MyQuery {
       file(relativePath: { eq: "orgov_logo.png" }) {
@@ -77,11 +83,13 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
     setOpen(!open);
   };
 
+  const onHomeClick = () => navigate('/')
+
   return (
     <div style={{display: 'flex'}}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          {isMobile &&
+          {isMobile && !props.hideMenu &&
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -93,9 +101,11 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
             </IconButton>
           }
           <Hidden xsDown>
-            <Img loading="eager" fixed={data.file.childImageSharp.fixed} placeholderStyle={{ visibility: "hidden" }} />
+            <div onClick={onHomeClick} className={classes.image}>
+              <Img loading="eager" fixed={data?.file?.childImageSharp?.fixed} placeholderStyle={{ visibility: "hidden" }} />
+            </div>
           </Hidden>
-          <Typography variant={'h6'} className={classes.title}>Pandemic Unemployment Assistance</Typography>
+          <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>Pandemic Unemployment Assistance</Typography>
           <Hidden mdDown>
             {user?.token &&
               <UserMenu />
@@ -103,39 +113,39 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
           </Hidden>
         </Toolbar>
       </AppBar>
-      {isMobile
-        ? (
-          <Drawer
-            className={classes.drawer}
-            variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={open}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true
-            }}
-          >
-            <UserMenuMobile />
-            <Divider />
-            <MainMenu />
-          </Drawer>
-        )
-        : (
-          <Drawer
-            className={classes.drawer}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            <Toolbar />
-            <MainMenu />
-          </Drawer>
-        )
+      
+      { !props.hideMenu && isMobile &&
+        <Drawer
+          className={classes.drawer}
+          variant="temporary"
+          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+          open={open}
+          onClose={handleDrawerToggle}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          ModalProps={{
+            keepMounted: true
+          }}
+        >
+          <UserMenuMobile />
+          <Divider />
+          <MainMenu />
+        </Drawer>
+      }
+        
+      { !props.hideMenu && !isMobile && 
+        <Drawer
+          className={classes.drawer}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          variant="permanent"
+          open
+        >
+          <Toolbar />
+          <MainMenu />
+        </Drawer>        
       }
       <Container>
         {showDebugger &&

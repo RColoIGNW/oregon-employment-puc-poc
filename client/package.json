@@ -18,7 +18,7 @@
     "lint": "eslint . --ext ts --ext tsx --ext js --ext jsx",
     "lint:watch": "esw -w . --ext ts --ext tsx --ext js --ext jsx",
     "lint:fix": "npm run lint --fix",
-    "test": "jest",
+    "test": "jest --detectOpenHandles --verbose",
     "test:watch": "jest --watch",
     "serve": "gatsby serve",
     "storybook": "start-storybook -p 6006",

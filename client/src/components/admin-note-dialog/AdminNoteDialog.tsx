@@ -33,7 +33,8 @@ export default function FormDialog(props: {
           type="text"
           style={{ height: '4em' }}
           fullWidth
-          onChange={props?.handleChange}
+          defaultValue={props.adminNote}
+          onBlur={props?.handleChange}
         />
       </DialogContent>
       <DialogActions>
