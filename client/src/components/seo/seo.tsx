@@ -112,11 +112,11 @@ const SEO: React.FC<SEOProps> = props => {
   const linkData = [
     {
       rel: "shortcut icon",
-      href: "favicon.ico",
+      href: "https://lh3.googleusercontent.com/JYBf6hIxR4LZCvSWXyVnfPFUqAtxQxUBNeQRFjGQfT__uXyEas9DIeGKnWC6Y3ehaEHFJPSMn6edgRh-Re2Cacf09u1NQEgEpO3CTjQ",
     },
     {
       rel: "apple-touch-icon",
-      href: "icons/apple-touch-icon.png",
+      href: "https://lh3.googleusercontent.com/JYBf6hIxR4LZCvSWXyVnfPFUqAtxQxUBNeQRFjGQfT__uXyEas9DIeGKnWC6Y3ehaEHFJPSMn6edgRh-Re2Cacf09u1NQEgEpO3CTjQ",
     },
   ];
   return (

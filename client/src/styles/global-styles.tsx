@@ -10,6 +10,9 @@ const GlobalStyles = createGlobalStyle`
   html {
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   }
+  .mui-toolbar {
+    background: white
+  }
 `;
 
 export { GlobalStyles };
