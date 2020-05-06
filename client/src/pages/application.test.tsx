@@ -3,8 +3,8 @@ import React from 'react'
 
 import ApplicationPage from './application'
 
-describe('App', () => {
-  xit('should render the app', () => {
+describe('Application', () => {
+  it('should render the application page', () => {
     const props = {} as any
     const {
       container,
