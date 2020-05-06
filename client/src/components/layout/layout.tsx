@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false, hideMenu?: boolean | false }) => {
+const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }) => {
   const data = useStaticQuery(graphql`
     query MyQuery {
       file(relativePath: { eq: "orgov_logo.png" }) {
@@ -86,10 +86,10 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false, 
   const onHomeClick = () => navigate('/')
 
   return (
-    <div style={{display: 'flex'}}>
+    <div style={{ display: 'flex' }}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          {isMobile && !props.hideMenu &&
+          {isMobile && user?.token &&
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -113,8 +113,8 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false, 
           </Hidden>
         </Toolbar>
       </AppBar>
-      
-      { !props.hideMenu && isMobile &&
+
+      {user?.token && isMobile &&
         <Drawer
           className={classes.drawer}
           variant="temporary"
@@ -133,8 +133,8 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false, 
           <MainMenu />
         </Drawer>
       }
-        
-      { !props.hideMenu && !isMobile && 
+
+      {user?.token && !isMobile &&
         <Drawer
           className={classes.drawer}
           classes={{
@@ -145,7 +145,7 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false, 
         >
           <Toolbar />
           <MainMenu />
-        </Drawer>        
+        </Drawer>
       }
       <Container>
         {showDebugger &&

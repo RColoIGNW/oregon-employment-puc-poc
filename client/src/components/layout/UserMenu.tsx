@@ -11,7 +11,7 @@ import { AuthContext } from '../../providers/AuthProvider';
 export const UserMenu = () => {
   const { signOut, user } = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)    
+  const open = Boolean(anchorEl)
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -61,12 +61,14 @@ export const UserMenu = () => {
 }
 
 export const UserMenuMobile = () => {
+  const { signOut, user } = useContext(AuthContext)
+
   return (
     <div style={{ padding: '0 16', minHeight: 150 }}>
       <PersonIcon style={{ fontSize: 68 }} />
       <br />
       <Button color="primary">My Account</Button>
-      <Button color="primary">Sign out</Button>
+      <Button color="primary" onClick={signOut}>Sign out</Button>
     </div>
   )
 }
