@@ -65,7 +65,7 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
         <Toolbar>
           <Hidden xsDown>
             <div onClick={onHomeClick} className={classes.image}>
-              <Img loading="eager" fixed={data.file.childImageSharp.fixed} placeholderStyle={{ visibility: "hidden" }} />
+              <Img loading="eager" fixed={data?.file?.childImageSharp?.fixed} placeholderStyle={{ visibility: "hidden" }} />
             </div>
           </Hidden>
           <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>Pandemic Unemployment Assistance</Typography>

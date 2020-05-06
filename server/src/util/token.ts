@@ -27,7 +27,7 @@ export const decodeToken: RequestHandler = async (
     if (!req.user) { throw new Error('You are unauthorized to access this resource') }
     next()
   } catch (error) {
-    return res.status(500).json({
+    return res.status(401).json({
       error,
     })
   }

@@ -1,6 +1,6 @@
+import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useStaticQuery, graphql } from "gatsby";
 
 type MetaItem = {
   name: string;
@@ -33,7 +33,7 @@ const SEO: React.FC<SEOProps> = props => {
     }
   `);
 
-  const { siteMetadata } = data.site;
+  const { siteMetadata = {} } = data?.site || {}
 
   const {
     title,
@@ -43,7 +43,7 @@ const SEO: React.FC<SEOProps> = props => {
     meta = [],
     keywords = [],
     image,
-  } = siteMetadata;
+  } = siteMetadata
   const siteTitle = props.title || title;
   const siteDescription = props.description || description;
   const siteUrl = props.url || url;

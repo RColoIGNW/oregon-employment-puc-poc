@@ -1,13 +1,14 @@
-import React, { useContext } from 'react'
+import { Divider } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton'
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import React, { useContext } from 'react'
+
 import { AuthContext } from '../../providers/AuthProvider';
-import { Divider } from '@material-ui/core';
 
 export default () => {
-  const { signOut, user } = useContext(AuthContext)
+  const { signOut } = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
