@@ -16,9 +16,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import React from "react"
 
 import theme from "../../themes/theme-light"
-import WeeklyStep1 from "../weekly-sectionA/WeeklyStep1"
-import WeeklyStep2 from "../weekly-sectionB/WeeklyStep2"
-import WeeklyStep3 from "../weekly-sectionC/WeekleStep3"
+import WeeklySectionAQuestions from "../weekly-sectionA/WeeklySectionAQuestions"
+import WeeklySectionBQuestions from "../weekly-sectionB/WeeklySectionBQuestions"
+import WeeklySectionC from "../weekly-sectionC/WeekleSectionC"
 import { WeeklyFormProps } from "../../models/WeeklySectionProps"
 
 export const pageInfo = {
@@ -46,21 +46,21 @@ export const steps = [
     icon: pageInfo.sectionA.icon,
     title: pageInfo.sectionA.title,
     isFirstStep: true,
-    component: WeeklyStep1
+    component: WeeklySectionAQuestions
   },
   {
     key: 'B',
     icon: pageInfo.sectionB.icon,
     title: pageInfo.sectionB.title,
     isFirstStep: false,
-    component: WeeklyStep2
+    component: WeeklySectionBQuestions
   },
   {
     key: 'C',
     icon: pageInfo.sectionB.icon,
     title: pageInfo.sectionB.title,
     isFirstStep: false,
-    component: WeeklyStep3
+    component: WeeklySectionC
   },
 ]
 
@@ -113,20 +113,20 @@ export default function WeeklyForm(props: WeeklyFormProps) {
   const classes = useStyles()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const {
-    applicant,
+    application,
     isDisabled: disabled,
     activeStep,
     setActiveStep,
     handleSave,
     handleChange,
-    handleEmploymentChange,
+    handleWorkSearchChange,
     handleBack,
     handleNext,
   } = props
 
   const ActiveSection = steps?.[activeStep]?.component
 
-  if (props.applicant) {
+  if (application) {
     return (
       <Grid container direction="column" spacing={2}>
         <Grid item style={{
@@ -157,7 +157,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
                   <StepContent>
                     <Grid container direction={'column'} spacing={2}>
                       <Grid item>
-                        <Section handleChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={applicant} />
+                        <Section handleChange={handleChange} handleWorkSearchChange={handleWorkSearchChange} application={application} />
                       </Grid>
                       <Grid item>
                         <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} isLastStep={activeStep === steps.length - 1}/>
@@ -176,7 +176,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
               </Paper>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
-                  <ActiveSection handleChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={applicant} />
+                  <ActiveSection handleChange={handleChange} handleWorkSearchChange={handleWorkSearchChange} application={application} />
                 </Grid>
               </Grid>
               <MobileStepper

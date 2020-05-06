@@ -1,4 +1,4 @@
-import EmploymentRecord from "./EmploymentRecord"
+import WorkSearchRecord from "./WorkSearchRecord"
 
 export default interface weeklyQuestions {
   failedToAcceptOffer: boolean,
@@ -8,6 +8,6 @@ export default interface weeklyQuestions {
   awayFromResidence: boolean,
   veteran: boolean,
   temporaryUnemployment: boolean,
-  employmentHistory?: EmploymentRecord[]
+  workSearchRecords?: WorkSearchRecord[]
   applicationId?: string
 }

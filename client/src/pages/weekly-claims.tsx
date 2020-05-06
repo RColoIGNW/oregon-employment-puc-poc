@@ -8,6 +8,7 @@ import useWeeklyApplication from "../hooks/useWeeklyApplication"
 const ApplicationPage = (props: any) => {
   const applicationId = props?.location?.state?.applicationId
   const childProps = useWeeklyApplication({ applicationId })
+  console.log(childProps)
 
   return (
     <Layout>

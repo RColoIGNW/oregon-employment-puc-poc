@@ -2,11 +2,11 @@ import weeklyQuestions from "./weeklyQuestions"
 
 export interface WeeklySectionProps {
   applicationId?: string,
-  applicant: weeklyQuestions,
+  application: weeklyQuestions,
   onSubmit?: (appId: string) => Promise<any>,
   isDisabled?: boolean,
   handleChange: (weeklyApplication: weeklyQuestions) => void,
-  handleEmploymentChange: (applicant: weeklyQuestions) => void,
+  handleWorkSearchChange: (applicant: weeklyQuestions) => void,
 }
 
 export interface WeeklyFormProps extends WeeklySectionProps {

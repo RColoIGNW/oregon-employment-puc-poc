@@ -19,7 +19,7 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     awayFromResidence: null,
     veteran: null,
     temporaryUnemployment: null,
-    employmentHistory: [],
+    workSearchHistory: [],
     applicationId: props?.applicationId || ''
   }
   const [application, setApplication] = useState(storage.load('weekly-application') || defaultValue)
@@ -112,9 +112,9 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     setApplication({...weeklyApplication}) // debounce to fix lag
   }
 
-  const handleEmploymentChange = (applicant: weeklyQuestions) => {
-    localSave({...applicant, employmentHistory: applicant.employmentHistory})
-    setApplication({...applicant, employmentHistory: applicant.employmentHistory})
+  const handleWorkSearchChange = (applicant: weeklyQuestions) => {
+    localSave({...applicant, workSearchRecords: applicant.workSearchRecords})
+    setApplication({...applicant, workSearchRecords: applicant.workSearchRecords})
   }
 
   const save = async (application: Partial<weeklyQuestions>): Promise<string> => {
@@ -140,7 +140,7 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   return {
     application,
     handleChange,
-    handleEmploymentChange,
+    handleWorkSearchChange,
     load,
     save,
     submit,
@@ -150,5 +150,6 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     handleSave,
     activeStep,
     setActiveStep: saveActiveStep,
+    localSave
   }
 }
