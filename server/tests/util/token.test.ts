@@ -71,7 +71,7 @@ describe('Auth Token Middleware', () => {
       console.error(error)
     }
   })
-  it('should return 401 for authorized tokens', async () => {
+  it('should return 401 for unauthorized tokens', async () => {
     try {
       const token = 'bad_token'
       const res: any = await request(app)
@@ -83,7 +83,7 @@ describe('Auth Token Middleware', () => {
       console.error(error)
     }
   })
-  it('should return 400 for missinng tokens', async () => {
+  it('should return 400 for missing tokens', async () => {
     try {
       const res: any = await request(app)
         .get('/api/applications')
