@@ -20,15 +20,21 @@ import weeklyQuestions from "../../models/weeklyQuestions"
 import theme from "../../themes/theme-light"
 import WeeklyStep1 from "../weekly-sectionA/WeeklyStep1"
 import WeeklyStep2 from "../weekly-sectionB/WeeklyStep2"
+import WeeklyStep3 from "../weekly-sectionC/WeekleStep3"
+import { WeeklySectionProps } from "../../models/WeeklySectionProps"
 
 export const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
   sectionA: {
     icon: 'A',
-    title: 'APPLICANT INFORMATION',
+    title: 'APPLICANT INFORMATION Part 1',
   },
   sectionB: {
     icon: 'B',
+    title: 'APPLICANT INFORMATION Part 2',
+  },
+  sectionC: {
+    icon: 'C',
     title: 'APPLICANT EMPLOYMENT',
   },
   back: 'Back',
@@ -50,6 +56,13 @@ export const steps = [
     title: pageInfo.sectionB.title,
     isFirstStep: false,
     component: WeeklyStep2
+  },
+  {
+    key: 'C',
+    icon: pageInfo.sectionB.icon,
+    title: pageInfo.sectionB.title,
+    isFirstStep: false,
+    component: WeeklyStep3
   },
 ]
 
@@ -98,21 +111,7 @@ const StepActions = (props: StepActionsProp) => {
   )
 }
 
-interface WeeklyFormProps {
-  application: weeklyQuestions
-  applicationId: string
-  isDisabled?: boolean
-  handleChange: (weeklyApplication: weeklyQuestions) => void
-  handleEmploymentChange: (employmentRecords: ApplicationModel) => void
-  save: (application: Partial<weeklyQuestions>) => Promise<string>
-  activeStep: number
-  setActiveStep: (step: number) => void
-  handleSave: () => any
-  handleBack: () => any
-  handleNext: () => any
-}
-
-export default function WeeklyForm(props: WeeklyFormProps) {
+export default function WeeklyForm(props: WeeklySectionProps) {
   const classes = useStyles()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const {
@@ -160,7 +159,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
                   <StepContent>
                     <Grid container direction={'column'} spacing={2}>
                       <Grid item>
-                        <Section onChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={application} />
+                        <Section handleChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={application} />
                       </Grid>
                       <Grid item>
                         <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} isLastStep={activeStep === steps.length - 1}/>
@@ -179,7 +178,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
               </Paper>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
-                  <ActiveSection onChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={application} />
+                  <ActiveSection handleChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={application} />
                 </Grid>
               </Grid>
               <MobileStepper

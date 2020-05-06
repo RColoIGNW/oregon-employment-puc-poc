@@ -1,7 +1,13 @@
 import weeklyQuestions from "./weeklyQuestions"
 
 export interface WeeklySectionProps {
-  weeklyQuestions: weeklyQuestions,
-  onChangeWeekly: (weeklyQuestions: weeklyQuestions) => void,
-  status: 'in-progress' | 'submitted' | 'approved'
+  applicationId?: string,
+  applicant: weeklyQuestions,
+  onSubmit?: (appId: string) => Promise<any>,
+  isDisabled?: boolean,
+  currentValue: Partial<weeklyQuestions>,
+  handleChange: (weeklyApplication: weeklyQuestions) => void,
+  handleEmploymentChange: (applicant: weeklyQuestions) => void,
+  save: (application: Partial<weeklyQuestions>) => Promise<string>,
+  localSave: (weeklyApplication:  weeklyQuestions) => void
 }

@@ -1,9 +1,11 @@
 import EmploymentRecord from "./EmploymentRecord"
 
 export default interface weeklyQuestions {
+  failedToAcceptOffer: boolean,
+  quitJob: boolean,
+  firedOrSuspended: boolean,
   ableToWork: boolean,
   awayFromResidence: boolean,
-  seekedEmployment: boolean,
   veteran: boolean,
   temporaryUnemployment: boolean,
   employmentHistory?: EmploymentRecord[]

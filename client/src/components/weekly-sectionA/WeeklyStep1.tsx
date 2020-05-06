@@ -1,32 +1,24 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import FormControl from "@material-ui/core/FormControl"
 import FormLabel from "@material-ui/core/FormLabel"
 import RadioGroup from "@material-ui/core/RadioGroup"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Radio from "@material-ui/core/Radio"
-import weeklyQuestions from "../../models/weeklyQuestions"
-import ApplicationModel from "../../models/Application"
+import questions from "../weekly-form/questions"
+import {WeeklySectionProps} from "../../models/WeeklySectionProps"
 
 const defaultValue = {
-  ableToWork: true,
-  awayFromResidence: false,
-  seekedEmployment: true,
+  failedToAcceptOffer: false,
+  quitJob: false,
+  firedOrSuspended: false,
   veteran: false,
   temporaryUnemployment: false,
   employmentHistory: [],
   applicationId: ''
 }
 
-interface WeeklyFormProps {
-  applicationId?: string
-  applicant?: weeklyQuestions,
-  isDisabled?: boolean,
-  onChange: (application: weeklyQuestions) => void
-  handleEmploymentChange?: (employmentRecords: ApplicationModel) => void,
-}
-
-export default (props: WeeklyFormProps) => {
+export default (props: WeeklySectionProps) => {
   const applicant = props.applicant || defaultValue
 
   const { isDisabled } = props
@@ -34,26 +26,21 @@ export default (props: WeeklyFormProps) => {
 
   const handleBooleanSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = event.target
-    props.onChange({ ...applicant, [name]: checked && value === 'true' })
+    props.handleChange({ ...applicant, [name]: checked && value === 'true' })
   }
-
-
-  // useEffect(() => {
-  //   props.onChange(applicant)
-  // }, [applicant])
 
   return (
       <Grid container spacing={2}>
         <Grid item xs={12} sm={7} md={6}>
           <FormControl component="fieldset">
-            <FormLabel component="legend">Were you physically able and willing to work last week?</FormLabel>
+            <FormLabel component="legend">{questions.failedToAcceptOffer}</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={applicant.ableToWork === true} onChange={handleBooleanSelection} name="ableToWork" value={true} disabled={disabled} />}
+                control={<Radio checked={applicant.failedToAcceptOffer === true} onChange={handleBooleanSelection} name="failedToAcceptOffer" value={true} disabled={disabled} />}
                 label="Yes"
               />
               <FormControlLabel
-                control={<Radio checked={applicant.ableToWork === false} onChange={handleBooleanSelection} name="ableToWork" value={false} disabled={disabled} />}
+                control={<Radio checked={applicant.failedToAcceptOffer === false} onChange={handleBooleanSelection} name="failedToAcceptOffer" value={false} disabled={disabled} />}
                 label="No"
               />
             </RadioGroup>
@@ -61,14 +48,14 @@ export default (props: WeeklyFormProps) => {
         </Grid>
         <Grid item xs={12} sm={7} md={6}>
           <FormControl component="fieldset">
-            <FormLabel component="legend">Were you away from your primary residence for more than 3 days?</FormLabel>
+            <FormLabel component="legend">{questions.quitJob}</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={applicant.awayFromResidence === true} onChange={handleBooleanSelection} name="awayFromResidence" value={true} disabled={disabled} />}
+                control={<Radio checked={applicant.quitJob === true} onChange={handleBooleanSelection} name="quitJob" value={true} disabled={disabled} />}
                 label="Yes"
               />
               <FormControlLabel
-                control={<Radio checked={applicant.awayFromResidence === false} onChange={handleBooleanSelection} name="awayFromResidence" value={false} disabled={disabled} />}
+                control={<Radio checked={applicant.quitJob === false} onChange={handleBooleanSelection} name="quitJob" value={false} disabled={disabled} />}
                 label="No"
               />
             </RadioGroup>
@@ -76,14 +63,14 @@ export default (props: WeeklyFormProps) => {
         </Grid>
         <Grid item xs={12} sm={7} md={6}>
           <FormControl component="fieldset">
-            <FormLabel component="legend">Did you seek unemployment last week?</FormLabel>
+            <FormLabel component="legend">{questions.firedOrSuspended}</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                control={<Radio checked={applicant.seekedEmployment === true} onChange={handleBooleanSelection} name="seekedEmployment" value={true} disabled={disabled} />}
+                control={<Radio checked={applicant.firedOrSuspended === true} onChange={handleBooleanSelection} name="firedOrSuspended" value={true} disabled={disabled} />}
                 label="Yes"
               />
               <FormControlLabel
-                control={<Radio checked={applicant.seekedEmployment === false} onChange={handleBooleanSelection} name="seekedEmployment" value={false} disabled={disabled} />}
+                control={<Radio checked={applicant.firedOrSuspended === false} onChange={handleBooleanSelection} name="firedOrSuspended" value={false} disabled={disabled} />}
                 label="No"
               />
             </RadioGroup>

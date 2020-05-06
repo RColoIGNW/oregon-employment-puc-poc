@@ -2,7 +2,6 @@ import { navigate } from "gatsby"
 import { useContext, useEffect, useState } from "react"
 
 import { steps } from '../components/weekly-form/WeeklyForm'
-import ApplicationModel from '../models/Application'
 import weeklyQuestions from "../models/weeklyQuestions"
 import { SnackBarContext } from "../providers/SnackbarProvider"
 import storage from '../util/storage'
@@ -13,9 +12,11 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   const [activeStep, setActiveStep] = useState(parseInt(storage.load('weeklyActiveStep')) || 0)
   const snackbar = useContext(SnackBarContext)
   const defaultValue = {
+    failedToAcceptOffer: null,
+    quitJob: null,
+    firedOrSuspended: null,
     ableToWork: null,
     awayFromResidence: null,
-    seekedEmployment: null,
     veteran: null,
     temporaryUnemployment: null,
     employmentHistory: [],
@@ -46,12 +47,7 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     }
   }
 
-  useEffect(() => {
-    load()
-    return () => {
-      resetState()
-    }
-  }, [application?.applicationId])
+
 
   useEffect(() => {
     return () => {
@@ -115,12 +111,12 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
 
   const handleChange = (weeklyApplication: weeklyQuestions) => {
     localSave({...weeklyApplication})
-    // setApplication({...weeklyApplication as any}) // debounce to fix lag
+    setApplication({...weeklyApplication}) // debounce to fix lag
   }
 
-  const handleEmploymentChange = (employmentRecords: ApplicationModel) => {
-    localSave({...application, employmentHistory: employmentRecords.employmentRecords})
-    setApplication({...application, employmentHistory: employmentRecords.employmentRecords as any})
+  const handleEmploymentChange = (applicant: weeklyQuestions) => {
+    localSave({...applicant, employmentHistory: applicant.employmentHistory})
+    setApplication({...applicant, employmentHistory: applicant.employmentHistory})
   }
 
   const save = async (application: Partial<weeklyQuestions>): Promise<string> => {
