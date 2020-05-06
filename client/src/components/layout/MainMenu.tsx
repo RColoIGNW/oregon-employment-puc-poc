@@ -19,7 +19,7 @@ const ListItemLink = (props: ListItemLinkProps) => {
 
   const renderLink = React.useMemo(
     () =>
-      React.forwardRef<any, Omit<GatsbyLinkProps<{}>, 'ref'>>((itemProps) => (
+      React.forwardRef<any, Omit<GatsbyLinkProps<{}>, 'ref'>>((itemProps, ref) => (
         <GatsbyLink {...itemProps} />
       )),
     [to],

@@ -19,6 +19,7 @@ import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 import MainMenu from "./MainMenu";
 import { UserMenu, UserMenuMobile } from './UserMenu';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const drawerWidth = 240;
 
@@ -26,6 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+    },
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -37,10 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     drawer: {
-      [theme.breakpoints.up('sm')]: {
-        width: drawerWidth,
-        flexShrink: 0,
-      },
+      width: drawerWidth,
+      flexShrink: 0,
     },
     drawerPaper: {
       width: drawerWidth,
@@ -68,26 +70,28 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
   const showDebugger = typeof window !== 'undefined' && !!window.location.href.includes('localhost')
   const classes = useStyles()
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setOpen(!open);
   };
 
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-
+          {isMobile &&
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+          }
           <Hidden xsDown>
             <Img loading="eager" fixed={data.file.childImageSharp.fixed} placeholderStyle={{ visibility: "hidden" }} />
           </Hidden>
@@ -99,12 +103,13 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
           </Hidden>
         </Toolbar>
       </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        <Hidden lgUp implementation="css">
+      {isMobile
+        ? (
           <Drawer
+            className={classes.drawer}
             variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={mobileOpen}
+            open={open}
             onClose={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper,
@@ -117,9 +122,10 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
             <Divider />
             <MainMenu />
           </Drawer>
-        </Hidden>
-        <Hidden mdDown implementation="css">
+        )
+        : (
           <Drawer
+            className={classes.drawer}
             classes={{
               paper: classes.drawerPaper,
             }}
@@ -129,8 +135,8 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
             <Toolbar />
             <MainMenu />
           </Drawer>
-        </Hidden>
-      </nav>
+        )
+      }
       <Container>
         {showDebugger &&
           <CSSDebugger />
