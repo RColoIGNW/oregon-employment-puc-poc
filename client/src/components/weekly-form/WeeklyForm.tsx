@@ -18,7 +18,7 @@ import React from "react"
 import theme from "../../themes/theme-light"
 import WeeklySectionAQuestions from "../weekly-sectionA/WeeklySectionAQuestions"
 import WeeklySectionBQuestions from "../weekly-sectionB/WeeklySectionBQuestions"
-import WeeklySectionC from "../weekly-sectionC/WeekleSectionC"
+import WeeklySectionC from "../weekly-sectionC/WeeklySectionC"
 import { WeeklyFormProps } from "../../models/WeeklySectionProps"
 
 export const pageInfo = {
