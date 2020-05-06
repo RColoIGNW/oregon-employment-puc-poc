@@ -5,9 +5,16 @@ export interface WeeklySectionProps {
   applicant: weeklyQuestions,
   onSubmit?: (appId: string) => Promise<any>,
   isDisabled?: boolean,
-  currentValue: Partial<weeklyQuestions>,
   handleChange: (weeklyApplication: weeklyQuestions) => void,
   handleEmploymentChange: (applicant: weeklyQuestions) => void,
+}
+
+export interface WeeklyFormProps extends WeeklySectionProps {
+  activeStep: number,
+  setActiveStep: (step: number) => void,
+  handleSave: () => any,
+  handleBack: () => any,
+  handleNext: () => any,
   save: (application: Partial<weeklyQuestions>) => Promise<string>,
-  localSave: (weeklyApplication:  weeklyQuestions) => void
+  localSave: (weeklyApplication:  weeklyQuestions) => void,
 }

@@ -5,7 +5,7 @@ import WeeklyForm from './WeeklyForm'
 
 describe('Weekly Form', () => {
   it('should render the Weekly Form page', () => {
-    const props = {} as any
+    const props = {} as any;
     const {
       container,
       // debug,
