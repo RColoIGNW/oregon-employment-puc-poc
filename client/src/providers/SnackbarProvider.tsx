@@ -49,7 +49,7 @@ export const SnackBarProvider = () => {
   }
 
   return (
-    <SnackBarContext.Provider value={value} />
+    <SnackBarContext.Provider value={value as any} />
   )
 }
 

@@ -22,7 +22,7 @@ export default (props: { location: { origin: string, pathname: string } }) => {
       const ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase?.auth()) as any || {}
       const uiConfig = {
         callbacks: {
-          signInSuccessWithAuthResult: (authResult: any, _redirectUrl: string) => true,
+          signInSuccessWithAuthResult: (_: any, _redirectUrl: string) => true,
           uiShown: () => {
             if (!!loadingState.open) {
               updateTransition({
