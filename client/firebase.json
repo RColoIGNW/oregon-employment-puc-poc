@@ -1,22 +1,7 @@
 {
   "hosting": [
     {
-      "site": "oregon-pua-poc",
-      "public": "public",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
-      "site": "oregon-pandemic-demo",
+      "site": "ignw-pandemic-demo",
       "public": "public",
       "ignore": [
         "firebase.json",

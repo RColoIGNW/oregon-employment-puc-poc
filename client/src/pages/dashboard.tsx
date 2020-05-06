@@ -14,7 +14,6 @@ import Alerts from '../components/alerts'
 import { Layout } from '../components/layout'
 import { SEO } from '../components/seo'
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -61,7 +60,7 @@ export default function DashboardPage() {
   const menuItems = [
     {
       buttonLabel: 'File your new claim',
-      description: 'Establish a new claim for Oregon unemployment benefits. If you are filing due to COVID- 19, please watch this training video.',
+      description: 'Establish a new claim for unemployment benefits. If you are filing due to COVID- 19, please watch this training video.',
       link: '/application',
       handleClick: handleNavigate
     },
@@ -81,7 +80,7 @@ export default function DashboardPage() {
 
   return (
     <Layout>
-      <SEO title={'Oregon Pandemic Unemployment Assistance'} />
+      <SEO title={'Pandemic Unemployment Assistance'} />
       <Grid container direction={'column'} spacing={3} style={{ marginTop: '2em' }}>
         <Grid item>
           <Alerts

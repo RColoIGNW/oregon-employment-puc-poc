@@ -1,8 +1,8 @@
 const activeEnv =
   process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development";
-const siteTitle = "Oregon Employment Department PUC POC";
+const siteTitle = "Employment Department PUC POC";
 const siteDescription =
-  "A proof of concept site for Oregon Employment Department";
+  "A proof of concept site for Employment Department";
 const siteAuthor = "Brian McBride";
 const siteUrl = "https://oregon-pua-poc.web.app/";
 const siteImage = `${siteUrl}/icons/icon_512x512.png`;

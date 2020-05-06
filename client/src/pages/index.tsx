@@ -14,7 +14,7 @@ const LoginPage = (props: { location: { origin: string, pathname: string } }) =>
 
   return (
     <Layout>
-      <SEO title={'Login - Oregon Employment Department Pandemic Unemployment Assistance'} />
+      <SEO title={'Login - Employment Department Pandemic Unemployment Assistance'} />
       <Grid container direction="row" spacing={3} style={{
         display: 'flex',
         marginTop: '2em',
@@ -23,7 +23,7 @@ const LoginPage = (props: { location: { origin: string, pathname: string } }) =>
       }}>
         <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
           <Typography>
-            {'To continue, log in to the Oregon Employment Department.'}
+            {'To continue, log in to the Employment Department.'}
           </Typography>
         </Grid>
         <Grid item id={'firebaseui-auth-container'} />

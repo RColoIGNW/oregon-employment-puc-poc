@@ -11,7 +11,7 @@ const ApplicationPage = (props: any) => {
 
   return (
     <Layout>
-      <SEO title={'Weekly Benefits - Oregon Pandemic Unemployment Assistance'} />
+      <SEO title={'Weekly Benefits - Pandemic Unemployment Assistance'} />
       <WeeklyForm
       {...childProps}
         applicationId={applicationId}

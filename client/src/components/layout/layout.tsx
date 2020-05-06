@@ -1,25 +1,25 @@
-import React, { useContext } from "react"
-import Img from "gatsby-image"
 import AppBar from "@material-ui/core/AppBar";
 import Container from "@material-ui/core/Container"
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
 import Grid from "@material-ui/core/Grid"
 import Hidden from "@material-ui/core/Hidden";
+import IconButton from '@material-ui/core/IconButton';
+import { Theme, createStyles, makeStyles, useTheme } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, Theme, createStyles, useTheme } from "@material-ui/core/styles";
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Divider from "@material-ui/core/Divider";
-import { graphql, navigate, useStaticQuery } from 'gatsby'
-import Drawer from "@material-ui/core/Drawer";
-import MainMenu from "./MainMenu";
-import { UserMenu, UserMenuMobile } from './UserMenu';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import MenuIcon from '@material-ui/icons/Menu';
+import { graphql, navigate, useStaticQuery } from 'gatsby'
+import Img from "gatsby-image"
+import React, { useContext } from "react"
 
 import { AuthContext } from '../../providers/AuthProvider'
 import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
 import { CSSDebugger } from "../css-debugger"
+import MainMenu from "./MainMenu";
+import { UserMenu, UserMenuMobile } from './UserMenu';
 
 const drawerWidth = 240;
 
@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
     },
     image: {
+      marginRight: '1em',
       cursor: 'pointer',
       display: 'flex',
       justifyContent: 'center'
@@ -102,7 +103,7 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
           }
           <Hidden xsDown>
             <div onClick={onHomeClick} className={classes.image}>
-              <Img loading="eager" fixed={data?.file?.childImageSharp?.fixed} placeholderStyle={{ visibility: "hidden" }} />
+              <img src={'https://lh3.googleusercontent.com/EUoOV44hxiSJPRgfNq61h5JP2V5fE4zypmUVK3bCCw_XvthzRTTXNGn5cp9tYtuFZJUZHpxV2jCVy8gQ2yjC02SKs_JD0Cvj-sSIOg'} width={'100px'} />
             </div>
           </Hidden>
           <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>Pandemic Unemployment Assistance</Typography>
