@@ -101,20 +101,17 @@ export interface Applicant {
   adminNote: string
 }
 
-export interface ApplicationSchema {
+export default interface ApplicationSchema {
   employmentRecords?: EmploymentRecord[]
-  uid: string
+  uid?: string // deprecate
   adminNote?: string
-  answersSectionC: AnswerModel[]
-  answersSenctionD: AnswerModel[]
-  answersSectionE: AnswerModel[]
-  answersSectionF: AnswerModel[]
   id: string
   applicant?: Applicant
-  status?: ApplicationStatus,
-  lastModified?: Date,
+  status?: ApplicationStatus
+  lastModified?: Date|string
   answers?: AnswerModel[]
-  isCertified: boolean
-  certifiedBy: string
-  dateApplied?: Date
+  isCertified?: boolean
+  certifiedBy?: string
+  dateApplied?: Date|string
+  userId: string
 }

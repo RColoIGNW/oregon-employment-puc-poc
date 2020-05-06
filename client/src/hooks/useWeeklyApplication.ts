@@ -98,11 +98,9 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     if (isStepValid) {
       try {
         await handleSave()
-        if (activeStep === steps.length - 1){
+        if (activeStep === steps.length - 1) {
           //Submit App
-          if(application.applicationId) {
-            handleSubmit()
-          }
+          handleSubmit()
         } else {
           saveActiveStep(activeStep + 1)
         }
