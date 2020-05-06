@@ -21,11 +21,9 @@ export const generatePdf = (collectionName: string, req: Request, res: Response)
           log.error(err)
           throw new Error('Failed to generate pdf')
         }
-
         res.setHeader('Content-Type', 'application/pdf')
         res.setHeader('Content-Length', output.length)
         res.setHeader('Content-disposition', 'attachment; filename=application.pdf')
-
         res.send(output)
       })
     })

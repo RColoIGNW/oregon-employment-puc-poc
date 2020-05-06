@@ -1,6 +1,6 @@
 {
   "include": ["../src/interfaces/*.ts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "tests", "*.test.ts"],
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2019",
@@ -15,6 +15,7 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "typeRoots": ["node_modules/@types"]
   }
 }
