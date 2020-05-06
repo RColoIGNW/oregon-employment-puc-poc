@@ -10,19 +10,28 @@ import useApplicantFormApi from './useApplicantFormApi'
 import useSectionA from './useSectionA'
 import useSectionB from './useSectionB'
 
-export default (props: { applicationId: string, isDisabled?: boolean }) => {
+const loadApplication = (applicationId?: string): ApplicationModel => {
+  return {} as ApplicationModel
+  //TODO: Load from Storage if not applicationId
+  // TODO: Ask to user when applicationId and  storage version
+  //   const storageApp = storage.load('application') 
+}
+
+export default (props: { applicationId?: string, isDisabled?: boolean }) => {
   const [activeStep, setActiveStep] = useState(parseInt(storage.load('activeStep')) || 0)
   const snackbar = useContext(SnackBarContext)
-  const api = useApplicantFormApi()
-  const [application, setApplication] = useState<ApplicationModel>(storage.load('application') || {
-    id: props?.applicationId
-  } as ApplicationModel)
-
+  const api = useApplicantFormApi()  
+  const [application, setApplication] = useState<ApplicationModel>(loadApplication())
   const { applicationId, isDisabled } = props || {}
   const disabled = !!isDisabled
-
+  
   useEffect(() => {
-    applicationId && load(applicationId)
+    if (applicationId) {
+      load(applicationId)
+    } else {
+      create()
+    }
+
     return () => {
       resetState()
     }
@@ -94,6 +103,15 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
       }
       catch (e) {
       }
+    }
+  }
+
+  const create = async () => {
+    try {
+      const application = await api.createApplication()
+      setApplication(application)
+    } catch (e) {
+      snackbar.showFeedback({ message: 'Failed to create a new application', severity: 'error' })
     }
   }
 

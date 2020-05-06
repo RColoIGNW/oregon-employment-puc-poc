@@ -162,7 +162,7 @@ const StepActions = (props: StepActionsProp) => {
 }
 
 interface ApplicationProps {
-  applicationId: string
+  applicationId?: string
   onSubmit?: (applicationId: string) => void
   isDisabled?: boolean
 }

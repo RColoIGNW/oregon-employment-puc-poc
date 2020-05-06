@@ -22,7 +22,7 @@ export default () => {
       .catch(console.error)
   }
 
-  const createApplication = () => {
+  const createApplication = (): Promise<any> => {
     const userId = localStorage.getItem('uid')
     const requestOptions = {
       method: 'PUT',

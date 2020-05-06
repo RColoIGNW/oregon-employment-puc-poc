@@ -1,19 +1,19 @@
-import Button from "@material-ui/core/Button"
+import Button from '@material-ui/core/Button'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import Grid from "@material-ui/core/Grid"
-import Paper from "@material-ui/core/Paper"
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
-import Typography from "@material-ui/core/Typography"
+import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { navigate } from "gatsby"
+import { navigate } from 'gatsby'
 import React from 'react'
 
 import Alerts from '../components/alerts'
-import { Layout } from "../components/layout"
-import { SEO } from "../components/seo"
-import useApplicantFormApi from "../hooks/useApplicantFormApi"
+import { Layout } from '../components/layout'
+import { SEO } from '../components/seo'
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,16 +46,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function DashboardPage() {
   const classes = useStyles()
-  const api = useApplicantFormApi()
+  //const api = useApplicantFormApi()
 
-  const handleNewApplication = async () => {
-    try {
-      const result = await api.createApplication() as any
-      navigate('application', {state: {applicationId: result.applicationId}})
-    } catch (e) {
+  // const handleNewApplication = async () => {
+  //   try {
+  //     const result = await api.createApplication() as any
+  //     navigate('application', {state: {applicationId: result.applicationId}})
+  //   } catch (e) {
 
-    }
-  }
+  //   }
+  // }
   const handleNavigate = (link: string) => navigate(link)
 
   const menuItems = [
@@ -63,7 +63,7 @@ export default function DashboardPage() {
       buttonLabel: 'File your new claim',
       description: 'Establish a new claim for Oregon unemployment benefits. If you are filing due to COVID- 19, please watch this training video.',
       link: '/application',
-      handleClick: handleNewApplication
+      handleClick: handleNavigate
     },
     {
       buttonLabel: 'Claim a Week of Benefits',
@@ -82,7 +82,7 @@ export default function DashboardPage() {
   return (
     <Layout>
       <SEO title={'Oregon Pandemic Unemployment Assistance'} />
-      <Grid container direction="column" spacing={3} style={{ marginTop: '2em' }}>
+      <Grid container direction={'column'} spacing={3} style={{ marginTop: '2em' }}>
         <Grid item>
           <Alerts
             isOpen={true}
@@ -140,7 +140,6 @@ export default function DashboardPage() {
             </ExpansionPanel>
           ))}
         </Paper>
-
       </Grid>
     </Layout>
   )
