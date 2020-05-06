@@ -78,7 +78,7 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
   };
 
   return (
-    <>
+    <div style={{display: 'flex'}}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           {isMobile &&
@@ -159,7 +159,7 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
         }
         <main>{children}</main>
       </Container>
-    </>
+    </div>
   )
 }
 
