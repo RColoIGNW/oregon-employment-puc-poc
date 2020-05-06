@@ -1,21 +1,26 @@
+import React, { useContext } from "react"
+import { graphql, useStaticQuery } from "gatsby"
+import Img from "gatsby-image"
 import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from '@material-ui/core/Typography'
-import { graphql, useStaticQuery } from "gatsby"
-import Img from "gatsby-image"
-import React, { useContext } from "react"
+import { makeStyles, Theme, createStyles, useTheme } from "@material-ui/core/styles";
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Divider from "@material-ui/core/Divider";
 
 import { AuthContext } from '../../providers/AuthProvider'
 import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
 import { CSSDebugger } from "../css-debugger"
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
-import UserMenu from "./UserMenu"
+import Drawer from "@material-ui/core/Drawer";
+import MainMenu from "./MainMenu";
+import { UserMenu, UserMenuMobile } from './UserMenu';
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,6 +35,15 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         fontSize: 'small',
       },
+    },
+    drawer: {
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+        flexShrink: 0,
+      },
+    },
+    drawerPaper: {
+      width: drawerWidth,
     },
   }),
 );
@@ -50,23 +64,73 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
   `)
 
   const { children, alert } = props
-  const { signOut, user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const showDebugger = typeof window !== 'undefined' && !!window.location.href.includes('localhost')
   const classes = useStyles()
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   return (
     <>
       <AppBar position="fixed">
         <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+
           <Hidden xsDown>
             <Img loading="eager" fixed={data.file.childImageSharp.fixed} placeholderStyle={{ visibility: "hidden" }} />
           </Hidden>
           <Typography variant={'h6'} className={classes.title}>Pandemic Unemployment Assistance</Typography>
-          {user?.token &&
-            <UserMenu />
-          }
+          <Hidden mdDown>
+            {user?.token &&
+              <UserMenu />
+            }
+          </Hidden>
         </Toolbar>
       </AppBar>
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        <Hidden lgUp implementation="css">
+          <Drawer
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true
+            }}
+          >
+            <UserMenuMobile />
+            <Divider />
+            <MainMenu />
+          </Drawer>
+        </Hidden>
+        <Hidden mdDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            <Toolbar />
+            <MainMenu />
+          </Drawer>
+        </Hidden>
+      </nav>
       <Container>
         {showDebugger &&
           <CSSDebugger />
