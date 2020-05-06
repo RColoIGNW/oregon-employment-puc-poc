@@ -1,6 +1,5 @@
 import request from 'supertest'
 import proxyquire from 'proxyquire'
-import app from '../../src/app'
 const firebasemock = require('firebase-mock')
 
 jest.setTimeout(30000)
@@ -34,6 +33,8 @@ const mocksdk = new firebasemock.MockFirebaseSdk(
 jest.mock('../../src/util/firebase.ts', () => {
   return mocksdk
 })
+
+import app from '../../src/app'
 
 proxyquire('../../src/util/firebase.ts', {
   firebase: mocksdk
