@@ -6,6 +6,5 @@ RUN apt-get -qq update && \
 
 COPY ./server ./
 
-# COPY . .
 RUN npm i && \
   npm run test
