@@ -3,9 +3,9 @@ steps:
     dir: 'client'
     entrypoint: npm
     args: ['install']
-#  - name: node
-#    entrypoint: npm
-#    args: ['test']
+ - name: node:12.16.2
+   entrypoint: npm
+   args: ['test']
   - name: node:12.16.2
     dir: 'client'
     entrypoint: npm
