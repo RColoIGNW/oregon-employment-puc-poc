@@ -15,4 +15,4 @@ COPY ./server/src ./src
 
 # COPY . .
 RUN npm i && \
-  npm test:server
+  npm run test:server
