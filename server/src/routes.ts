@@ -1,7 +1,5 @@
 import type { Router } from 'express'
 import { decodeToken, isAuthorized, hasAdminRole } from './util/token'
-import newApplicationService from './services/new-application'
-import weeklyApplicationService from './services/weekly-application'
 import applicationApi from './services/application'
 import pdfApi from './services/pdf-application'
 import { validateApplicationRequest } from './util/application.middleware'
