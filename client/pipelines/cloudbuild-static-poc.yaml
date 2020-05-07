@@ -4,6 +4,7 @@ steps:
     entrypoint: npm
     args: ['install']
  - name: node:12.16.2
+   dir: 'client'
    entrypoint: npm
    args: ['test']
   - name: node:12.16.2
