@@ -71,10 +71,9 @@ export const UserMenuMobile = () => {
     <Grid container alignItems="center">
       <Grid item>
         <PersonIcon style={{ fontSize: 68 }} />
-        {user?.displayName}
       </Grid>
       <Grid item>
-        {user?.displayName || user?.email}
+        {user?.displayName}
       </Grid>
       <Grid item xs={12}>
         <Grid container justify="space-between">
