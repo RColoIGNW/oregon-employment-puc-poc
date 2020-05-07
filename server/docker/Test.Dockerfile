@@ -11,6 +11,7 @@ COPY ./server/package.json ./package.json
 COPY ./server/.env .env
 COPY ./server/sa.json sa.json
 COPY ./server/src ./src
+COPY ./server/tests ./tests
 
 # COPY . .
 RUN npm i && \
