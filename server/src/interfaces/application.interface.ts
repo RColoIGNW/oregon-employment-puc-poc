@@ -90,7 +90,7 @@ export interface Applicant {
   middleName: string
   lastName: string
   ssn: string
-  dob?: Date
+  dob?: Date|string
   address?: Address
   phone: string
   email: string
@@ -98,7 +98,7 @@ export interface Applicant {
   isHispanicLatino?: boolean
   contactMethod?: ContactMethod
   races: Race[]
-  adminNote: string
+  adminNote?: string
 }
 
 export default interface ApplicationSchema {
