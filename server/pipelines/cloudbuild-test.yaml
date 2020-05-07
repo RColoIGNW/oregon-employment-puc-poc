@@ -1,18 +1,18 @@
 steps:
   # Install NPM
-  - name: node:12.16.2-alpine3.11
+  - name: node:12.16.2
     dir: 'server'
     entrypoint: npm
     args: ['install']
 
   # Run Test
-  - name: node:12.16.2-alpine3.11
+  - name: node:12.16.2
     dir: 'server'
     entrypoint: npm
     args: ['test']
 
   # Run Build
-  - name: node:12.16.2-alpine3.11
+  - name: node:12.16.2
     dir: 'server'
     entrypoint: npm
     args: ['run', 'build']
