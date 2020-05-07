@@ -157,6 +157,35 @@ const createDocument = async (collectionName: string, subCollectionName: string,
   }
 }
 
+const submitDocument = async (collectionName: string, req: Request, res: Response) => {
+  try {
+    const requestBody = {
+      ...req.body,
+      lastModified: fbAdmin.firestore.Timestamp.now(),
+      dateApplied: fbAdmin.firestore.Timestamp.now(),
+    }
+    const applicationRef = db.collection(collectionName).doc(req.params.id)
+
+    return db
+      .runTransaction(async (t) => {
+        t.update(applicationRef, requestBody)
+        return Promise.resolve('Transaction Successful!')
+      })
+      .then(async () => {
+        // TODO: add downstream service notification
+        // const doc = await applicationRef.get()
+        // const application = doc.data()
+        // // publish to pub/sub for downstream services
+        // log(JSON.stringify(application), 'Published to pub/sub!'
+        return res.status(200).json({ success: true })
+      })
+  } catch (error) {
+    res.status(400).json({ error })
+  } finally {
+    log.info('SubmitDocument Transaction Finished!')
+  }
+}
+
 export default {
   getCollectionByName,
   getCollectionByUser,
@@ -165,4 +194,5 @@ export default {
   updateDocumentById,
   changeDocumentStatusById,
   createDocument,
+  submitDocument,
 }
