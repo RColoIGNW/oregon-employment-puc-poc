@@ -7,7 +7,7 @@ steps:
 
   # build test container
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', './server/docker/Server.Dockerfile']
+    args: ['build', '-f', './server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server-test:$COMMIT_SHA', '.']
 
   # Run Test
   - name: node:12.16.2
