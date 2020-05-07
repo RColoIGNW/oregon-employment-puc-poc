@@ -8,6 +8,15 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link as GatsbyLink, GatsbyLinkProps } from 'gatsby'
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    active: {
+      backgroundColor: 'blue'
+    }
+  }),
+)
 
 interface ListItemLinkProps {
   to: string;
@@ -15,12 +24,13 @@ interface ListItemLinkProps {
 }
 
 const ListItemLink = (props: ListItemLinkProps) => {
+  const classes = useStyles()
   const { to } = props
 
   const renderLink = React.useMemo(
     () =>
       React.forwardRef<any, Omit<GatsbyLinkProps<{}>, 'ref'>>((itemProps, ref) => (
-        <GatsbyLink {...itemProps} />
+        <GatsbyLink {...itemProps} activeClassName={'Mui-selected'} />
       )),
     [to],
   )
