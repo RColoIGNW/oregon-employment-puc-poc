@@ -65,7 +65,7 @@
     "test:dev": "jest --watchAll",
     "test:ci": "npm run typegen && npm run test",
     "lint": "tslint --project tsconfig.json",
-    "prebuild": "npm run typgen",
+    "prebuild": "npm run typegen",
     "build": "tsc",
     "run": "node dist/server.js",
     "dev": "ts-node-dev ./src/server.ts",
