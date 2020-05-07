@@ -30,7 +30,7 @@ steps:
     args: ['build', '-f', './server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA', '.']
 
    # Run Test
-  - name: node:12.16.2-alpine
+  - name: node:12.16.2-alpine3.11
     dir: 'server'
     entrypoint: npm
     args: ['test']
