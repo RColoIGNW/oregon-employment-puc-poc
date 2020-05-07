@@ -130,8 +130,6 @@ export enum ApplicationStatus {
 
 const createDocument = async (collectionName: string, subCollectionName: string, req: Request, res: Response) => {
   try {
-    if (!req.body) { throw new Error('Request Body Required') }
-
     const requestBody: Partial<ApplicationSchema> = { ...req.body, lastModified: fbAdmin.firestore.Timestamp.now() }
     const countRef = db.collection(collectionName).doc(subCollectionName)
     const applicationRef = db.collection(collectionName).doc()

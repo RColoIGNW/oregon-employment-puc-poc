@@ -38,7 +38,7 @@ proxyquire('../src/util/firebase.ts', {
   firebase: mocksdk
 })
 
-describe('Auth Token Middleware', () => {
+describe('Integration Tests', () => {
   let ref: any
   let user: any
   let dbRef: any

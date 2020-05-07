@@ -9,4 +9,10 @@ describe('Health Check Endpoints', () => {
     expect(res.statusCode).toEqual(200)
     expect(res.body).toHaveProperty('message')
   })
+  it('should return 404 for invalid endpoints', async () => {
+    const res: any = await request(app)
+      .get('/some-random-endpoint/')
+    expect(res.statusCode).toEqual(404)
+    expect(res.body).toHaveProperty('message')
+  })
 })
