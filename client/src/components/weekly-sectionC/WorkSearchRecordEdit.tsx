@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import MomentUtils from '@date-io/moment';
 import Button from '@material-ui/core/Button'
@@ -12,8 +11,14 @@ import TextField from '@material-ui/core/TextField'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
-
 import WorkSearchRecord from "../../models/WorkSearchRecord"
+import questions from "../weekly-form/questions"
+
+import {
+  Checkbox,
+  ExpansionPanel, ExpansionPanelDetails,
+  ExpansionPanelSummary, FormControlLabel, Typography,
+} from "@material-ui/core"
 
 interface EmploymentRecordEditProps {
   workSearchRecord: WorkSearchRecord
@@ -35,6 +40,13 @@ export default (props: EmploymentRecordEditProps) => {
     console.log(state)
   }
 
+  const handleCheckBoxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = event.target
+    console.log(value);
+    console.log(checked);
+    setExpanded(false);
+  }
+
   const handleDateChange = (value: MaterialUiPickersDate) => {
     value && setState({ ...state, date: value.toDate() })
   }
@@ -46,6 +58,8 @@ export default (props: EmploymentRecordEditProps) => {
   const handleCancel = () => {
     onCancel && onCancel()
   }
+
+  const [expanded, setExpanded] = React.useState(false);
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -78,6 +92,34 @@ export default (props: EmploymentRecordEditProps) => {
                   <KeyboardDatePicker fullWidth value={state.date} onChange={handleDateChange} label="Started" format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
                 </Grid>
               </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <ExpansionPanel expanded={expanded} onChange={() => setExpanded(true)}>
+                <ExpansionPanelSummary
+                  expandIcon={expanded ? null : <Typography>Read more</Typography>}
+                  aria-label="Expand"
+                  aria-controls="additional-actions1-content"
+                  id="additional-actions1-header"
+                >
+                  <FormControlLabel
+                    aria-label="Acknowledge"
+                    value={'unionMember'}
+                    onChange={handleCheckBoxChange}
+                    control={<Checkbox />}
+                    label="Check here if you are a union member in good standing."
+                  />
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <Grid container direction={'column'}>
+                    <Typography color="textSecondary">
+                      {questions.unionMemberMessage}
+                    </Typography>
+                    <Grid style={{display: 'flex', justifyContent: 'flex-end'}}>
+                      <Button onClick={() => {setExpanded(false)}}>Ok</Button>
+                    </Grid>
+                  </Grid>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2} justify="flex-end">
