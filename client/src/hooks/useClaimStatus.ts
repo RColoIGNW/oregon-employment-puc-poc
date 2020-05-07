@@ -18,6 +18,7 @@ export default () => {
     } as any
 
     try {
+      snackbar.showFeedback({ message: 'Download in progress', severity: 'info' })
       const result = await request(`${process.env.REACT_APP_API_HOST}/api/generate-pdf/${applicationId}`, requestOptions, 'blob')
       const file = new Blob([ result as Blob ], { type: 'application/pdf' })
       const fileURL = URL.createObjectURL(file)

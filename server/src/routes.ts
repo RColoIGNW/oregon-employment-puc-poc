@@ -1,7 +1,5 @@
 import type { Router } from 'express'
 import { decodeToken, isAuthorized, hasAdminRole } from './util/token'
-import newApplicationService from './services/new-application'
-import weeklyApplicationService from './services/weekly-application'
 import applicationApi from './services/application'
 import pdfApi from './services/pdf-application'
 import { validateApplicationRequest } from './util/application.middleware'
@@ -50,7 +48,7 @@ export const routes = (router: Router) => {
 
   router
     .route('/applications/:id/submit')
-    .patch(decodeToken, isAuthorized, validateApplicationRequest, newApplicationService.submitApplication)
+    .patch(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.submitDocument.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   //#region WEEKLY APPLICATION ROUTES   
   router
@@ -79,7 +77,7 @@ export const routes = (router: Router) => {
 
   router
     .route('/weekly-applications/:id/submit')
-    .patch(decodeToken, isAuthorized, weeklyApplicationService.submitWeeklyApplication)
+    .patch(decodeToken, isAuthorized, applicationApi.submitDocument.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 
   router
     .route('/weekly-applications/:id')

@@ -27,35 +27,21 @@ export interface AnswerModel{
 
 export interface Employer {
   name: string
-  address: Address
+  address?: Address
   phone: string
 }
 
 export interface EmploymentRecord {
-  id?: number
+  id?: number|string
   employer: Employer
-  started: Date
-  ended: Date
+  started: Date|string
+  ended: Date|string
 }
 
 export enum Gender {
   Male = 'Male',
   Female = 'Female'
 }
-
-// export interface QuestionModel {
-//   code: string
-//   text: string
-//   showOptions: boolean
-//   note?: string
-//   whenShowDetails: 'YES' | 'NO' | 'ALWAYS' | 'NEVER'
-//   whenShowSubQuestions: 'YES' | 'NO' | 'ALWAYS' | 'NEVER'
-//   subQuestions?: QuestionModel[]
-//   isDisabled?:  boolean
-//   answer: AnswerModel
-//   errorMessage?: string
-//   detailErrorMessage?: string
-// }
 
 export enum Race {
   AmericanIndianOrAlaskaNative = 'American Indian or Alaska Native',
@@ -75,7 +61,38 @@ export const Races: Race[] = [
   Race.Other
 ]
 
-// export interface WeeklyClaimSchema {
+export interface Applicant {
+  firstName: string
+  middleName: string
+  lastName: string
+  ssn: string
+  dob?: Date|string
+  address?: Address
+  phone: string
+  email: string
+  gender?: Gender
+  isHispanicLatino?: boolean
+  contactMethod?: ContactMethod
+  races: Race[]
+  adminNote?: string
+}
+
+export default interface ApplicationSchema {
+  employmentRecords?: EmploymentRecord[]
+  uid?: string // deprecate
+  adminNote?: string
+  id?: string
+  applicant?: Applicant
+  status?: ApplicationStatus
+  lastModified?: Date|string
+  answers?: AnswerModel[]
+  isCertified?: boolean
+  certifiedBy?: string
+  dateApplied?: Date|string
+  userId?: string
+}
+
+// export interface WeeklyClaimSchema { // TODO: recreate in its own file
 //   ableToWork: boolean,
 //   awayFromResidence: boolean,
 //   seekedEmployment: boolean,
@@ -84,34 +101,3 @@ export const Races: Race[] = [
 //   employmentHistory?: EmploymentRecord[]
 //   id?: string
 // }
-
-export interface Applicant {
-  firstName: string
-  middleName: string
-  lastName: string
-  ssn: string
-  dob?: Date
-  address?: Address
-  phone: string
-  email: string
-  gender?: Gender
-  isHispanicLatino?: boolean
-  contactMethod?: ContactMethod
-  races: Race[]
-  adminNote: string
-}
-
-export default interface ApplicationSchema {
-  employmentRecords?: EmploymentRecord[]
-  uid?: string // deprecate
-  adminNote?: string
-  id: string
-  applicant?: Applicant
-  status?: ApplicationStatus
-  lastModified?: Date|string
-  answers?: AnswerModel[]
-  isCertified?: boolean
-  certifiedBy?: string
-  dateApplied?: Date|string
-  userId: string
-}
