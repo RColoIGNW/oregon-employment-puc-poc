@@ -12,7 +12,8 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*',
     '!tests',
-    '!src/*.ts',
-    '!src/**/*.json'
+    '!src/server.ts',
+    '!src/**/*.json',
+    '!src/interfaces/*'
   ]
-};
+}

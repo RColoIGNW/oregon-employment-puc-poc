@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
+import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 import Divider from '@material-ui/core/Divider'
 import PersonIcon from '@material-ui/icons/Person'
-import Button from '@material-ui/core/Button'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import Grid from '@material-ui/core/Grid'
 
 import { AuthContext } from '../../providers/AuthProvider';
-import { Grid } from '@material-ui/core'
 
 export const UserMenu = () => {
   const { signOut, user } = useContext(AuthContext)
@@ -67,7 +67,7 @@ export const UserMenuMobile = () => {
   const { signOut, user } = useContext(AuthContext)
 
   return (
-    <Grid container alignItems="center" justify="center">
+    <Grid container alignItems="center">
       <Grid item>
         <PersonIcon style={{ fontSize: 68 }} />
       </Grid>

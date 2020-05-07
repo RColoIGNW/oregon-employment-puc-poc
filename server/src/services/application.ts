@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import fbAdmin from 'firebase-admin'
 
+import ApplicationSchema from '../interfaces/application.interface'
 import firebase from '../util/firebase'
 import log from '../util/logger'
 
@@ -8,7 +9,7 @@ const db = firebase.firestore()
 
 const getCollectionByName = async (collectionName: string, _: Request, res: Response) => {
   try {
-    const response: any = []
+    const response: Partial<ApplicationSchema>[] = []
     await db
       .collection(collectionName)
       .get()
@@ -28,7 +29,7 @@ const getCollectionByName = async (collectionName: string, _: Request, res: Resp
 
 const getCollectionByUser = async (collectionName: string, req: Request, res: Response) => {
   try {
-    const response: any = []
+    const response: Partial<ApplicationSchema>[] = []
     await db
       .collection(collectionName)
       .where('userId', '==', req.params.userId)
@@ -50,7 +51,7 @@ const getCollectionByUser = async (collectionName: string, req: Request, res: Re
 
 const getDocumentById = async (collectionName: string, req: Request, res: Response) => {
   try {
-    let response: any = undefined
+    let response: Partial<ApplicationSchema> = undefined
     await db
       .collection(collectionName)
       .doc(req.params.id)
@@ -85,7 +86,7 @@ const deleteDocumentById = async (collectionName: string, req: Request, res: Res
 
 const updateDocumentById = async (collectionName: string, req: Request, res: Response) => {
   try {
-    const { id, ...applicationInfo } = req.body;
+    const { id, ...applicationInfo }: Partial<ApplicationSchema> = req.body;
     await db
       .collection(collectionName)
       .doc(req.params.id)
@@ -110,7 +111,7 @@ const changeDocumentStatusById = async (collectionName: string, req: Request, re
       .update({
         ...req.body,
         lastModified: fbAdmin.firestore.Timestamp.now()
-      })
+      } as Partial<ApplicationSchema>)
 
     return res.status(204).send({
       success: true
@@ -129,9 +130,7 @@ export enum ApplicationStatus {
 
 const createDocument = async (collectionName: string, subCollectionName: string, req: Request, res: Response) => {
   try {
-    if (!req.body) { throw new Error('Request Body Required') }
-
-    const requestBody = { ...req.body, lastModified: fbAdmin.firestore.Timestamp.now() }
+    const requestBody: Partial<ApplicationSchema> = { ...req.body, lastModified: fbAdmin.firestore.Timestamp.now() }
     const countRef = db.collection(collectionName).doc(subCollectionName)
     const applicationRef = db.collection(collectionName).doc()
 
