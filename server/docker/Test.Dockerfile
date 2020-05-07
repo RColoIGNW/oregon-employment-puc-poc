@@ -6,4 +6,4 @@ RUN apt-get -qq update && \
 WORKDIR /app
 COPY . .
 RUN npm i && \
-  npm test
+  npm test:server
