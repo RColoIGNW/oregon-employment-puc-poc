@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import MomentUtils from '@date-io/moment';
 import Button from '@material-ui/core/Button'
@@ -28,9 +29,10 @@ export default (props: EmploymentRecordEditProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleEmployerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target
-    setState({ ...state, employer: value })
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target
+    setState({ ...state, [name]: value })
+    console.log(state)
   }
 
   const handleDateChange = (value: MaterialUiPickersDate) => {
@@ -50,20 +52,30 @@ export default (props: EmploymentRecordEditProps) => {
       <Dialog fullScreen={fullScreen} open={open} onClose={handleCancel}>
         <DialogTitle id="simple-dialog-title">Employment record</DialogTitle>
         <DialogContent>
-          <Grid container direction="column" spacing={2}>
-            <Grid item>
-            </Grid>
+          <Grid container spacing={2} direction="column">
             <Grid item>
               <Grid container spacing={2} direction="column">
                 <Grid item xs={12}>
-                  <TextField fullWidth value={state.employer} name="name" onChange={handleEmployerChange} label="Name of Employer" variant="outlined" disabled={props.isDisabled} />
+                  <TextField fullWidth value={state.employer} name="employer" onChange={handleTextChange} label="Company Name" variant="outlined" disabled={props.isDisabled} />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth value={state.location} name="location" onChange={handleTextChange} label="Location" variant="outlined" disabled={props.isDisabled} />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth value={state.contactMethod} name="contactMethod" onChange={handleTextChange} label="Contact Method (in person, phone, resume)" variant="outlined" disabled={props.isDisabled} />
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <KeyboardDatePicker fullWidth value={state.date} onChange={handleDateChange} label="Started" format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
+                    <Grid item xs={12}>
+                      <TextField fullWidth value={state.typeOfWorkSought} name="typeOfWorkSought" onChange={handleTextChange} label="Type of Work Sought" variant="outlined" disabled={props.isDisabled} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth value={state.result} name="result" onChange={handleTextChange} label="Result (hired, not hired)" variant="outlined" disabled={props.isDisabled} />
                     </Grid>
                   </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <KeyboardDatePicker fullWidth value={state.date} onChange={handleDateChange} label="Started" format="MM/DD/YYYY" inputVariant="outlined" disabled={props.isDisabled} />
                 </Grid>
               </Grid>
             </Grid>

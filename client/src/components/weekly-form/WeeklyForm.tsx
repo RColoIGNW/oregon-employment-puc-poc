@@ -57,8 +57,8 @@ export const steps = [
   },
   {
     key: 'C',
-    icon: pageInfo.sectionB.icon,
-    title: pageInfo.sectionB.title,
+    icon: pageInfo.sectionC.icon,
+    title: pageInfo.sectionC.title,
     isFirstStep: false,
     component: WeeklySectionC
   },

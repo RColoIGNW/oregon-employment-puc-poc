@@ -19,7 +19,7 @@ const defaultValue = {
 }
 
 export default (props: WeeklySectionProps) => {
-  const applicant = props.applicant || defaultValue
+  const applicant = props.application || defaultValue
 
   const { isDisabled } = props
   const disabled = !!isDisabled

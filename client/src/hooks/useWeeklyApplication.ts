@@ -77,6 +77,7 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   const handleSubmit = async () => {
     try {
       //TODO: Show Progress
+
       await submit(application)
       navigate('confirm',  { state: { applicationId: application.applicationId }})
     } catch (e) {
