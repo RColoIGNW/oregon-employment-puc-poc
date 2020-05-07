@@ -1,6 +1,7 @@
 import type { RequestHandler } from "express-serve-static-core"
 import { NextFunction, Request, Response } from "express"
 import firebase from './firebase'
+import log from './logger'
 
 const auth = firebase.auth()
 
@@ -27,6 +28,7 @@ export const decodeToken: RequestHandler = async (
     if (!req.user) { throw new Error('You are unauthorized to access this resource') }
     next()
   } catch (error) {
+    log.error(error)
     return res.status(401).json({
       error,
     })
@@ -42,6 +44,7 @@ export const isAuthorized: RequestHandler = async (
   if (req.user) {
     next()
   } else {
+    log.error('Unauthorized')
     return res.status(401).json({
       error: {
         message:
@@ -68,6 +71,7 @@ export const hasAdminRole: RequestHandler = async (
       })
     }
   } catch (error) {
+    log.error(error)
     return res.status(500).json({
       error: {
         message:

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import fb from 'firebase-admin'
 
+import ApplicationSchema from '../interfaces/application.interface'
 import firebase from '../util/firebase'
 import log from '../util/logger'
 
@@ -10,7 +11,7 @@ const submitApplication = async (req: Request, res: Response) => {
   try {
     if (!req.body) { throw new Error('Request Body Required') }
 
-    const requestBody = {
+    const requestBody: Partial<ApplicationSchema> = {
       ...req.body,
       lastModified: fb.firestore.Timestamp.now(),
       status: 'submitted',
