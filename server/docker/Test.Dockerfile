@@ -7,7 +7,7 @@ RUN apt-get -qq update && \
 COPY ./server/dist ./dist
 COPY ./server/src/templates ./dist/templates
 COPY ./server/node_modules ./node_modules
-COPY ./server/package.json .package.json
+COPY ./server/package.json ./package.json
 COPY ./server/.env .env
 COPY ./server/sa.json sa.json
 COPY ./server/src ./src
