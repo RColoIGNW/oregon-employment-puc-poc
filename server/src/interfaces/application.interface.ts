@@ -27,35 +27,21 @@ export interface AnswerModel{
 
 export interface Employer {
   name: string
-  address: Address
+  address?: Address
   phone: string
 }
 
 export interface EmploymentRecord {
-  id?: number
+  id?: number|string
   employer: Employer
-  started: Date
-  ended: Date
+  started: Date|string
+  ended: Date|string
 }
 
 export enum Gender {
   Male = 'Male',
   Female = 'Female'
 }
-
-// export interface QuestionModel {
-//   code: string
-//   text: string
-//   showOptions: boolean
-//   note?: string
-//   whenShowDetails: 'YES' | 'NO' | 'ALWAYS' | 'NEVER'
-//   whenShowSubQuestions: 'YES' | 'NO' | 'ALWAYS' | 'NEVER'
-//   subQuestions?: QuestionModel[]
-//   isDisabled?:  boolean
-//   answer: AnswerModel
-//   errorMessage?: string
-//   detailErrorMessage?: string
-// }
 
 export enum Race {
   AmericanIndianOrAlaskaNative = 'American Indian or Alaska Native',
@@ -74,16 +60,6 @@ export const Races: Race[] = [
   Race.BlackOrAfricanAmerican,
   Race.Other
 ]
-
-// export interface WeeklyClaimSchema {
-//   ableToWork: boolean,
-//   awayFromResidence: boolean,
-//   seekedEmployment: boolean,
-//   veteran: boolean,
-//   temporaryUnemployment: boolean,
-//   employmentHistory?: EmploymentRecord[]
-//   id?: string
-// }
 
 export interface Applicant {
   firstName: string
@@ -105,7 +81,7 @@ export default interface ApplicationSchema {
   employmentRecords?: EmploymentRecord[]
   uid?: string // deprecate
   adminNote?: string
-  id: string
+  id?: string
   applicant?: Applicant
   status?: ApplicationStatus
   lastModified?: Date|string
@@ -113,5 +89,15 @@ export default interface ApplicationSchema {
   isCertified?: boolean
   certifiedBy?: string
   dateApplied?: Date|string
-  userId: string
+  userId?: string
 }
+
+// export interface WeeklyClaimSchema { // TODO: recreate in its own file
+//   ableToWork: boolean,
+//   awayFromResidence: boolean,
+//   seekedEmployment: boolean,
+//   veteran: boolean,
+//   temporaryUnemployment: boolean,
+//   employmentHistory?: EmploymentRecord[]
+//   id?: string
+// }

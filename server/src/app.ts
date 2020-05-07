@@ -3,7 +3,9 @@ require('dotenv').config({
 })
 
 import bodyParser from 'body-parser'
-import cors, { CorsOptionsDelegate } from 'cors'
+import cors, {
+  // CorsOptionsDelegate
+} from 'cors'
 import express, { NextFunction, Request, Response } from 'express'
 
 import routes from './routes'
@@ -14,19 +16,19 @@ const router = express.Router()
 const headers1 = 'Origin, X-Requested-With, Content-Type, Accept'
 const headers2 =
   'Authorization, Access-Control-Allow-Credentials, x-access-token'
-const whitelist = [process.env.CLIENT_URL]
+// const whitelist = [process.env.CLIENT_URL]
 
-const corsOptionsDelegate: CorsOptionsDelegate = (req: Request, callback) => {
-  let corsOptions
-  if (whitelist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true }
-  } else if (process.env.NODE_ENV === 'production') {
-    corsOptions = { origin: true }
-  } else {
-    corsOptions = { origin: false }
-  }
-  callback(null, corsOptions)
-}
+// const corsOptionsDelegate: CorsOptionsDelegate = (req: Request, callback) => {
+//   let corsOptions
+//   if (whitelist.indexOf(req.header('Origin')) !== -1) {
+//     corsOptions = { origin: true }
+//   } else if (process.env.NODE_ENV === 'production') {
+//     corsOptions = { origin: true }
+//   } else {
+//     corsOptions = { origin: false }
+//   }
+//   callback(null, corsOptions)
+// }
 
 // For security reasons - don't tell users details about this web app in the headers
 app.disable('x-powered-by')
@@ -36,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // Use express backend routes
-const clientHeaderOrigin = process.env.CLIENT_URL
+// const clientHeaderOrigin = process.env.CLIENT_URL
 app.use(cors('*' as any))
 
 app.use((req: Request, res: Response, next: NextFunction) => {

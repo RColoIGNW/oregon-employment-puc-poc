@@ -62,16 +62,45 @@ describe('Integration Tests', () => {
     dbRef.autoFlush()
   })
 
-  const mockRequest = { id: 'fakeid', userId: 'uid', applicant: {
-    firstName: 'John',
-    middleName: 'Jo',
-    lastName: 'Smith',
-    ssn: '123456789',
-    dob: new Date(),
-    phone: '5555555555',
-    email: 'testing@testing.com',
-    races: [] as any,
-  } } as any
+  const mockRequest = {
+    id: 'fakeid',
+    userId: 'uid',
+    applicant: {
+      firstName: 'John',
+      middleName: 'Jo',
+      lastName: 'Smith',
+      ssn: '123456789',
+      dob: new Date(),
+      phone: '5555555555',
+      email: 'testing@testing.com',
+      races: [] as any,
+    },
+    employmentRecords: new Array(5).fill({
+      employer: {
+        name: 'Nike',
+        phone: '555-555-5555',
+        address: {
+          street: 'some street',
+          city: 'Portland',
+          state: 'OR',
+          zipCode: '97201'
+        }
+      },
+      id: 'employerId',
+      ended: 'some-date',
+      started: 'another-date'
+    }).map(item => item),
+    answers: [{
+      questionCode: 'C_1',
+      selectedOption: 'YES',
+      detailInfo: 'string',
+      subQuestionsAnwers: [{
+        questionCode: 'C_1_1',
+        selectedOption: 'YES',
+        detailInfo: 'string',
+      }],
+    }]
+} as any
 ​
   it('should return 200 for authorized tokens', async () => {
     try {
@@ -203,6 +232,26 @@ describe('Integration Tests', () => {
     const token = await user.getIdToken()
     const res: any = await request(app)
       .get('/api/generate-pdf/fakeiid')
+      .set('Authorization', 'Bearer ' + token)
+    expect(res.statusCode).toEqual(200)
+  })
+  it('should return 400 for invalid request objects', async () => {
+    user = await ref.createUser({
+      uid: 'badData',
+      email: 'testbadsubmit@test.com',
+    })
+    await ref.setCustomUserClaims('badData', { admin: true })
+    const token = await user.getIdToken()
+    const res: any = await request(app)
+      .patch('/api/applications/fakeiid/submit')
+      .set('Authorization', 'Bearer ' + token)
+      .send({badData: true})
+    expect(res.statusCode).toEqual(400)
+  })
+  it('should get all applications for an authenticated user', async () => {
+    const token = await user.getIdToken()
+    const res: any = await request(app)
+      .get('/api/users/some-user-id/applications')
       .set('Authorization', 'Bearer ' + token)
     expect(res.statusCode).toEqual(200)
   })

@@ -24,14 +24,10 @@ export const decodeToken: RequestHandler = async (
     // Decoding this token returns the userpayload and all the other token claims you added while creating the custom token
     req.token = req.headers.authorization.replace('Bearer ', '')
     req.user = await auth.verifyIdToken(req.token)
-
-    if (!req.user) { throw new Error('You are unauthorized to access this resource') }
     next()
   } catch (error) {
     log.error(error)
-    return res.status(401).json({
-      error,
-    })
+    return res.status(401).json({ error })
   }
 }
 
@@ -60,23 +56,13 @@ export const hasAdminRole: RequestHandler = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    if (!!req.user.admin) {
-      next()
-    } else {
-      return res.status(403).json({
-        error: {
-          message: 'You are not permitted to access this resource'
-        }
-      })
-    }
-  } catch (error) {
-    log.error(error)
-    return res.status(500).json({
+  if (!!req.user.admin) {
+    next()
+  } else {
+    return res.status(403).json({
       error: {
-        message:
-          "An error occurred while getting user access. Please try again",
-      },
+        message: 'You are not permitted to access this resource'
+      }
     })
   }
 }
