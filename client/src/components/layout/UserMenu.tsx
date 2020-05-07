@@ -1,15 +1,16 @@
-import React, { useContext } from 'react'
+import { Divider } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import { Divider, Hidden } from '@material-ui/core'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 import PersonIcon from '@material-ui/icons/Person'
-import Button from '@material-ui/core/Button'
+import React, { useContext } from 'react'
+
 import { AuthContext } from '../../providers/AuthProvider';
 
 export const UserMenu = () => {
-  const { signOut, user } = useContext(AuthContext)
+  const { signOut } = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -61,7 +62,7 @@ export const UserMenu = () => {
 }
 
 export const UserMenuMobile = () => {
-  const { signOut, user } = useContext(AuthContext)
+  const { signOut } = useContext(AuthContext)
 
   return (
     <div style={{ padding: '0 16', minHeight: 150 }}>
