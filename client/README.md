@@ -1,4 +1,4 @@
-# gatsby-starter-typescript-deluxe 🌟
+# oregon-employment-pua-poc client 🌟
 
 ### An opinionated starter library for creating React applications with Gatsby (v2) and TypeScript.
 

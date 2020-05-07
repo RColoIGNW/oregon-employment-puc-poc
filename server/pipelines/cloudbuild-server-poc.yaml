@@ -29,6 +29,12 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', './server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA', '.']
 
+   # Run Test
+  - name: node:12.16.2-alpine3.11
+    dir: 'server'
+    entrypoint: npm
+    args: ['test']
+
   # push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA']

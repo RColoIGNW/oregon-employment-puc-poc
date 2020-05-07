@@ -1,5 +1,4 @@
 FROM node:12.16.2
-
 RUN apt-get -qq update && \
   apt-get -qq dist-upgrade && \
   apt-get -qq install pdftk && \
@@ -7,4 +6,5 @@ RUN apt-get -qq update && \
 
 COPY ./server ./
 
-CMD [ "node", "dist/server.js" ]
+RUN npm i && \
+  npm run test
