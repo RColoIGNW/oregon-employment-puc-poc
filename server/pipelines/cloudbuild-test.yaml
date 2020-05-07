@@ -5,6 +5,10 @@ steps:
     entrypoint: npm
     args: ['install']
 
+  # build test container
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', './server/docker/Server.Dockerfile']
+
   # Run Test
   - name: node:12.16.2
     dir: 'server'
