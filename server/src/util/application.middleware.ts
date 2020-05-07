@@ -13,10 +13,10 @@ export const validateApplicationRequest: RequestHandler = async (
   try {
     const ajv = new Ajv()
     ajv.validate(schema, req.body)
-    log.info('application schema validation check:', JSON.stringify(ajv?.errors))
-    if (ajv?.errors?.length) {
+    log.info('application schema validation check:', JSON.stringify(ajv.errors))
+    if (ajv.errors?.length) {
       log.error(ajv.errors)
-      return res.status(400).send(ajv.errors)
+      throw new Error(JSON.stringify(ajv.errors))
     }
     next()
   } catch (error) {
