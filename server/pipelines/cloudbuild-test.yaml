@@ -13,12 +13,12 @@ steps:
     env:
       - NODE_ENV=production
 
-  # build test container
+  # build container and test
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', './server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server-test:$COMMIT_SHA', '.']
+    args: ['build', '-f', './server/docker/Test.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server-test:$COMMIT_SHA', '.']
 
-  # Run Test
-  - name: node:12.16.2
-    dir: 'server'
-    entrypoint: npm
-    args: ['test']
+  # # Run Test
+  # - name: node:12.16.2
+  #   dir: 'server'
+  #   entrypoint: npm
+  #   args: ['test']
