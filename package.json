@@ -16,7 +16,8 @@
   "scripts": {
     "start": "lerna run start --stream",
     "bootstrap": "lerna bootstrap",
-    "test": "lerna run test --stream"
+    "test": "lerna run test --stream",
+    "test:server": "cd ./server && npm run test"
   },
   "dependencies": {}
 }

@@ -30,6 +30,7 @@ export const UserMenu = () => {
 
   return (
     <>
+      {user?.displayName}
       <IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
@@ -72,7 +73,7 @@ export const UserMenuMobile = () => {
         <PersonIcon style={{ fontSize: 68 }} />
       </Grid>
       <Grid item>
-        {user?.displayName || user?.email}
+        {user?.displayName}
       </Grid>
       <Grid item xs={12}>
         <Grid container justify="space-between">

@@ -44,7 +44,7 @@ interface QuestionProps {
 
 export const Question = (props: QuestionProps) => {
   const classes = useStyles()
-  let focusTimer: NodeJS.Timeout
+  let focusTimer: NodeJS.Timeout|any
   //let [detailsInput, setDetailsFocus] = useFocus()
   let detailsInput: any = useRef(null)
   const {answer} =  props.question

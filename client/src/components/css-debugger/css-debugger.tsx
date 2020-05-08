@@ -58,11 +58,11 @@ const CSSDebugger: React.FC<CSSDebuggerProps> = ({
     color?: string;
   }>`
     html, * {
-      ${(props) => getDebugStyles(props)};
+      ${(props: any) => getDebugStyles(props)};
     }
 
     html {
-      ${(props) => props.debug && props.showGrid && gridStyles};
+      ${(props: any) => props.debug && props.showGrid && gridStyles};
     }
   `;
 

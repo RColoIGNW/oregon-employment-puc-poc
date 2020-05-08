@@ -1,12 +1,12 @@
 steps:
   # Install NPM
-  - name: node:12.16.2-alpine3.11
+  - name: node:12.16.2
     dir: 'server'
     entrypoint: npm
     args: ['install']
 
   # Run Build
-  - name: node:12.16.2-alpine3.11
+  - name: node:12.16.2
     dir: 'server'
     entrypoint: npm
     args: ['run', 'build']
@@ -14,13 +14,13 @@ steps:
       - NODE_ENV=production
 
   # Run Prune
-  - name: node:12.16.2-alpine3.11
+  - name: node:12.16.2
     dir: 'server'
     entrypoint: npm
     args: ['prune', '--production']
 
   # View Directory
-#  - name: node:12.16.2-alpine3.11
+#  - name: node:12.16.2
 #    dir: 'server'
 #    entrypoint: "bash"
 #    args: [ '-c', 'ls -la']
@@ -28,6 +28,10 @@ steps:
   # build container
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', './server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA', '.']
+
+  # build test container and run test
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', './server/docker/Test.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server-test:$COMMIT_SHA', '.']
 
   # push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
