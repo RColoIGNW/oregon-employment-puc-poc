@@ -26,14 +26,14 @@ const LoginPage = (props: { location: { origin: string, pathname: string } }) =>
         flexDirection: 'column'
       }}>
         <Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
-          <Typography>
+          <Typography color={'primary'}>
             {'To continue, log in to the Oregon Employment Department.'}
           </Typography>
         </Grid>
         <SignInForm {...childProps} />
         <Divider style={{width: '100%', marginTop: '2em'}} />
-        <Grid item>
-          <Typography variant={'subtitle2'}>{'OR'}</Typography>
+        <Grid item style={{marginBottom: '-1em'}}>
+          <Typography color={'primary'} variant={'subtitle2'}>{'OR'}</Typography>
         </Grid>
         <Grid item id={'firebaseui-auth-container'} />
       </Grid>
