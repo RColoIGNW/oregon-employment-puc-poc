@@ -33,7 +33,7 @@ export const pageInfo = {
   },
   sectionC: {
     icon: 'C',
-    title: 'APPLICANT EMPLOYMENT',
+    title: 'WORK SEARCH ACTIVITY',
   },
   back: 'Back',
   next: 'Next',

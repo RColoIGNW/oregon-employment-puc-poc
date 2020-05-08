@@ -70,7 +70,7 @@ export default (props: WorkSearchListProps) => {
           <Button fullWidth component="div" variant="contained" size="large" color="primary" onClick={() => handleOpen()}>
             <Grid container direction="column" alignItems="center">
               <Grid item><AddIcon /></Grid>
-              <Grid item><Typography>Add employment record</Typography></Grid>
+              <Grid item><Typography>Add work search activity</Typography></Grid>
             </Grid>
           </Button>
         </Grid>

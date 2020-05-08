@@ -13,6 +13,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import WorkSearchRecord from "../../models/WorkSearchRecord"
 import questions from "../weekly-form/questions"
+import HelpIcon from '@material-ui/icons/Help';
 
 import {
   Checkbox,
@@ -28,6 +29,7 @@ interface EmploymentRecordEditProps {
   isDisabled?: boolean
 }
 
+
 export default (props: EmploymentRecordEditProps) => {
   const { open, onAccept, onCancel } = props
   const [state, setState] = useState<WorkSearchRecord>(props.workSearchRecord)
@@ -42,9 +44,9 @@ export default (props: EmploymentRecordEditProps) => {
 
   const handleCheckBoxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target
-    console.log(value);
-    console.log(checked);
-    setExpanded(false);
+    setState({ ...state, [value]: checked })
+    value === "unionMember" && setExpandedUnion(false);
+    value === "tempLayoff" && setExpandedTempLayoff(false);
   }
 
   const handleDateChange = (value: MaterialUiPickersDate) => {
@@ -59,12 +61,15 @@ export default (props: EmploymentRecordEditProps) => {
     onCancel && onCancel()
   }
 
-  const [expanded, setExpanded] = React.useState(false);
+  const [expandedDescription, setExpandedDescription] = React.useState(false);
+  const [expandedUnion, setExpandedUnion] = React.useState(false);
+  const [expandedTempLayoff, setExpandedTempLayoff] = React.useState(false);
+
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <Dialog fullScreen={fullScreen} open={open} onClose={handleCancel}>
-        <DialogTitle id="simple-dialog-title">Employment record</DialogTitle>
+        <DialogTitle id="simple-dialog-title">Work Search Activity</DialogTitle>
         <DialogContent>
           <Grid container spacing={2} direction="column">
             <Grid item>
@@ -94,9 +99,9 @@ export default (props: EmploymentRecordEditProps) => {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <ExpansionPanel expanded={expanded} onChange={() => setExpanded(true)}>
+              <ExpansionPanel expanded={expandedUnion} onChange={() => setExpandedUnion(true)}>
                 <ExpansionPanelSummary
-                  expandIcon={expanded ? null : <Typography>Read more</Typography>}
+                  expandIcon={expandedUnion ? null : <Typography>Read more</Typography>}
                   aria-label="Expand"
                   aria-controls="additional-actions1-content"
                   id="additional-actions1-header"
@@ -104,8 +109,7 @@ export default (props: EmploymentRecordEditProps) => {
                   <FormControlLabel
                     aria-label="Acknowledge"
                     value={'unionMember'}
-                    onChange={handleCheckBoxChange}
-                    control={<Checkbox />}
+                    control={<Checkbox onChange={handleCheckBoxChange} />}
                     label="Check here if you are a union member in good standing."
                   />
                 </ExpansionPanelSummary>
@@ -115,7 +119,35 @@ export default (props: EmploymentRecordEditProps) => {
                       {questions.unionMemberMessage}
                     </Typography>
                     <Grid style={{display: 'flex', justifyContent: 'flex-end'}}>
-                      <Button onClick={() => {setExpanded(false)}}>Ok</Button>
+                      <Button onClick={() => {setExpandedUnion(false)}}>Ok</Button>
+                    </Grid>
+                  </Grid>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+              <ExpansionPanel expanded={expandedTempLayoff} onChange={() => setExpandedTempLayoff(true)} style={{paddingTop: 15}}>
+                <ExpansionPanelSummary
+                  expandIcon={expandedTempLayoff ? null : <Typography>Read more</Typography>}
+                  aria-label="Expand"
+                  aria-controls="additional-actions1-content"
+                  id="additional-actions1-header"
+                >
+                  <FormControlLabel
+                    aria-label="Acknowledge"
+                    value={'tempLayoff'}
+                    control={<Checkbox onChange={handleCheckBoxChange} />}
+                    label="Check here if you are on a temporary layoff (TLO)"
+                  />
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <Grid container direction={'column'}>
+                    <Typography color="textSecondary">
+                      {questions.tempLayoffMessage}
+                    </Typography>
+                    <Typography color="textSecondary">
+                      {questions.tempLayoffNote}
+                    </Typography>
+                    <Grid style={{display: 'flex', justifyContent: 'flex-end'}}>
+                      <Button onClick={() => {setExpandedTempLayoff(false)}}>Ok</Button>
                     </Grid>
                   </Grid>
                 </ExpansionPanelDetails>
