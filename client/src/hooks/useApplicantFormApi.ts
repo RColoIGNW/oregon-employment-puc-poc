@@ -1,8 +1,9 @@
 import { useContext } from 'react'
+
 import Application from '../models/Application'
 import { ApplicationStatus } from '../models/ApplicationStatus'
-import { request, RequestOptions, ResponseType } from '../util/request'
 import { TransitionContext } from '../providers/TransitionProvider'
+import { RequestOptions, ResponseType, request } from '../util/request'
 
 export default () => {
   const { setState: setTransitionState } = useContext(TransitionContext)
@@ -28,7 +29,7 @@ export default () => {
     const userId = localStorage.getItem('uid')
     const requestOptions = {
       method: 'PUT',
-      body: JSON.stringify({ userId: userId }),
+      body: JSON.stringify({ userId }),
       redirect: 'follow',
     }
     return doRequest(`${process.env.REACT_APP_API_HOST}/api/applications`, requestOptions as any)
@@ -37,7 +38,7 @@ export default () => {
   const updateApplication = (application: Partial<Application>) => {
     const requestOptions = {
       method: 'PATCH',
-      body: JSON.stringify(application),
+      body: JSON.stringify({...application, success: undefined, applicationId: undefined, id: application?.applicationId as string }), // TODO: fix upstream data
       redirect: 'follow',
     }
     return doRequest(`${process.env.REACT_APP_API_HOST}/api/applications/${application.id}`, requestOptions as any)

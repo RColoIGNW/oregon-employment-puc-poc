@@ -5,6 +5,9 @@ import { Layout } from '../components/layout'
 import { SEO } from '../components/seo'
 
 const ApplicationPage = (props: any) => {
+  console.log('====================================');
+  console.log(props);
+  console.log('====================================');
   const applicationId = props.location?.state?.applicationId
 
   return (
