@@ -13,12 +13,17 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import WorkSearchRecord from "../../models/WorkSearchRecord"
 import questions from "../weekly-form/questions"
-import HelpIcon from '@material-ui/icons/Help';
 
 import {
   Checkbox,
-  ExpansionPanel, ExpansionPanelDetails,
-  ExpansionPanelSummary, FormControlLabel, Typography,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  FormControlLabel,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
 } from "@material-ui/core"
 
 interface EmploymentRecordEditProps {
@@ -61,7 +66,6 @@ export default (props: EmploymentRecordEditProps) => {
     onCancel && onCancel()
   }
 
-  const [expandedDescription, setExpandedDescription] = React.useState(false);
   const [expandedUnion, setExpandedUnion] = React.useState(false);
   const [expandedTempLayoff, setExpandedTempLayoff] = React.useState(false);
 
@@ -99,7 +103,7 @@ export default (props: EmploymentRecordEditProps) => {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <ExpansionPanel expanded={expandedUnion} onChange={() => setExpandedUnion(true)}>
+              <ExpansionPanel expanded={expandedUnion} onChange={() => setExpandedUnion(true)} elevation={expandedUnion ? 1 : 0}>
                 <ExpansionPanelSummary
                   expandIcon={expandedUnion ? null : <Typography>Read more</Typography>}
                   aria-label="Expand"
@@ -115,16 +119,24 @@ export default (props: EmploymentRecordEditProps) => {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   <Grid container direction={'column'}>
-                    <Typography color="textSecondary">
-                      {questions.unionMemberMessage}
-                    </Typography>
+                    <List component="nav" aria-label="main mailbox folders">
+                      {
+                        questions.unionMemberMessage.map((textSection) => {
+                          return (
+                            <ListItem>
+                              <ListItemText primary={textSection}/>
+                            </ListItem>
+                          )
+                        })
+                      }
+                    </List>
                     <Grid style={{display: 'flex', justifyContent: 'flex-end'}}>
                       <Button onClick={() => {setExpandedUnion(false)}}>Ok</Button>
                     </Grid>
                   </Grid>
                 </ExpansionPanelDetails>
               </ExpansionPanel>
-              <ExpansionPanel expanded={expandedTempLayoff} onChange={() => setExpandedTempLayoff(true)} style={{paddingTop: 15}}>
+              <ExpansionPanel expanded={expandedTempLayoff} onChange={() => setExpandedTempLayoff(true)} style={{paddingTop: 15}} elevation={expandedTempLayoff ? 1 : 0}>
                 <ExpansionPanelSummary
                   expandIcon={expandedTempLayoff ? null : <Typography>Read more</Typography>}
                   aria-label="Expand"
@@ -140,12 +152,17 @@ export default (props: EmploymentRecordEditProps) => {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   <Grid container direction={'column'}>
-                    <Typography color="textSecondary">
-                      {questions.tempLayoffMessage}
-                    </Typography>
-                    <Typography color="textSecondary">
-                      {questions.tempLayoffNote}
-                    </Typography>
+                    <List component="nav" aria-label="main mailbox folders">
+                      {
+                        questions.tempLayoffMessage.map((textSection) => {
+                          return (
+                            <ListItem>
+                              <ListItemText primary={textSection}/>
+                            </ListItem>
+                          )
+                        })
+                      }
+                    </List>
                     <Grid style={{display: 'flex', justifyContent: 'flex-end'}}>
                       <Button onClick={() => {setExpandedTempLayoff(false)}}>Ok</Button>
                     </Grid>
