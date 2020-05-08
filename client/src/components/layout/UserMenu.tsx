@@ -1,11 +1,14 @@
 import React, { useContext } from 'react'
+import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import { Divider, Hidden } from '@material-ui/core'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import Divider from '@material-ui/core/Divider'
 import PersonIcon from '@material-ui/icons/Person'
-import Button from '@material-ui/core/Button'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import Grid from '@material-ui/core/Grid'
+
 import { AuthContext } from '../../providers/AuthProvider';
 
 export const UserMenu = () => {
@@ -27,6 +30,7 @@ export const UserMenu = () => {
 
   return (
     <>
+      {user?.displayName}
       <IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
@@ -64,11 +68,23 @@ export const UserMenuMobile = () => {
   const { signOut, user } = useContext(AuthContext)
 
   return (
-    <div style={{ padding: '0 16', minHeight: 150 }}>
-      <PersonIcon style={{ fontSize: 68 }} />
-      <br />
-      <Button color="primary">My Account</Button>
-      <Button color="primary" onClick={signOut}>Sign out</Button>
-    </div>
+    <Grid container alignItems="center">
+      <Grid item>
+        <PersonIcon style={{ fontSize: 68 }} />
+      </Grid>
+      <Grid item>
+        {user?.displayName}
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container justify="space-between">
+          <Grid item>
+            <Button color="primary">Profile</Button>
+          </Grid>
+          <Grid item>
+            <Button color="primary" onClick={signOut} endIcon={<ExitToAppIcon />}>Sign out</Button>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   )
 }

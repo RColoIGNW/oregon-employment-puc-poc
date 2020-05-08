@@ -14,8 +14,10 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "start": "lerna run start",
-    "bootstrap": "lerna bootstrap"
+    "start": "lerna run start --stream",
+    "bootstrap": "lerna bootstrap",
+    "test": "lerna run test --stream",
+    "test:server": "cd ./server && npm run test"
   },
   "dependencies": {}
 }

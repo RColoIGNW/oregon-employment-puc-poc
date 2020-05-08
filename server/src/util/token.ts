@@ -1,6 +1,7 @@
 import type { RequestHandler } from "express-serve-static-core"
 import { NextFunction, Request, Response } from "express"
 import firebase from './firebase'
+import log from './logger'
 
 const auth = firebase.auth()
 
@@ -23,13 +24,10 @@ export const decodeToken: RequestHandler = async (
     // Decoding this token returns the userpayload and all the other token claims you added while creating the custom token
     req.token = req.headers.authorization.replace('Bearer ', '')
     req.user = await auth.verifyIdToken(req.token)
-
-    if (!req.user) { throw new Error('You are unauthorized to access this resource') }
     next()
   } catch (error) {
-    return res.status(401).json({
-      error,
-    })
+    log.error(error)
+    return res.status(401).json({ error })
   }
 }
 
@@ -42,6 +40,7 @@ export const isAuthorized: RequestHandler = async (
   if (req.user) {
     next()
   } else {
+    log.error('Unauthorized')
     return res.status(401).json({
       error: {
         message:
@@ -57,22 +56,13 @@ export const hasAdminRole: RequestHandler = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    if (!!req.user.admin) {
-      next()
-    } else {
-      return res.status(403).json({
-        error: {
-          message: 'You are not permitted to access this resource'
-        }
-      })
-    }
-  } catch (error) {
-    return res.status(500).json({
+  if (!!req.user.admin) {
+    next()
+  } else {
+    return res.status(403).json({
       error: {
-        message:
-          "An error occurred while getting user access. Please try again",
-      },
+        message: 'You are not permitted to access this resource'
+      }
     })
   }
 }
