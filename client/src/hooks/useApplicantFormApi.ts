@@ -35,7 +35,7 @@ export default () => {
     return doRequest(`${process.env.REACT_APP_API_HOST}/api/applications`, requestOptions as any)
   }
 
-  const updateApplication = (application: Partial<Application>) => {
+  const updateApplication = (application: Partial<Application|any>) => {
     const requestOptions = {
       method: 'PATCH',
       body: JSON.stringify({...application, success: undefined, applicationId: undefined, id: application?.applicationId as string }), // TODO: fix upstream data
