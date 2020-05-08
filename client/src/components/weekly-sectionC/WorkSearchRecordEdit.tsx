@@ -26,7 +26,7 @@ import {
   Typography,
 } from "@material-ui/core"
 
-interface EmploymentRecordEditProps {
+interface WorkSearchEditProps {
   workSearchRecord: WorkSearchRecord
   open: boolean
   onAccept?: (workSearchRecord: WorkSearchRecord) => void
@@ -35,7 +35,7 @@ interface EmploymentRecordEditProps {
 }
 
 
-export default (props: EmploymentRecordEditProps) => {
+export default (props: WorkSearchEditProps) => {
   const { open, onAccept, onCancel } = props
   const [state, setState] = useState<WorkSearchRecord>(props.workSearchRecord)
   const theme = useTheme();
@@ -154,10 +154,10 @@ export default (props: EmploymentRecordEditProps) => {
                   <Grid container direction={'column'}>
                     <List component="nav" aria-label="main mailbox folders">
                       {
-                        questions.tempLayoffMessage.map((textSection) => {
+                        questions.tempLayoffMessage.map((textSection, index) => {
                           return (
-                            <ListItem>
-                              <ListItemText primary={textSection}/>
+                            <ListItem key={index}>
+                              <ListItemText primary={textSection} key={index}/>
                             </ListItem>
                           )
                         })

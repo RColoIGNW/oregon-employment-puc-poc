@@ -1,10 +1,11 @@
 import { render } from '@testing-library/react'
 import React from 'react'
 
-import WorkSearchRecordEdit from "./WorkSearchRecordEdit"
+import WorkSearchItem from "./WorkSearchItem"
+import WorkSearchRecord from "../../models/WorkSearchRecord"
 
-describe('Work Search Record Edit', () => {
-  it('should render the Work Search Record Edit component', () => {
+describe('Work Search Item', () => {
+  it('should render the Work Search Item component', () => {
     const props = {
       workSearchRecord: {
         employer: 'string',
@@ -16,12 +17,13 @@ describe('Work Search Record Edit', () => {
         unionMember: true,
         tempLayoff: true,
       },
-      open: true,
-    }
+      onEditWorkSearchRecord: (workSearchRecord: WorkSearchRecord) => {console.log(workSearchRecord)},
+      onDeleteWorkSearchRecord: (workSearchRecord: WorkSearchRecord) => {console.log(workSearchRecord)},
+  }
     const {
       container,
       // debug,
-    } = render(<WorkSearchRecordEdit {...props}/>)
+    } = render(<WorkSearchItem {...props}/>)
     // debug()
     expect(container).toBeTruthy()
   })
