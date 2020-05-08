@@ -2,9 +2,11 @@ import { useContext } from 'react'
 
 import { SnackBarContext } from '../providers/SnackbarProvider'
 import { request } from '../util/request'
+import useApplicantFormApi from './useApplicantFormApi'
 
 export default () => {
   const snackbar = useContext(SnackBarContext)
+  const api = useApplicantFormApi()
 
   const downloadApplication = async (applicationId: string) => {
     const headers = new Headers()
@@ -31,7 +33,12 @@ export default () => {
     }
   }
 
+  const discardApplication = async (applicationId: string) => {
+    await api.discardApplication(applicationId)
+  }
+
   return {
     downloadApplication,
+    discardApplication
   }
 }

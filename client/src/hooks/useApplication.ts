@@ -147,9 +147,14 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
     return navigate('application-submitted',  { state: { applicationId }})
   }
 
+  const discard = async (applicationId: string) => {
+    await api.discardApplication(applicationId)
+  }
+
   return {
     load,
     submit,
+    discard,
     disabled,
     handleChange,
     handleBack,

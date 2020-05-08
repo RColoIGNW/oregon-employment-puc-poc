@@ -80,6 +80,7 @@ const deleteDocumentById = async (collectionName: string, req: Request, res: Res
       success: true
     })
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error })
   }
 }

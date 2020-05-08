@@ -19,7 +19,7 @@ const defaultInfo = {
 
 export interface ConfirmDialogProps {
   open: boolean
-  title: string
+  title?: string
   description?: string
   confirmActionText?: string
   cancelActionText?: string
