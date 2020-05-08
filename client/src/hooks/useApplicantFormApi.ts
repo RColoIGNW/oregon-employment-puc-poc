@@ -33,14 +33,18 @@ export default () => {
       .catch(console.error)
   }
 
-  const updateApplication = (application: Partial<Application>) => {
+  const updateApplication = (application: Partial<Application>) => {    
     const requestOptions = {
       method: 'PATCH',
       body: JSON.stringify(application),
       redirect: 'follow',
     }
+    console.log('Updating Application...')
     return request(`${process.env.REACT_APP_API_HOST}/api/applications/${application.id}`, requestOptions as any)
-      .catch(console.error)
+      .catch((error) => {
+        console.log('ERROR Updating Application..,')
+        console.error(error)
+      })
   }
 
   const getUserApplications = (): Promise<Application[]> => {
