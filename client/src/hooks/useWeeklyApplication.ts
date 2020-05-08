@@ -17,8 +17,6 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     firedOrSuspended: null,
     ableToWork: null,
     awayFromResidence: null,
-    veteran: null,
-    temporaryUnemployment: null,
     workSearchHistory: [],
     applicationId: props?.applicationId || ''
   }
