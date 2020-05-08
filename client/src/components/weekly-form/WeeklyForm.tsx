@@ -15,21 +15,25 @@ import {
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import React from "react"
 
-import ApplicationModel from '../../models/Application'
-import weeklyQuestions from "../../models/weeklyQuestions"
 import theme from "../../themes/theme-light"
-import WeeklyStep1 from "../weekly-sectionA/WeeklyStep1"
-import WeeklyStep2 from "../weekly-sectionB/WeeklyStep2"
+import WeeklySectionAQuestions from "../weekly-sectionA/WeeklySectionAQuestions"
+import WeeklySectionBQuestions from "../weekly-sectionB/WeeklySectionBQuestions"
+import WeeklySectionC from "../weekly-sectionC/WeeklySectionC"
+import { WeeklyFormProps } from "../../models/WeeklySectionProps"
 
 export const pageInfo = {
   title: 'Initial Application for Pandemic Unemployment Assistance',
   sectionA: {
     icon: 'A',
-    title: 'APPLICANT INFORMATION',
+    title: 'APPLICANT INFORMATION Part 1',
   },
   sectionB: {
     icon: 'B',
-    title: 'APPLICANT EMPLOYMENT',
+    title: 'APPLICANT INFORMATION Part 2',
+  },
+  sectionC: {
+    icon: 'C',
+    title: 'WORK SEARCH ACTIVITY',
   },
   back: 'Back',
   next: 'Next',
@@ -42,14 +46,21 @@ export const steps = [
     icon: pageInfo.sectionA.icon,
     title: pageInfo.sectionA.title,
     isFirstStep: true,
-    component: WeeklyStep1
+    component: WeeklySectionAQuestions
   },
   {
     key: 'B',
     icon: pageInfo.sectionB.icon,
     title: pageInfo.sectionB.title,
     isFirstStep: false,
-    component: WeeklyStep2
+    component: WeeklySectionBQuestions
+  },
+  {
+    key: 'C',
+    icon: pageInfo.sectionC.icon,
+    title: pageInfo.sectionC.title,
+    isFirstStep: false,
+    component: WeeklySectionC
   },
 ]
 
@@ -98,20 +109,6 @@ const StepActions = (props: StepActionsProp) => {
   )
 }
 
-interface WeeklyFormProps {
-  application: weeklyQuestions
-  applicationId: string
-  isDisabled?: boolean
-  handleChange: (weeklyApplication: weeklyQuestions) => void
-  handleEmploymentChange: (employmentRecords: ApplicationModel) => void
-  save: (application: Partial<weeklyQuestions>) => Promise<string>
-  activeStep: number
-  setActiveStep: (step: number) => void
-  handleSave: () => any
-  handleBack: () => any
-  handleNext: () => any
-}
-
 export default function WeeklyForm(props: WeeklyFormProps) {
   const classes = useStyles()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -122,14 +119,14 @@ export default function WeeklyForm(props: WeeklyFormProps) {
     setActiveStep,
     handleSave,
     handleChange,
-    handleEmploymentChange,
+    handleWorkSearchChange,
     handleBack,
     handleNext,
   } = props
 
   const ActiveSection = steps?.[activeStep]?.component
 
-  if (props.application) {
+  if (application) {
     return (
       <Grid container direction="column" spacing={2}>
         <Grid item style={{
@@ -160,7 +157,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
                   <StepContent>
                     <Grid container direction={'column'} spacing={2}>
                       <Grid item>
-                        <Section onChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={application} />
+                        <Section handleChange={handleChange} handleWorkSearchChange={handleWorkSearchChange} application={application} />
                       </Grid>
                       <Grid item>
                         <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} isLastStep={activeStep === steps.length - 1}/>
@@ -179,7 +176,7 @@ export default function WeeklyForm(props: WeeklyFormProps) {
               </Paper>
               <Grid container direction={'column'} spacing={2}>
                 <Grid item>
-                  <ActiveSection onChange={handleChange} handleEmploymentChange={handleEmploymentChange} applicant={application} />
+                  <ActiveSection handleChange={handleChange} handleWorkSearchChange={handleWorkSearchChange} application={application} />
                 </Grid>
               </Grid>
               <MobileStepper
