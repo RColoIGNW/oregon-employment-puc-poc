@@ -1,6 +1,6 @@
 const log = console.log
 
-type ResponseType = 'text' | 'blob'
+export type ResponseType = 'text' | 'blob'
 
 export interface RequestOptions extends RequestInit {
   requireJSON?: boolean

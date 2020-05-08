@@ -9,6 +9,7 @@ export default interface Application {
   applicant?: Applicant
   employmentRecords?: EmploymentRecord[]
   status?: ApplicationStatus,
+  dateCreated?: Date,
   lastModified?: Date,
   answers?: AnswerModel[]
   isCertified: boolean
