@@ -16,11 +16,10 @@ import { SEO } from "../components/seo"
 import useApplicantFormApi from "../hooks/useApplicantFormApi"
 import useClaimStatus from '../hooks/useClaimStatus'
 import Application from '../models/Application'
+import { AlertProps } from '../components/alerts/Alerts'
 
 const GoBackToDashboard = () => (
-  <Grid item style={{flexDirection:'row', width: '100%', display: 'flex', justifyContent: 'center'}}>
-    <Button variant={'contained'} color={'primary'} onClick={() => navigate('/dashboard')}>{`Go to Dashboard`}</Button>
-  </Grid>
+  <Button variant={'contained'} color={'primary'} onClick={() => navigate('/dashboard')}>{`Go to Dashboard`}</Button>
 )
 
 const ClaimsStatusPage = () => {
@@ -28,6 +27,7 @@ const ClaimsStatusPage = () => {
   const [data, setData] = useState<Application[]>()
   const [application, setApplication] = useState<Application>()
   const { downloadApplication } = useClaimStatus()
+  const [alert, setAlert] = useState<AlertProps>()
 
   const handleEdit = () => {
     application && navigate('application', { state: { applicationId: application.id } })
@@ -60,8 +60,16 @@ const ClaimsStatusPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await apiClient.getUserApplications()
-      setData(data)
+      try {
+        const data = await apiClient.getUserApplications()
+        setData(data)
+        if (!data?.length)
+          setAlert({ message: 'You have not yet submitted any claims', title: 'Claim Status' })
+      } catch (err) {
+        setAlert({ message: 'There was an error loading your claims', title: 'Claim Status', severity: 'error' })
+      } finally {
+        
+      }
     }
     fetchData()
   }, [])
@@ -78,13 +86,14 @@ const ClaimsStatusPage = () => {
     setAnchorEl(null)
   }
 
-  if (!data) return (<div>Loading...</div>)
-
   return (
-    <Layout alert={!data.length && { message:'You have not yet submitted any claims', title: 'Claim Status' }}>
+    <Layout alert={alert}>
       <SEO title={'Claim Status'} />
       <Grid container direction="row" spacing={1} style={{ marginTop: '1em' }}>
-        {!data.length ? <GoBackToDashboard /> : data.map((application: Application, index: number) =>
+        <Grid item xs={12}>
+          <GoBackToDashboard />
+        </Grid>
+        {data?.map((application: Application, index: number) =>
           <Grid item xs={12} sm={7} md={6} lg={4} key={index}>
             <Card>
               <CardContent>
@@ -99,7 +108,7 @@ const ClaimsStatusPage = () => {
                         </Typography>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography variant="body1">{moment().format('MMM D, YYYY')}</Typography>
+                        <Typography variant="body1">{moment(application.dateCreated).format('MMM D, YYYY')}</Typography>
                       </Grid>
                       <Grid item xs={6}>
                         <Typography variant="body2" color="secondary" style={{ fontWeight: 'bold' }}>{application.status}</Typography>

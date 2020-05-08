@@ -87,8 +87,8 @@ describe('Integration Tests', () => {
         }
       },
       id: 'employerId',
-      ended: 'some-date',
-      started: 'another-date'
+      ended: new Date(),
+      started: new Date()
     }).map(item => item),
     answers: [{
       questionCode: 'C_1',

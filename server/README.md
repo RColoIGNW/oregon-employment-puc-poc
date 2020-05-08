@@ -1,4 +1,4 @@
-# API Server BFF (Backend for Frontends)
+# API Server BFF (Backend for Frontend)
 ##### Experience APIs (REST/HTTP) for supporting the State of Oregon Pandemic Unemployment Assistance clients
 
 #### Getting Started:

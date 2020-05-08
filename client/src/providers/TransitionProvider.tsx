@@ -1,4 +1,5 @@
 import React, { Context, createContext, useState } from 'react'
+import Backdrop from '../components/backdrop'
 
 interface TransitionContext {
   open?: boolean
@@ -10,14 +11,17 @@ export const TransitionContext: Context<any> = createContext({
 })
 
 export const TransitionProvider = (props: { children: any }) => {
-  const [ state, setState ] = useState(TransitionContext)
+  const [state, setState] = useState(TransitionContext)
   const value = {
     state: state,
     setState: (context: any) => setState(context)
   }
 
   return (
-    <TransitionContext.Provider value={value}>{props.children}</TransitionContext.Provider>
+    <TransitionContext.Provider value={value}>
+      <Backdrop delay={200} />
+      {props.children}
+    </TransitionContext.Provider>
   )
 }
 
