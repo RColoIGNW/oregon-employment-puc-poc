@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from 'express'
 import schema from '../interfaces/application-schema.json'
 import log from './logger'
 
-export const validateApplicationRequest: RequestHandler = async (
+export const validateApplicationRequest: RequestHandler = (
   req: Request | any,
   res: Response,
   next: NextFunction,
