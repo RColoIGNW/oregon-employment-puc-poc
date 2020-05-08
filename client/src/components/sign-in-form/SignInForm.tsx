@@ -44,13 +44,13 @@ export default function SignIn(props: SignInFormProps) {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{marginTop: '-4em'}}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography color={'primary'} component="h1" variant="h5">
           Sign in
         </Typography>
         <TextField

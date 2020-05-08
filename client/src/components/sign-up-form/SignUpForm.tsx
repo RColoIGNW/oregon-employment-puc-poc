@@ -49,7 +49,7 @@ export default function SignUp(props: SignUpFormProps) {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography color={'primary'} component="h1" variant="h5">
           Sign up
         </Typography>
         <Grid container spacing={2} style={{marginTop: '1em'}}>
