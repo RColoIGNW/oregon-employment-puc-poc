@@ -3,8 +3,10 @@ import { useContext, useState } from 'react'
 
 import firebase from '../lib/firebase'
 import { SnackBarContext } from '../providers/SnackbarProvider'
+import { TransitionContext } from '../providers/TransitionProvider';
 
 export default () => {
+  const transition = useContext(TransitionContext)
   const snackbar = useContext(SnackBarContext)
   const [state, setState] = useState({
     email: '',
@@ -23,12 +25,13 @@ export default () => {
   }
 
   const handleSubmit = () => {
-    firebase.auth().signInWithEmailAndPassword(state.email, state.password)
-    .then(() => navigate('/dashboard'))
-    .catch((error: any) => {
-      const errorMessage = error.message;
-      snackbar.showFeedback({message: errorMessage, severity: 'error'})
-    });
+    // firebase.auth().signInWithEmailAndPassword(state.email, state.password)
+    // .then(() => navigate('/dashboard'))
+    // .catch((error: any) => {
+    //   const errorMessage = error.message;
+    //   snackbar.showFeedback({message: errorMessage, severity: 'error'})
+    // });
+    transition.setState({ open: true, message: 'whaterver'})
   }
 
   return {

@@ -43,7 +43,7 @@ export default function SignUp(props: SignUpFormProps) {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{marginTop: '-4em'}}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

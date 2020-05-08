@@ -2,6 +2,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
+import { Location, LocationProps } from "@reach/router"
 import React, { ReactNode } from "react"
 import { Helmet } from 'react-helmet'
 
@@ -23,9 +24,13 @@ const WrapRootElement:React.FC<{ element: ReactNode }> = ({element}) => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AuthProvider>
-        <TransitionProvider>
+        <Location>
+        {(location: LocationProps) => (
+          <TransitionProvider location={location}>
           {element}
         </TransitionProvider>
+        )}
+        </Location>
       </AuthProvider>
       <Toast />
     </ThemeProvider>
