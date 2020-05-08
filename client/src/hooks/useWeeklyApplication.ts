@@ -2,7 +2,6 @@ import { navigate } from "gatsby"
 import { useContext, useEffect, useState } from "react"
 
 import { steps } from '../components/weekly-form/WeeklyForm'
-import ApplicationModel from '../models/Application'
 import weeklyQuestions from "../models/weeklyQuestions"
 import { SnackBarContext } from "../providers/SnackbarProvider"
 import storage from '../util/storage'
@@ -13,12 +12,14 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   const [activeStep, setActiveStep] = useState(parseInt(storage.load('weeklyActiveStep')) || 0)
   const snackbar = useContext(SnackBarContext)
   const defaultValue = {
+    failedToAcceptOffer: null,
+    quitJob: null,
+    firedOrSuspended: null,
     ableToWork: null,
     awayFromResidence: null,
-    seekedEmployment: null,
     veteran: null,
     temporaryUnemployment: null,
-    employmentHistory: [],
+    workSearchHistory: [],
     applicationId: props?.applicationId || ''
   }
   const [application, setApplication] = useState(storage.load('weekly-application') || defaultValue)
@@ -46,12 +47,7 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     }
   }
 
-  useEffect(() => {
-    load()
-    return () => {
-      resetState()
-    }
-  }, [application?.applicationId])
+
 
   useEffect(() => {
     return () => {
@@ -81,6 +77,7 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   const handleSubmit = async () => {
     try {
       //TODO: Show Progress
+
       await submit(application)
       navigate('confirm',  { state: { applicationId: application.applicationId }})
     } catch (e) {
@@ -113,12 +110,12 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
 
   const handleChange = (weeklyApplication: weeklyQuestions) => {
     localSave({...weeklyApplication})
-    // setApplication({...weeklyApplication as any}) // debounce to fix lag
+    setApplication({...weeklyApplication}) // debounce to fix lag
   }
 
-  const handleEmploymentChange = (employmentRecords: ApplicationModel) => {
-    localSave({...application, employmentHistory: employmentRecords.employmentRecords})
-    setApplication({...application, employmentHistory: employmentRecords.employmentRecords as any})
+  const handleWorkSearchChange = (applicant: weeklyQuestions) => {
+    localSave({...applicant, workSearchRecords: applicant.workSearchRecords})
+    setApplication({...applicant, workSearchRecords: applicant.workSearchRecords})
   }
 
   const save = async (application: Partial<weeklyQuestions>): Promise<string> => {
@@ -144,7 +141,7 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   return {
     application,
     handleChange,
-    handleEmploymentChange,
+    handleWorkSearchChange,
     load,
     save,
     submit,
@@ -154,5 +151,6 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     handleSave,
     activeStep,
     setActiveStep: saveActiveStep,
+    localSave
   }
 }
