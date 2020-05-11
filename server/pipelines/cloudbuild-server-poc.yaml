@@ -25,13 +25,13 @@ steps:
 #    entrypoint: "bash"
 #    args: [ '-c', 'ls -la']
 
-  # build container
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', './server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA', '.']
-
   # build test container and run test
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', './server/docker/Test.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server-test:$COMMIT_SHA', '.']
+
+  # build container
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', './server/docker/Server.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-server:$COMMIT_SHA', '.']
 
   # push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'

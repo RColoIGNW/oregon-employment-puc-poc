@@ -108,8 +108,9 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
 
   const create = async () => {
     try {
-      const application = await api.createApplication()
-      setApplication(application)
+      const userId: any = localStorage.getItem('uid')
+      const { applicationId: id } = await api.createApplication()
+      setApplication({ ...application, id, userId } as Application)
     } catch (e) {
       snackbar.showFeedback({ message: 'Failed to create a new application', severity: 'error' })
     }
