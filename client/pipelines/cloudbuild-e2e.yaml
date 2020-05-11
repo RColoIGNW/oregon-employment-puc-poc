@@ -61,7 +61,7 @@ steps:
       - GATSBY_IS_STATIC_PREVIEW=true
       - GATSBY_SITE_DOMAIN=https://$PROJECT_ID.web.app/
       - _FIREBASE_TOKEN=$_FIREBASE_TOKEN
-  - name: node:12.16.2
+  - name: cypress/base:12
     dir: 'client'
     entrypoint: npm
     args: ['run', 'test:ci']
