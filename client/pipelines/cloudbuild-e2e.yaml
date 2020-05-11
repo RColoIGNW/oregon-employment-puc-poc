@@ -21,7 +21,7 @@ steps:
   - name: node:12.16.2
     dir: 'client'
     entrypoint: npm
-    args: ['install']
+    args: ['ci']
   - name: 'ubuntu'
     id: Install Cypress Dependencies
     args: [
