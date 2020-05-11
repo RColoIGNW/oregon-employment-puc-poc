@@ -22,9 +22,22 @@ steps:
     dir: 'client'
     entrypoint: npm
     args: ['ci']
-  # - name: 'ubuntu'
-  #   id: Install Cypress Dependencies
-  #   args: [
+  - name: 'ubuntu'
+    id: Install Cypress Dependencies
+    args: [
+      'apt-get',
+      'install',
+      'libgtk2.0-0',
+      'libgtk-3-0',
+      'libnotify-dev',
+      'libgconf-2-4',
+      'libnss3',
+      'libxss1',
+      'libasound2',
+      'libxtst6',
+      'xauth',
+      'xvfb'
+
   #     'apt-get',
   #     'install',
   #     'xvfb',
@@ -34,7 +47,7 @@ steps:
   #     'libnss3',
   #     'libxss1',
   #     'libasound2',
-  #   ]
+    ]
   # - name: node:12.16.2
   #   dir: 'client'
   #   entrypoint: npm
