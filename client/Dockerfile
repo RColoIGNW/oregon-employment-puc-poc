@@ -22,7 +22,7 @@ WORKDIR /app
 
 # dependencies will be installed only if the package files change
 RUN ls -la
-COPY . .
+COPY ./client .
 RUN ls -la
 # COPY package.json .
 # COPY package-lock.json .
