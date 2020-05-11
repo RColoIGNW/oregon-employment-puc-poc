@@ -1,10 +1,10 @@
-import Application from '../models/Application'
 import { request } from '../util/request'
 import weeklyQuestions from "../models/weeklyQuestions"
 
 export default () => {
   const saveApplication = async (application: Partial<weeklyQuestions>): Promise<string> => {
-    let applicationId: string =  application.id || ''
+    let applicationId: string =  application.applicationId || ''
+
     if (applicationId) {
       await updateApplication(application)
     } else {
@@ -43,7 +43,7 @@ export default () => {
       body: JSON.stringify(application),
       redirect: 'follow',
     }
-    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.id}`, requestOptions as any)
+    return request(`${process.env.REACT_APP_API_HOST}/api/weekly-applications/${application.applicationId}`, requestOptions as any)
       .catch(console.error)
   }
 
