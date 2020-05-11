@@ -31,6 +31,7 @@ ENV CI=1
 RUN npm ci
 
 # BUILD PRODUCTION BUNDLE
+COPY src ./src
 RUN npm run build
 
 # tests will rerun if the "cypress" folder, "cypress.json" file or "public" folder
