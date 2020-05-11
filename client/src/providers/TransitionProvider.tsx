@@ -1,5 +1,4 @@
 import React, { Context, createContext, useState } from 'react'
-
 interface TransitionContext {
   open?: boolean
   message?: string

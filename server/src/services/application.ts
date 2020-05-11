@@ -131,15 +131,15 @@ export enum ApplicationStatus {
 
 const createDocument = async (collectionName: string, subCollectionName: string, req: Request, res: Response) => {
   try {
+    const date = fbAdmin.firestore.Timestamp.now()
     const requestBody: Partial<ApplicationSchema> = { 
       ...req.body, 
-      lastModified: fbAdmin.firestore.Timestamp.now(),
+      lastModified: date,
       status: ApplicationStatus.IN_PROGRESS,
-      dateCreated: fbAdmin.firestore.Timestamp.now(),
-    }
-    const countRef = db.collection(collectionName).doc(subCollectionName)
+      dateCreated: date,
+    }    
+    const countRef = db.collection(`${collectionName}-count`).doc(subCollectionName)
     const applicationRef = db.collection(collectionName).doc()
-
 
     await db
       .runTransaction(async (t) => {
