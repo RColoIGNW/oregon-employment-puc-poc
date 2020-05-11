@@ -31,17 +31,12 @@ ENV CI=1
 RUN npm ci
 
 # BUILD PRODUCTION BUNDLE
-COPY src ./src
+COPY . .
 RUN npm run build
 
 # tests will rerun if the "cypress" folder, "cypress.json" file or "public" folder
 # has any changes
 # copy tests
-COPY cypress cypress
-COPY cypress.json .
-
-# copy what to test
-COPY public public
 RUN ls -la
 RUN ls -la public
 
