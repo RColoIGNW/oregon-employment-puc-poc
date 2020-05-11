@@ -1,13 +1,14 @@
-# build container and run cypress e2e test
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'build',
-    '-f', './client/Dockerfile',
-    '-t', 'gcr.io/$PROJECT_ID/oed-poc-client-e2e:$COMMIT_SHA', '.',
-    '--env-file', './client/.env.production',
-    '-env',
-      '_FIREBASE_TOKEN=$_FIREBASE_TOKEN',
-      'GATSBY_SITE_DOMAIN=https://$PROJECT_ID.web.app/',
-      'REACT_APP_AUTH_DOMAIN=pge-$PROJECT_ID.firebaseapp.com',
-      'NO_PROXY=localhost'
-  ]
+steps:
+  # build container and run cypress e2e test
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-f', './client/Dockerfile',
+      '-t', 'gcr.io/$PROJECT_ID/oed-poc-client-e2e:$COMMIT_SHA', '.',
+      '--env-file', './client/.env.production',
+      '-env',
+        '_FIREBASE_TOKEN=$_FIREBASE_TOKEN',
+        'GATSBY_SITE_DOMAIN=https://$PROJECT_ID.web.app/',
+        'REACT_APP_AUTH_DOMAIN=pge-$PROJECT_ID.firebaseapp.com',
+        'NO_PROXY=localhost'
+    ]
