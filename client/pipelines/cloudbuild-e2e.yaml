@@ -2,7 +2,7 @@ steps:
   - name: node:12.16.2
     dir: 'client'
     entrypoint: npm
-    args: ['install']
+    args: ['ci']
 
   # build container and run cypress e2e test
   - name: 'gcr.io/cloud-builders/docker'
@@ -15,7 +15,7 @@ steps:
         '_FIREBASE_TOKEN=$_FIREBASE_TOKEN',
         'GATSBY_SITE_DOMAIN=https://$PROJECT_ID.web.app/',
         'REACT_APP_AUTH_DOMAIN=pge-$PROJECT_ID.firebaseapp.com',
-
+        'NO_PROXY=localhost'
     ]
 
   # - name: node:12.16.2
