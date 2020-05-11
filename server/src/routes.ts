@@ -45,8 +45,8 @@ export const routes = (router: Router) => {
   //   .put(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
   router
     .route('/applications/:id')
-    // .patch(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
-    .patch(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
+    .patch(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
+    //.patch(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
     
 
   router
