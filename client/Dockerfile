@@ -22,7 +22,7 @@ WORKDIR /app
 
 # dependencies will be installed only if the package files change
 RUN ls -la
-COPY . .
+COPY ./client .
 
 # by setting CI environment variable we switch the Cypress install messages
 # to small "started / finished" and avoid 1000s of lines of progress messages
