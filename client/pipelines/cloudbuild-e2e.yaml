@@ -1,11 +1,7 @@
 steps:
   # build container and run cypress e2e test
   - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'build',
-      '-f', './client/Dockerfile',
-      '-t', 'gcr.io/$PROJECT_ID/oed-poc-client-e2e:$COMMIT_SHA', '.'
-    ],
+    args: ['build', '-f', './client/Dockerfile', '-t', 'gcr.io/$PROJECT_ID/oed-poc-client-e2e:$COMMIT_SHA', '.']
      env:
       - NODE_ENV=production
       - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
