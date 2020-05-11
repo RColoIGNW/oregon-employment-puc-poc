@@ -6,7 +6,7 @@ steps:
   - name: node:12.16.2
     dir: 'client'
     entrypoint: npm
-    args: ['test:ci']
+    args: ['run', 'test:ci']
     env:
       - NODE_ENV=development
       - REACT_APP_MAPS_API_KEY=AIzaSyCu6lN42dUBn7sToanhY6PnhZpjijWa2-0
