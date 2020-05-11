@@ -135,6 +135,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+import { AlertProps } from '../components/alerts/Alerts'
+
+
 const ClaimsStatusPage = () => {
   const classes = useStyles()
   const apiClient = useApplicantFormApi()
@@ -143,12 +146,13 @@ const ClaimsStatusPage = () => {
   const [filterList, setFilterList] = useState<Application[]>([])
   const { downloadApplication, discardApplication } = useClaimStatus()
   const [selectedList, setSelectedList] = useState<string[]>([])
+  const [alert, setAlert] = useState<AlertProps>()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   
   //#region Actions
   const handleEdit = (applicationId: string) => {
-    navigate('application', { state: { applicationId } })
+    navigate('application', { state: { applicationId } })  
   }
 
   const handleDiscard = (applicationId: string) => {    
@@ -182,8 +186,14 @@ const ClaimsStatusPage = () => {
   //#region Effects 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await apiClient.getUserApplications()
-      setData(data)
+      try {
+        const data = await apiClient.getUserApplications()
+        setData(data)
+        if (!data?.length)
+          setAlert({ message: 'You have not yet submitted any claims', title: 'Claim Status' })
+      } catch (err) {
+        setAlert({ message: 'There was an error loading your claims', title: 'Claim Status', severity: 'error' })
+      }
     }
     fetchData()
   }, [])
@@ -201,13 +211,11 @@ const ClaimsStatusPage = () => {
       console.log(selectedList)
     } 
   }, [searchText])
-
  //#endregion
-  
-  if (!data) return (<div>Loading...</div>)
 
   return (
-    <Layout alert={!data.length && { message:'You have not yet submitted any claims', title: 'Claim Status' }}>
+    // <Layout alert={!data?.length && { message:'You have not yet submitted any claims', title: 'Claim Status' }}>
+    <Layout>
       <SEO title={'Claim Status'} />  
       {
         isMobile &&  
