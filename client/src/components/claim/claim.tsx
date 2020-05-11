@@ -1,139 +1,144 @@
-import React, { useState } from 'react'
+import React from 'react'
 import moment from 'moment'
 
 import { 
-  Card, 
-  CardContent, 
   Grid, 
   Typography,
-  IconButton,
-  Menu,
-  MenuItem,
-  Link
+  Link,
+  Fade,
+  Avatar,
+  Paper,
+  useMediaQuery,
+  useTheme,
+  makeStyles,
+  createStyles,
+  Theme,
 } from '@material-ui/core'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import ConfirmDialog from '../confirm-dialog/ConfirmDialog'
+import CheckIcon from '@material-ui/icons/Check'
+import ListAltIcon from '@material-ui/icons/ListAlt'
+import ClaimActions from '../claim-actions/ClaimActions'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    claimBox: {
+      padding: theme.spacing(1, 1),
+      position: 'relative', 
+      margin: theme.spacing(1,1)
+    },
+    pua: {
+      background: theme.palette.primary.dark,
+      color: 'white'
+    } 
+  }),
+)
 
 export interface ClaimProps {
   claimId: string
-  claimDate?: Date //Receive last modify date or submitted date
+  claimDate?: Date //Receive last modified date or submitted date
   claimStatus?: string  
+  isSelected?: boolean
   disableEdit?: boolean
   disableDownload?: boolean
   disableDiscard?: boolean
   onEdit: (applicationId: string) => void
   onDownload: (applicationId: string) => void
   onDiscard: (applicationId: string) => void
+  onChangeSelect: (applicationId: string, isSelected: boolean) => void
 }
 
 const Claim = (props: ClaimProps) => {  
+  const classes = useStyles()
   const { claimId, claimDate, claimStatus } = props
-  const [openConfirm, setOpenConfirm] = useState<boolean>(false)
+  const [showActions, setShowActions] = React.useState(false)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   //#region Actions
   const handleEdit = () => {
     props.onEdit && props.onEdit(claimId)
-    handleCloseMenu()
   }
 
   const handleDownload = () => {
     props.onDownload && props.onDownload(claimId)
-    handleCloseMenu()
   }
 
   const handleDiscard = () => {
-    setOpenConfirm(true)    
-    handleCloseMenu()
-  }
-
-  const handleConfirmDiscard = () => {
     props.onDiscard && props.onDiscard(claimId)
-    setOpenConfirm(false)
-    
   }
-
-  const handleCancelDiscard = () => {
-    setOpenConfirm(false)    
-  }
-  //#endregion
-
-  //#region Menu
-  const menuActions = [
-    {
-      text: 'Edit',
-      onClick: handleEdit,
-      isDisabled: props.disableEdit || false
-    },
-    {
-      text: 'Discard',
-      onClick: handleDiscard,
-      isDisabled: props.disableDiscard || false
-
-    },
-    {
-      text: 'Download',
-      onClick: handleDownload,
-      isDisabled: props.disableDownload || false
+  
+  const handleChangeSelection = () => {    
+    if (isMobile){    
+      props.onChangeSelect && props.onChangeSelect(claimId, !props.isSelected)
     }
-  ]
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {    
-    setAnchorEl(event.currentTarget)
-  }
-  const handleCloseMenu = () => {
-    setAnchorEl(null)
-  }
+  }  
   //#endregion
   
   return (
     <>
-    <Card>
-      <CardContent>                
-        <Grid container justify="space-between" style={{ flexWrap: "nowrap" }}>
-          <Grid item>
-            <Grid container spacing={1} alignItems="center">
-              <Grid item xs={12}>
-                <Typography variant="body1" color="primary" style={{ fontWeight: 'bold' }}>
-                  <Link component={'button'} onClick={handleEdit}>
-                    {claimId}
-                  </Link>
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">{claimDate && moment(claimDate).format('MMM D, YYYY')}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body2" color="secondary" style={{ fontWeight: 'bold' }}>
-                  {claimStatus}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <IconButton 
-              aria-label="menu" 
-              aria-controls="claim-menu" 
-              aria-haspopup="true" 
-              onClick={handleOpenMenu}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
-    <ConfirmDialog open={openConfirm} onConfirm={handleConfirmDiscard} onCancel={handleCancelDiscard}/>
-    <Menu
-      id={'claim-menu'}
-      anchorEl={anchorEl}
-      keepMounted
-      open={Boolean(anchorEl)}
-      onClose={handleCloseMenu}
+    <Paper className={classes.claimBox} 
+      onMouseEnter={() => setShowActions(true)}
+      onMouseLeave={() => setShowActions(false)}
     >
-      {menuActions.map((action, index) => (
-        <MenuItem key={index} onClick={action.onClick} disabled={action.isDisabled}>{action.text}</MenuItem>
-      ))}
-    </Menu>
+      {
+        !isMobile && 
+        <Fade in={showActions} timeout={{ enter: 300, exit: 800 }}>               
+          <div                                 
+            style={
+              {
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'top',
+                justifyContent: 'flex-end',                                
+                zIndex: 2,                  
+                position: 'absolute',
+                right: 0,  
+                bottom: 0,      
+              }
+            }
+          >
+            <ClaimActions
+              onEdit={handleEdit}
+              onDownload={handleDownload}
+              onDiscard={handleDiscard}
+            />
+          </div>
+        </Fade>
+      }
+        
+        <Grid container 
+          direction={'row'} 
+          alignItems={'center'}
+          style={{ flexWrap: "nowrap" }} 
+          spacing={1}>
+          <Grid item>
+            <Avatar onClick={handleChangeSelection} className={classes.pua}>
+              {/* TODO: Put icon peer application type  */}
+              { (isMobile && props.isSelected) ? <CheckIcon/> : <ListAltIcon/> }
+            </Avatar>
+          </Grid>
+          <Grid item>
+            <Grid container direction={'column'}>
+              <Grid item>
+                <Link component={'button'} onClick={handleEdit}>
+                  <Typography variant={'body1'} color="primary" style={{ fontWeight: 'bold' }}>
+                    {claimId}
+                  </Typography>    
+                </Link>
+              </Grid>       
+              <Grid item>
+                <Typography variant="body2" color="secondary" style={{ fontWeight: 'bold' }}>
+                  {claimStatus || 'undefined'} 
+                </Typography>
+              </Grid>                
+              <Grid item>
+                <Typography variant="body1">
+                  {claimDate && moment(claimDate).format('MMM D, YYYY HH:mm')}
+                </Typography>
+              </Grid>              
+            </Grid>
+          </Grid>   
+        </Grid>
+    </Paper>
     </>
   )
 }

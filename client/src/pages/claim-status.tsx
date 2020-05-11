@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { navigate } from 'gatsby'
-import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 
 import { Layout } from '../components/layout'
@@ -8,39 +7,179 @@ import { SEO } from '../components/seo'
 import useApplicantFormApi from '../hooks/useApplicantFormApi'
 import useClaimStatus from '../hooks/useClaimStatus'
 import Application from '../models/Application'
-import { InputAdornment, TextField } from '@material-ui/core'
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import { InputAdornment, TextField, Checkbox, FormControlLabel, Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles, Button, Toolbar, FormControl, Input } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
+import SearchIcon from '@material-ui/icons/Search'
+import CloseIcon from '@material-ui/icons/Close'
 import Claim from '../components/claim/claim'
+import ClaimActions from '../components/claim-actions/ClaimActions'
 
 
-const GoBackToDashboard = () => (
-  <Grid item style={{flexDirection:'row', width: '100%', display: 'flex', justifyContent: 'center'}}>
-    <Button variant={'contained'} color={'primary'} onClick={() => navigate('/dashboard')}>{`Go to Dashboard`}</Button>
-  </Grid>
-)
+interface MainToolBarProps {
+  onSearch: (text: string) => void
+  onCreate: () => void
+}
+const MainToolBar = (props: MainToolBarProps) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [searchText, setSearchText] = useState('')
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value)
+  }
+
+  const handleClearSearch = () => {
+    setSearchText('')
+  }
+  
+  const handleCreate = () => {
+    props.onCreate && props.onCreate()
+  }
+
+  useEffect(() => {
+    props.onSearch && props.onSearch(searchText)
+  }, [searchText])
+
+  return (
+    <Grid container direction={'row'} alignItems={'center'} justify={'space-between'}>
+      <Grid item xs={12} md={6} lg={8}>
+      <FormControl fullWidth>
+        <Input
+          id="search-textfield"
+          placeholder={'Search'} 
+          value={searchText}         
+          onChange={handleSearch}
+          startAdornment= {
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
+          endAdornment= {
+            searchText.length > 0 &&
+            <InputAdornment position="start">
+              <CloseIcon onClick={handleClearSearch}/>
+            </InputAdornment>
+          }
+        />
+        </FormControl>       
+      </Grid>
+      {
+        !isMobile &&
+        <Grid item>
+          <Button 
+            variant="outlined" 
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={handleCreate}
+          >
+            {'New Application'}
+          </Button>
+        </Grid>
+      }
+    </Grid>
+    
+  )
+}
+interface SelectedToolBarProps {
+  selectedAmount: number
+  onClearSelecttion: () => void
+  onSearch?: (text: string) => void
+  onDiscard?: () => void
+  onEdit?: () => void
+  onDownload?: () => void
+}
+const SelectedToolBar = (props: SelectedToolBarProps) => {
+  const [checked, setChecked] = React.useState(true);
+
+  const handleClearSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked)
+    props.onClearSelecttion && props.onClearSelecttion()
+  }
+  return (
+    <Grid container direction={'row'} justify={'space-between'} alignItems={'center'} spacing={1}>
+      <Grid item>
+        <FormControlLabel
+          control={
+            <Checkbox 
+              checked={checked} 
+              onChange={handleClearSelection} 
+              name="selectedApplications" 
+              color={'primary'}
+            />          
+          }
+          label={props.selectedAmount}
+        />
+      </Grid>
+      <Grid item>
+        <ClaimActions />
+      </Grid>
+    </Grid>
+  )
+}
+
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    toolbar: {
+      // background: theme.palette.primary.main,
+      padding: theme.spacing(2,2),
+      //borderBottom: '1px solid',
+      //borderBottomColor: theme.palette.primary.main
+    },
+    createAction: {
+      position: 'fixed', 
+      bottom: theme.spacing(1),
+      right: theme.spacing(1),
+      zIndex: 100
+    },  
+  }),
+);
 
 const ClaimsStatusPage = () => {
+  const classes = useStyles()
   const apiClient = useApplicantFormApi()
   const [data, setData] = useState<Application[]>()
   const [searchText, setSearchText] = useState<string>('')
   const [filterList, setFilterList] = useState<Application[]>([])
   const { downloadApplication, discardApplication } = useClaimStatus()
+  const [selectedList, setSelectedList] = useState<string[]>([])
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   
-
+  //#region Actions
   const handleEdit = (applicationId: string) => {
     navigate('application', { state: { applicationId } })
   }
 
-  const handleDiscard = (applicationId: string) => {
+  const handleDiscard = (applicationId: string) => {    
     discardApplication(applicationId)
+    // TODO: Update list
   }
 
   const handleDownload = async (applicationId: string) => {
     await downloadApplication(applicationId)
   }
 
-  
+  const handleSelect = async (applicationId: string, isSelected: boolean) => {
+    console.log(selectedList)
+    if (isSelected){
+      setSelectedList(previousState => [...previousState, applicationId])
+    } else {
+      setSelectedList(previousState => previousState.filter(a => a !== applicationId))
+    }
+  }
 
+  const handleClearSelection = () => {
+    setSelectedList([])
+  }
+
+  const handleCreate = () => {
+    navigate('application')
+  }
+
+  //#endregion
+
+  //#region Effects 
   useEffect(() => {
     const fetchData = async () => {
       const data = await apiClient.getUserApplications()
@@ -51,66 +190,65 @@ const ClaimsStatusPage = () => {
 
   useEffect(() => {
     data && setFilterList(data)
-  }, [data])
-
-  const handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(`searching ${event.target.value}`)
-    setSearchText(event.target.value)
-  }
+  }, [data])  
 
   useEffect(() => {    
     if (data && filterList){
       const results = data.filter(application =>
         application.id.includes(searchText) || application.status?.includes(searchText)
       )      
-      setFilterList(results);
+      setFilterList(results)
+      console.log(selectedList)
     } 
   }, [searchText])
 
+ //#endregion
   
-
-  
-
   if (!data) return (<div>Loading...</div>)
 
   return (
     <Layout alert={!data.length && { message:'You have not yet submitted any claims', title: 'Claim Status' }}>
-      <SEO title={'Claim Status'} />
-      <Grid container direction={'column'} spacing={2} style={{ marginTop: '1em' }} >
-        <Grid item>
-          <TextField            
-            id="search-textfield"
-            label="Search"
-            variant="outlined"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            }}
-            onChange={handleSearchTextChange}
-          />
+      <SEO title={'Claim Status'} />  
+      {
+        isMobile &&  
+        <Fab 
+          color="primary" 
+          aria-label="add" 
+          className={classes.createAction}          
+          onClick={handleCreate}
+        >
+          <AddIcon />
+        </Fab>  
+      }
+      <Grid container direction={'column'} spacing={2} style={{ marginTop: '1em' }}>
+        <Grid item>     
+          <Toolbar>
+          {
+            (isMobile && selectedList.length > 0)
+            ? <SelectedToolBar  selectedAmount={selectedList.length} onClearSelecttion={handleClearSelection} />
+            : <MainToolBar onSearch={setSearchText} onCreate={handleCreate}/>
+          }
+          </Toolbar>
         </Grid>
         <Grid item>
-          <Grid container direction="row" spacing={1} style={{ marginTop: '1em' }}>
-          {!filterList.length ? <GoBackToDashboard /> : filterList.map((application: Application, index: number) =>
-            <Grid item xs={12} sm={7} md={6} lg={4} key={index}>
-              <Claim 
-                claimId={application.id} 
-                claimDate={application.submitted || application.lastModified || new Date()} 
-                claimStatus={application.status}
-                onDownload={handleDownload}
-                onDiscard={handleDiscard}
-                onEdit={handleEdit}
-              />
-            </Grid>
-          )}
-        </Grid>
-          
-        </Grid>
+          <Grid container direction="row" spacing={1} style={{ marginTop: '1em' }} >
+            { filterList.map((application: Application, index: number) =>
+              <Grid item key={index} lg={4} md={4} sm={6} xs={12}>
+                <Claim 
+                  claimId={application.id}                   
+                  claimDate={application.submitted || application.lastModified || new Date()} 
+                  claimStatus={application.status}
+                  isSelected={selectedList.findIndex(a => application.id === a) !== -1}
+                  onDownload={handleDownload}
+                  onDiscard={handleDiscard}
+                  onEdit={handleEdit}
+                  onChangeSelect={handleSelect}
+                />
+              </Grid>
+            )}
+          </Grid>
+        </Grid>          
       </Grid>
-      
     </Layout>
   )
 }
