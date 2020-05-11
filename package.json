@@ -1,9 +1,9 @@
 {
-  "name": "@pregon-state/oed-pua-claim-poc",
+  "name": "@oregon-state/pua-poc",
   "workspaces": [
     "packages/*",
-    "oed-client",
-    "oed-server"
+    "client",
+    "server"
   ],
   "devDependencies": {
     "@types/styled-components": "^5.1.0",
@@ -14,7 +14,10 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "start": "lerna run start",
-    "bootstrap": "lerna bootstrap"
-  }
+    "start": "lerna run start --stream",
+    "bootstrap": "lerna bootstrap",
+    "test": "lerna run test --stream",
+    "test:server": "cd ./server && npm run test"
+  },
+  "dependencies": {}
 }
