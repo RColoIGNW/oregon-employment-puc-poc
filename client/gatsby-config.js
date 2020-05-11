@@ -35,6 +35,8 @@ module.exports = {
       options: {
         stylesProvider: {
           injectFirst: true,
+          disableAutoprefixing: false,
+          disableMinification: false,
         },
       },
     },
