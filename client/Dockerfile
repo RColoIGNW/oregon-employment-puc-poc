@@ -21,8 +21,11 @@ FROM cypress/base:10 as TEST
 WORKDIR /app
 
 # dependencies will be installed only if the package files change
-COPY package.json .
-COPY package-lock.json .
+RUN ls -la
+COPY . .
+RUN ls -la
+# COPY package.json .
+# COPY package-lock.json .
 
 # by setting CI environment variable we switch the Cypress install messages
 # to small "started / finished" and avoid 1000s of lines of progress messages
@@ -31,7 +34,6 @@ ENV CI=1
 RUN npm ci
 
 # BUILD PRODUCTION BUNDLE
-COPY . .
 RUN npm run build
 
 # tests will rerun if the "cypress" folder, "cypress.json" file or "public" folder
@@ -46,15 +48,6 @@ RUN ls -la public
 
 # FROM node:12.16.2-alpine3.11
 RUN npm run test:ci
-
-# to avoid Docker thinking it is the same command and skipping tests
-# have a dummy command here
-# see discussion in https://github.com/moby/moby/issues/1996
-# find variable that changes. For example on Zeit.co Now GitHub deploys the HOSTNAME changes
-# RUN env
-# ARG HOSTNAME=1
-# if you run "docker build . --build-arg HOSTNAME=foo"
-# it will bust this cache and it will rerun all commands from here
 
 # show the size of the current folder so we know
 RUN ls -la
