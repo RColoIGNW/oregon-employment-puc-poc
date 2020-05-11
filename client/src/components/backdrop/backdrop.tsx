@@ -20,10 +20,10 @@ export default () => {
   const { state } = useContext(TransitionContext)
 
   return (
-    <Fade in={state.open} style={{ transitionDelay: state.open ? '500ms' : '0ms' }} unmountOnExit>
+    <Fade in={state?.open} style={{ transitionDelay: state?.open ? '500ms' : '0ms' }} unmountOnExit>
       <Backdrop className={classes.backdrop} open={true}>
         <CircularProgress color="inherit" />
-        {state.message}
+        {state?.message}
       </Backdrop>
     </Fade>
   )
