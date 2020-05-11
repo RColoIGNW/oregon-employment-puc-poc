@@ -4,7 +4,7 @@ steps:
     args: [
       'build',
       '-f', './client/docker/unit.Dockerfile',
-      '-t', 'gcr.io/$PROJECT_ID/oed-poc-client-test:$COMMIT_SHA', '.',
+      '-t', 'gcr.io/$PROJECT_ID/oed-poc-client-test:$COMMIT_SHA', '.'
     ],
     env:
       - NODE_ENV=production
