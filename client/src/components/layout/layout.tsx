@@ -19,7 +19,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { AuthContext } from '../../providers/AuthProvider'
 import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
-import { CSSDebugger } from "../css-debugger"
+import { CSSDebugger } from '../css-debugger'
+import Backdrop from '../backdrop'
 
 const drawerWidth = 240;
 
@@ -151,6 +152,7 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
         {showDebugger &&
           <CSSDebugger />
         }
+        <Backdrop />
         <Toolbar />
         {!!alert &&
           <Grid item style={{

@@ -67,8 +67,6 @@ const ClaimsStatusPage = () => {
           setAlert({ message: 'You have not yet submitted any claims', title: 'Claim Status' })
       } catch (err) {
         setAlert({ message: 'There was an error loading your claims', title: 'Claim Status', severity: 'error' })
-      } finally {
-        
       }
     }
     fetchData()
@@ -124,7 +122,8 @@ const ClaimsStatusPage = () => {
               </CardContent>
             </Card>
           </Grid>
-        )}
+        )
+        }
       </Grid>
       <Menu
         id="app-menu"
