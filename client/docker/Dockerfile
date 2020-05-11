@@ -1,4 +1,4 @@
-FROM node:10.19.0-alpine3.11
+FROM node:12.16.2-alpine3.11
 WORKDIR /app
-COPY . .
+COPY ./client .
 RUN npm i

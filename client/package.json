@@ -31,7 +31,7 @@
     "plop:component": "plop --plopfile ./node_modules/ignw-component-generator/plopfile.ts",
     "cy:open": "cypress open",
     "test:cy": "cypress run",
-    "test:ci": "npm start & http://localhost:4000 & wait-on & wait-on http://localhost:8000 && npm run test:cy"
+    "test:ci": "NODE_ENV=production wait-on & wait-on http://localhost:8000 && npm run test:cy"
   },
   "dependencies": {
     "@date-io/moment": "^1.3.13",
