@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import React from 'react'
 
-import WorkSearchRecordEdit from "./WorkSearchRecordEdit"
+import WorkSeekingRecordEdit from "./WorkSeekingRecordEdit"
 
 describe('Work Search Record Edit', () => {
   it('should render the Work Search Record Edit component', () => {
@@ -13,15 +13,15 @@ describe('Work Search Record Edit', () => {
         contactMethod: 'string',
         typeOfWorkSought: 'string',
         result: 'string',
-        unionMember: true,
-        tempLayoff: true,
+        type: "searching",
+        activity: '',
       },
       open: true,
     }
     const {
       container,
       // debug,
-    } = render(<WorkSearchRecordEdit {...props}/>)
+    } = render(<WorkSeekingRecordEdit {...props}/>)
     // debug()
     expect(container).toBeTruthy()
   })

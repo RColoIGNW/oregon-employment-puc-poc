@@ -1,5 +1,5 @@
 export default interface EmploymentRecord {
-  type: 'searching' | 'seeking',
+  type: "searching" | "seeking",
   id?: number,
   employer?: string | null,
   date: Date,
