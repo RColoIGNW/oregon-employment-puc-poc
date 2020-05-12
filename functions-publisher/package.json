@@ -10,7 +10,7 @@
     "functions": "functions/src/"
   },
   "files": [
-    "lib"
+    "functions"
   ],
   "repository": {
     "type": "git",

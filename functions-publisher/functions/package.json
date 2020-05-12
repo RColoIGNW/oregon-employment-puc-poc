@@ -12,6 +12,7 @@
   "engines": {
     "node": "10"
   },
+  "main": "dist/index.js",
   "dependencies": {
     "@google-cloud/pubsub": "^1.7.3",
     "firebase-admin": "^8.10.0",
