@@ -3,9 +3,12 @@
 /// <reference types="Cypress" />const clear = Cypress.LocalStorage.clear
 
 describe('New Application Page Smoke/E2E Testing', () => {
-  // afterAll(() => {
+  // after(() => {
     // cleanup applications from db
   // })
+  before(() => {
+    Cypress.LocalStorage.clear()
+  })
   beforeEach(() => {
     Cypress.LocalStorage.clear = () => undefined // persist localstorage for auth token
   })
