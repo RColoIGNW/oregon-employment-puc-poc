@@ -2,7 +2,7 @@ steps:
   - name: node:12.16.2
     dir: 'functions-publisher'
     entrypoint: npm
-    args: ['ci']
+    args: ['install']
   # - name: node:12.16.2
   #   dir: 'functions-publisher'
   #   entrypoint: npm
