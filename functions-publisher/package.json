@@ -25,6 +25,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "firebase-tools": "^8.2.0"
+    "firebase-tools": "^8.2.0",
+    "tslint": "^6.1.2",
+    "typescript": "^3.8.3"
   }
 }
