@@ -1,8 +1,3 @@
-# FROM node:12.16.2-alpine3.11
-# WORKDIR /app
-# COPY ./client .
-# RUN npm i
-
 # multi-stage Docker build with testing node_modules and Cypress binary
 # discarded before serving in production
 # https://glebbahmutov.com/blog/making-small-docker-image/
@@ -22,7 +17,19 @@ WORKDIR /app
 
 # dependencies will be installed only if the package files change
 RUN ls -la
-COPY ./client .
+COPY src ./src
+COPY package.json ./package.json
+COPY package-lock.json ./package-lock.json
+COPY cypress ./cypress
+COPY cypress.json ./cypress.json
+COPY static ./static
+COPY tsconfig.json ./tsconfig.json
+COPY gatsby-browser.js ./gatsby-browser.js
+COPY gatsby-config.js ./gatsby-config.js
+COPY gatsby-node.js ./gatsby-node.js
+COPY .env.production ./.env.production
+# COPY gatsby-ssr.js ./gatsby-ssr.js
+COPY .cache ./.cache
 
 # by setting CI environment variable we switch the Cypress install messages
 # to small "started / finished" and avoid 1000s of lines of progress messages
@@ -35,6 +42,7 @@ RUN npm run build
 
 # tests will rerun if the "cypress" folder, "cypress.json" file or "public" folder
 # has any changes
+COPY public ./public
 RUN ls -la
 RUN ls -la public
 
