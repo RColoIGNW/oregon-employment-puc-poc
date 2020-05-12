@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { navigate } from 'gatsby'
 import React from 'react'
+import { useTranslation } from "react-i18next"
 
 import Alerts from '../components/alerts'
 import { Layout } from '../components/layout'
@@ -45,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function DashboardPage() {
   const classes = useStyles()
+  const {t} = useTranslation()
   //const api = useApplicantFormApi()
 
   // const handleNewApplication = async () => {
@@ -59,21 +61,21 @@ export default function DashboardPage() {
 
   const menuItems = [
     {
-      buttonLabel: 'File your new claim',
+      buttonLabel: t('dashboard.newClaim'),
       description: 'Establish a new claim for Oregon unemployment benefits. If you are filing due to COVID- 19, please watch this training video.',
       link: '/application',
       handleClick: handleNavigate,
       e2e: 'new-claim-link'
     },
     {
-      buttonLabel: 'Claim a Week of Benefits',
+      buttonLabel: t('dashboard.weekClaim'),
       description: 'Claim a week of unemployment benefits once your claim is established. Just like claiming by phone but easier! * Please see notes below. If you completed your New Claim this week, please wait until Sunday to Claim a Week of Benefits. If you are out of work due to COVID- 19, please read the FAQs prior to claiming a week of benefits.',
       link: '/weekly-claims',
       handleClick: handleNavigate,
       e2e: 'weekly-claim-link'
     },
     {
-      buttonLabel: 'Claim Status',
+      buttonLabel: t('dashboard.claimStatus'),
       description: 'See the status of your current weekly claim report (if claimed by Internet or phone)',
       link: '/claim-status',
       handleClick: handleNavigate,
@@ -90,13 +92,13 @@ export default function DashboardPage() {
             isOpen={true}
             variant={'outlined'}
             severity={'info'}
-            message={'Have questions about filing your unemployment insurance claim and potential benefits? Please review our COVID-19 page for information, including frequently asked questions and video tutorials. If you still have questions please send a detailed message to UI Help and we will respond as soon as possible.'}
+            message={t('dashboard.alert')}
           />
         </Grid>
 
         <Grid item style={{ justifyContent: 'center', display: 'flex'}}>
           <Typography variant={'h4'} color={'primary'}>
-            Welcome to your online claim system
+            {t('dashboard.title')}
           </Typography>
         </Grid>
 
@@ -125,7 +127,7 @@ export default function DashboardPage() {
                   </Grid>
                   <Grid item style={{right: 0, display: 'flex'}}>
                     <Typography color={'primary'}>
-                      More details
+                      {t('dashboard.moreDetails')}
                     </Typography>
                   </Grid>
                 </Grid>
