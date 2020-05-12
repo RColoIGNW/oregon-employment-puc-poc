@@ -1,5 +1,5 @@
 {
-  "name": "@oregpn-state/functions-publisher",
+  "name": "@oregon-state/functions-publisher",
   "version": "1.0.0",
   "description": "Application Publisher Cloud Function",
   "author": "desmondpnw3dev <pnw3dev@gmail.com>",
@@ -10,7 +10,7 @@
     "functions": "functions/src/"
   },
   "files": [
-    "lib"
+    "functions"
   ],
   "repository": {
     "type": "git",

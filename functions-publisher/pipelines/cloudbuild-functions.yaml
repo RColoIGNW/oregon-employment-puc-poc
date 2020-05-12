@@ -1,6 +1,6 @@
 steps:
   - name: node:12.16.2
-    dir: 'functions-publisher'
+    dir: 'functions-publisher/functions'
     entrypoint: npm
     args: ['install']
   # - name: node:12.16.2
@@ -9,6 +9,6 @@ steps:
   #   args: ['test']
   #deploy functions build
   - name: node:12.16.2
-    dir: 'functions-publisher'
+    dir: 'functions-publisher/functions'
     entrypoint: npm
     args: ['run', 'deploy']
