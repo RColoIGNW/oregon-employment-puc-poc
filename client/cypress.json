@@ -1,3 +1,4 @@
 {
-  "fixturesFolder": "cypress/fixtures"
+  "fixturesFolder": "cypress/fixtures",
+  "chromeWebSecurity": false
 }
