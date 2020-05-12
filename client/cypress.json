@@ -1,4 +1,5 @@
 {
-  "baseUrl": "http://localhost:5000",
-  "fixturesFolder": "cypress/fixtures"
+  "fixturesFolder": "cypress/fixtures",
+  "chromeWebSecurity": false,
+  "video": false
 }

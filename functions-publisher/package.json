@@ -1,0 +1,36 @@
+{
+  "name": "@oregon-state/functions-publisher",
+  "version": "1.0.0",
+  "description": "Application Publisher Cloud Function",
+  "author": "desmondpnw3dev <pnw3dev@gmail.com>",
+  "homepage": "https://github.com/IGNW/oregon-employment-puc-poc#readme",
+  "license": "ISC",
+  "main": "functions/src/index.ts",
+  "directories": {
+    "functions": "functions/src/"
+  },
+  "files": [
+    "functions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IGNW/oregon-employment-puc-poc.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 0",
+    "deploy": "cd ./functions && npm run deploy"
+  },
+  "bugs": {
+    "url": "https://github.com/IGNW/oregon-employment-puc-poc/issues"
+  },
+  "dependencies": {
+    "@google-cloud/pubsub": "^1.7.3",
+    "firebase-admin": "^8.12.1",
+    "firebase-functions": "^3.6.1"
+  },
+  "devDependencies": {
+    "firebase-tools": "^8.2.0",
+    "tslint": "^6.1.2",
+    "typescript": "^3.8.3"
+  }
+}
