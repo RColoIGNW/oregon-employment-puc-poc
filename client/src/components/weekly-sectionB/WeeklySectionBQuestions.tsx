@@ -68,7 +68,7 @@ export default (props: WeeklySectionProps) => {
         <FormControl component="fieldset">
           <FormLabel component="legend">{questions.ableToReportToWork}</FormLabel>
           <Grid style={{display: 'flex', paddingTop: 10}}>
-            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAbleToWorkExpanded(true)}>Help</Button>
+            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAbleToReportToWorkExpanded(true)}>Help</Button>
             {ableToReportToWorkExpanded && <HelpDialog title={'Question 6'} textSections={questions.ableToReportToWorkHelp} openFn={setReport}/>}
           </Grid>
           <RadioGroup>
@@ -87,7 +87,7 @@ export default (props: WeeklySectionProps) => {
         <FormControl component="fieldset">
           <FormLabel component="legend">{questions.searchedForWork}</FormLabel>
           <Grid style={{display: 'flex', paddingTop: 10}}>
-            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAbleToWorkExpanded(true)}>Help</Button>
+            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setSearchedForWorkExpanded(true)}>Help</Button>
             {searchedForWorkExpanded && <HelpDialog title={'Question 7'} textSections={questions.searchedForWorkHelp} openFn={setSearch}/>}
           </Grid>
           <RadioGroup>
@@ -106,7 +106,7 @@ export default (props: WeeklySectionProps) => {
         <FormControl component="fieldset">
           <FormLabel component="legend">{questions.didYouWorkLastWeek}</FormLabel>
           <Grid style={{display: 'flex', paddingTop: 10}}>
-            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAbleToWorkExpanded(true)}>Help</Button>
+            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setDidYouWorkLastWeekExpanded(true)}>Help</Button>
             {didYouWorkLastWeekExpanded && <HelpDialog title={'Question 8'} textSections={questions.didYouWorkLastWeekHelp} openFn={setWorked}/>}
           </Grid>
           <RadioGroup>

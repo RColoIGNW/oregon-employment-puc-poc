@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react'
 import React from 'react'
 
-import WorkSearchList from "./WorkSearchList"
-import WorkSearchRecord from "../../models/WorkSearchRecord"
+import WorkSeekingItem from "./WorkSeekingItem"
+import WorkSearchRecord from "../../../models/WorkSearchRecord"
 
-describe('Work Search List', () => {
-  it('should render the Work Search List component', () => {
+describe('Work Search Item', () => {
+  it('should render the Work Search Item component', () => {
     const props = {
-      workSearchRecords: [{
+      workSearchRecord: {
         employer: 'string',
         date: new Date(),
         location: 'string',
@@ -16,14 +16,14 @@ describe('Work Search List', () => {
         result: 'string',
         unionMember: true,
         tempLayoff: true,
-      }],
-      onAddWorkSearchRecord: (workSearchRecord: WorkSearchRecord) => {console.log(workSearchRecord)},
+      },
+      onEditWorkSearchRecord: (workSearchRecord: WorkSearchRecord) => {console.log(workSearchRecord)},
       onDeleteWorkSearchRecord: (workSearchRecord: WorkSearchRecord) => {console.log(workSearchRecord)},
-    }
+  }
     const {
       container,
       // debug,
-    } = render(<WorkSearchList {...props}/>)
+    } = render(<WorkSeekingItem {...props}/>)
     // debug()
     expect(container).toBeTruthy()
   })

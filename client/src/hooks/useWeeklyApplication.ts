@@ -20,6 +20,8 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     ableToReportToWork: null,
     searchedForWork: null,
     didYouWorkLastWeek: null,
+    tempLayoff: null,
+    unionMember: null,
     workSearchRecords: [],
     applicationId: props?.applicationId || ''
   }

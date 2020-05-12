@@ -36,6 +36,10 @@ export const pageInfo = {
     icon: 'C',
     title: 'WORK SEARCH ACTIVITY',
   },
+  sectionD: {
+    icon: 'D',
+    title: 'VERIFY YOUR RESPONSES',
+  },
   back: 'Back',
   next: 'Next',
   submit: 'Submit',
@@ -65,8 +69,8 @@ export const steps = [
   },
   {
     key: 'D',
-    icon: pageInfo.sectionC.icon,
-    title: pageInfo.sectionC.title,
+    icon: pageInfo.sectionD.icon,
+    title: pageInfo.sectionD.title,
     isFirstStep: false,
     component: WeeklySectionDVerifyResponses
   },

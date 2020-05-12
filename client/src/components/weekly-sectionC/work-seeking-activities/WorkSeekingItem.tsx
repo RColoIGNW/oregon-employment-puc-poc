@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import moment from 'moment'
 import React from 'react'
 
-import WorkSearchRecord from "../../models/WorkSearchRecord"
+import WorkSearchRecord from "../../../models/WorkSearchRecord"
 
 interface WorkSearchItemProps {
   workSearchRecord: WorkSearchRecord
@@ -16,7 +16,7 @@ interface WorkSearchItemProps {
 
 export default (props: WorkSearchItemProps) => {
   const { workSearchRecord, onDeleteWorkSearchRecord, onEditWorkSearchRecord } = props
-  const { employer } = workSearchRecord
+  const { activity } = workSearchRecord
 
   const handleDelete = () => {
     onDeleteWorkSearchRecord(workSearchRecord)
@@ -31,7 +31,7 @@ export default (props: WorkSearchItemProps) => {
       <CardContent>
         <Grid container direction="column">
           <Grid item>
-            <Typography variant="body1" style={{ fontWeight: 'bold' }}>{employer}</Typography>
+            {<Typography variant="body1" style={{ fontWeight: 'bold' }}>{activity}</Typography>}
           </Grid>
           <Grid item>
             <Grid container justify="space-between" spacing={2}>

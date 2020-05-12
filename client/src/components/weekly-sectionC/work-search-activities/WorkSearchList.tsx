@@ -4,19 +4,19 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
 
-import WorkSearchRecord from "../../models/WorkSearchRecord"
+import WorkSearchRecord from "../../../models/WorkSearchRecord"
 import WorkSearchItem from "./WorkSearchItem"
 import WorkSearchRecordEdit from "./WorkSearchRecordEdit"
 
 const defaultValue: WorkSearchRecord = {
+  type: 'searching',
   employer: '',
   date: new Date(),
   location: '',
   contactMethod: '',
   typeOfWorkSought: '',
   result: '',
-  unionMember: false,
-  tempLayoff: false,
+  activity: ''
 }
 
 interface WorkSearchListProps {
@@ -54,15 +54,23 @@ export default (props: WorkSearchListProps) => {
     <>
       <Grid container spacing={1} justify="flex-start" >
         {
-          workSearchRecords?.map((workSearchRecord, index) =>
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <WorkSearchItem
-                workSearchRecord={workSearchRecord}
-                onEditWorkSearchRecord={handleOpen}
-                onDeleteWorkSearchRecord={onDeleteWorkSearchRecord}
-                isDisabled={props.isDisabled}
-              />
-            </Grid>
+          workSearchRecords?.map((workSearchRecord, index) => {
+              if(workSearchRecord.type == 'searching') {
+                return (
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                    <WorkSearchItem
+                      workSearchRecord={workSearchRecord}
+                      onEditWorkSearchRecord={handleOpen}
+                      onDeleteWorkSearchRecord={onDeleteWorkSearchRecord}
+                      isDisabled={props.isDisabled}
+                    />
+                  </Grid>
+                )
+              }
+              else {
+                return null
+              }
+            }
           )
         }
         {!props.isDisabled &&

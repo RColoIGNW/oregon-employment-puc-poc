@@ -1,11 +1,11 @@
 export default interface EmploymentRecord {
+  type: 'searching' | 'seeking',
   id?: number,
-  employer: string,
+  employer?: string | null,
   date: Date,
-  location: string,
-  contactMethod: string,
-  typeOfWorkSought: string,
-  result: string,
-  unionMember: boolean,
-  tempLayoff: boolean,
+  location?: string | null,
+  contactMethod?: string | null,
+  typeOfWorkSought?: string | null,
+  result?: string | null,
+  activity?: string | null,
 }
