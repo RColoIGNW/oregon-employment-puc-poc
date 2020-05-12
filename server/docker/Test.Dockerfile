@@ -8,5 +8,5 @@ RUN apt-get -qq update && \
   apt-get -qq install pdftk && \
   apt-get -qq clean
 
-RUN npm i && \
+RUN npm ci && \
   npm run test
