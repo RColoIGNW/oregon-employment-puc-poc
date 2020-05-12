@@ -1,6 +1,6 @@
 // enables intelligent code completion for Cypress commands
 // https://on.cypress.io/intelligent-code-completion
-/// <reference types="Cypress" />const clear = Cypress.LocalStorage.clear
+/// <reference types="Cypress" />
 
 describe('New Application Page Smoke/E2E Testing', () => {
   // after(() => {
