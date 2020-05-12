@@ -1,33 +1,17 @@
-# oregon-employment-pua-poc client 🌟
+# oregon-employment-pua client 🌟
 
-### An opinionated starter library for creating React applications with Gatsby (v2) and TypeScript.
+#### Pandemic Unemployment Assistance Gatsby/React/Nodejs/Typescript Application
 
-### [View Demo](https://gatsby-starter-typescript-deluxe.netlify.com) [![Netlify Status](https://api.netlify.com/api/v1/badges/741aaab2-8497-431c-8b59-7f675856de77/deploy-status)](https://app.netlify.com/sites/gatsby-starter-typescript-deluxe/deploys)
+## Getting Started:
 
-This starter library is pre-configured with the following integrations:
-
-- **TypeScript** for type-safe code.
-- **Styled-Components** for all your styles.
-- **modern-css-reset** for a reset of sensible default styles.
-- **Framer Motion** for awesome animations.
-- **gatsby-image and gatsby-transformer-sharp** for optimized images.
-- **gatsby-plugin-manifest / SEO component** for an SEO-friendly PWA.
-- **Storybook with add-ons** for showing off your awesome components.
-- **Jest and React Testing library** for snapshots and unit tests.
-- **ESLint (with TSLint and Prettier)** to make your code look its best.
-- **React Axe and React A11y for accessibility** so that your site is awesome for everyone.
+* Install dependencies via `npm i`
+* Run the Client `npm start`
 
 ## Installation
 
 You will need to have `node` and `npm` installed on your computer.
 
 You can either use `npx` or install the `gatsby-cli` globally.
-
-The `npx` way:
-
-```sh
-npx gatsby new my-site https://github.com/gojutin/gatsby-starter-typescript-deluxe
-```
 
 or the global way:
 
@@ -46,7 +30,7 @@ npm run develop
 
 If all was successful, you should see links to two development servers in the Node terminal. You can open these url in any browser that you would like.
 
-1. [http://localhost:8080](http://localhost:8080):
+1. [http://localhost:8000](http://localhost:8000):
 
 This is the development server that allows you to preview your website. It comes with hot-module reloading, which means that you should see your changes almost immediately without having to refresh the browser tab.
 
