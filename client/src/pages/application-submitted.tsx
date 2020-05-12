@@ -33,12 +33,24 @@ const ApplicationSubmittedPage = (props: any) => {
           </Typography>
         </Grid>
         <Grid item>
-          <Button color={'primary'} variant={'contained'} size={'large'} onClick={() => downloadApplication(applicationId)}>
+          <Button
+            color={'primary'}
+            variant={'contained'}
+            size={'large'}
+            onClick={() => downloadApplication(applicationId)}
+            data-testid={'download-application-button'}
+          >
             {pageInfo.downloadButton}
           </Button>
         </Grid>
         <Grid item>
-          <Button color={'primary'} variant={'contained'} size={'large'} onClick={() => navigate('claim-status')}>
+          <Button
+            color={'primary'}
+            variant={'contained'}
+            size={'large'}
+            onClick={() => navigate('claim-status')}
+            data-testid={'view-claims-button'}
+          >
             {pageInfo.button}
           </Button>
         </Grid>

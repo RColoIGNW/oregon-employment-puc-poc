@@ -52,5 +52,7 @@ describe('New Application Page Smoke/E2E Testing', () => {
     cy.url().should('include', '/application-submitted')
 
     // download form button --> view applications button --> assert url should include /claim-status
+    cy.get("[data-testid='download-application-button']").click()
+    cy.get("[data-testid='view-claims-button']").click()
   })
 })
