@@ -52,7 +52,7 @@ describe('New Application Page Smoke/E2E Testing', () => {
   })
   it('section F - have the file upload (react dropzone) and save progress', () => {
     // assert on dropzone element --> next
-    cy.get("[data-testid='next-button']").click()
+    cy.get("[data-testid='next-button']").click({multiple: true, force: true})
     cy.wait(1000)
   })
   it('section G - should select an answer, click agree and submit the application', () => {
