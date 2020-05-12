@@ -9,6 +9,7 @@
     "@types/node": "^13.13.5",
     "@types/styled-components": "^5.1.0",
     "babel-plugin-styled-components": "^1.10.7",
+    "firebase-tools": "^8.2.0",
     "lerna": "^3.20.2",
     "npm-check-updates": "^4.0.4",
     "prettier": "^2.0.4",
