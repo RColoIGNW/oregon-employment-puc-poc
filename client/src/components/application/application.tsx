@@ -141,6 +141,7 @@ const StepActions = (props: StepActionsProp) => {
         <Button
           disabled={disabledBack}
           onClick={props.onBack}
+          data-testid={'back-button'}
         >
           {pageInfo.back}
         </Button>
@@ -151,6 +152,7 @@ const StepActions = (props: StepActionsProp) => {
           variant='contained'
           color='primary'
           onClick={props.onNext}
+          data-testid={'next-button'}
         >
           {
             (showSubmit) ? pageInfo.submit : pageInfo.next
@@ -251,6 +253,16 @@ export const Application = (props: ApplicationProps) => {
               position='bottom'
               variant='text'
               activeStep={activeStep}
+              backButton={
+                <Button
+                  disabled={disabled || activeStep === 0}
+                  size='medium'
+                  onClick={handleBack}
+                  data-testid={'back-button'}
+                >
+                  Back
+                </Button>
+              }
               nextButton={
                 <Button
                   disabled={disabled}
@@ -258,13 +270,9 @@ export const Application = (props: ApplicationProps) => {
                   variant='contained'
                   color='primary'
                   onClick={handleNext}
+                  data-testid={'next-button'}
                 >
                   {activeStep === steps.length - 1 ? pageInfo.submit : pageInfo.next}
-                </Button>
-              }
-              backButton={
-                <Button disabled={disabled || activeStep === 0} size='medium' onClick={handleBack} >
-                  Back
                 </Button>
               }
             />

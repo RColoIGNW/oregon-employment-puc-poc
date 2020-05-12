@@ -3,11 +3,11 @@
 /// <reference types="Cypress" />
 
 describe('Claim Status Page Smoke/E2E Testing', () => {
-  afterEach(() => {
-    Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
-    // cy.get('[data-e2e=sign-out-button]').click()
-  })
+  // afterEach(() => {
+  //   // cy.get('[data-e2e=sign-out-button]').click()
+  // })
   beforeEach(() => {
+    Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
     const email = 'me@you.com'
     const password = 'Testing' // get from environment variable or mock auth call
     cy.visit('/')
