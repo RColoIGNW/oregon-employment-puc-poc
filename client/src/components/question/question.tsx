@@ -131,6 +131,7 @@ export const Question = (props: QuestionProps) => {
                       label={info.yes}
                       control={
                         <Checkbox
+                          data-testid={props.question.code}
                           color={'primary'}
                           checked={answer?.selectedOption === 'YES'}
                           onChange={() => handleOptionChange('YES')}

@@ -3,9 +3,8 @@
 /// <reference types="Cypress" />
 
 describe('Sign In Page Smoke/E2E Testing', () => {
-  afterEach(() => {
+  beforeEach(() => {
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
-    // cy.get('[data-e2e=sign-out-button]').click()
   })
   it('should redirect to the user account page upon successful login', () => {
     const email = 'me@you.com'
