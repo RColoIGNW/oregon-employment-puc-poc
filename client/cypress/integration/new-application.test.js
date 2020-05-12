@@ -34,29 +34,29 @@ describe('New Application Page Smoke/E2E Testing', () => {
   it('section C - should select an answer checkbox and save progress', () => {
     cy.get("[data-testid='C_1']").click()
     cy.get("[data-testid='next-button']").click()
-    cy.wait(500)
+    cy.wait(1000)
   })
   it('section D - should select an answer checkbox and save progress', () => {
     // checkbox --> text field --> next
     cy.get("[data-testid='D_1']").click()
     cy.get("[data-testid='next-button']").click()
-    cy.wait(500)
+    cy.wait(1000)
   })
   it('section E - should select an answer checkbox and save progress', () => {
     cy.get("[data-testid='E_1']").click()
     cy.get("[data-testid='next-button']").click()
-    cy.wait(500)
+    cy.wait(1000)
   })
   it('section F - have the file upload (react dropzone) and save progress', () => {
     // assert on dropzone element --> next
     cy.get("[data-testid='next-button']").click()
-    cy.wait(500)
+    cy.wait(1000)
   })
   it('section G - should select an answer, click agree and submit the application', () => {
     // checkbox -> full name --> agree chexkbox --> submit application button
     cy.get("[data-testid='F_1']").click()
     cy.get("[data-testid='next-button']").click()
-    cy.wait(500)
+    cy.wait(1000)
     // assert url should include /application-submitted
     cy.url().should('include', '/application-submitted')
   })
