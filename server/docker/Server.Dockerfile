@@ -1,7 +1,7 @@
 FROM node:12.16.2
 
 COPY ./server ./
-COPY ./server/src/templates ./server/dist/templates
+COPY ./server/src/templates ./dist/templates
 
 RUN ls-la
 RUN ls-la dist
