@@ -130,7 +130,12 @@ export enum ApplicationStatus {
 
 const createDocument = async (collectionName: string, subCollectionName: string, req: Request, res: Response) => {
   try {
-    const requestBody: Partial<ApplicationSchema> = { ...req.body, lastModified: fbAdmin.firestore.Timestamp.now() }
+    const requestBody: Partial<ApplicationSchema> = {
+      ...req.body,
+      lastModified: fbAdmin.firestore.Timestamp.now(),
+      status: ApplicationStatus.IN_PROGRESS,
+      dateCreated: fbAdmin.firestore.Timestamp.now(),
+    }
     const countRef = db.collection(`${collectionName}-count`).doc(subCollectionName)
     const applicationRef = db.collection(collectionName).doc()
 
@@ -140,9 +145,7 @@ const createDocument = async (collectionName: string, subCollectionName: string,
         const increment = fbAdmin.firestore.FieldValue.increment(1)
         t[countDoc.data() ? "update" : "set"](countRef, {
           applicationCount: increment,
-          lastModified: fbAdmin.firestore.Timestamp.now(),
-          status: ApplicationStatus.IN_PROGRESS,
-          dateCreated: fbAdmin.firestore.Timestamp.now(),
+          lastModified: fbAdmin.firestore.Timestamp.now()
         });
         t.set(applicationRef, requestBody)
         return Promise.resolve('Transaction Successful!')
@@ -163,6 +166,7 @@ const submitDocument = async (collectionName: string, req: Request, res: Respons
       ...req.body,
       lastModified: fbAdmin.firestore.Timestamp.now(),
       dateApplied: fbAdmin.firestore.Timestamp.now(),
+      status: ApplicationStatus.SUBMITTED
     }
     const applicationRef = db.collection(collectionName).doc(req.params.id)
 
@@ -171,14 +175,7 @@ const submitDocument = async (collectionName: string, req: Request, res: Respons
         t.update(applicationRef, requestBody)
         return Promise.resolve('Transaction Successful!')
       })
-      .then(async () => {
-        // TODO: add downstream service notification
-        // const doc = await applicationRef.get()
-        // const application = doc.data()
-        // // publish to pub/sub for downstream services
-        // log(JSON.stringify(application), 'Published to pub/sub!'
-        return res.status(200).json({ success: true })
-      })
+      .then(() => res.status(200).json({ success: true }))
   } catch (error) {
     res.status(400).json({ error })
   } finally {
