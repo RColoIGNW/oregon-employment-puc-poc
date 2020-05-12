@@ -37,16 +37,11 @@ export const routes = (router: Router) => {
 
   router
     .route('/applications/:id')
-    // .delete(decodeToken, isAuthorized, hasAdminRole, applicationApi.deleteDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
     .delete(decodeToken, isAuthorized, applicationApi.deleteDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
-  // router
-  //   .route('/applications/:id')
-  //   .put(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
   router
     .route('/applications/:id')
     .patch(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
-    //.patch(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
     
 
   router

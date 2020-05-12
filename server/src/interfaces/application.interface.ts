@@ -84,6 +84,7 @@ export default interface ApplicationSchema {
   id?: string
   applicant?: Applicant
   status?: ApplicationStatus
+  createdDate?: Date|string
   lastModified?: Date|string
   answers?: AnswerModel[]
   isCertified?: boolean

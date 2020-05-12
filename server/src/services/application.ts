@@ -104,29 +104,12 @@ const updateDocumentById = async (collectionName: string, req: Request, res: Res
   }
 }
 
-// const changeDocumentStatusById = async (collectionName: string, req: Request, res: Response) => {
-//   try {
-//     await db
-//       .collection(collectionName)
-//       .doc(req.params.id)
-//       .update({
-//         ...req.body,
-//         lastModified: fbAdmin.firestore.Timestamp.now()
-//       } as Partial<ApplicationSchema>)
-
-//     return res.status(204).send({
-//       success: true
-//     })
-//   } catch (error) {
-//     res.status(400).json({ error })
-//   }
-// }
-
 export enum ApplicationStatus {
   IN_PROGRESS = 'in progress',
   SUBMITTED = 'submitted',
   DENY = 'deny',
-  APPROVED = 'approved'
+  APPROVED = 'approved',
+  CANCELLED = 'cancelled'
 }
 
 const createDocument = async (collectionName: string, subCollectionName: string, req: Request, res: Response) => {
@@ -136,7 +119,7 @@ const createDocument = async (collectionName: string, subCollectionName: string,
       ...req.body, 
       lastModified: date,
       status: ApplicationStatus.IN_PROGRESS,
-      dateCreated: date,
+      createdDate: date,
     }    
     const countRef = db.collection(`${collectionName}-count`).doc(subCollectionName)
     const applicationRef = db.collection(collectionName).doc()
@@ -162,11 +145,13 @@ const createDocument = async (collectionName: string, subCollectionName: string,
 }
 
 const submitDocument = async (collectionName: string, req: Request, res: Response) => {
+  
   try {
+    const date = fbAdmin.firestore.Timestamp.now()
     const requestBody = {
       ...req.body,
-      lastModified: fbAdmin.firestore.Timestamp.now(),
-      dateApplied: fbAdmin.firestore.Timestamp.now(),
+      lastModified: date,
+      dateApplied: date,
     }
     const applicationRef = db.collection(collectionName).doc(req.params.id)
 
@@ -196,7 +181,6 @@ export default {
   getDocumentById,
   deleteDocumentById,
   updateDocumentById,
-  // changeDocumentStatusById,
   createDocument,
   submitDocument,
 }
