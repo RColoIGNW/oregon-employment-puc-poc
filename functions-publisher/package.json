@@ -23,7 +23,11 @@
   "bugs": {
     "url": "https://github.com/IGNW/oregon-employment-puc-poc/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@google-cloud/pubsub": "^1.7.3",
+    "firebase-admin": "^8.12.1",
+    "firebase-functions": "^3.6.1"
+  },
   "devDependencies": {
     "firebase-tools": "^8.2.0",
     "tslint": "^6.1.2",
