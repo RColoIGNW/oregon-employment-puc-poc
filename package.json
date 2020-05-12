@@ -6,6 +6,7 @@
     "server"
   ],
   "devDependencies": {
+    "@types/node": "^13.13.5",
     "@types/styled-components": "^5.1.0",
     "babel-plugin-styled-components": "^1.10.7",
     "lerna": "^3.20.2",

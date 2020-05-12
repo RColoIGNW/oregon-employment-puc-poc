@@ -1,0 +1,14 @@
+steps:
+  - name: node:12.16.2
+    dir: 'functions-publisher'
+    entrypoint: npm
+    args: ['ci']
+  # - name: node:12.16.2
+  #   dir: 'functions-publisher'
+  #   entrypoint: npm
+  #   args: ['test']
+  #deploy functions build
+  - name: node:12.16.2
+    dir: 'functions-publisher'
+    entrypoint: npm
+    args: ['run', 'deploy', '--token', '$_FIREBASE_TOKEN']
