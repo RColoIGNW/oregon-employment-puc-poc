@@ -149,3 +149,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+lerna-debug*
