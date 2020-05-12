@@ -1,12 +1,16 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 import { SnackBarContext } from '../providers/SnackbarProvider'
 import { request } from '../util/request'
 import useApplicantFormApi from './useApplicantFormApi'
+import Application from '../models/Application'
 
 export default () => {
   const snackbar = useContext(SnackBarContext)
   const api = useApplicantFormApi()
+  const [searchText, setSearchText] = useState<string>('')
+  const [filterList, setFilterList] = useState<Application[]>([])
+  const [selectedList, setSelectedList] = useState<string[]>([])
 
   const downloadApplication = async (applicationId: string) => {
     const headers = new Headers()
