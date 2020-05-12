@@ -16,7 +16,7 @@ describe('New Application Page Smoke/E2E Testing', () => {
   it('should navigate to the new applications form page', () => {
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
     const email = 'e2e@testing.com'
-    const password = 'testing' // get from environment variable or mock auth call
+    const password = 'testing'
     cy.visit('/')
     cy.get('input[name=email]').type(email)
     cy.get('input[name=password]').type(`${password}`)
@@ -63,7 +63,6 @@ describe('New Application Page Smoke/E2E Testing', () => {
     cy.url().should('include', '/application-submitted')
   })
   it('application submitted - should download a pdf application and navigate to view claim status.', () => {
-    // download form button --> view applications button --> assert url should include /claim-status
     cy.get("[data-testid='download-application-button']").click()
     cy.get("[data-testid='view-claims-button']").click()
     cy.url().should('include', '/claim-status')
