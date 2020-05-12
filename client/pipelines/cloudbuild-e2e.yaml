@@ -24,7 +24,7 @@ steps:
     args: ['ci']
   - name: cypress/base:12
     id: Install Cypress Dependencies
-
+    args: ['echo', 'installing cypress dependencies']
   # - name: node:12.16.2
   #   dir: 'client'
   #   entrypoint: npm
