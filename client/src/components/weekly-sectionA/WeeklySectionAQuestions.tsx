@@ -15,8 +15,7 @@ const defaultValue = {
   failedToAcceptOffer: false,
   quitJob: false,
   firedOrSuspended: false,
-  veteran: false,
-  temporaryUnemployment: false,
+  awayFromResidence: false,
   employmentHistory: [],
   applicationId: ''
 }
@@ -33,6 +32,8 @@ export default (props: WeeklySectionProps) => {
   const [firedOrSuspendedExpanded, setFiredOrSuspendedExpanded] = useState(false)
   const setFired = (open: boolean) => {setFiredOrSuspendedExpanded(open)}
 
+  const [awayFromResidenceExpanded, setAwayFromResidenceExpanded] = useState(false)
+  const setAway = (open: boolean) => {setAwayFromResidenceExpanded(open)}
 
   const { isDisabled } = props
   const disabled = !!isDisabled
@@ -96,6 +97,25 @@ export default (props: WeeklySectionProps) => {
               />
               <FormControlLabel
                 control={<Radio checked={applicant.firedOrSuspended === false} onChange={handleBooleanSelection} name="firedOrSuspended" value={false} disabled={disabled} />}
+                label="No"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={7} md={6}>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">{questions.awayFromResidence}</FormLabel>
+            <Grid style={{display: 'flex', paddingTop: 10}}>
+              <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAwayFromResidenceExpanded(true)}>Help</Button>
+              {awayFromResidenceExpanded && <HelpDialog title={'Question 4'} textSections={questions.awayFromResidenceHelp} openFn={setAway}/>}
+            </Grid>
+            <RadioGroup>
+              <FormControlLabel
+                control={<Radio checked={applicant.awayFromResidence === true} onChange={handleBooleanSelection} name="awayFromResidence" value={true} disabled={disabled} />}
+                label="Yes"
+              />
+              <FormControlLabel
+                control={<Radio checked={applicant.awayFromResidence === false} onChange={handleBooleanSelection} name="awayFromResidence" value={false} disabled={disabled} />}
                 label="No"
               />
             </RadioGroup>

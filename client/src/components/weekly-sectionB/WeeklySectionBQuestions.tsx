@@ -31,39 +31,26 @@ export default (props: WeeklySectionProps) => {
 
   }
 
-  const [awayFromResidenceExpanded, setAwayFromResidenceExpanded] = useState(false)
-  const setAway = (open: boolean) => {setAwayFromResidenceExpanded(open)}
-
   const [ableToWorkExpanded, setAbleToWorkExpanded] = useState(false)
   const setAble = (open: boolean) => {setAbleToWorkExpanded(open)}
+
+  const [ableToReportToWorkExpanded, setAbleToReportToWorkExpanded] = useState(false)
+  const setReport = (open: boolean) => {setAbleToReportToWorkExpanded(open)}
+
+  const [searchedForWorkExpanded, setSearchedForWorkExpanded] = useState(false)
+  const setSearch = (open: boolean) => {setSearchedForWorkExpanded(open)}
+
+  const [didYouWorkLastWeekExpanded, setDidYouWorkLastWeekExpanded] = useState(false)
+  const setWorked = (open: boolean) => {setDidYouWorkLastWeekExpanded(open)}
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={7} md={6}>
         <FormControl component="fieldset">
-          <FormLabel component="legend">{questions.awayFromResidence}</FormLabel>
-          <Grid style={{display: 'flex', paddingTop: 10}}>
-            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAwayFromResidenceExpanded(true)}>Help</Button>
-            {awayFromResidenceExpanded && <HelpDialog title={'Question 1'} textSections={questions.awayFromResidenceHelp} openFn={setAway}/>}
-          </Grid>
-          <RadioGroup>
-            <FormControlLabel
-              control={<Radio checked={applicant.awayFromResidence === true} onChange={handleBooleanSelection} name="awayFromResidence" value={true} disabled={disabled} />}
-              label="Yes"
-            />
-            <FormControlLabel
-              control={<Radio checked={applicant.awayFromResidence === false} onChange={handleBooleanSelection} name="awayFromResidence" value={false} disabled={disabled} />}
-              label="No"
-            />
-          </RadioGroup>
-        </FormControl>
-      </Grid>
-      <Grid item xs={12} sm={7} md={6}>
-        <FormControl component="fieldset">
           <FormLabel component="legend">{questions.ableToWork}</FormLabel>
           <Grid style={{display: 'flex', paddingTop: 10}}>
             <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAbleToWorkExpanded(true)}>Help</Button>
-            {ableToWorkExpanded && <HelpDialog title={'Question 2'} textSections={questions.ableToWorkHelp} openFn={setAble}/>}
+            {ableToWorkExpanded && <HelpDialog title={'Question 5'} textSections={questions.ableToWorkHelp} openFn={setAble}/>}
           </Grid>
           <RadioGroup>
             <FormControlLabel
@@ -76,8 +63,64 @@ export default (props: WeeklySectionProps) => {
             />
           </RadioGroup>
         </FormControl>
-
-    </Grid>
+      </Grid>
+      <Grid item xs={12} sm={7} md={6}>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">{questions.ableToReportToWork}</FormLabel>
+          <Grid style={{display: 'flex', paddingTop: 10}}>
+            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAbleToWorkExpanded(true)}>Help</Button>
+            {ableToReportToWorkExpanded && <HelpDialog title={'Question 6'} textSections={questions.ableToReportToWorkHelp} openFn={setReport}/>}
+          </Grid>
+          <RadioGroup>
+            <FormControlLabel
+              control={<Radio checked={applicant.ableToReportToWork === true} onChange={handleBooleanSelection} name="ableToReportToWork" value={true} disabled={disabled} />}
+              label="Yes"
+            />
+            <FormControlLabel
+              control={<Radio checked={applicant.ableToReportToWork === false} onChange={handleBooleanSelection} name="ableToReportToWork" value={false} disabled={disabled} />}
+              label="No"
+            />
+          </RadioGroup>
+        </FormControl>
+      </Grid>
+      <Grid item xs={12} sm={7} md={6}>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">{questions.searchedForWork}</FormLabel>
+          <Grid style={{display: 'flex', paddingTop: 10}}>
+            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAbleToWorkExpanded(true)}>Help</Button>
+            {searchedForWorkExpanded && <HelpDialog title={'Question 7'} textSections={questions.searchedForWorkHelp} openFn={setSearch}/>}
+          </Grid>
+          <RadioGroup>
+            <FormControlLabel
+              control={<Radio checked={applicant.searchedForWork === true} onChange={handleBooleanSelection} name="searchedForWork" value={true} disabled={disabled} />}
+              label="Yes"
+            />
+            <FormControlLabel
+              control={<Radio checked={applicant.searchedForWork === false} onChange={handleBooleanSelection} name="searchedForWork" value={false} disabled={disabled} />}
+              label="No"
+            />
+          </RadioGroup>
+        </FormControl>
+      </Grid>
+      <Grid item xs={12} sm={7} md={6}>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">{questions.didYouWorkLastWeek}</FormLabel>
+          <Grid style={{display: 'flex', paddingTop: 10}}>
+            <Button variant={'outlined'} startIcon={<HelpIcon />} onClick={() => setAbleToWorkExpanded(true)}>Help</Button>
+            {didYouWorkLastWeekExpanded && <HelpDialog title={'Question 8'} textSections={questions.didYouWorkLastWeekHelp} openFn={setWorked}/>}
+          </Grid>
+          <RadioGroup>
+            <FormControlLabel
+              control={<Radio checked={applicant.didYouWorkLastWeek === true} onChange={handleBooleanSelection} name="didYouWorkLastWeek" value={true} disabled={disabled} />}
+              label="Yes"
+            />
+            <FormControlLabel
+              control={<Radio checked={applicant.didYouWorkLastWeek === false} onChange={handleBooleanSelection} name="didYouWorkLastWeek" value={false} disabled={disabled} />}
+              label="No"
+            />
+          </RadioGroup>
+        </FormControl>
+      </Grid>
     </Grid>
   )
 }

@@ -19,6 +19,7 @@ import theme from "../../themes/theme-light"
 import WeeklySectionAQuestions from "../weekly-sectionA/WeeklySectionAQuestions"
 import WeeklySectionBQuestions from "../weekly-sectionB/WeeklySectionBQuestions"
 import WeeklySectionC from "../weekly-sectionC/WeeklySectionC"
+import WeeklySectionDVerifyResponses from "../weekly-sectionD/WeeklySectionDVerifyResponses"
 import { WeeklyFormProps } from "../../models/WeeklySectionProps"
 
 export const pageInfo = {
@@ -61,6 +62,13 @@ export const steps = [
     title: pageInfo.sectionC.title,
     isFirstStep: false,
     component: WeeklySectionC
+  },
+  {
+    key: 'D',
+    icon: pageInfo.sectionC.icon,
+    title: pageInfo.sectionC.title,
+    isFirstStep: false,
+    component: WeeklySectionDVerifyResponses
   },
 ]
 
