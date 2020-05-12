@@ -14,7 +14,6 @@ import Alerts from '../components/alerts'
 import { Layout } from '../components/layout'
 import { SEO } from '../components/seo'
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -63,19 +62,22 @@ export default function DashboardPage() {
       buttonLabel: 'File your new claim',
       description: 'Establish a new claim for Oregon unemployment benefits. If you are filing due to COVID- 19, please watch this training video.',
       link: '/application',
-      handleClick: handleNavigate
+      handleClick: handleNavigate,
+      e2e: 'new-claim-link'
     },
     {
       buttonLabel: 'Claim a Week of Benefits',
       description: 'Claim a week of unemployment benefits once your claim is established. Just like claiming by phone but easier! * Please see notes below. If you completed your New Claim this week, please wait until Sunday to Claim a Week of Benefits. If you are out of work due to COVID- 19, please read the FAQs prior to claiming a week of benefits.',
       link: '/weekly-claims',
-      handleClick: handleNavigate
+      handleClick: handleNavigate,
+      e2e: 'weekly-claim-link'
     },
     {
       buttonLabel: 'Claim Status',
       description: 'See the status of your current weekly claim report (if claimed by Internet or phone)',
       link: '/claim-status',
-      handleClick: handleNavigate
+      handleClick: handleNavigate,
+      e2e: 'view-claims-link'
     }
   ]
 
@@ -116,6 +118,7 @@ export default function DashboardPage() {
                       size={'medium'}
                       fullWidth
                       onClick={() => item.handleClick(item.link)}
+                      data-testid={item.e2e}
                     >
                       {item.buttonLabel}
                     </Button>

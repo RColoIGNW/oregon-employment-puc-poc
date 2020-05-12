@@ -66,6 +66,7 @@
     "lint": "tslint --project tsconfig.json",
     "prebuild": "npm run typegen",
     "build": "tsc",
+    "tsc": "npm run build",
     "run": "node dist/server.js",
     "dev": "ts-node-dev ./src/server.ts",
     "start": "npm run dev",

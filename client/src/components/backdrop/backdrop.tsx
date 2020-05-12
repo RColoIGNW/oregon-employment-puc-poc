@@ -1,9 +1,10 @@
-import Backdrop, { BackdropProps as MuiBackdropProps } from '@material-ui/core/Backdrop'
+import Backdrop from '@material-ui/core/Backdrop'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 
 import { TransitionContext } from '../../providers/TransitionProvider'
+import Fade from '@material-ui/core/Fade'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,28 +15,16 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-interface BackdropProps extends Omit<MuiBackdropProps, 'open'> {
-  delay?: number
-}
-
-export default (props: BackdropProps) => {
+export default () => {
   const classes = useStyles()
   const { state } = useContext(TransitionContext)
-  const [isOpen, setIsOpen] = useState(false)
-
-  useEffect(() => {
-
-    if (state.open) {
-      setTimeout(setIsOpen, props.delay || 0, true)
-    } else {
-      setIsOpen(false)
-    }
-  })
 
   return (
-    <Backdrop className={classes.backdrop} open={isOpen}>
-      <CircularProgress color="inherit" />
-      {state.message}
-    </Backdrop>
+    <Fade in={state?.open} style={{ transitionDelay: state?.open ? '500ms' : '0ms' }} unmountOnExit>
+      <Backdrop className={classes.backdrop} open={true}>
+        <CircularProgress color="inherit" />
+        {state?.message}
+      </Backdrop>
+    </Fade>
   )
 }
