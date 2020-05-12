@@ -17,7 +17,6 @@
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "types": ["node", "jest"],
     "typeRoots": ["node_modules/@types"]
   }
 }
