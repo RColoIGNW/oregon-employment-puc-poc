@@ -13,13 +13,6 @@ You will need to have `node` and `npm` installed on your computer.
 
 You can either use `npx` or install the `gatsby-cli` globally.
 
-or the global way:
-
-```sh
-npm i -g gatsby-cli
-gatsby new my-site https://github.com/gojutin/gatsby-starter-typescript-deluxe
-```
-
 ## Usage
 
 To start the development servers:
