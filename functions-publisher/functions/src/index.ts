@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions'
 
 export const applicationStarted = functions.firestore
   .document('applications/{applicationId}')
-  .onCreate((snap) => {
+  .onCreate((snap: any) => {
     const newValue = snap.data()
     // perform desired operations ...
     console.info('Trigger App Started Pub/Sub Event',  newValue)
@@ -10,7 +10,7 @@ export const applicationStarted = functions.firestore
 
 export const applicationChanged = functions.firestore
   .document('applications/{applicationId}')
-  .onUpdate((change) => {
+  .onUpdate((change: any) => {
     const newValue = change.after.data()
     // ...or the previous value before this update
     // const previousValue = change.before.data()
@@ -20,7 +20,7 @@ export const applicationChanged = functions.firestore
 
 export const applicationDeleted = functions.firestore
   .document('applications/{applicationId}')
-  .onDelete((snap) => {
+  .onDelete((snap: any) => {
     const deletedValue = snap.data()
     // perform desired operations ...
     console.info('Trigger App Deleted Pub/Sub Event',  deletedValue)
@@ -28,7 +28,7 @@ export const applicationDeleted = functions.firestore
 
 export const applicationSubscriber = functions.pubsub
   .topic('pua-claims')
-  .onPublish((message, context) => {
+  .onPublish((message: any, context: any) => {
     console.info(message.json)
     console.info('The function was triggered at ', context.timestamp)
     console.info('The unique ID for the event is', context.eventId)
@@ -36,7 +36,7 @@ export const applicationSubscriber = functions.pubsub
 
 export const weeklyApplicationSubscriber = functions.pubsub
   .topic('pua-weekly-claims')
-  .onPublish((message, context) => {
+  .onPublish((message: any, context: any) => {
     console.info(message.json)
     console.info('The function was triggered at ', context.timestamp)
     console.info('The unique ID for the event is', context.eventId)
