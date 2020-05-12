@@ -24,39 +24,39 @@ describe('New Application Page Smoke/E2E Testing', () => {
   it('section A - should enter a first name and save progress', () => {
     cy.get("input[name='firstName']").type('First Name e2e').should('have.value', 'First Name e2e')
     cy.get("[data-testid='next-button']").click()
-    cy.wait(200)
+    cy.wait(500)
   })
   it('section B - should add employee record and save progress', () => {
     // add employment record button --> name of employer --> accept button --> Next
     cy.get("[data-testid='next-button']").click()
-    cy.wait(200)
+    cy.wait(500)
   })
   it('section C - should select an answer checkbox and save progress', () => {
     cy.get("[data-testid='C_1']").click()
     cy.get("[data-testid='next-button']").click()
-    cy.wait(200)
+    cy.wait(500)
   })
   it('section D - should select an answer checkbox and save progress', () => {
     // checkbox --> text field --> next
     cy.get("[data-testid='D_1']").click()
     cy.get("[data-testid='next-button']").click()
-    cy.wait(200)
+    cy.wait(500)
   })
   it('section E - should select an answer checkbox and save progress', () => {
     cy.get("[data-testid='E_1']").click()
     cy.get("[data-testid='next-button']").click()
-    cy.wait(200)
+    cy.wait(500)
   })
   it('section F - have the file upload (react dropzone) and save progress', () => {
     // assert on dropzone element --> next
     cy.get("[data-testid='next-button']").click()
-    cy.wait(200)
+    cy.wait(500)
   })
   it('section G - should select an answer, click agree and submit the application', () => {
     // checkbox -> full name --> agree chexkbox --> submit application button
     cy.get("[data-testid='F_1']").click()
     cy.get("[data-testid='next-button']").click()
-    cy.wait(200)
+    cy.wait(500)
     // assert url should include /application-submitted
     cy.url().should('include', '/application-submitted')
   })
