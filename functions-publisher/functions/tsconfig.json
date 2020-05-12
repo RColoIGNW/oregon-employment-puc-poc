@@ -1,16 +1,23 @@
 {
+  "extends": "../../tsconfig.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "module": "commonjs",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
-    "sourceMap": true,
-    "strict": true,
     "target": "es2019",
     "lib": ["es2020", "esnext.asynciterable"],
-  },
-  "compileOnSave": true,
-  "include": [
-    "src"
-  ]
+    "baseUrl": ".",
+    "outDir": "dist/",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "types": ["node", "jest"],
+    "typeRoots": ["node_modules/@types"]
+  }
 }
