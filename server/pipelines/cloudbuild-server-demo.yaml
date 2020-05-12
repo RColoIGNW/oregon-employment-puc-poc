@@ -3,7 +3,7 @@ steps:
   - name: node:12.16.2-alpine3.11
     dir: 'server'
     entrypoint: npm
-    args: ['install']
+    args: ['ci']
 
   # Run Build
   - name: node:12.16.2-alpine3.11
