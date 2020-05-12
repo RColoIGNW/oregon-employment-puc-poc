@@ -19,10 +19,12 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 0",
     "deploy": "cd ./functions && npm run deploy"
-
   },
   "bugs": {
     "url": "https://github.com/IGNW/oregon-employment-puc-poc/issues"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "firebase-tools": "^8.2.0"
+  }
 }
