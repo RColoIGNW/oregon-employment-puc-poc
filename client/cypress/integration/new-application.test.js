@@ -6,9 +6,9 @@ describe('New Application Page Smoke/E2E Testing', () => {
   // after(() => {
     // cleanup applications from db
   // })
-  before(() => {
-    Cypress.LocalStorage.clear()
-  })
+  // before(() => {
+  //   Cypress.LocalStorage.clear()
+  // })
   beforeEach(() => {
     Cypress.LocalStorage.clear = () => undefined // persist localstorage for auth token
   })
