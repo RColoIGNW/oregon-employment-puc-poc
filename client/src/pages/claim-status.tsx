@@ -7,12 +7,12 @@ import { SEO } from '../components/seo'
 import useApplicantFormApi from '../hooks/useApplicantFormApi'
 import useClaimStatus from '../hooks/useClaimStatus'
 import Application from '../models/Application'
-import { InputAdornment, Checkbox, FormControlLabel, Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles, Button, Toolbar, FormControl, Input } from '@material-ui/core'
+import { Checkbox, FormControlLabel, Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles, Button, Toolbar, FormControl, Input } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import SearchIcon from '@material-ui/icons/Search'
-import CloseIcon from '@material-ui/icons/Close'
+
 import Claim from '../components/claim/claim'
 import ClaimActions from '../components/claim-actions/ClaimActions'
+import Search from '../components/search'
 
 
 interface MainToolBarProps {
@@ -22,46 +22,14 @@ interface MainToolBarProps {
 const MainToolBar = (props: MainToolBarProps) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const [searchText, setSearchText] = useState('')
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value)
-  }
-
-  const handleClearSearch = () => {
-    setSearchText('')
-  }
   
   const handleCreate = () => {
     props.onCreate && props.onCreate()
   }
-
-  useEffect(() => {
-    props.onSearch && props.onSearch(searchText)
-  }, [searchText])
-
   return (
     <Grid container direction={'row'} alignItems={'center'} justify={'space-between'}>
       <Grid item xs={12} md={6} lg={8}>
-      <FormControl fullWidth>
-        <Input
-          id="search-textfield"
-          placeholder={'Search'} 
-          value={searchText}         
-          onChange={handleSearch}
-          startAdornment= {
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          }
-          endAdornment= {
-            searchText.length > 0 &&
-            <InputAdornment position="start">
-              <CloseIcon onClick={handleClearSearch}/>
-            </InputAdornment>
-          }
-        />
-        </FormControl>       
+        <Search onSearch={props.onSearch}/>
       </Grid>
       {
         !isMobile &&
