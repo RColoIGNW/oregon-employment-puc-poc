@@ -10,9 +10,11 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Grid from '@material-ui/core/Grid'
 
 import { AuthContext } from '../../providers/AuthProvider';
+import { useTranslation } from 'react-i18next'
 
 export const UserMenu = () => {
   const { signOut, user } = useContext(AuthContext)
+  const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -55,10 +57,10 @@ export const UserMenu = () => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>{t('userMenu.profile')}</MenuItem>
+        <MenuItem onClick={handleClose}>{t('userMenu.account')}</MenuItem>
         <Divider />
-        <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+        <MenuItem onClick={handleSignOut}>{t('userMenu.signOut')}</MenuItem>
       </Menu>
     </>
   )
@@ -66,6 +68,7 @@ export const UserMenu = () => {
 
 export const UserMenuMobile = () => {
   const { signOut, user } = useContext(AuthContext)
+  const { t } = useTranslation()
 
   return (
     <Grid container alignItems="center">
@@ -78,10 +81,10 @@ export const UserMenuMobile = () => {
       <Grid item xs={12}>
         <Grid container justify="space-between">
           <Grid item>
-            <Button color="primary">Profile</Button>
+            <Button color="primary">{t('userMenu.profile')}</Button>
           </Grid>
           <Grid item>
-            <Button color="primary" onClick={signOut} endIcon={<ExitToAppIcon />}>Sign out</Button>
+            <Button color="primary" onClick={signOut} endIcon={<ExitToAppIcon />}>{t('userMenu.signOut')}</Button>
           </Grid>
         </Grid>
       </Grid>
