@@ -1,4 +1,5 @@
 'use strict'
+process.env.GOOGLE_APPLICATION_CREDENTIALS = __dirname + '../sa.json'
 
 // Imports the Google Cloud client library
 import  { PubSub } from '@google-cloud/pubsub'
