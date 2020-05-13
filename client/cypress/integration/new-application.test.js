@@ -8,9 +8,13 @@ describe('New Application Page Smoke/E2E Testing', () => {
   // })
   beforeEach(() => {
     Cypress.LocalStorage.clear = () => undefined
+    cy.server()
+    // cy.route('PUT', '/api/applications/*').as('saveApp');
+    cy.route('*').as('saveApp');
   })
 
   it('should navigate to the new applications form page', () => {
+    cy.wait(3000)
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
     const email = 'e2e@testing.com'
     const password = 'testing'
@@ -20,11 +24,13 @@ describe('New Application Page Smoke/E2E Testing', () => {
     cy.get('button[type=submit]').click()
     cy.wait(200)
     cy.get("[data-testid='new-claim-link']").click({multiple: true, force: true})
+    cy.wait(200)
   })
   it('section A - should enter a first name and save progress', () => {
     cy.get("input[name='firstName']").type('First Name e2e').should('have.value', 'First Name e2e')
+    cy.route('*').as('saveApp');
     cy.get("[data-testid='next-button']").click({multiple: true, force: true})
-    cy.wait(200)
+    cy.wait(1000)
   })
   it('section B - should add employee record and save progress', () => {
     // add employment record button --> name of employer --> accept button --> Next

@@ -5,6 +5,7 @@
 describe('Account Profile Settings Page Smoke/E2E Testing', () => {
   beforeEach(() => {
     Cypress.LocalStorage.clear()
+    cy.wait(3000)
   })
   const runBefore = () => {
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
@@ -20,7 +21,7 @@ describe('Account Profile Settings Page Smoke/E2E Testing', () => {
     runBefore()
     cy.wait(500)
     cy.get("[data-testid='account-menu-icon']").click()
-    cy.wat(100)
+    cy.wait(100)
     cy.get("[data-testid='account-menu-item']").click()
     cy.wait(500)
     cy.url().should('include', '/account')
