@@ -13,7 +13,7 @@ describe('Account Profile Settings Page Smoke/E2E Testing', () => {
     const password = 'Testing' // get from environment variable or mock auth call
     cy.visit('/')
     cy.get('input[name=email]').type(email).should('have.value', email)
-    cy.get('input[name=password]').type(`${password}enter`)
+    cy.get('input[name=password]').type(`${password}-{enter}`)
   }
   it('should navigate to the account profile page (web)', () => {
     cy.viewport(1400, 750)
