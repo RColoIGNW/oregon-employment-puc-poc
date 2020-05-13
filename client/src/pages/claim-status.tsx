@@ -7,22 +7,17 @@ import { SEO } from '../components/seo'
 import useApplicantFormApi from '../hooks/useApplicantFormApi'
 import useClaimStatus from '../hooks/useClaimStatus'
 import Application from '../models/Application'
-import { Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles, FormControl } from '@material-ui/core'
+import { Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
+
+import { AlertProps } from '../components/alerts/Alerts'
+import ClaimsToolbar from '../components/claims-toolbar/ClaimsToolbar'
 import Claim from '../components/claim/claim'
-
-
-
-
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     toolbar: {
-      // background: theme.palette.primary.main,
       padding: theme.spacing(2,2),
-      //borderBottom: '1px solid',
-      //borderBottomColor: theme.palette.primary.main
     },
     createAction: {
       position: 'fixed', 
@@ -32,11 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },  
   }),
 );
-
-import { AlertProps } from '../components/alerts/Alerts'
-import ClaimsToolbar, { ToolbarActionType } from '../components/claims-toolbar/ClaimsToolbar'
-
-
 
 const ClaimsStatusPage = () => {
   const classes = useStyles()
