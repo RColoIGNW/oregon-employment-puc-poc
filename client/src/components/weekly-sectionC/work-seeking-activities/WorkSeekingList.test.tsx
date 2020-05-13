@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import { workRecordType } from "../../../models/WorkSearchRecord"
 import React from 'react'
 
 import WorkSeekingList from "./WorkSeekingList"
@@ -14,7 +15,7 @@ describe('Work Search List', () => {
         contactMethod: 'string',
         typeOfWorkSought: 'string',
         result: 'string',
-        type: 'searching',
+        type: workRecordType.seeking,
         activity: '',
       }],
       onAddWorkSearchRecord: (workSearchRecord: WorkSearchRecord) => {console.log(workSearchRecord)},

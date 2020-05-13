@@ -1,5 +1,10 @@
+export enum workRecordType {
+  searching = 'searching',
+  seeking = 'seeking'
+}
+
 export default interface EmploymentRecord {
-  type: "searching" | "seeking",
+  type: workRecordType,
   id?: number,
   employer?: string | null,
   date: Date,

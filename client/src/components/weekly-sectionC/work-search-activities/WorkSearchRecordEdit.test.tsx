@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import { workRecordType } from "../../../models/WorkSearchRecord"
 import React from 'react'
 
 import WorkSearchRecordEdit from "./WorkSearchRecordEdit"
@@ -13,8 +14,8 @@ describe('Work Search Record Edit', () => {
         contactMethod: 'string',
         typeOfWorkSought: 'string',
         result: 'string',
-        unionMember: true,
-        tempLayoff: true,
+        type: workRecordType.searching,
+        activity: ''
       },
       open: true,
     }
