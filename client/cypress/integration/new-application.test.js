@@ -29,18 +29,18 @@ describe('New Application Page Smoke/E2E Testing', () => {
   it('section B - should add employee record and save progress', () => {
     // add employment record button --> name of employer --> accept button --> Next
     cy.get("[data-testid='next-button']").click({multiple: true, force: true})
-    // cy.wait(1000)
+    cy.wait(1000)
   })
   it('section C - should select an answer checkbox and save progress', () => {
     cy.get("[data-testid='C_1']").click()
     cy.get("[data-testid='next-button']").click({multiple: true, force: true})
-    // cy.wait(1000)
+    cy.wait(1000)
   })
   it('section D - should select an answer checkbox and save progress', () => {
     // checkbox --> text field --> next
     cy.get("[data-testid='D_1']").click()
     cy.get("[data-testid='next-button']").click({multiple: true, force: true})
-    // cy.wait(1000)
+    cy.wait(1000)
   })
   it('section E - should select an answer checkbox and save progress', () => {
     cy.get("[data-testid='E_1']").click()
