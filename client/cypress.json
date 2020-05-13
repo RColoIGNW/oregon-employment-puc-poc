@@ -1,6 +1,5 @@
 {
   "fixturesFolder": "cypress/fixtures",
   "chromeWebSecurity": false,
-  "video": true,
-  "projectId": "someid"
+  "video": false
 }
