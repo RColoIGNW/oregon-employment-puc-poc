@@ -19,11 +19,11 @@ describe('New Application Page Smoke/E2E Testing', () => {
     cy.get('input[name=password]').type(`${password}`)
     cy.get('button[type=submit]').click()
     cy.wait(200)
-    cy.get("[data-testid='new-claim-link']").click()
+    cy.get("[data-testid='new-claim-link']").click({multiple: true, force: true})
   })
   it('section A - should enter a first name and save progress', () => {
     cy.get("input[name='firstName']").type('First Name e2e').should('have.value', 'First Name e2e')
-    cy.get("[data-testid='next-button']").click()
+    cy.get("[data-testid='next-button']").click({multiple: true, force: true})
     cy.wait(200)
   })
   it('section B - should add employee record and save progress', () => {
