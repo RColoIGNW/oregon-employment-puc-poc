@@ -12,9 +12,6 @@ const LoginPage = (props: { location: { origin: string, pathname: string } }) =>
   const { isSignedIn } = useAuthUI(props)
   const childProps = useSignInForm()
 
-  // if (isSignedIn) {
-  //   return <>Redirecting...</>
-  // }
   if (!!isSignedIn) {
     navigate('/dashboard')
     return <>Redirecting...</>

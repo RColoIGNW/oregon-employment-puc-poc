@@ -18,6 +18,7 @@ describe('Account Profile Settings Page Smoke/E2E Testing', () => {
     cy.wait(500)
     cy.get("[data-testid='account-menu-icon']").click()
     cy.get("[data-testid='account-menu-item']").click()
+    cy.wait(500)
     cy.url().should('include', '/account')
   })
   it('should navigate to the account profile page (mobile)', () => {
@@ -25,6 +26,7 @@ describe('Account Profile Settings Page Smoke/E2E Testing', () => {
     runBefore()
     cy.wait(500)
     cy.get("[data-testid='menu-icon']").click()
+    cy.wait(100)
     cy.get("[data-testid='nav-profile-item']").click()
     cy.wait(500)
     cy.url().should('include', '/account')
