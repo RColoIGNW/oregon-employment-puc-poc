@@ -11,7 +11,7 @@ describe('New Application Page Smoke/E2E Testing', () => {
   })
 
   it('should navigate to the new applications form page', () => {
-    cy.wait(3000)
+    cy.wait(1000)
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
     const email = 'e2e@testing.com'
     const password = 'testing'

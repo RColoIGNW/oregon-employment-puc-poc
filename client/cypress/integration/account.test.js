@@ -5,7 +5,7 @@
 describe('Account Profile Settings Page Smoke/E2E Testing', () => {
   beforeEach(() => {
     Cypress.LocalStorage.clear()
-    cy.wait(3000)
+    cy.wait(1000)
   })
   const runBefore = () => {
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
