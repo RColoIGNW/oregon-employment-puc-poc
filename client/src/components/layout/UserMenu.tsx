@@ -31,6 +31,8 @@ export const UserMenu = () => {
     signOut()
   }
 
+  const handleAccountClick = () => navigate('/account')
+
   return (
     <>
       {user?.displayName}
@@ -58,8 +60,8 @@ export const UserMenu = () => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>{t('userMenu.profile')}</MenuItem>
-        <MenuItem onClick={() => navigate('/account')}>{t('userMenu.account')}</MenuItem>
+        <MenuItem onClick={handleAccountClick}>{t('userMenu.profile')}</MenuItem>
+        <MenuItem onClick={handleAccountClick}>{t('userMenu.account')}</MenuItem>
         <Divider />
         <MenuItem onClick={handleSignOut}>{t('userMenu.signOut')}</MenuItem>
       </Menu>
