@@ -8,9 +8,6 @@ describe('New Application Page Smoke/E2E Testing', () => {
   // })
   beforeEach(() => {
     Cypress.LocalStorage.clear = () => undefined
-    cy.server()
-    // cy.route('PUT', '/api/applications/*').as('saveApp');
-    cy.route('*').as('saveApp');
   })
 
   it('should navigate to the new applications form page', () => {
