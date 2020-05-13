@@ -16,7 +16,9 @@ describe('Weekly Claims Application Page Smoke/E2E Testing', () => {
     cy.get('button[type=submit]').click()
   })
   it('should navigate to the weekly claims applications form page', () => {
+    cy.wait(200)
     cy.get("[data-testid='weekly-claim-link']").click()
+    cy.wait(500)
     cy.url().should('include', '/weekly-claims')
   })
 })
