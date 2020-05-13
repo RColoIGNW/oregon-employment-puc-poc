@@ -12,7 +12,7 @@ describe('Admin Approvals Page Smoke/E2E Testing', () => {
     const password = 'Testing' // get from environment variable or mock auth call
     cy.visit('/')
     cy.get('input[name=email]').type(email).should('have.value', email)
-    cy.get('input[name=password]').type(`${password}-{enter}`)
+    cy.get('input[name=password]').type(`${password}{enter}`)
   })
   it('should navigate to the Admin Approvals page', () => {
     cy.visit('/admin/approvals') // TODO: assert menu item shows up and is clickable instead of navigating here via url directly.

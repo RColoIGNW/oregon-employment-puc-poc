@@ -17,7 +17,7 @@ describe('New Application Page Smoke/E2E Testing', () => {
     const password = 'testing'
     cy.visit('/')
     cy.get('input[name=email]').type(email)
-    cy.get('input[name=password]').type(`${password}-{enter}`)
+    cy.get('input[name=password]').type(`${password}{enter}`)
     cy.wait(200)
     cy.get("[data-testid='new-claim-link']").click({multiple: true, force: true})
     cy.wait(200)
