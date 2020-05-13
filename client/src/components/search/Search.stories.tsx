@@ -1,7 +1,7 @@
 import React from 'react'
 import Search from '.'
- import { actions } from '@storybook/addon-actions';
- import { withKnobs, number} from "@storybook/addon-knobs";
+import { action } from '@storybook/addon-actions'
+import { withKnobs, number, text} from '@storybook/addon-knobs'
 
 export default {
   title: 'Search',
@@ -10,25 +10,20 @@ export default {
 
 }
 
-const storyActionNames = actions('onSearch');
+export const SearchBasic = () => { 
+  return (
+      <Search onSearch={action('OnSearch')} />
+  )
+}
 
-export const SearchStyled = () => {
-  const delay = number("Delay", 1000)
-  return (  
-  <Search {...storyActionNames} delay={delay}/>
+export const SearchWithDelay = () => {
+  const delay = number("delay", 4000)  
+  const placeholder = text("placeholder", 'Search')  
+
+  return (
+      <Search onSearch={action('OnSearch')} delay={delay} placeholder={placeholder}/>
+    
   )
 }
 
 
-// import { storiesOf } from "@storybook/react";
-// import { action } from "@storybook/addon-actions";
-// import { withKnobs} from "@storybook/addon-knobs";
-
-
-// storiesOf("Search Component", module)
-//   .addDecorator(withKnobs)
-//   .add("with text", () => (
-//     <Search
-//       onSearch={action("searching..")}
-//     />
-//   ));

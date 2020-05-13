@@ -1,4 +1,7 @@
 {
+  "common": {
+    "search": "Search"
+  },
   "layout": {
     "title": "Pandemic unemployment assistance"
   },
@@ -20,5 +23,8 @@
     "weekClaim": "Claim a week of benefits",
     "claimStatus": "Claim Status",
     "moreDetails": "More details"
+  },
+  "claims": {
+    "newApplication": "New Application"
   }
 }

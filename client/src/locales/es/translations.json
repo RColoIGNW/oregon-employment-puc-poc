@@ -1,4 +1,7 @@
 {
+  "common": {
+    "search": "Buscar"
+  },
   "layout": {
     "title": "Asistencia de desempleo pandémico"
   },
@@ -20,5 +23,8 @@
     "weekClaim": "Reclamar una semana de beneficios",
     "claimStatus": "Estado de su reclamo",
     "moreDetails": "Más detalles"
+  },
+  "claims": {
+    "newApplication": "Nueva Aplicación"
   }
 }

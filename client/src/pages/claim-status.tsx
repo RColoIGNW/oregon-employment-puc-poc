@@ -7,83 +7,13 @@ import { SEO } from '../components/seo'
 import useApplicantFormApi from '../hooks/useApplicantFormApi'
 import useClaimStatus from '../hooks/useClaimStatus'
 import Application from '../models/Application'
-import { Checkbox, FormControlLabel, Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles, Button, Toolbar, FormControl, Input } from '@material-ui/core'
+import { Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles, FormControl } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-
 import Claim from '../components/claim/claim'
-import ClaimActions from '../components/claim-actions/ClaimActions'
-import Search from '../components/search'
 
 
-interface MainToolBarProps {
-  onSearch: (text: string) => void
-  onCreate: () => void
-}
-const MainToolBar = (props: MainToolBarProps) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  
-  const handleCreate = () => {
-    props.onCreate && props.onCreate()
-  }
-  return (
-    <Grid container direction={'row'} alignItems={'center'} justify={'space-between'}>
-      <Grid item xs={12} md={6} lg={8}>
-        <Search onSearch={props.onSearch}/>
-      </Grid>
-      {
-        !isMobile &&
-        <Grid item>
-          <Button 
-            variant="outlined" 
-            color="primary"
-            startIcon={<AddIcon />}
-            onClick={handleCreate}
-          >
-            {'New Application'}
-          </Button>
-        </Grid>
-      }
-    </Grid>
-    
-  )
-}
-interface SelectedToolBarProps {
-  selectedAmount: number
-  onClearSelecttion: () => void
-  onSearch?: (text: string) => void
-  onDiscard?: () => void
-  onEdit?: () => void
-  onDownload?: () => void
-}
-const SelectedToolBar = (props: SelectedToolBarProps) => {
-  const [checked, setChecked] = React.useState(true);
 
-  const handleClearSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked)
-    props.onClearSelecttion && props.onClearSelecttion()
-  }
-  return (
-    <Grid container direction={'row'} justify={'space-between'} alignItems={'center'} spacing={1}>
-      <Grid item>
-        <FormControlLabel
-          control={
-            <Checkbox 
-              checked={checked} 
-              onChange={handleClearSelection} 
-              name="selectedApplications" 
-              color={'primary'}
-            />          
-          }
-          label={props.selectedAmount}
-        />
-      </Grid>
-      <Grid item>
-        <ClaimActions />
-      </Grid>
-    </Grid>
-  )
-}
+
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -104,6 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 import { AlertProps } from '../components/alerts/Alerts'
+import ClaimsToolbar, { ToolbarActionType } from '../components/claims-toolbar/ClaimsToolbar'
+
 
 
 const ClaimsStatusPage = () => {
@@ -119,8 +51,12 @@ const ClaimsStatusPage = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   
   //#region Actions
+  const handleCreate = () => {
+    navigate('application')
+  }
+
   const handleEdit = (applicationId: string) => {
-    navigate('application', { state: { applicationId } })  
+    navigate('application', { state: { applicationId } })    
   }
 
   const handleDiscard = (applicationId: string) => {    
@@ -132,6 +68,24 @@ const ClaimsStatusPage = () => {
     await downloadApplication(applicationId)
   }
 
+  const handleSelectedEdit = () => {
+    console.log('editing selected applications (edit first app or avoid this action?)')
+  }
+
+  const handleSelectedDownload = async () => {
+    //TODO: Download all selected claims
+    console.log('download selected applications')
+  }
+
+  const handleSelectedDiscard = async () => {
+    //TODO: Discard all selected claims
+    console.log('discard selected applications')
+  }
+
+  const handleClearSelection = () => {
+    setSelectedList([])
+  }
+
   const handleSelect = async (applicationId: string, isSelected: boolean) => {
     console.log(selectedList)
     if (isSelected){
@@ -141,14 +95,9 @@ const ClaimsStatusPage = () => {
     }
   }
 
-  const handleClearSelection = () => {
-    setSelectedList([])
+  const handleSearch = (text: string) => {
+    setSearchText(text)
   }
-
-  const handleCreate = () => {
-    navigate('application')
-  }
-
   //#endregion
 
   //#region Effects 
@@ -198,13 +147,15 @@ const ClaimsStatusPage = () => {
       }
       <Grid container direction={'column'} spacing={2} style={{ marginTop: '1em' }}>
         <Grid item>     
-          <Toolbar>
-          {
-            (isMobile && selectedList.length > 0)
-            ? <SelectedToolBar  selectedAmount={selectedList.length} onClearSelecttion={handleClearSelection} />
-            : <MainToolBar onSearch={setSearchText} onCreate={handleCreate}/>
-          }
-          </Toolbar>
+          <ClaimsToolbar 
+            selectedAmount={selectedList.length} 
+            onCreate={handleCreate}
+            onSearch={handleSearch}
+            onEdit={handleSelectedEdit}
+            onDiscard={handleSelectedDiscard}
+            onDownload={handleSelectedDownload}
+            onClearSelection={handleClearSelection}
+          />
         </Grid>
         <Grid item>
           <Grid container direction="row" spacing={1} style={{ marginTop: '1em' }} >
