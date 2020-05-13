@@ -18,7 +18,9 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 0",
-    "deploy": "cd ./functions && npm run deploy"
+    "deploy": "cd ./functions && npm run deploy",
+    "precreate:topic": "export GOOGLE_APPLICATION_CREDENTIALS=./sa.json",
+    "create:topic": "ts-node ./scripts/create-topic"
   },
   "bugs": {
     "url": "https://github.com/IGNW/oregon-employment-puc-poc/issues"
