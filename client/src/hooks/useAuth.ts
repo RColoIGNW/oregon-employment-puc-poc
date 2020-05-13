@@ -1,4 +1,3 @@
-import { navigate } from 'gatsby';
 import { useEffect, useState } from 'react'
 import  { useContext } from 'react'
 
