@@ -1,9 +1,16 @@
+import firebase from '../lib/firebase'
+
 const log = console.log
 
 export type ResponseType = 'text' | 'blob'
 
 export interface RequestOptions extends RequestInit {
   requireJSON?: boolean
+}
+
+export const token = async () => {
+  const user = firebase.auth().currentUser
+  return user?.getIdToken() || ''
 }
 
 export async function request<T>(
@@ -22,7 +29,7 @@ export async function request<T>(url: string, options?: RequestOptions, response
   log("request: fetching", url)
 
   const headers = new Headers()
-  headers.append("Authorization", `Bearer ${localStorage.token || ""}`)
+  headers.append("Authorization", `Bearer ${await token()}`)
   headers.append("Content-Type", "application/json")
 
   let response
