@@ -3,6 +3,9 @@
 /// <reference types="Cypress" />
 
 describe('Account Profile Settings Page Smoke/E2E Testing', () => {
+  beforeEach(() => {
+    Cypress.LocalStorage.clear()
+  })
   const runBefore = () => {
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
     const email = 'me@you.com'
