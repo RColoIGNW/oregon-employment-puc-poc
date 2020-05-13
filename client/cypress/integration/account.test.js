@@ -21,7 +21,7 @@ describe('Account Profile Settings Page Smoke/E2E Testing', () => {
     cy.url().should('include', '/account')
   })
   it('should navigate to the account profile page (mobile)', () => {
-    cy.viewport(660, 750)
+    cy.viewport('iphone-x')
     runBefore()
     cy.wait(500)
     cy.get("[data-testid='menu-icon']").click()
