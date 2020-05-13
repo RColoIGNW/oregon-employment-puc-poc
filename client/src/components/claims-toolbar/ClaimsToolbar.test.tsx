@@ -4,7 +4,15 @@ import ClaimsToolbar from '.'
 
 describe('ClaimsToolbar', () => {
   it('should render the ClaimsToolbar component', () => {
-    const props = {}
+    const props = {
+      selectedAmount: 0,
+      onCreate: jest.fn(),
+      onEdit: jest.fn(),
+      onDiscard: jest.fn(),
+      onDownload: jest.fn(),
+      onClearSelection: jest.fn(),
+      onSearch: jest.fn()
+    }
     const {
       container,
       // debug,

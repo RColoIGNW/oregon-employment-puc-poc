@@ -4,7 +4,9 @@ import Search from '.'
 
 describe('Search', () => {
   it('should render the Search component', () => {
-    const props = {}
+    const props = {
+      onSearch: jest.fn()
+    }
     const {
       container,
       // debug,
