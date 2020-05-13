@@ -1,28 +1,28 @@
-import React, { useContext } from "react"
-import Img from "gatsby-image"
 import AppBar from "@material-ui/core/AppBar";
 import Container from "@material-ui/core/Container"
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
 import Grid from "@material-ui/core/Grid"
 import Hidden from "@material-ui/core/Hidden";
+import IconButton from '@material-ui/core/IconButton';
+import { Theme, createStyles, makeStyles, useTheme } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, Theme, createStyles, useTheme } from "@material-ui/core/styles";
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Divider from "@material-ui/core/Divider";
-import { graphql, navigate, useStaticQuery } from 'gatsby'
-import Drawer from "@material-ui/core/Drawer";
-import MainMenu from "./MainMenu";
-import { UserMenu, UserMenuMobile } from './UserMenu';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import MenuIcon from '@material-ui/icons/Menu';
+import { graphql, navigate, useStaticQuery } from 'gatsby'
+import Img from "gatsby-image"
+import React, { useContext } from "react"
+import { useTranslation } from "react-i18next"
 
 import { AuthContext } from '../../providers/AuthProvider'
 import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
-import { CSSDebugger } from '../css-debugger'
 import Backdrop from '../backdrop'
+import { CSSDebugger } from '../css-debugger'
 import LanguageMenu from "./LanguageMenu";
-import { useTranslation } from "react-i18next"
+import MainMenu from "./MainMenu";
+import { UserMenu, UserMenuMobile } from './UserMenu';
 
 const drawerWidth = 240;
 
@@ -101,6 +101,7 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
               edge="start"
               onClick={handleDrawerToggle}
               className={classes.menuButton}
+              data-testid={'menu-icon'}
             >
               <MenuIcon />
             </IconButton>

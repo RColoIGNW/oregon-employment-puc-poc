@@ -30,6 +30,7 @@
     "start:ci": "npm run serve",
     "copy:assets": "cp -R ./src/images/ ./public/images/",
     "plop:component": "plop --plopfile ./node_modules/ignw-component-generator/plopfile.ts",
+    "precy:open": "npm run build && npm run serve  & wait-on http://localhost:5000",
     "cy:open": "NODE_ENV=production CYPRESS_BASE_URL=http://localhost:5000 cypress open",
     "test:cy": "cypress run",
     "pretest:ci": "export REACT_APP_API_HOST=https://oed-poc-server-ohkmuktm2a-uw.a.run.app",

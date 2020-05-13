@@ -6,23 +6,21 @@ describe('New Application Page Smoke/E2E Testing', () => {
   // after(() => {
     // cleanup applications from db
   // })
-  // before(() => {
-  //   Cypress.LocalStorage.clear()
-  // })
   beforeEach(() => {
-    Cypress.LocalStorage.clear = () => undefined // persist localstorage for auth token
+    Cypress.LocalStorage.clear = () => undefined
   })
 
   it('should navigate to the new applications form page', () => {
+    cy.wait(1000)
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
     const email = 'e2e@testing.com'
     const password = 'testing'
     cy.visit('/')
     cy.get('input[name=email]').type(email)
-    cy.get('input[name=password]').type(`${password}`)
-    cy.get('button[type=submit]').click()
-    cy.get("[data-testid='new-claim-link']").click()
-    cy.url().should('include', '/application')
+    cy.get('input[name=password]').type(`${password}{enter}`)
+    cy.wait(200)
+    cy.get("[data-testid='new-claim-link']").click({multiple: true, force: true})
+    cy.wait(200)
   })
   it('section A - should enter a first name and save progress', () => {
     cy.get("input[name='firstName']").type('First Name e2e').should('have.value', 'First Name e2e')

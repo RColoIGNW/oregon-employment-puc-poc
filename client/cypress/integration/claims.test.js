@@ -12,11 +12,12 @@ describe('Claim Status Page Smoke/E2E Testing', () => {
     const password = 'Testing' // get from environment variable or mock auth call
     cy.visit('/')
     cy.get('input[name=email]').type(email).should('have.value', email)
-    cy.get('input[name=password]').type(`${password}`)
-    cy.get('button[type=submit]').click()
+    cy.get('input[name=password]').type(`${password}{enter}`)
+    cy.wait(500)
   })
   it('should navigate to the claim page', () => {
     cy.get("[data-testid='view-claims-link']").click()
+    cy.wait(500)
     cy.url().should('include', '/claim-status')
   })
 })

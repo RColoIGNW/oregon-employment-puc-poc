@@ -108,7 +108,7 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
 
   const create = async () => {
     try {
-      const userId: any = localStorage.getItem('uid')
+      const userId: any = storage.load('uid')
       const { applicationId: id } = await api.createApplication()
       setApplication({ ...application, id, userId } as Application)
     } catch (e) {

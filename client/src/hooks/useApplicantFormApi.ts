@@ -1,12 +1,15 @@
 import { useContext } from 'react'
 
+import firebase from '../lib/firebase';
 import Application from '../models/Application'
 import { ApplicationStatus } from '../models/ApplicationStatus'
 import { TransitionContext } from '../providers/TransitionProvider'
 import { RequestOptions, ResponseType, request } from '../util/request'
+import storage from '../util/storage'
 
 export default () => {
   const { setState: setTransitionState } = useContext(TransitionContext)
+  const userId = firebase?.auth?.()?.currentUser?.uid || storage.load('uid')
 
   const getUnapprovedApplications = () => {
     return doRequest(`${process.env.REACT_APP_API_HOST}/api/applications`)
@@ -26,7 +29,6 @@ export default () => {
   }
 
   const createApplication = (): Promise<any> => {
-    const userId = localStorage.getItem('uid')
     const requestOptions = {
       method: 'PUT',
       body: JSON.stringify({ userId }),
@@ -38,14 +40,14 @@ export default () => {
   const updateApplication = (application: Partial<Application|any>) => {
     const requestOptions = {
       method: 'PATCH',
-      body: JSON.stringify({...application, success: undefined, applicationId: undefined, id: application?.applicationId as string }), // TODO: fix upstream data
+      body: JSON.stringify({...application, userId, lastModified: undefined, success: undefined, applicationId: undefined, id: application?.applicationId as string }), // TODO: fix upstream data
       redirect: 'follow',
     }
     return doRequest(`${process.env.REACT_APP_API_HOST}/api/applications/${application.id}`, requestOptions as any)
   }
 
   const getUserApplications = (): Promise<Application[]> => {
-    const userId = localStorage.getItem('uid')
+    const userId = storage.load('uid')
     return doRequest(`${process.env.REACT_APP_API_HOST}/api/users/${userId}/applications`)
       .then((result: any) => {
         if (!result.success) { return [] }
