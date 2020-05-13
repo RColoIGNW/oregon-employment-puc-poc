@@ -6,6 +6,9 @@ describe('New Application Page Smoke/E2E Testing', () => {
   // after(() => {
     // cleanup applications from db
   // })
+  beforeEach(() => {
+    Cypress.LocalStorage.clear = () => undefined
+  })
 
   it('should navigate to the new applications form page', () => {
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')

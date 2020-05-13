@@ -9,15 +9,9 @@ import storage from '../util/storage'
 
 export default (props: { location: { origin: string, pathname: string } }) => {
   const { setState: updateTransition, state: loadingState } = useContext(TransitionContext)
-  const [token, setToken] = useState(typeof window !== 'undefined' && storage.load('token') || '')
+  const [token, setToken] = useState(typeof window !== 'undefined' && storage.load('token'))
   const user = firebase?.auth?.()?.currentUser
   const isSignedIn = !!token && user?.uid && props.location.pathname === "/"
-
-  useEffect(() => {
-    if (!!isSignedIn) {
-      navigate('/dashboard')
-    }
-  }, [token, setToken])
 
   if (typeof window !== 'undefined') {
     useEffect(() => {
