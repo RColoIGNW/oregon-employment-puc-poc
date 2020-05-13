@@ -6,6 +6,7 @@ describe('New Application Page Smoke/E2E Testing', () => {
   // after(() => {
     // cleanup applications from db
   // })
+  Cypress.LocalStorage.clear()
   beforeEach(() => {
     Cypress.LocalStorage.clear = () => undefined
   })
@@ -16,14 +17,14 @@ describe('New Application Page Smoke/E2E Testing', () => {
     const email = 'e2e@testing.com'
     const password = 'testing'
     cy.visit('/')
-    cy.get('input[name=email]').type(email, { force: true })
+    cy.get('input[name=email]').type(email)
     cy.get('input[name=password]').type(`${password}{enter}`, { force: true })
     cy.wait(200)
-    cy.get("[data-testid='new-claim-link']").click({multiple: true, force: true})
-    cy.wait(200)
+    cy.get("[data-testid='new-claim-link']").click({ force: true})
   })
   it('section A - should enter a first name and save progress', () => {
-    cy.get("input[name='firstName']").type('First Name e2e', { force: true }).should('have.value', 'First Name e2e')
+    cy.wait(200)
+    cy.get("input[name='firstName']").type('First Name e2e').should('have.value', 'First Name e2e')
     cy.get("[data-testid='next-button']").click({multiple: true, force: true})
     cy.wait(1000)
   })
