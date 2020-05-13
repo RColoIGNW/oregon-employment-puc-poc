@@ -3,10 +3,7 @@
 /// <reference types="Cypress" />
 
 describe('Account Profile Settings Page Smoke/E2E Testing', () => {
-  // afterEach(() => {
-  //   // cy.get('[data-e2e=sign-out-button]').click()
-  // })
-  beforeEach(() => {
+  const runBefore = () => {
     Cypress.env('REACT_APP_API_HOST', 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app')
     const email = 'me@you.com'
     const password = 'Testing' // get from environment variable or mock auth call
@@ -14,10 +11,22 @@ describe('Account Profile Settings Page Smoke/E2E Testing', () => {
     cy.get('input[name=email]').type(email).should('have.value', email)
     cy.get('input[name=password]').type(`${password}`)
     cy.get('button[type=submit]').click()
-  })
-  it('should navigate to the account profile page', () => {
+  }
+  it('should navigate to the account profile page (web)', () => {
+    cy.viewport(1400, 750)
+    runBefore()
+    cy.wait(500)
     cy.get("[data-testid='account-menu-icon']").click()
     cy.get("[data-testid='account-menu-item']").click()
+    cy.url().should('include', '/account')
+  })
+  it('should navigate to the account profile page (mobile)', () => {
+    cy.viewport(660, 750)
+    runBefore()
+    cy.wait(500)
+    cy.get("[data-testid='menu-icon']").click()
+    cy.get("[data-testid='nav-profile-item']").click()
+    cy.wait(500)
     cy.url().should('include', '/account')
   })
 })

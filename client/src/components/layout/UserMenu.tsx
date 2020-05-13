@@ -42,6 +42,7 @@ export const UserMenu = () => {
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"
+        data-testid={'account-menu-icon'}
       >
         <AccountCircle />
       </IconButton>
@@ -59,7 +60,6 @@ export const UserMenu = () => {
         }}
         open={open}
         onClose={handleClose}
-        data-testid={'account-menu-icon'}
       >
         <MenuItem onClick={handleAccountClick}>{t('userMenu.profile')}</MenuItem>
         <MenuItem onClick={handleAccountClick} data-testid={'account-menu-item'}>{t('userMenu.account')}</MenuItem>
@@ -85,7 +85,7 @@ export const UserMenuMobile = () => {
       <Grid item xs={12}>
         <Grid container justify="space-between">
           <Grid item>
-            <Button color="primary" onClick={() => navigate('/account')}>{t('userMenu.profile')}</Button>
+            <Button color="primary" onClick={() => navigate('/account')} data-testid={'nav-profile-item'}>{t('userMenu.profile')}</Button>
           </Grid>
           <Grid item>
             <Button color="primary" onClick={signOut} endIcon={<ExitToAppIcon />}>{t('userMenu.signOut')}</Button>
