@@ -1,11 +1,11 @@
 'use strict'
 
-process.env.GOOGLE_APPLICATION_CREDENTIALS = __dirname + '../../sa.json'
+import path from 'path'
 
-// Imports the Google Cloud client library
 import  { PubSub } from '@google-cloud/pubsub'
 
-// Creates a client; cache this for further use
+process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, '../../sa.json')
+
 const pubSubClient = new PubSub()
 
 interface PublishMessage {
@@ -14,7 +14,7 @@ interface PublishMessage {
 }
 
 export const publishMessage = async ({topicName, data}: PublishMessage) => {
-  const dataBuffer = Buffer.from(data)
+  const dataBuffer = Buffer.from(JSON.stringify(data))
   const messageId = await pubSubClient
     .topic(topicName)
     .publish(dataBuffer)
