@@ -20,6 +20,7 @@ describe('Account Profile Settings Page Smoke/E2E Testing', () => {
     runBefore()
     cy.wait(500)
     cy.get("[data-testid='account-menu-icon']").click()
+    cy.wat(100)
     cy.get("[data-testid='account-menu-item']").click()
     cy.wait(500)
     cy.url().should('include', '/account')
