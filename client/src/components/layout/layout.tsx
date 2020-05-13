@@ -21,6 +21,8 @@ import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
 import { CSSDebugger } from '../css-debugger'
 import Backdrop from '../backdrop'
+import LanguageMenu from "./LanguageMenu";
+import { useTranslation } from "react-i18next"
 
 const drawerWidth = 240;
 
@@ -73,6 +75,8 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
   `)
 
   const { children, alert } = props
+  const { t } = useTranslation()
+
   const { user } = useContext(AuthContext)
   const showDebugger = typeof window !== 'undefined' && !!window.location.href.includes('localhost')
   const classes = useStyles()
@@ -101,12 +105,14 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
               <MenuIcon />
             </IconButton>
           }
-          <Hidden xsDown>
+          <Hidden smDown>
             <div onClick={onHomeClick} className={classes.image}>
               <Img loading="eager" fixed={data?.file?.childImageSharp?.fixed} placeholderStyle={{ visibility: "hidden" }} />
             </div>
           </Hidden>
-          <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>Pandemic Unemployment Assistance</Typography>
+        <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>{t('layout.title')}</Typography>
+          <div style={{flex: '1 1 auto'}} />
+          <LanguageMenu />
           <Hidden mdDown>
             {user?.token &&
               <UserMenu />
