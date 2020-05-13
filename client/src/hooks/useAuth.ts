@@ -5,10 +5,11 @@ import  { useContext } from 'react'
 import firebase from '../lib/firebase'
 import firebaseui from '../lib/firebaseUI'
 import { TransitionContext } from '../providers/TransitionProvider'
+import storage from '../util/storage'
 
 export default (props: { location: { origin: string, pathname: string } }) => {
   const { setState: updateTransition, state: loadingState } = useContext(TransitionContext)
-  const [token, setToken] = useState(typeof window !== 'undefined' && localStorage.token || '')
+  const [token, setToken] = useState(typeof window !== 'undefined' && storage.load('token') || '')
   const user = firebase?.auth?.()?.currentUser
   const isSignedIn = !!token && user?.uid && props.location.pathname === "/"
 

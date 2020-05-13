@@ -1,4 +1,5 @@
 import firebase from '../lib/firebase'
+import storage from './storage'
 
 const log = console.log
 
@@ -9,8 +10,13 @@ export interface RequestOptions extends RequestInit {
 }
 
 export const token = async () => {
+  if (storage.load('token')) {
+    return storage.load('token')
+  }
   const user = firebase.auth().currentUser
-  return user?.getIdToken() || ''
+  const userToken = user?.getIdToken() || ''
+  storage.save('token', userToken)
+  return userToken
 }
 
 export async function request<T>(
