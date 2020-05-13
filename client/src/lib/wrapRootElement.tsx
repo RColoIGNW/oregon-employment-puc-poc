@@ -4,13 +4,15 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import React, { ReactNode } from "react"
 import { Helmet } from 'react-helmet'
+import { I18nextProvider } from 'react-i18next'
 
+import i18next from '../i18n/config'
 import Toast from '../components/toast'
 import AuthProvider from '../providers/AuthProvider'
 import TransitionProvider from '../providers/TransitionProvider'
 import theme from '../themes/theme-light'
 
-const WrapRootElement:React.FC<{ element: ReactNode }> = ({element}) => {
+const WrapRootElement: React.FC<{ element: ReactNode }> = ({ element }) => {
   return (
     <React.Fragment>
       <Helmet>
@@ -20,15 +22,17 @@ const WrapRootElement:React.FC<{ element: ReactNode }> = ({element}) => {
           rel="preconnect"
         />
       </Helmet>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AuthProvider>
-        <TransitionProvider>
-          {element}
-        </TransitionProvider>
-      </AuthProvider>
-      <Toast />
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AuthProvider>
+          <TransitionProvider>
+            <I18nextProvider i18n={i18next} >
+              {element}
+            </I18nextProvider>
+          </TransitionProvider>
+        </AuthProvider>
+        <Toast />
+      </ThemeProvider>
     </React.Fragment>
   )
 }

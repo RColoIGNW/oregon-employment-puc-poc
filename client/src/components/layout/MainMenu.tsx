@@ -8,6 +8,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import { Link as GatsbyLink, GatsbyLinkProps } from 'gatsby'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface ListItemLinkProps {
   to: string;
@@ -31,11 +32,12 @@ const ListItemLink = (props: ListItemLinkProps) => {
 }
 
 export default () => {
+  const { t } = useTranslation()
   const menu = [
-    { label: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-    { label: 'New application', icon: <AddBoxIcon />, path: '/application' },
-    { label: 'Weekly claims', icon: <DateRangeIcon />, path: '/weekly-claims' },
-    { label: 'Claim status', icon: <CheckBoxIcon />, path: '/claim-status' },
+    { label: t('mainMenu.dashboard'), icon: <DashboardIcon />, path: '/dashboard' },
+    { label: t('mainMenu.newApplication'), icon: <AddBoxIcon />, path: '/application' },
+    { label: t('mainMenu.weeklyClaims'), icon: <DateRangeIcon />, path: '/weekly-claims' },
+    { label: t('mainMenu.claimStatus'), icon: <CheckBoxIcon />, path: '/claim-status' },
   ]
 
   return (
