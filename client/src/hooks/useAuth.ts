@@ -9,7 +9,7 @@ import { TransitionContext } from '../providers/TransitionProvider'
 export default (props: { location: { origin: string, pathname: string } }) => {
   const { setState: updateTransition, state: loadingState } = useContext(TransitionContext)
   const [token, setToken] = useState(typeof window !== 'undefined' && localStorage.token || '')
-  const user = firebase.auth().currentUser
+  const user = firebase?.auth?.()?.currentUser
   const isSignedIn = !!token && user?.uid && props.location.pathname === "/"
 
   useEffect(() => {

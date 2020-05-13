@@ -59,9 +59,10 @@ export const UserMenu = () => {
         }}
         open={open}
         onClose={handleClose}
+        data-testid={'account-menu-icon'}
       >
         <MenuItem onClick={handleAccountClick}>{t('userMenu.profile')}</MenuItem>
-        <MenuItem onClick={handleAccountClick}>{t('userMenu.account')}</MenuItem>
+        <MenuItem onClick={handleAccountClick} data-testid={'account-menu-item'}>{t('userMenu.account')}</MenuItem>
         <Divider />
         <MenuItem onClick={handleSignOut}>{t('userMenu.signOut')}</MenuItem>
       </Menu>

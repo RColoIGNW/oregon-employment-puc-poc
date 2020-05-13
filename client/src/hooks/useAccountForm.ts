@@ -12,8 +12,8 @@ export default () => {
     email: user?.email || '',
     password: '',
     confirmPassword: '',
-    displayName: user.displayName || '',
-    photoUrl: user.photoUrl || '',
+    displayName: user?.displayName || '',
+    photoUrl: user?.photoUrl || '',
     providerId: user?.providerData?.[0]?.providerId
   })
 
