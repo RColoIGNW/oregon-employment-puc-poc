@@ -5,7 +5,7 @@ import React from "react"
 import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
 import SignInForm from '../components/sign-in-form'
-import useAuthUI from '../hooks/useAuth'
+import useAuthUI from '../hooks/useAuthUI'
 import useSignInForm from '../hooks/useSignIn'
 
 const LoginPage = (props: { location: { origin: string, pathname: string } }) => {
