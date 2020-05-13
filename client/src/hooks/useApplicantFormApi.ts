@@ -9,7 +9,7 @@ import storage from '../util/storage'
 
 export default () => {
   const { setState: setTransitionState } = useContext(TransitionContext)
-  const userId = firebase?.auth?.()?.currentUser?.uid
+  const userId = firebase?.auth?.()?.currentUser?.uid || storage.load('uid')
 
   const getUnapprovedApplications = () => {
     return doRequest(`${process.env.REACT_APP_API_HOST}/api/applications`)

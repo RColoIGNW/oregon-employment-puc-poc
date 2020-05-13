@@ -34,7 +34,7 @@ export const AuthContext: Context<AuthContext> = createContext<AuthContext>(
 
 export const AuthProvider: FC = ({ children }) => {
   const [ user, loading, error ] = useAuthState(firebase.auth && firebase.auth())
-  const [token, setToken] = useState(typeof window !== 'undefined' && localStorage.token || '')
+  const [token, setToken] = useState(typeof window !== 'undefined' && storage.load('token') || '')
 
   const signOut = async () => {
     await firebase.auth().signOut()
