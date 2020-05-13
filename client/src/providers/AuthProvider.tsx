@@ -10,6 +10,7 @@ import React, {
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 import firebase from '../lib/firebase'
+import storage from '../util/storage'
 
 export interface AuthUser extends User {
   token: string
@@ -24,7 +25,7 @@ export interface AuthContext {
 
 export const AuthContext: Context<AuthContext> = createContext<AuthContext>(
   {
-    user: undefined,
+    user: storage.load('user')?.uid && storage.load('user') || undefined,
     loading: true,
     error: undefined,
     signOut: () => {}
@@ -44,9 +45,10 @@ export const AuthProvider: FC = ({ children }) => {
   useEffect(() => {
     const getAccountInformation = async () => {
       const t = await user?.getIdToken() || ''
-      localStorage.setItem('token', t)
-      localStorage.setItem('uid', user?.uid || '')
+      storage.save('token', t)
+      storage.save('uid', user?.uid || '')
       setToken(t)
+      storage.save('user', user || {})
     }
     getAccountInformation() // tslint:disable-line
   }, [ user ])

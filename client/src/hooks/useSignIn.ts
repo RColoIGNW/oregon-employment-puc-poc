@@ -22,18 +22,25 @@ export default () => {
     }
   }
 
+  const onKeyUp = (event: any) => {
+    if (event.keyCode === 13) {
+      return handleSubmit()
+    }
+  }
+
   const handleSubmit = () => {
     firebase.auth().signInWithEmailAndPassword(state.email, state.password)
     .then(() => navigate('/dashboard'))
     .catch((error: any) => {
       const errorMessage = error.message;
       snackbar.showFeedback({message: errorMessage, severity: 'error'})
-    });
+    })
   }
 
   return {
     handleSubmit,
     handleChange,
+    onKeyUp,
     email: state.email,
     password: state.password,
     rememeberMe: state.rememberMe,
