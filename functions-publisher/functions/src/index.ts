@@ -1,34 +1,39 @@
 import * as functions from 'firebase-functions'
 
-export const applicationStarted = functions.firestore
+import publishMessage from './pub-sub'
+
+export const onApplicationStarted = functions.firestore
   .document('applications/{applicationId}')
-  .onCreate((snap: any) => {
+  .onCreate(async (snap: any, context: any) => {
     const newValue = snap.data()
-    // perform desired operations ...
-    console.info('Trigger App Started Pub/Sub Event',  newValue)
+    const data = { id: context.params.applicationId }
+    await publishMessage({ topicName: 'pua-claims', data })
+    console.info('Triggered Application Started Pub/Sub Event',  newValue)
   })
 
-export const applicationChanged = functions.firestore
+export const onApplicationChanged = functions.firestore
   .document('applications/{applicationId}')
-  .onUpdate((change: any) => {
+  .onUpdate(async (change: any, context: any) => {
     const newValue = change.after.data()
+    const data = { id: context.params.applicationId }
     // ...or the previous value before this update
     // const previousValue = change.before.data()
-    // perform desired operations ...
-    console.info('Trigger App Change Pub/Sub Event', newValue)
+    await publishMessage({ topicName: 'pua-claims', data })
+    console.info('Triggered Application Change Pub/Sub Event', newValue)
   })
 
-export const applicationDeleted = functions.firestore
+export const onApplicationDeleted = functions.firestore
   .document('applications/{applicationId}')
-  .onDelete((snap: any) => {
+  .onDelete(async (snap: any, context: any) => {
     const deletedValue = snap.data()
-    // perform desired operations ...
-    console.info('Trigger App Deleted Pub/Sub Event',  deletedValue)
+    const data = { id: context.params.applicationId }
+    await publishMessage({ topicName: 'pua-claims', data })
+    console.info('Trigger Application Deleted Pub/Sub Event',  deletedValue)
   })
 
 export const applicationSubscriber = functions.pubsub
   .topic('pua-claims')
-  .onPublish((message: any, context: any) => {
+  .onPublish(async (message: any, context: any) => {
     console.info(message.json)
     console.info('The function was triggered at ', context.timestamp)
     console.info('The unique ID for the event is', context.eventId)
