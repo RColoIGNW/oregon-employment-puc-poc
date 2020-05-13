@@ -24,7 +24,6 @@ describe('New Application Page Smoke/E2E Testing', () => {
   })
   it('section A - should enter a first name and save progress', () => {
     cy.get("input[name='firstName']").type('First Name e2e').should('have.value', 'First Name e2e')
-    cy.route('*').as('saveApp');
     cy.get("[data-testid='next-button']").click({multiple: true, force: true})
     cy.wait(1000)
   })
