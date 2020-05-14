@@ -6,9 +6,6 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import SettingsIcon from '@material-ui/icons/Settings';
-import HelpIcon from '@material-ui/icons/Help';
-import InfoIcon from '@material-ui/icons/Info';
 import { Link as GatsbyLink, GatsbyLinkProps } from 'gatsby'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -41,9 +38,6 @@ export default () => {
     { label: t('mainMenu.newClaim'), icon: <CreateNewFolderIcon />, path: '/application' },
     { label: t('mainMenu.claimWeek'), icon: <DateRangeIcon />, path: '/weekly-claims' },
     { label: t('mainMenu.claimStatus'), icon: <CheckBoxIcon />, path: '/claim-status' },
-    // { label: t('mainMenu.settings'), icon: <SettingsIcon />, path: '/settings' },
-    // { label: t('mainMenu.help'), icon: <HelpIcon />, path: '/help' },
-    // { label: t('mainMenu.about'), icon: <InfoIcon />, path: '/about' },
   ]
 
   return (
