@@ -41,8 +41,10 @@ export const routes = (router: Router) => {
 
   router
     .route('/applications/:id')
+    .put(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
+  router
+    .route('/applications/:id')
     .patch(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
-    
 
   router
     .route('/applications/:id/submit')
@@ -72,9 +74,6 @@ export const routes = (router: Router) => {
   router
     .route('/weekly-applications/:id')
     .patch(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
-    //.patch(decodeToken, isAuthorized, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
-    
-
   router
     .route('/weekly-applications/:id/submit')
     .patch(decodeToken, isAuthorized, applicationApi.submitDocument.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))

@@ -90,6 +90,7 @@ export default interface ApplicationSchema {
   isCertified?: boolean
   certifiedBy?: string
   dateApplied?: Date|string
+  dateCreated?: Date|string
   userId?: string
 }
 

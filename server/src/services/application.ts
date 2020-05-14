@@ -100,6 +100,7 @@ const updateDocumentById = async (collectionName: string, req: Request, res: Res
       success: true
     })
   } catch (error) {
+    log.error('failed to update doc', error)
     res.status(400).json({ error })
   }
 }
