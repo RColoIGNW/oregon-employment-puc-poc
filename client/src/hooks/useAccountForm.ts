@@ -12,6 +12,7 @@ export default () => {
     email: user?.email || '',
     password: '',
     confirmPassword: '',
+    currentPassword: '',
     displayName: user?.displayName || '',
     photoUrl: user?.photoUrl || '',
     providerId: user?.providerData?.[0]?.providerId
@@ -37,9 +38,10 @@ export default () => {
     return user.updateProfile(profile)
   }
 
-  const updatePassword = (password = state.password): Promise<any> => {
-    if (state.providerId === 'password' && !!password) {
+  const updatePassword = async (password = state.password): Promise<any> => {
+    if (state.providerId === 'password' && !!password && !!state.currentPassword) {
       const user: any = firebase.auth().currentUser
+      await user.reauthenticateWithCredential(state.currentPassword)
       return user.updatePassword(password)
     }
     return Promise.resolve()

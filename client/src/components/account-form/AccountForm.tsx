@@ -33,6 +33,7 @@ interface AccountFormProps {
   email: string
   password: string
   confirmPassword: string
+  currentPassword: string
   displayName: string
   handleChange: (event: any) => void
   handleSubmit: () => any
@@ -87,11 +88,25 @@ export default function AccountForm(props: AccountFormProps) {
                   variant="outlined"
                   required
                   fullWidth
+                  name="currentPassword"
+                  label="Current Password (required for email/password changes)"
+                  type="password"
+                  id="curren-passwordt"
+                  autoComplete="current-password"
+                  defaultValue={props.currentPassword}
+                  onChange={props.handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
                   name="password"
-                  label="Password"
+                  label="New Password"
                   type="password"
                   id="password"
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   defaultValue={props.password}
                   onChange={props.handleChange}
                 />
@@ -102,7 +117,7 @@ export default function AccountForm(props: AccountFormProps) {
                   required
                   fullWidth
                   name="confirmPassword"
-                  label="Confirm Password"
+                  label="Confirm New Password"
                   type="password"
                   id="confirm-password"
                   autoComplete="confirm-password"

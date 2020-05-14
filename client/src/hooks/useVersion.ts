@@ -8,12 +8,6 @@ export default () => {
   {
     site {
       siteMetadata {
-        title
-        description
-        author
-        url
-        keywords
-        image
         version
       }
     }
