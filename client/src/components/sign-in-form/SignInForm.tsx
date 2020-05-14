@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { Link } from 'gatsby'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,6 +44,7 @@ interface SignInFormProps {
 
 export default function SignIn(props: SignInFormProps) {
   const classes = useStyles()
+  const { t } = useTranslation()
 
   return (
     <Container component="main" maxWidth="xs" style={{marginTop: '-4em'}}>
@@ -52,7 +54,7 @@ export default function SignIn(props: SignInFormProps) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography color={'primary'} component="h1" variant="h5">
-          Sign in
+          {t('login.signIn')}
         </Typography>
         <TextField
           variant="outlined"
@@ -60,7 +62,7 @@ export default function SignIn(props: SignInFormProps) {
           required
           fullWidth
           id="email"
-          label="Email Address"
+          label={t('login.email')}
           name="email"
           autoComplete="email"
           autoFocus
@@ -73,7 +75,7 @@ export default function SignIn(props: SignInFormProps) {
           required
           fullWidth
           name="password"
-          label="Password"
+          label={t('login.password')}
           type="password"
           id="password"
           autoComplete="current-password"
@@ -83,7 +85,7 @@ export default function SignIn(props: SignInFormProps) {
         <FormControlLabel
           style={{left: 0, display: 'flex', justifyContent: 'flex-start', width: '100%'}}
           control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
+          label={t('login.rememberMe')}
         />
         <Button
           type="submit"
@@ -93,17 +95,17 @@ export default function SignIn(props: SignInFormProps) {
           className={classes.submit}
           onClick={props.handleSubmit}
         >
-          Sign In
+          {t('login.signIn')}
         </Button>
         <Grid container style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <Grid item>
             <Link to={'/forgot-password'}>
-              Forgot password?
+              {t('login.forgotPassword')}
             </Link>
           </Grid>
           <Grid item>
             <Link to={'/sign-up'}>
-              {"Don't have an account? Sign Up"}
+              {t('login.signUp')}
             </Link>
           </Grid>
         </Grid>

@@ -4,14 +4,29 @@
   },
   "mainMenu": {
     "dashboard": "Panel de Control",
-    "newApplication": "Nueva Aplicación",
-    "weeklyClaims": "Reclamar Semana",
-    "claimStatus": "Estado de Reclamos"
+    "newClaim": "Nueva Aplicación",
+    "claimWeek": "Reclamar Semana",
+    "claimStatus": "Estado de Reclamos",
+    "settings": "Configuración",
+    "help": "Ayuda",
+    "about": "Acerca de"
   },
   "userMenu": {
     "profile": "Perfil",
     "account": "Cuenta",
     "signOut": "Salir"
+  },
+  "login": {
+    "redirecting": "Redireccionando...",
+    "title": "Login - Oregon Departamento de Empleo Asistencia de desempleo pandémico",
+    "message": "Para continuar, ingrese al Departamento de Empleo de Oregon",
+    "or": "O",
+    "signIn": "Ingresar",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "rememberMe": "Recuérdame",
+    "forgotPassword": "¿Olvidó su contraseña?",
+    "signUp": "¿No tiene una cuenta? Regístrese"
   },
   "dashboard": {
     "alert": "¿Tiene preguntas sobre cómo presentar su reclamo de seguro de desempleo y los posibles beneficios? Revise nuestra página COVID-19 para más información, incluidas preguntas frecuentes y tutoriales en video. Si aún tiene preguntas, envíe un mensaje detallado a la Ayuda de UI y le responderemos lo antes posible.",
