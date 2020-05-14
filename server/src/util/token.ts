@@ -26,7 +26,7 @@ export const decodeToken: RequestHandler = async (
     req.user = await auth.verifyIdToken(req.token)
     next()
   } catch (error) {
-    log.error(error)
+    log.error(error, `bad token sent: ${req.token}`)
     return res.status(401).json({ error })
   }
 }

@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react'
-
 import { SnackBarContext } from '../providers/SnackbarProvider'
 import { request } from '../util/request'
 import useApplicantFormApi from './useApplicantFormApi'
 import Application from '../models/Application'
+import storage from '../util/storage'
+
 
 export default () => {
   const snackbar = useContext(SnackBarContext)
@@ -15,7 +16,7 @@ export default () => {
   const downloadApplication = async (applicationId: string) => {
     const headers = new Headers()
     headers.append("Content-Type", "application/pdf")
-    headers.append("Authorization", `Bearer ${localStorage.token || ""}`)
+    headers.append("Authorization", `Bearer ${storage.load('token')}`)
 
     const requestOptions = {
       method: 'GET',
