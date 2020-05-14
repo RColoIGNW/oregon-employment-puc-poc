@@ -1,6 +1,6 @@
 {
   "include": ["./src/**/*"],
-  "exclude": ["node_modules", "src/**/*.stories.tsx", "src/**/*.styles.*"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es5",
     "jsx": "react",
@@ -13,9 +13,5 @@
     "noFallthroughCasesInSwitch": true,
     "typeRoots": ["node_modules/@types/", "./src/@types/", ".src/**/@types/"],
     "strict": true,
-    "composite": true
-  },
-  "references": [
-    { "path": "../server" }
-]
+  }
 }
