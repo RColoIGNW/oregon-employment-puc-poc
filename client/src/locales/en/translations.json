@@ -32,8 +32,11 @@
     "alert": "Have questions about filing your unemployment insurance claim and potential benefits? Please review our COVID-19 page for information, including frequently asked questions and video tutorials. If you still have questions please send a detailed message to UI Help and we will respond as soon as possible.",
     "title": "Welcome to your online claim system",
     "newClaim": "File your new claim",
+    "newClaimDescription": "Establish a new claim for Oregon unemployment benefits. If you are filing due to COVID- 19, please watch this training video.",
     "weekClaim": "Claim a week of benefits",
+    "weekClaimDescription": "Claim a week of unemployment benefits once your claim is established. Just like claiming by phone but easier! * Please see notes below. If you completed your New Claim this week, please wait until Sunday to Claim a Week of Benefits. If you are out of work due to COVID- 19, please read the FAQs prior to claiming a week of benefits.",
     "claimStatus": "Claim Status",
+    "claimStatusDescription": "See the status of your current weekly claim report (if claimed by Internet or phone)",
     "moreDetails": "More details"
   }
 }

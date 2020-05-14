@@ -62,21 +62,21 @@ export default function DashboardPage() {
   const menuItems = [
     {
       buttonLabel: t('dashboard.newClaim'),
-      description: 'Establish a new claim for Oregon unemployment benefits. If you are filing due to COVID- 19, please watch this training video.',
+      description: t('dashboard.newClaimDescription'),
       link: '/application',
       handleClick: handleNavigate,
       e2e: 'new-claim-link'
     },
     {
       buttonLabel: t('dashboard.weekClaim'),
-      description: 'Claim a week of unemployment benefits once your claim is established. Just like claiming by phone but easier! * Please see notes below. If you completed your New Claim this week, please wait until Sunday to Claim a Week of Benefits. If you are out of work due to COVID- 19, please read the FAQs prior to claiming a week of benefits.',
+      description: t('dashboard.weekClaimDescription'),
       link: '/weekly-claims',
       handleClick: handleNavigate,
       e2e: 'weekly-claim-link'
     },
     {
       buttonLabel: t('dashboard.claimStatus'),
-      description: 'See the status of your current weekly claim report (if claimed by Internet or phone)',
+      description: t('dashboard.claimStatusDescription'),
       link: '/claim-status',
       handleClick: handleNavigate,
       e2e: 'view-claims-link'
