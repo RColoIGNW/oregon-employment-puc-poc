@@ -1,10 +1,6 @@
 'use strict'
 
-import path from 'path'
-
 import  { PubSub } from '@google-cloud/pubsub'
-
-process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, '../../sa.json')
 
 const pubSubClient = new PubSub()
 
