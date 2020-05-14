@@ -70,7 +70,7 @@ export default function DashboardPage() {
     {
       buttonLabel: t('dashboard.weekClaim'),
       description: t('dashboard.weekClaimDescription'),
-      link: '/weekly-claims',
+      link: '/ui-review',
       handleClick: handleNavigate,
       e2e: 'weekly-claim-link'
     },
