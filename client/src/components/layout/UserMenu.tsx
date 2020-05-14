@@ -38,6 +38,7 @@ export const UserMenu = () => {
         endIcon={<AccountCircle />}
         onClick={handleMenu}
         color="inherit"
+        data-testid={'account-menu-icon'}
       >
          {user?.displayName}
       </Button>
