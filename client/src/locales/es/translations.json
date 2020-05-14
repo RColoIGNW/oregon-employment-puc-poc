@@ -1,4 +1,7 @@
 {
+  "common": {
+    "search": "Buscar"
+  },
   "layout": {
     "title": "Asistencia de desempleo pandémico"
   },
@@ -38,5 +41,8 @@
     "claimStatus": "Estado de su reclamo",
     "claimStatusDescription": "Vea el estado de su reclamo semanal actual (si lo reclamó por Internet o por teléfono)",
     "moreDetails": "Más detalles"
+  },
+  "claims": {
+    "newApplication": "Nueva Aplicación"
   }
 }

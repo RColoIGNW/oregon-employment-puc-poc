@@ -184,7 +184,7 @@ export const Application = (props: ApplicationProps) => {
 
   const ActiveSection = steps?.[activeStep]?.component
 
-  if (!application) return (<>Loading...</>)
+  // if (!application) return (<>Loading...</>)
 
   return (
     <Grid container direction='column' spacing={2}>

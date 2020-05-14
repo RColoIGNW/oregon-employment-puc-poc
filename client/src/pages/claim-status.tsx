@@ -1,141 +1,173 @@
-import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
+import React, { useEffect, useState, useContext } from 'react'
+import { navigate } from 'gatsby'
 import Grid from '@material-ui/core/Grid'
-import IconButton from '@material-ui/core/IconButton'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import Typography from '@material-ui/core/Typography'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import { Link, navigate } from "gatsby"
-import moment from 'moment'
-import React, { useEffect, useState } from "react"
+import { Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
 
-import { Layout } from "../components/layout"
-import { SEO } from "../components/seo"
-import useApplicantFormApi from "../hooks/useApplicantFormApi"
+import { Layout } from '../components/layout'
+import { SEO } from '../components/seo'
 import useClaimStatus from '../hooks/useClaimStatus'
 import Application from '../models/Application'
 import { AlertProps } from '../components/alerts/Alerts'
+import ClaimsToolbar from '../components/claims-toolbar/ClaimsToolbar'
+import Claim from '../components/claim/claim'
+import { SnackBarContext } from '../providers/SnackbarProvider'
 
-const GoBackToDashboard = () => (
-  <Button variant={'contained'} color={'primary'} onClick={() => navigate('/dashboard')}>{`Go to Dashboard`}</Button>
-)
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    toolbar: {
+      padding: theme.spacing(2,2),
+    },
+    createAction: {
+      position: 'fixed', 
+      bottom: theme.spacing(1),
+      right: theme.spacing(1),
+      zIndex: 100
+    },  
+  }),
+);
 
 const ClaimsStatusPage = () => {
-  const apiClient = useApplicantFormApi()
-  const [data, setData] = useState<Application[]>()
-  const [application, setApplication] = useState<Application>()
-  const { downloadApplication } = useClaimStatus()
+  const classes = useStyles()
+  const snackbar = useContext(SnackBarContext)
+  const { 
+    selectedList,
+    filterList,
+    download, 
+    discard, 
+    unselectAll,
+    select,
+    unselect,
+    search,
+    load, 
+  } = useClaimStatus() 
+
   const [alert, setAlert] = useState<AlertProps>()
-
-  const handleEdit = () => {
-    application && navigate('application', { state: { applicationId: application.id } })
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  
+  //#region Actions
+  const handleCreate = () => {
+    navigate('application')
   }
 
-  const handleDiscard = () => {
-    console.log('onDiscard')
-    handleClose()
+  const handleEdit = (applicationId: string) => {
+    navigate('application', { state: { applicationId } })    
   }
 
-  const handleDownload = async () => {
-    await downloadApplication(application?.id as string)
-    handleClose()
+  const handleDiscard = async (applicationId: string) => {    
+    try {
+      await discard(applicationId)
+      //TODO: update list
+    } catch (error) {
+      snackbar.showFeedback({message: 'Unable to discard the application', severity: 'error'})
+    } 
   }
 
-  const actions = [
-    {
-      tooltip: 'Edit',
-      onClick: handleEdit
-    },
-    {
-      tooltip: 'Discard',
-      onClick: handleDiscard
-    },
-    {
-      tooltip: 'Download',
-      onClick: handleDownload
+  const handleDownload = async (applicationId: string) => {
+    try {
+      snackbar.showFeedback({ message: 'Download in progress', severity: 'info' })
+      const fileURL = await download(applicationId)
+      snackbar.showFeedback({ message: 'Download Complete' })
+      window.open(fileURL, '_blank')
+    } catch (error) {
+        
+        snackbar.showFeedback({ message: 'Form Download Failed', severity: 'error' })
     }
-  ]
+  }
 
+  const handleSelectedEdit = () => {
+    console.log('editing selected applications (edit first app or avoid this action?)')
+  }
+
+  const handleSelectedDownload = async () => {
+    //TODO: Download all selected claims
+    console.log('download selected applications')
+  }
+
+  const handleSelectedDiscard = async () => {
+    //TODO: Discard all selected claims
+    console.log('discard selected applications')
+  }
+
+  const handleClearSelection = () => {
+    unselectAll()
+  }
+
+  const handleSelect = async (applicationId: string, isSelected: boolean) => {    
+    if (isSelected){
+      select(applicationId)
+    } else {
+      unselect(applicationId)
+    }
+  }
+
+  const handleSearch = (text: string) => {
+    search(text)
+  }
+  //#endregion
+
+  //#region Effects 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await apiClient.getUserApplications()
-        setData(data)
-        if (!data?.length)
+        const amount = await load()
+        if (!amount)
           setAlert({ message: 'You have not yet submitted any claims', title: 'Claim Status' })
       } catch (err) {
         setAlert({ message: 'There was an error loading your claims', title: 'Claim Status', severity: 'error' })
       }
     }
     fetchData()
-  }, [])
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>, application: Application) => {
-    setApplication(application)
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setApplication(undefined)
-    setAnchorEl(null)
-  }
+  }, [])  
+ //#endregion
 
   return (
-    <Layout alert={alert}>
-      <SEO title={'Claim Status'} />
-      <Grid container direction="row" spacing={1} style={{ marginTop: '1em' }}>
-        <Grid item xs={12}>
-          <GoBackToDashboard />
+    // <Layout alert={!data?.length && { message:'You have not yet submitted any claims', title: 'Claim Status' }}>
+    <Layout>
+      <SEO title={'Claim Status'} />  
+      {
+        isMobile &&  
+        <Fab 
+          color="primary" 
+          aria-label="add" 
+          className={classes.createAction}          
+          onClick={handleCreate}
+        >
+          <AddIcon />
+        </Fab>  
+      }
+      <Grid container direction={'column'} spacing={2} style={{ marginTop: '1em' }}>
+        <Grid item>     
+          <ClaimsToolbar 
+            selectedAmount={selectedList.length} 
+            onCreate={handleCreate}
+            onSearch={handleSearch}
+            onEdit={handleSelectedEdit}
+            onDiscard={handleSelectedDiscard}
+            onDownload={handleSelectedDownload}
+            onClearSelection={handleClearSelection}
+          />
         </Grid>
-        {data?.map((application: Application, index: number) =>
-          <Grid item xs={12} sm={7} md={6} lg={4} key={index}>
-            <Card>
-              <CardContent>
-                <Grid container justify="space-between" style={{ flexWrap: "nowrap" }}>
-                  <Grid item>
-                    <Grid container spacing={1} alignItems="center">
-                      <Grid item xs={12}>
-                        <Typography variant="body1" color="primary" style={{ fontWeight: 'bold' }}>
-                          <Link to="/application" state={{ applicationId: application.id }} style={{ textDecoration: 'none' }}>
-                            {application.id}
-                          </Link>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Typography variant="body1">{moment(application.dateCreated).format('MMM D, YYYY')}</Typography>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Typography variant="body2" color="secondary" style={{ fontWeight: 'bold' }}>{application.status}</Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item>
-                    <IconButton aria-label="menu" aria-controls="app-menu" aria-haspopup="true" onClick={(e) => handleClick(e, application)}>
-                      <MoreVertIcon />
-                    </IconButton>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
+        <Grid item>
+          <Grid container direction="row" spacing={1} style={{ marginTop: '1em' }} >
+            { filterList.map((application: Application, index: number) =>
+              <Grid item key={index} lg={4} md={4} sm={6} xs={12}>
+                <Claim 
+                  claimId={application.id}                   
+                  claimDate={application.submitted || application.lastModified || new Date()} 
+                  claimStatus={application.status}
+                  isSelected={selectedList.findIndex(a => application.id === a) !== -1}
+                  onDownload={handleDownload}
+                  onDiscard={handleDiscard}
+                  onEdit={handleEdit}
+                  onChangeSelect={handleSelect}
+                />
+              </Grid>
+            )}
           </Grid>
-        )
-        }
+        </Grid>          
       </Grid>
-      <Menu
-        id="app-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {actions.map((action, index) => (
-          <MenuItem key={index} onClick={action.onClick}>{action.tooltip}</MenuItem>
-        ))}
-      </Menu>
     </Layout>
   )
 }

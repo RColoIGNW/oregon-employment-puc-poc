@@ -38,8 +38,11 @@ export default () => {
   }
 
   const updateApplication = (application: Partial<Application|any>) => {
+    console.log(application)
     const requestOptions = {
       method: 'PATCH',
+      //YO
+      // body: JSON.stringify({...application }), // TODO: fix upstream data
       body: JSON.stringify({...application, userId, lastModified: undefined, success: undefined, applicationId: undefined, id: application?.applicationId as string }), // TODO: fix upstream data
       redirect: 'follow',
     }
@@ -72,11 +75,23 @@ export default () => {
     }
   }
 
+  //TODO: Discuss if we want to allow delete an application or only put it in discarded status 
+  const discardApplication = (applicationId: string): Promise<any> => {
+    const requestOptions = {
+      method: 'DELETE',
+      // body: JSON.stringify({status: ApplicationStatus.Discarded}),
+      redirect: 'follow',
+    }
+    return request(`${process.env.REACT_APP_API_HOST}/api/applications/${applicationId}`, requestOptions as any)
+      .catch(console.error)
+  }
+
   return {
     getApplication,
     createApplication,
     submitApplication,
     updateApplication,
+    discardApplication,
     getUnapprovedApplications,
     getUserApplications,
   }

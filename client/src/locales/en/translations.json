@@ -1,4 +1,7 @@
 {
+  "common": {
+    "search": "Search"
+  },
   "layout": {
     "title": "Pandemic unemployment assistance"
   },
@@ -38,5 +41,8 @@
     "claimStatus": "Claim Status",
     "claimStatusDescription": "See the status of your current weekly claim report (if claimed by Internet or phone)",
     "moreDetails": "More details"
+  },
+  "claims": {
+    "newApplication": "New Application"
   }
 }
