@@ -36,10 +36,10 @@ const ApplicationSubmittedPage = () => {
             }
           </Grid>
           <Grid style={{paddingTop: 10, paddingBottom: 10}}>
-            {!readMore && <Button variant={'contained'} size={'large'} onClick={() => setReadMore(true)}>
+            {!readMore && <Button variant={'contained'} style={{backgroundColor: '#5F9EA0', color: "#FFF"}} size={'large'} onClick={() => setReadMore(true)}>
               Read more
             </Button>}
-            {readMore && <Button variant={'contained'} size={'large'} onClick={() => setReadMore(false)}>
+            {readMore && <Button variant={'contained'} style={{backgroundColor: '#5F9EA0', color: "#FFF"}} size={'large'} onClick={() => setReadMore(false)}>
               Read less
             </Button>}
           </Grid>
