@@ -16,7 +16,7 @@ const pageInfo = {
 
 const ApplicationSubmittedPage = (props: any) => {
   const applicationId = props.location?.state?.applicationId
-  const { downloadApplication } = useApi()
+  const { download } = useApi()
 
   return (
     <Layout>
@@ -37,7 +37,7 @@ const ApplicationSubmittedPage = (props: any) => {
             color={'primary'}
             variant={'contained'}
             size={'large'}
-            onClick={() => downloadApplication(applicationId)}
+            onClick={() => download(applicationId)}
             data-testid={'download-application-button'}
           >
             {pageInfo.downloadButton}

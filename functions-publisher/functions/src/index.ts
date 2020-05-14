@@ -31,18 +31,18 @@ export const onApplicationDeleted = functions.firestore
     console.info('Trigger Application Deleted Pub/Sub Event',  deletedValue)
   })
 
-export const applicationSubscriber = functions.pubsub
+export const applicationSubscriber = functions.pubsub // For future use (notifications, big query --> ML, etc)
   .topic('pua-claims')
   .onPublish(async (message: any, context: any) => {
     console.info(message.json)
-    console.info('The function was triggered at ', context.timestamp)
+    console.info('The applicationSubscriber function was triggered at ', context.timestamp)
     console.info('The unique ID for the event is', context.eventId)
   })
 
-export const weeklyApplicationSubscriber = functions.pubsub
+export const weeklyApplicationSubscriber = functions.pubsub // For future use (notifications, big query --> ML, etc)
   .topic('pua-weekly-claims')
   .onPublish((message: any, context: any) => {
     console.info(message.json)
-    console.info('The function was triggered at ', context.timestamp)
+    console.info('The weeklyApplicationSubscriber function was triggered at ', context.timestamp)
     console.info('The unique ID for the event is', context.eventId)
   })
