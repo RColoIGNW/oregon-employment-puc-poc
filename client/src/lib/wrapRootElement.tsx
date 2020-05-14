@@ -6,8 +6,8 @@ import React, { ReactNode } from "react"
 import { Helmet } from 'react-helmet'
 import { I18nextProvider } from 'react-i18next'
 
-import i18next from '../i18n/config'
 import Toast from '../components/toast'
+import i18next from '../i18n/config'
 import AuthProvider from '../providers/AuthProvider'
 import TransitionProvider from '../providers/TransitionProvider'
 import theme from '../themes/theme-light'

@@ -1,7 +1,7 @@
 {
   "name": "@oregon-state/client",
   "description": "Pandemic Unemployment Assistance Gatsby/React/Typescript Application",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "repository": {
     "type": "git",
