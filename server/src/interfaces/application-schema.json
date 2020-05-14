@@ -854,6 +854,414 @@
             }
           ]
         },
+        "dateCreated": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "toString": {
+                  "kind": "function",
+                  "type": "string"
+                },
+                "toDateString": {
+                  "kind": "function",
+                  "type": "string"
+                },
+                "toTimeString": {
+                  "kind": "function",
+                  "type": "string"
+                },
+                "toLocaleString": {
+                  "kind": "function",
+                  "type": "string"
+                },
+                "toLocaleDateString": {
+                  "kind": "function",
+                  "type": "string"
+                },
+                "toLocaleTimeString": {
+                  "kind": "function",
+                  "type": "string"
+                },
+                "valueOf": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getTime": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getFullYear": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getUTCFullYear": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getMonth": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getUTCMonth": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getDate": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getUTCDate": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getDay": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getUTCDay": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getHours": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getUTCHours": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getMinutes": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getUTCMinutes": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getSeconds": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getUTCSeconds": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getMilliseconds": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getUTCMilliseconds": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "getTimezoneOffset": {
+                  "kind": "function",
+                  "type": "number"
+                },
+                "setTime": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "time": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "time"
+                  ]
+                },
+                "setMilliseconds": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "ms"
+                  ]
+                },
+                "setUTCMilliseconds": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "ms"
+                  ]
+                },
+                "setSeconds": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "sec": {
+                      "type": "number"
+                    },
+                    "ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "sec"
+                  ]
+                },
+                "setUTCSeconds": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "sec": {
+                      "type": "number"
+                    },
+                    "ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "sec"
+                  ]
+                },
+                "setMinutes": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "min": {
+                      "type": "number"
+                    },
+                    "sec": {
+                      "type": "number"
+                    },
+                    "ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "min"
+                  ]
+                },
+                "setUTCMinutes": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "min": {
+                      "type": "number"
+                    },
+                    "sec": {
+                      "type": "number"
+                    },
+                    "ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "min"
+                  ]
+                },
+                "setHours": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "hours": {
+                      "type": "number"
+                    },
+                    "min": {
+                      "type": "number"
+                    },
+                    "sec": {
+                      "type": "number"
+                    },
+                    "ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "hours"
+                  ]
+                },
+                "setUTCHours": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "hours": {
+                      "type": "number"
+                    },
+                    "min": {
+                      "type": "number"
+                    },
+                    "sec": {
+                      "type": "number"
+                    },
+                    "ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "hours"
+                  ]
+                },
+                "setDate": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "date": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "date"
+                  ]
+                },
+                "setUTCDate": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "date": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "date"
+                  ]
+                },
+                "setMonth": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "month": {
+                      "type": "number"
+                    },
+                    "date": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "month"
+                  ]
+                },
+                "setUTCMonth": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "month": {
+                      "type": "number"
+                    },
+                    "date": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "month"
+                  ]
+                },
+                "setFullYear": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "year": {
+                      "type": "number"
+                    },
+                    "month": {
+                      "type": "number"
+                    },
+                    "date": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "year"
+                  ]
+                },
+                "setUTCFullYear": {
+                  "kind": "function",
+                  "type": "number",
+                  "parameters": {
+                    "year": {
+                      "type": "number"
+                    },
+                    "month": {
+                      "type": "number"
+                    },
+                    "date": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "year"
+                  ]
+                },
+                "toUTCString": {
+                  "kind": "function",
+                  "type": "string"
+                },
+                "toISOString": {
+                  "kind": "function",
+                  "type": "string"
+                },
+                "toJSON": {
+                  "kind": "function",
+                  "type": "string",
+                  "parameters": {
+                    "key": {}
+                  },
+                  "required": []
+                }
+              },
+              "required": [
+                "toString",
+                "toDateString",
+                "toTimeString",
+                "toLocaleString",
+                "toLocaleDateString",
+                "toLocaleTimeString",
+                "valueOf",
+                "getTime",
+                "getFullYear",
+                "getUTCFullYear",
+                "getMonth",
+                "getUTCMonth",
+                "getDate",
+                "getUTCDate",
+                "getDay",
+                "getUTCDay",
+                "getHours",
+                "getUTCHours",
+                "getMinutes",
+                "getUTCMinutes",
+                "getSeconds",
+                "getUTCSeconds",
+                "getMilliseconds",
+                "getUTCMilliseconds",
+                "getTimezoneOffset",
+                "setTime",
+                "setMilliseconds",
+                "setUTCMilliseconds",
+                "setSeconds",
+                "setUTCSeconds",
+                "setMinutes",
+                "setUTCMinutes",
+                "setHours",
+                "setUTCHours",
+                "setDate",
+                "setUTCDate",
+                "setMonth",
+                "setUTCMonth",
+                "setFullYear",
+                "setUTCFullYear",
+                "toUTCString",
+                "toISOString",
+                "toJSON"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
         "userId": {
           "type": "string"
         }
