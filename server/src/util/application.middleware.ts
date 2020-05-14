@@ -13,11 +13,9 @@ export const validateApplicationRequest: RequestHandler = (
   const ajv = new Ajv()
   ajv.validate(schema, req.body)
   log.info('application schema validation check:', JSON.stringify(ajv.errors))
-  console.log('====================================');
-  console.log(JSON.stringify(ajv.errors, null, 2));
-  console.log('====================================');
   if (ajv.errors?.length) {
     log.error(ajv.errors)
+    log.info('invalid request sent: ',  JSON.stringify(req.body))
     return res.status(400).send(ajv.errors)
   }
   next()
