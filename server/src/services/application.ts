@@ -77,9 +77,7 @@ const deleteDocumentById = async (collectionName: string, req: Request, res: Res
       .doc(req.params.id)
       .delete()
 
-    return res.status(204).send({
-      success: true
-    })
+    return res.status(204).send({ success: true })
   } catch (error) {
     res.status(400).json({ error })
   }
@@ -96,9 +94,7 @@ const updateDocumentById = async (collectionName: string, req: Request, res: Res
         lastModified: fbAdmin.firestore.Timestamp.now(),
       })
 
-    return res.status(204).send({
-      success: true
-    })
+    return res.status(204).send({ success: true })
   } catch (error) {
     log.error('failed to update doc', error)
     res.status(400).json({ error })
@@ -107,14 +103,16 @@ const updateDocumentById = async (collectionName: string, req: Request, res: Res
 
 const createDocument = async (collectionName: string, subCollectionName: string, req: Request, res: Response) => {
   try {
+    const countRef = db.collection(`${collectionName}-count`).doc(subCollectionName)
+    const applicationRef = db.collection(collectionName).doc()
+
     const requestBody: Partial<ApplicationSchema> = {
       ...req.body,
+      id: applicationRef.id,
       lastModified: fbAdmin.firestore.Timestamp.now(),
       status: ApplicationStatus.InProgress,
       dateCreated: fbAdmin.firestore.Timestamp.now(),
     }
-    const countRef = db.collection(`${collectionName}-count`).doc(subCollectionName)
-    const applicationRef = db.collection(collectionName).doc()
 
     await db
       .runTransaction(async (t) => {
