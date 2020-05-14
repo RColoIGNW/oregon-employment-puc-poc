@@ -11,9 +11,6 @@
             "$ref": "#/definitions/EmploymentRecord"
           }
         },
-        "uid": {
-          "type": "string"
-        },
         "adminNote": {
           "type": "string"
         },
@@ -851,7 +848,8 @@
             },
             {
               "type": "string"
-            }
+            },
+            {}
           ]
         },
         "dateCreated": {
@@ -1259,7 +1257,8 @@
             },
             {
               "type": "string"
-            }
+            },
+            {}
           ]
         },
         "userId": {

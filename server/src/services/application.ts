@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import fbAdmin from 'firebase-admin'
 
 import ApplicationSchema from '../interfaces/application.interface'
+import { ApplicationStatus } from '../interfaces/application.interface'
 import firebase from '../util/firebase'
 import log from '../util/logger'
 
@@ -104,19 +105,12 @@ const updateDocumentById = async (collectionName: string, req: Request, res: Res
   }
 }
 
-export enum ApplicationStatus {
-  IN_PROGRESS = 'in progress',
-  SUBMITTED = 'submitted',
-  DENY = 'deny',
-  APPROVED = 'approved'
-}
-
 const createDocument = async (collectionName: string, subCollectionName: string, req: Request, res: Response) => {
   try {
     const requestBody: Partial<ApplicationSchema> = {
       ...req.body,
       lastModified: fbAdmin.firestore.Timestamp.now(),
-      status: ApplicationStatus.IN_PROGRESS,
+      status: ApplicationStatus.InProgress,
       dateCreated: fbAdmin.firestore.Timestamp.now(),
     }
     const countRef = db.collection(`${collectionName}-count`).doc(subCollectionName)
@@ -149,7 +143,7 @@ const submitDocument = async (collectionName: string, req: Request, res: Respons
       ...req.body,
       lastModified: fbAdmin.firestore.Timestamp.now(),
       dateApplied: fbAdmin.firestore.Timestamp.now(),
-      status: ApplicationStatus.SUBMITTED
+      status: ApplicationStatus.Submitted
     }
     const applicationRef = db.collection(collectionName).doc(req.params.id)
 

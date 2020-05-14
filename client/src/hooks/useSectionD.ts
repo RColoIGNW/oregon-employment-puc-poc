@@ -1,8 +1,6 @@
-import { QuestionModel } from '../models/Question'
 import { AnswerModel } from '../models/Answer'
-import storage from '../utils/storage'
-
-
+import { QuestionModel } from '../models/Question'
+import storage from '../util/storage'
 
 const _questions: QuestionModel[] = [
  {
@@ -13,19 +11,19 @@ const _questions: QuestionModel[] = [
     whenShowDetails: 'YES',
     answer: {
       questionCode: 'C_15'
-    }    
-  }, 
-]
+    }
+  },
+] as QuestionModel[]
 
 export default () => {
-  
+
   const prepareQuestions = (): QuestionModel[]   => {
       return _questions.map(q => {
         const _answer = currentAnswers.find((a) => a.questionCode === q.code)
         let subQuestions = q.subQuestions
         if(_answer && _answer.subQuestionsAnwers){
           subQuestions = q.subQuestions?.map((subQ) => {
-            const subQAnswer  = _answer.subQuestionsAnwers?.find(sqa => sqa.questionCode === subQ.code) || subQ.answer            
+            const subQAnswer  = _answer.subQuestionsAnwers?.find(sqa => sqa.questionCode === subQ.code) || subQ.answer
             return {...subQ, answer: subQAnswer}
           })
         }
@@ -36,7 +34,7 @@ export default () => {
   let currentAnswers: AnswerModel[] = storage.load(storage.StorageKey.SectionD) || []
 
   let questions = prepareQuestions()
-  
+
   const handleChange = (a: AnswerModel) => {
     const index = questions.findIndex((q) => q.code === a.questionCode)
     questions[index].answer = a
