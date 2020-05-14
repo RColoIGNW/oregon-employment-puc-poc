@@ -109,9 +109,9 @@ export default (props: WeeklySectionProps) => {
             <Grid container direction={'column'}>
               <List component="nav" aria-label="main mailbox folders">
                 {
-                  questions.unionMemberMessage.map((textSection) => {
+                  questions.unionMemberMessage.map((textSection, index) => {
                     return (
-                      <ListItem>
+                      <ListItem key={index}>
                         <ListItemText primary={textSection}/>
                       </ListItem>
                     )

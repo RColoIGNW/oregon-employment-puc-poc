@@ -14,9 +14,13 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TableHead from '@material-ui/core/TableHead';
 import dayjs from "dayjs"
+import Alerts from "../alerts"
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
+];
+const counts = ["First", "Second", "Third", "Fourth", "Fifth",
+  "Sixth", "Seventh", "Eighth", "Ninth", "Tenth"
 ];
 
 const formatDate = () => {
@@ -31,6 +35,8 @@ const formatDate = () => {
 
 const Summary = (props: {application: weeklyQuestions}) => {
   const {application} =  props
+  let seekingCount = -1;
+  let searchCount = -1;
 
   const rows: {name: string, value: string}[] = [
     {name: questions.failedToAcceptOffer, value: (application.failedToAcceptOffer) ? "Yes" : "No"},
@@ -57,6 +63,15 @@ const Summary = (props: {application: weeklyQuestions}) => {
           ))}
         </TableBody>
       </Table>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center" colSpan={2} style={{backgroundColor: '#D3D3D3'}}>
+              Work Search Records
+            </TableCell>
+          </TableRow>
+        </TableHead>
+      </Table>
           {application.workSearchRecords.map((record) => {
             if (record.type == 'searching') {
               const workRows: {name: string, value: string}[] = [
@@ -67,44 +82,59 @@ const Summary = (props: {application: weeklyQuestions}) => {
                 {name: "Type of Work", value: String(record.typeOfWorkSought)},
                 {name: "Result", value: String(record.result)},
               ]
+              searchCount += 1;
 
               return (
                 <Table aria-label="question response table" style={{width: '100%'}}>
-                  <TableBody style={{width: '100%'}}>
                     <TableHead>
-                      <TableCell align="right" colSpan={6}>
-
-                      </TableCell>
-                    </TableHead>
-                    {workRows.map((row) => (
-                      <TableRow key={row.name}>
-                        <TableCell scope="row">
-                          {row.name}
+                      <TableRow>
+                        <TableCell align="center" colSpan={2} style={{backgroundColor: '#FFFACD'}}>
+                          {counts[searchCount]}
                         </TableCell>
-                        <TableCell align="right">{row.value}</TableCell>
                       </TableRow>
-                    ))}
+                    </TableHead>
+                    <TableBody>
+                      {workRows.map((row) => (
+                        <TableRow key={row.name}>
+                          <TableCell scope="row">
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="right">{row.value}</TableCell>
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               )
             }
             else { return null }
           })}
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center" colSpan={2} style={{backgroundColor: '#D3D3D3'}}>
+              Work Seeking Activity Records
+            </TableCell>
+          </TableRow>
+        </TableHead>
+      </Table>
       {application.workSearchRecords.map((record) => {
         if (record.type == 'seeking') {
           const workRows: {name: string, value: string}[] = [
             {name: "Date", value: dayjs(record.date).format('MMM. DD, YYYY')},
             {name: "Activity", value: String(record.activity)},
           ]
+          seekingCount += 1;
 
           return (
             <Table aria-label="question response table" style={{width: '100%'}}>
-              <TableBody style={{width: '100%'}}>
-                <TableHead>
-                  <TableCell align="right" colSpan={6}>
-
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" colSpan={2} style={{backgroundColor: '#FFFACD'}}>
+                    {counts[seekingCount]}
                   </TableCell>
-                </TableHead>
+                </TableRow>
+              </TableHead>
+              <TableBody>
                 {workRows.map((row) => (
                   <TableRow key={row.name}>
                     <TableCell scope="row">
@@ -131,17 +161,19 @@ export default (props: WeeklySectionProps) => {
   return (
     <Grid container spacing={2} direction={'column'}>
       <Grid style={{paddingTop: 20, paddingBottom: 10}}>
-        <Typography style={{fontWeight: 600}} align={'center'}> {questions.submitClaim} </Typography>
-        <Typography align={'center'}> {questions.clickViewSummary} </Typography>
-        <hr/>
-        <Typography> {formatDate()} </Typography>
-        <Typography> Ref: {application.applicationId} </Typography>
+        <Alerts isOpen={true} severity={'success'}
+          message={<div><Typography style={{fontWeight: 600}} align={'center'}> {questions.submitClaim} </Typography>
+          <Typography align={'center'}> {questions.clickViewSummary} </Typography></div>}/>
+          <Grid style={{padding: 20}}>
+            <Typography> {formatDate()} </Typography>
+            <Typography> Ref: {application.applicationId} </Typography>
+          </Grid>
       </Grid>
       <Grid style={{paddingTop: 10}}>
         {!showSummary && <Button onClick={() => setShowSummary(true)} variant={'outlined'}>View Summary</Button>}
       </Grid>
       {showSummary &&
-        <Grid container>
+        <Grid container direction={'column'}>
           <Grid item>
             <Summary application={application}/>
           </Grid>

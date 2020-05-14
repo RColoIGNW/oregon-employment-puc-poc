@@ -40,6 +40,9 @@ export default (props: WorkSearchItemProps) => {
               </Grid>
             </Grid>
           </Grid>
+          <Grid item>
+            <Typography variant="body2">Work Search Activity Record</Typography>
+          </Grid>
         </Grid>
       </CardContent>
       {!props.isDisabled &&
