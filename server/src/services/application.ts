@@ -99,24 +99,7 @@ const updateDocumentById = async (collectionName: string, req: Request, res: Res
       success: true
     })
   } catch (error) {
-    res.status(400).json({ error })
-  }
-}
-
-const changeDocumentStatusById = async (collectionName: string, req: Request, res: Response) => {
-  try {
-    await db
-      .collection(collectionName)
-      .doc(req.params.id)
-      .update({
-        ...req.body,
-        lastModified: fbAdmin.firestore.Timestamp.now()
-      } as Partial<ApplicationSchema>)
-
-    return res.status(204).send({
-      success: true
-    })
-  } catch (error) {
+    log.error('failed to update doc', error)
     res.status(400).json({ error })
   }
 }
@@ -189,7 +172,6 @@ export default {
   getDocumentById,
   deleteDocumentById,
   updateDocumentById,
-  changeDocumentStatusById,
   createDocument,
   submitDocument,
 }

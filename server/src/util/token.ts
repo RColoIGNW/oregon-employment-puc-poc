@@ -11,6 +11,7 @@ export const decodeToken: RequestHandler = async (
   next: NextFunction,
 ) => {
   if (!req.headers.authorization) {
+    log.error('Missing Auth Headers', req.headers)
     return res.status(400).json({
       error: {
         message: "You did not specify any jwt for this request",

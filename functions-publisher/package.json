@@ -20,7 +20,9 @@
     "test": "echo \"Error: run tests from root\" && exit 0",
     "deploy": "cd ./functions && npm run deploy",
     "precreate:topic": "export GOOGLE_APPLICATION_CREDENTIALS=./sa.json",
-    "create:topic": "ts-node ./scripts/create-topic"
+    "create:topic": "ts-node ./scripts/create-topic",
+    "pretrigger:table:message": "export GOOGLE_APPLICATION_CREDENTIALS=./sa.json",
+    "trigger:table:message": "ts-node ./functions/src/big-table.ts"
   },
   "bugs": {
     "url": "https://github.com/IGNW/oregon-employment-puc-poc/issues"
@@ -31,6 +33,7 @@
     "firebase-functions": "^3.6.1"
   },
   "devDependencies": {
+    "@google-cloud/bigtable": "^2.3.2",
     "firebase-tools": "^8.2.0",
     "tslint": "^6.1.2",
     "typescript": "^3.8.3"
