@@ -4,7 +4,7 @@ export enum workRecordType {
 }
 
 export default interface EmploymentRecord {
-  type: workRecordType,
+  type: string,
   id?: number,
   employer?: string | null,
   date: Date,
