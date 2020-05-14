@@ -1,24 +1,48 @@
 {
+  "common": {
+    "search": "Buscar"
+  },
   "layout": {
     "title": "Asistencia de desempleo pandémico"
   },
   "mainMenu": {
-    "dashboard": "Tablero",
-    "newApplication": "Nueva Aplicación",
-    "weeklyClaims": "Reclamar Semana",
-    "claimStatus": "Estado de Reclamos"
+    "dashboard": "Panel de Control",
+    "newClaim": "Nueva Aplicación",
+    "claimWeek": "Reclamar Semana",
+    "claimStatus": "Estado de Reclamos",
+    "settings": "Configuración",
+    "help": "Ayuda",
+    "about": "Acerca de"
   },
   "userMenu": {
     "profile": "Perfil",
     "account": "Cuenta",
     "signOut": "Salir"
   },
+  "login": {
+    "redirecting": "Redireccionando...",
+    "title": "Login - Oregon Departamento de Empleo Asistencia de desempleo pandémico",
+    "message": "Para continuar, ingrese al Departamento de Empleo de Oregon",
+    "or": "O",
+    "signIn": "Ingresar",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "rememberMe": "Recuérdame",
+    "forgotPassword": "¿Olvidó su contraseña?",
+    "signUp": "¿No tiene una cuenta? Regístrese"
+  },
   "dashboard": {
     "alert": "¿Tiene preguntas sobre cómo presentar su reclamo de seguro de desempleo y los posibles beneficios? Revise nuestra página COVID-19 para más información, incluidas preguntas frecuentes y tutoriales en video. Si aún tiene preguntas, envíe un mensaje detallado a la Ayuda de UI y le responderemos lo antes posible.",
     "title": "Bienvenido a su sistema de reclamos en línea",
     "newClaim": "Nueva aplicación",
+    "newClaimDescription": "Establecer un nuevo reclamo para beneficios de desempleo en Oregon. Si está presentando una solicitud debido a COVID-19, mire este video de capacitación.",
     "weekClaim": "Reclamar una semana de beneficios",
+    "weekClaimDescription": "Reclame una semana de beneficios de desempleo una vez que se establezca su reclamo. ¡Cómo reclamar por teléfono pero más fácil! * Por favor vea las notas a continuación. Si completó su nuevo reclamo esta semana, espere hasta el domingo para reclamar una semana de beneficios. Si no tiene trabajo debido a COVID-19, lea las preguntas frecuentes antes de reclamar una semana de beneficios.",
     "claimStatus": "Estado de su reclamo",
+    "claimStatusDescription": "Vea el estado de su reclamo semanal actual (si lo reclamó por Internet o por teléfono)",
     "moreDetails": "Más detalles"
+  },
+  "claims": {
+    "newApplication": "Nueva Aplicación"
   }
 }

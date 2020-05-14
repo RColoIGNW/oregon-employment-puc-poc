@@ -8,7 +8,7 @@ const server = app.listen(port as number, () => {
 })
 
 server.on('connection', function(socket) {
-  log.info("A new connection was made by a client.")
+  // log.info("A new connection was made by a client.")
   socket.setTimeout(30 * 1000)
   // 30 second timeout. Change this as you see fit.
 })

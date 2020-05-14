@@ -1,21 +1,16 @@
-import { navigate } from 'gatsby';
 import { useEffect, useState } from 'react'
 import  { useContext } from 'react'
 
 import firebase from '../lib/firebase'
 import firebaseui from '../lib/firebaseUI'
 import { TransitionContext } from '../providers/TransitionProvider'
+import storage from '../util/storage'
 
 export default (props: { location: { origin: string, pathname: string } }) => {
   const { setState: updateTransition, state: loadingState } = useContext(TransitionContext)
-  const [token, setToken] = useState(typeof window !== 'undefined' && localStorage.token || '')
-  const isSignedIn = token && props.location.pathname === "/"
-
-  useEffect(() => {
-    if (isSignedIn) {
-      navigate('/dashboard')
-    }
-  }, [token, setToken])
+  const [token, setToken] = useState(typeof window !== 'undefined' && storage.load('token'))
+  const user = firebase?.auth?.()?.currentUser
+  const isSignedIn = !!token && user?.uid && props.location.pathname === "/"
 
   if (typeof window !== 'undefined') {
     useEffect(() => {

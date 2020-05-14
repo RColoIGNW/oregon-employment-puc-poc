@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
+import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
+import { navigate } from "gatsby"
+
 import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
-import Button from "@material-ui/core/Button"
-import { navigate } from "gatsby"
 import { Paper } from "@material-ui/core"
 import Alerts from "../components/alerts"
 

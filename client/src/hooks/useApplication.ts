@@ -108,8 +108,9 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
 
   const create = async () => {
     try {
-      const userId: any = localStorage.getItem('uid')
-      const { applicationId: id } = await api.createApplication()
+      const userId: any = storage.load('uid')
+      const { id } = await api.createApplication()
+      // const { applicationId: id } = await api.createApplication()
       setApplication({ ...application, id, userId } as Application)
     } catch (e) {
       snackbar.showFeedback({ message: 'Failed to create a new application', severity: 'error' })
@@ -126,6 +127,7 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
   }
 
   const save = (application: Application) => {
+    console.log(application)
     return api.updateApplication(application)
   }
 
@@ -148,9 +150,14 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
     return navigate('application-submitted',  { state: { applicationId }})
   }
 
+  const discard = async (applicationId: string) => {
+    await api.discardApplication(applicationId)
+  }
+
   return {
     load,
     submit,
+    discard,
     disabled,
     handleChange,
     handleBack,

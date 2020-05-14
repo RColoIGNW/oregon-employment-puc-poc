@@ -79,16 +79,17 @@ export interface Applicant {
 
 export default interface ApplicationSchema {
   employmentRecords?: EmploymentRecord[]
-  uid?: string // deprecate
   adminNote?: string
   id?: string
   applicant?: Applicant
   status?: ApplicationStatus
+  createdDate?: Date|string
   lastModified?: Date|string
   answers?: AnswerModel[]
   isCertified?: boolean
   certifiedBy?: string
-  dateApplied?: Date|string
+  dateApplied?: Date|string|any // TODO: normalize
+  dateCreated?: Date|string|any // TODO: normalize
   userId?: string
 }
 

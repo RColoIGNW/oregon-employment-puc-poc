@@ -11,6 +11,7 @@ export default () => {
     password: '',
     firstName: '',
     lastName: '',
+    rememberMe: false,
   })
 
   const handleChange = (event: any) => {

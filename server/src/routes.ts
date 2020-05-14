@@ -18,14 +18,14 @@ export const routes = (router: Router) => {
     })
   })
 
-  /* NEW APPLICATION ROUTES */
+  /* PUA APPLICATION ROUTES */
   router
     .route('/applications')
     .put(decodeToken, isAuthorized, applicationApi.createDocument.bind(null, 'applications', 'pua-applications'))
 
   router
     .route('/applications')
-    .get(decodeToken, isAuthorized, hasAdminRole, applicationApi.getCollectionByName.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
+    .get(decodeToken, isAuthorized, hasAdminRole, applicationApi.getCollectionByName.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   router
     .route('/users/:userId/applications')
@@ -37,20 +37,20 @@ export const routes = (router: Router) => {
 
   router
     .route('/applications/:id')
-    .delete(decodeToken, isAuthorized, hasAdminRole, applicationApi.deleteDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
+    .delete(decodeToken, isAuthorized, applicationApi.deleteDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   router
     .route('/applications/:id')
     .put(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
   router
     .route('/applications/:id')
-    .patch(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
+    .patch(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.updateDocumentById.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
   router
     .route('/applications/:id/submit')
     .patch(decodeToken, isAuthorized, validateApplicationRequest, applicationApi.submitDocument.bind(null, ENDPOINTS.NEW_APPLICATIONS))
 
-  /* WEEKLY APPLICATION ROUTES */
+  //#region WEEKLY APPLICATION ROUTES   
   router
     .route('/weekly-applications')
     .put(decodeToken, isAuthorized, applicationApi.createDocument.bind(null, 'weekly-applications', 'weekly-claims'))
@@ -73,8 +73,7 @@ export const routes = (router: Router) => {
 
   router
     .route('/weekly-applications/:id')
-    .patch(decodeToken, isAuthorized, applicationApi.changeDocumentStatusById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
-
+    .patch(decodeToken, isAuthorized, applicationApi.updateDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
   router
     .route('/weekly-applications/:id/submit')
     .patch(decodeToken, isAuthorized, applicationApi.submitDocument.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
@@ -83,9 +82,13 @@ export const routes = (router: Router) => {
     .route('/weekly-applications/:id')
     .delete(decodeToken, isAuthorized, applicationApi.deleteDocumentById.bind(null, ENDPOINTS.WEEKLY_APPLICATIONS))
 
+  //#endregion
+  
+  //#region PDF
   router
     .route('/generate-pdf/:applicationId')
     .get(decodeToken, isAuthorized, pdfApi.generatePdf.bind(null, 'applications'))
+  //#endregion
 }
 
 export default routes

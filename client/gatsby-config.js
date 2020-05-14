@@ -7,6 +7,7 @@ const siteAuthor = "Brian McBride";
 const siteUrl = "https://oregon-pua-poc.web.app/";
 const siteImage = `${siteUrl}/icons/icon_512x512.png`;
 const siteKeywords = ["gatsby", "typescript", "starter", "javascript", "react"]
+const { version } = require('./package.json')
 
 require('dotenv').config({
   path: `.env.${activeEnv}`
@@ -21,6 +22,7 @@ module.exports = {
     siteUrl: siteUrl,
     keywords: siteKeywords,
     image: siteImage,
+    version
   },
   plugins: [
     {
@@ -35,9 +37,9 @@ module.exports = {
       options: {
         stylesProvider: {
           injectFirst: true,
-          disableAutoprefixing: false,
-          disableMinification: false,
         },
+        disableAutoprefixing: false,
+        disableMinification: false,
       },
     },
     // {
