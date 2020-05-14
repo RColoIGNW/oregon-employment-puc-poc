@@ -9,6 +9,6 @@ export default interface weeklyQuestions {
   ableToReportToWork: boolean,
   searchedForWork: boolean,
   didYouWorkLastWeek: boolean,
-  workSearchRecords?: WorkSearchRecord[]
+  workSearchRecords: WorkSearchRecord[]
   applicationId?: string
 }
