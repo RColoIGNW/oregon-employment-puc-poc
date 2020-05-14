@@ -1,3 +1,6 @@
+require('dotenv').config({
+  path: `.env.development`
+})
 module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest",
@@ -10,7 +13,7 @@ module.exports = {
       "<rootDir>/__mocks__/file-mock.js",
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  testPathIgnorePatterns: ["node_modules", ".cache"],
+  testPathIgnorePatterns: ["node_modules", ".cache", "cypress"],
   transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
   globals: {
     __PATH_PREFIX__: "",

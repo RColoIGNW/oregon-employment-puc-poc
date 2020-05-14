@@ -1,0 +1,24 @@
+{
+  "layout": {
+    "title": "Asistencia de desempleo pandémico"
+  },
+  "mainMenu": {
+    "dashboard": "Panel de Control",
+    "newApplication": "Nueva Aplicación",
+    "weeklyClaims": "Reclamar Semana",
+    "claimStatus": "Estado de Reclamos"
+  },
+  "userMenu": {
+    "profile": "Perfil",
+    "account": "Cuenta",
+    "signOut": "Salir"
+  },
+  "dashboard": {
+    "alert": "¿Tiene preguntas sobre cómo presentar su reclamo de seguro de desempleo y los posibles beneficios? Revise nuestra página COVID-19 para más información, incluidas preguntas frecuentes y tutoriales en video. Si aún tiene preguntas, envíe un mensaje detallado a la Ayuda de UI y le responderemos lo antes posible.",
+    "title": "Bienvenido a su sistema de reclamos en línea",
+    "newClaim": "Nueva aplicación",
+    "weekClaim": "Reclamar una semana de beneficios",
+    "claimStatus": "Estado de su reclamo",
+    "moreDetails": "Más detalles"
+  }
+}

@@ -1,17 +1,19 @@
 import { Divider, Grid, Typography } from '@material-ui/core'
+import { navigate } from 'gatsby'
 import React from "react"
 
 import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
 import SignInForm from '../components/sign-in-form'
-import useAuth from '../hooks/useAuth'
+import useAuthUI from '../hooks/useAuthUI'
 import useSignInForm from '../hooks/useSignIn'
 
 const LoginPage = (props: { location: { origin: string, pathname: string } }) => {
-  const { isSignedIn } = useAuth(props)
+  const { isSignedIn } = useAuthUI(props)
   const childProps = useSignInForm()
 
-  if (isSignedIn) {
+  if (!!isSignedIn) {
+    navigate('/dashboard')
     return <>Redirecting...</>
   }
 

@@ -20,6 +20,7 @@
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/eslint-plugin-tslint": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
+    "artillery": "^1.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-immutable": "^1.0.0",
     "eslint-plugin-import": "^2.20.2",
@@ -64,13 +65,15 @@
     "test:dev": "jest --watchAll",
     "test:ci": "npm run typegen && npm run test",
     "lint": "tslint --project tsconfig.json",
-    "prebuild": "npm run typegen",
+    "prebuild": "npm run schema",
     "build": "tsc",
+    "tsc": "npm run build",
     "run": "node dist/server.js",
     "dev": "ts-node-dev ./src/server.ts",
     "start": "npm run dev",
     "grant:admin": "export GOOGLE_APPLICATION_CREDENTIALS=./sa.json && ts-node ./scripts/grant-admin-role.ts",
     "debug:pdf": "node ./scripts/debug-pdf.js",
-    "typegen": "node ./scripts/typegen"
+    "schema": "node ./scripts/schema",
+    "test:load": "artillery run ./scripts/load.yaml"
   }
 }
