@@ -1,0 +1,30 @@
+config:
+  target: 'http://localhost:4000' # local
+  # target: 'https://oed-poc-server-ohkmuktm2a-uw.a.run.app/' # cloud run
+  tls:
+    rejectUnauthorized: false
+  phases:
+    - duration: 6
+      arrivalRate: 2
+  defaults:
+    headers:
+      authorization: "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImZjMmM4YmIyNmE3OGM0M2JkODYzNzA1YjNkNzkyMWI0ZTY0MjVkNTQiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiRGVzbW9uZCIsImFkbWluIjp0cnVlLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vb3JlZ29uLXB1YS1wb2MiLCJhdWQiOiJvcmVnb24tcHVhLXBvYyIsImF1dGhfdGltZSI6MTU4OTQwOTk4NCwidXNlcl9pZCI6IlQzekg2c2tLdE5UTzcyWTZTOVJBV3Q5V0xlZDIiLCJzdWIiOiJUM3pINnNrS3ROVE83Mlk2UzlSQVd0OVdMZWQyIiwiaWF0IjoxNTg5NDE0MzYwLCJleHAiOjE1ODk0MTc5NjAsImVtYWlsIjoieW91QG1lLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbInlvdUBtZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.JbWB61yKWed6LciWZujIiWNrd2Rx40uLaDGVmXt9OLlxhjsJ4x5pTrJMEk29nAXoS9XaUrbXVLzjz25PhWScTTS-A2cFYsNG2k6bwXk5OKVdM6RD1Mh6yNnFEgQalNMSypDe0erL1qgdPj21GXDCrFCNjS2n4_RhC-1hVASRx0_dJwk71--f1ryathiIxWv_Wr_zygNlJNPB6loWZdVfHGbzgSesDlG-vb2tmSB6RZWGLsi0jWDeJLCSk2rNQR6dzG269HME9OnKvw-H-Nx6QoMxgOZc2ibGZ7IWzXr8EDy_DAlktqQWbQ1hYlwDxrND4CKihnzUukz8WlZWgj7iVQ"
+scenarios:
+  - flow:
+    - get:
+        url: "/api/applications"
+    - put:
+        url: "/api/applications"
+        capture:
+          json: "$.applicationId"
+          as: "id"
+        json:
+          userId: "fake"
+    - patch:
+        url: "/api/applications/{{id}}"
+        json:
+          userId: "fake"
+          status: "Approved"
+          # applicant:
+          #   firstName: 'first name'
+          # TODO: fill out all required fields
