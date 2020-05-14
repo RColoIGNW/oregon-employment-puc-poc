@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "oregon-pua-poc",
+  "private_key_id": "7407349fb3ba6641abbc3956419ba948a3305915",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDg65fYYnGaNKNI\npmiSxJbIP9ZLoBhNBlCs2McYCxo4SwW5RZ5EPW2Wk8kO3HBSbYoy4YX9XXh/bIvA\n7yz+xHPVNO2yno0X/xKnamCEeabIknijeBExmbkk2rnWFPKJK2WZh3fbArpGGvzf\nATQ0/imWD1qUivZtXRV1/NRa4Z2Vy7FydT+lH5B1GI9Cl/pTJbKdP1AcBjb6oXhV\nyrxxmXbZov6xYXTE2euNGagXRysjPRs26Z4HJpoWj21iFUiCGlK9dAEoZkrUVKAa\n3FyOMGnNZS7slIzVdgefqBG898p/V2t1uXqM/jDuvZKKQD7b9WVBHuXTijdC04T5\nc7vA2kFPAgMBAAECggEAB8phQg92296C4VtSN/MzPdBoPcpXzSMw3CvOCZko2VZP\n5nDw4HA4QYTw6+DayyAcL1L8byAzskYyOQaPymtHj9T7frpbLL+bB815dl04V64r\nG45nGg63CP3CfhXPqMymAkFc92sKxK7en2LNSiCblCUIACkoC/WzbpjJSjSSXsPU\ny1tfddP3Q3/rRNtHs/66Y7GcyuMYrKkuZoceqtOSnYX13aEKrBrOkZCddiJFUfKv\nMh6SGOl58u5RwHaMuJPpMsxHpRpoRuU74fz1OzCioaKgfwX/pyp5JuI8z0CqJF8q\n78LKZgtxeQbPmsSLR7t3ztpdzwaN+Kwvr/47GQK4YQKBgQD0kt/Q3WQc1ieat1Cp\nczKDGh5Q4XboI48pMMest9Kqhj0qJPyOzb55ICOKFXESN4VcZUGd9s07PRWHU0Qt\nWW9hb05KV/ldaARb47uhvOoFIADO96iodeuMlTWed1Sow+w9f7htKR/mCcbtYPlL\nyD89hnWXtzU37hLwxeW/G/XaeQKBgQDrbalqIj4l3byKcqGy2HVI862vjZMxGEWd\ncYcZbjCk9NO+CiYpRo9N2DClBw3etDtWhh+EhTuAL2F2UnKxP5pG7z/T+tK4f1Ch\nOt4OB2wUk4mTa/TWe7h1BgFCKNN3xoxp2krKFPGEztPW1HQN4uiBPI8RDhTUHMxE\nVhK2lVmIBwKBgBI2HZRf5+R9zdUncUos2cYJW9iJ8WC3xSE8EKI7zeQEuuk4d9Xq\nXBSI4ByYHCNPHw8SOyCYEBApLEE3Ygw+bJzEvP+sLVVXOXveKUqR1psrFuRSbKye\nmzuMoMF8AUHP1Pd/WyxFs6pdcAKdBfMupgbezELP0Zaok6B6G/FvE4+BAoGBAIxj\nECsh0D10RAGq6ZFkUkv2QxP0MFmOR7TjBdS8SHWVKM6h7q+eS8X3rMo7sqGih9/I\nivLTH/AIUO3lrE7VxoGWGVGmuBEcmlAKcm+bLW/3qoomThG4JP5jXky9W5yI4SId\n8YsfggXX76qjdbDyJgMqwYVCCFmT8pqtWOtXk9PxAoGBAJt6sJJvcf84KPzrKUkw\nKvncDYZfALOFe5+CVLZ6EQmBLCek48NJOwfHKi831Nz2Ugvk2DIjTtlap/W7xRWF\n/AlySFGrTbMJuFDHuSEGLUH5DnPxl9/fZK2CkT9KTEin/BjVTWBSjhWiIUhVxXgW\noZ+2/r7fQ3QlRLbl76xsVes5\n-----END PRIVATE KEY-----\n",
+  "client_email": "oregon-pub-sub-sa@oregon-pua-poc.iam.gserviceaccount.com",
+  "client_id": "108795807661590242723",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/oregon-pub-sub-sa%40oregon-pua-poc.iam.gserviceaccount.com"
+}
