@@ -46,3 +46,17 @@ export const weeklyApplicationSubscriber = functions.pubsub // For future use (n
     console.info('The weeklyApplicationSubscriber function was triggered at ', context.timestamp)
     console.info('The unique ID for the event is', context.eventId)
   })
+
+export const applicationScheduledFunctionCronJob = functions.pubsub.schedule('5 0 * * *') /* 12:05 AM */
+  .timeZone('America/Los_Angeles') // Users can choose timezone - default is America/Los_Angeles
+  .onRun((context) => {
+    console.info('This will be ran every day at 12:05 AM PST!') // TODO: read from firestore --> create CSV file and put in cloud storage
+    return null
+  })
+
+export const weeklyApplicationScheduledFunctionCronJob = functions.pubsub.schedule('5 0 * * *') /* 12:05 AM */
+  .timeZone('America/Los_Angeles') // Users can choose timezone - default is America/Los_Angeles
+  .onRun((context) => {
+    console.info('This will be ran every day at 12:05 AM PST!') // TODO: read from firestore --> create CSV file and put in cloud storage
+    return null
+  })
