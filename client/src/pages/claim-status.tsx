@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { navigate } from 'gatsby'
 import Grid from '@material-ui/core/Grid'
-
-import { Layout } from '../components/layout'
-import { SEO } from '../components/seo'
-import useApplicantFormApi from '../hooks/useApplicantFormApi'
-import useClaimStatus from '../hooks/useClaimStatus'
-import Application from '../models/Application'
 import { Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 
+import { Layout } from '../components/layout'
+import { SEO } from '../components/seo'
+import useClaimStatus from '../hooks/useClaimStatus'
+import Application from '../models/Application'
 import { AlertProps } from '../components/alerts/Alerts'
 import ClaimsToolbar from '../components/claims-toolbar/ClaimsToolbar'
 import Claim from '../components/claim/claim'
+import { SnackBarContext } from '../providers/SnackbarProvider'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,12 +29,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ClaimsStatusPage = () => {
   const classes = useStyles()
-  const apiClient = useApplicantFormApi()
-  const [data, setData] = useState<Application[]>()
-  const [searchText, setSearchText] = useState<string>('')
-  const [filterList, setFilterList] = useState<Application[]>([])
-  const { downloadApplication, discardApplication } = useClaimStatus()
-  const [selectedList, setSelectedList] = useState<string[]>([])
+  const snackbar = useContext(SnackBarContext)
+  const { 
+    selectedList,
+    filterList,
+    download, 
+    discard, 
+    unselectAll,
+    select,
+    unselect,
+    search,
+    load, 
+  } = useClaimStatus() 
+
   const [alert, setAlert] = useState<AlertProps>()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -49,13 +55,25 @@ const ClaimsStatusPage = () => {
     navigate('application', { state: { applicationId } })    
   }
 
-  const handleDiscard = (applicationId: string) => {    
-    discardApplication(applicationId)
-    // TODO: Update list
+  const handleDiscard = async (applicationId: string) => {    
+    try {
+      await discard(applicationId)
+      //TODO: update list
+    } catch (error) {
+      snackbar.showFeedback({message: 'Unable to discard the application', severity: 'error'})
+    } 
   }
 
   const handleDownload = async (applicationId: string) => {
-    await downloadApplication(applicationId)
+    try {
+      snackbar.showFeedback({ message: 'Download in progress', severity: 'info' })
+      const fileURL = await download(applicationId)
+      snackbar.showFeedback({ message: 'Download Complete' })
+      window.open(fileURL, '_blank')
+    } catch (error) {
+        
+        snackbar.showFeedback({ message: 'Form Download Failed', severity: 'error' })
+    }
   }
 
   const handleSelectedEdit = () => {
@@ -73,20 +91,19 @@ const ClaimsStatusPage = () => {
   }
 
   const handleClearSelection = () => {
-    setSelectedList([])
+    unselectAll()
   }
 
-  const handleSelect = async (applicationId: string, isSelected: boolean) => {
-    console.log(selectedList)
+  const handleSelect = async (applicationId: string, isSelected: boolean) => {    
     if (isSelected){
-      setSelectedList(previousState => [...previousState, applicationId])
+      select(applicationId)
     } else {
-      setSelectedList(previousState => previousState.filter(a => a !== applicationId))
+      unselect(applicationId)
     }
   }
 
   const handleSearch = (text: string) => {
-    setSearchText(text)
+    search(text)
   }
   //#endregion
 
@@ -94,30 +111,15 @@ const ClaimsStatusPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await apiClient.getUserApplications()
-        setData(data)
-        if (!data?.length)
+        const amount = await load()
+        if (!amount)
           setAlert({ message: 'You have not yet submitted any claims', title: 'Claim Status' })
       } catch (err) {
         setAlert({ message: 'There was an error loading your claims', title: 'Claim Status', severity: 'error' })
       }
     }
     fetchData()
-  }, [])
-
-  useEffect(() => {
-    data && setFilterList(data)
-  }, [data])  
-
-  useEffect(() => {    
-    if (data && filterList){
-      const results = data.filter(application =>
-        application.id.includes(searchText) || application.status?.includes(searchText)
-      )      
-      setFilterList(results)
-      console.log(selectedList)
-    } 
-  }, [searchText])
+  }, [])  
  //#endregion
 
   return (
