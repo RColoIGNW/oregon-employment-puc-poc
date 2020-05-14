@@ -15,6 +15,7 @@ import Img from "gatsby-image"
 import React, { useContext } from "react"
 import { useTranslation } from "react-i18next"
 
+import useVersion from "../../hooks/useVersion"
 import { AuthContext } from '../../providers/AuthProvider'
 import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }) => {
+  useVersion()
   const data = useStaticQuery(graphql`
     query MyQuery {
       file(relativePath: { eq: "orgov_logo.png" }) {
