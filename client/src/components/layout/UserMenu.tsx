@@ -1,18 +1,21 @@
-import React, { useContext } from 'react'
 import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
+import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import Divider from '@material-ui/core/Divider'
-import PersonIcon from '@material-ui/icons/Person'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import Grid from '@material-ui/core/Grid'
+import PersonIcon from '@material-ui/icons/Person'
+import { navigate } from 'gatsby';
+import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { AuthContext } from '../../providers/AuthProvider';
+import { AuthContext } from '../../providers/AuthProvider'
 
 export const UserMenu = () => {
   const { signOut, user } = useContext(AuthContext)
+  const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -28,6 +31,8 @@ export const UserMenu = () => {
     signOut()
   }
 
+  const handleAccountClick = () => navigate('/account')
+
   return (
     <>
       {user?.displayName}
@@ -37,6 +42,7 @@ export const UserMenu = () => {
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"
+        data-testid={'account-menu-icon'}
       >
         <AccountCircle />
       </IconButton>
@@ -55,10 +61,10 @@ export const UserMenu = () => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleAccountClick}>{t('userMenu.profile')}</MenuItem>
+        <MenuItem onClick={handleAccountClick} data-testid={'account-menu-item'}>{t('userMenu.account')}</MenuItem>
         <Divider />
-        <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+        <MenuItem onClick={handleSignOut}>{t('userMenu.signOut')}</MenuItem>
       </Menu>
     </>
   )
@@ -66,6 +72,7 @@ export const UserMenu = () => {
 
 export const UserMenuMobile = () => {
   const { signOut, user } = useContext(AuthContext)
+  const { t } = useTranslation()
 
   return (
     <Grid container alignItems="center">
@@ -78,10 +85,10 @@ export const UserMenuMobile = () => {
       <Grid item xs={12}>
         <Grid container justify="space-between">
           <Grid item>
-            <Button color="primary">Profile</Button>
+            <Button color="primary" onClick={() => navigate('/account')} data-testid={'nav-profile-item'}>{t('userMenu.profile')}</Button>
           </Grid>
           <Grid item>
-            <Button color="primary" onClick={signOut} endIcon={<ExitToAppIcon />}>Sign out</Button>
+            <Button color="primary" onClick={signOut} endIcon={<ExitToAppIcon />}>{t('userMenu.signOut')}</Button>
           </Grid>
         </Grid>
       </Grid>

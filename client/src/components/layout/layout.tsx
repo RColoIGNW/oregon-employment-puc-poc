@@ -13,11 +13,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { graphql, navigate, useStaticQuery } from 'gatsby'
 import Img from "gatsby-image"
 import React, { useContext } from "react"
+import { useTranslation } from "react-i18next"
 
 import { AuthContext } from '../../providers/AuthProvider'
 import Alerts from '../alerts'
 import { AlertProps } from '../alerts/Alerts'
-import { CSSDebugger } from "../css-debugger"
+import Backdrop from '../backdrop'
+import { CSSDebugger } from '../css-debugger'
+import LanguageMenu from "./LanguageMenu";
 import MainMenu from "./MainMenu";
 import { UserMenu, UserMenuMobile } from './UserMenu';
 
@@ -60,21 +63,23 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }) => {
-  const data = useStaticQuery(graphql`
-    query MyQuery {
-      file(relativePath: { eq: "orgov_logo.png" }) {
-        childImageSharp {
-          # Specify the image processing specifications right in the query.
-          # Makes it trivial to update as your page's design changes.
-          fixed(width: 158, height: 38) {
-            ...GatsbyImageSharpFixed
-          }
-        }
-      }
-    }
-  `)
+  // const data = useStaticQuery(graphql`
+  //   query MyQuery {
+  //     file(relativePath: { eq: "orgov_logo.png" }) {
+  //       childImageSharp {
+  //         # Specify the image processing specifications right in the query.
+  //         # Makes it trivial to update as your page's design changes.
+  //         fixed(width: 158, height: 38) {
+  //           ...GatsbyImageSharpFixed
+  //         }
+  //       }
+  //     }
+  //   }
+  // `)
 
   const { children, alert } = props
+  const { t } = useTranslation()
+
   const { user } = useContext(AuthContext)
   const showDebugger = typeof window !== 'undefined' && !!window.location.href.includes('localhost')
   const classes = useStyles()
@@ -99,16 +104,19 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
               edge="start"
               onClick={handleDrawerToggle}
               className={classes.menuButton}
+              data-testid={'menu-icon'}
             >
               <MenuIcon />
             </IconButton>
           }
-          <Hidden xsDown>
+          <Hidden smDown>
             <div onClick={onHomeClick} className={classes.image}>
               <img src={'https://lh3.googleusercontent.com/EUoOV44hxiSJPRgfNq61h5JP2V5fE4zypmUVK3bCCw_XvthzRTTXNGn5cp9tYtuFZJUZHpxV2jCVy8gQ2yjC02SKs_JD0Cvj-sSIOg'} width={'100px'} />
             </div>
           </Hidden>
-          <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>Pandemic Unemployment Assistance</Typography>
+        <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>{t('layout.title')}</Typography>
+          <div style={{flex: '1 1 auto'}} />
+          <LanguageMenu />
           <Hidden mdDown>
             {user?.token &&
               <UserMenu />
@@ -154,6 +162,7 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
         {showDebugger &&
           <CSSDebugger />
         }
+        <Backdrop />
         <Toolbar />
         {!!alert &&
           <Grid item style={{

@@ -1,0 +1,24 @@
+{
+  "layout": {
+    "title": "Pandemic unemployment assistance"
+  },
+  "mainMenu": {
+    "dashboard": "Dashboard",
+    "newApplication": "New Application",
+    "weeklyClaims": "Claim a Week",
+    "claimStatus": "Claim Status"
+  },
+  "userMenu": {
+    "profile": "Profile",
+    "account": "Account",
+    "signOut": "Sign out"
+  },
+  "dashboard": {
+    "alert": "Have questions about filing your unemployment insurance claim and potential benefits? Please review our COVID-19 page for information, including frequently asked questions and video tutorials. If you still have questions please send a detailed message to UI Help and we will respond as soon as possible.",
+    "title": "Welcome to your online claim system",
+    "newClaim": "File your new claim",
+    "weekClaim": "Claim a week of benefits",
+    "claimStatus": "Claim Status",
+    "moreDetails": "More details"
+  }
+}

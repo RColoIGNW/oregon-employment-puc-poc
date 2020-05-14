@@ -1,3 +1,5 @@
+import path from 'path'
+
 import { Request, Response } from 'express'
 import fillPdf from 'fill-pdf'
 
@@ -6,7 +8,7 @@ import log from '../util/logger'
 import getMappings from '../util/mappings'
 
 const db = firebase.firestore()
-const pdfTemplatePath = __dirname + '/../templates/pdf-template.pdf'
+const pdfTemplatePath = path.join(__dirname, '/../templates/pdf-template.pdf')
 
 export const generatePdf = (collectionName: string, req: Request, res: Response) => {
   return db
