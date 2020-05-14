@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       cursor: 'pointer',
-      flexGrow: 1,
       [theme.breakpoints.down('xs')]: {
         fontSize: 'small',
       },
@@ -111,8 +110,8 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
               <Img loading="eager" fixed={data?.file?.childImageSharp?.fixed} placeholderStyle={{ visibility: "hidden" }} />
             </div>
           </Hidden>
-        <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>{t('layout.title')}</Typography>
-          <div style={{flex: '1 1 auto'}} />
+          <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>{t('layout.title')}</Typography>
+          <div style={{ flex: '1 1 auto' }} />
           <LanguageMenu />
           <Hidden mdDown>
             {user?.token &&

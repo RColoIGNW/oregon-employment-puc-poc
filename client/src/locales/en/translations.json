@@ -4,14 +4,29 @@
   },
   "mainMenu": {
     "dashboard": "Dashboard",
-    "newApplication": "New Application",
-    "weeklyClaims": "Claim a Week",
-    "claimStatus": "Claim Status"
+    "newClaim": "File New Claim",
+    "claimWeek": "Claim a Week",
+    "claimStatus": "Claim Status",
+    "settings": "Settings",
+    "help": "Help",
+    "about": "About"
   },
   "userMenu": {
     "profile": "Profile",
     "account": "Account",
     "signOut": "Sign out"
+  },
+  "login": {
+    "redirecting": "Redirecting...",
+    "title": "Login - Oregon Employment Department Pandemic Unemployment Assistance",
+    "message": "To continue, log in to the Oregon Employment Department.",
+    "or": "OR",
+    "signIn": "Sign in",
+    "email": "Email Address",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "signUp": "Don't have an account? Sign Up"
   },
   "dashboard": {
     "alert": "Have questions about filing your unemployment insurance claim and potential benefits? Please review our COVID-19 page for information, including frequently asked questions and video tutorials. If you still have questions please send a detailed message to UI Help and we will respond as soon as possible.",
