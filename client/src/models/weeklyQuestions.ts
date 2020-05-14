@@ -4,10 +4,11 @@ export default interface weeklyQuestions {
   failedToAcceptOffer: boolean,
   quitJob: boolean,
   firedOrSuspended: boolean,
-  ableToWork: boolean,
   awayFromResidence: boolean,
-  veteran: boolean,
-  temporaryUnemployment: boolean,
-  workSearchRecords?: WorkSearchRecord[]
+  ableToWork: boolean,
+  ableToReportToWork: boolean,
+  searchedForWork: boolean,
+  didYouWorkLastWeek: boolean,
+  workSearchRecords: WorkSearchRecord[]
   applicationId?: string
 }

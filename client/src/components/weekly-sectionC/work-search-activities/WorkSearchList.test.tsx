@@ -2,7 +2,7 @@ import { render } from '@testing-library/react'
 import React from 'react'
 
 import WorkSearchList from "./WorkSearchList"
-import WorkSearchRecord from "../../models/WorkSearchRecord"
+import WorkSearchRecord, { workRecordType } from "../../../models/WorkSearchRecord"
 
 describe('Work Search List', () => {
   it('should render the Work Search List component', () => {
@@ -14,8 +14,8 @@ describe('Work Search List', () => {
         contactMethod: 'string',
         typeOfWorkSought: 'string',
         result: 'string',
-        unionMember: true,
-        tempLayoff: true,
+        type: workRecordType.searching,
+        activity: ''
       }],
       onAddWorkSearchRecord: (workSearchRecord: WorkSearchRecord) => {console.log(workSearchRecord)},
       onDeleteWorkSearchRecord: (workSearchRecord: WorkSearchRecord) => {console.log(workSearchRecord)},

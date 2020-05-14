@@ -21,5 +21,7 @@
     "test": "lerna run test --stream",
     "test:server": "cd ./server && npm run test"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dayjs": "^1.8.27"
+  }
 }

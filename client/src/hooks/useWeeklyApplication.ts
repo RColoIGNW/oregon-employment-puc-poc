@@ -17,9 +17,12 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     firedOrSuspended: null,
     ableToWork: null,
     awayFromResidence: null,
-    veteran: null,
-    temporaryUnemployment: null,
-    workSearchHistory: [],
+    ableToReportToWork: null,
+    searchedForWork: null,
+    didYouWorkLastWeek: null,
+    tempLayoff: null,
+    unionMember: null,
+    workSearchRecords: [],
     applicationId: props?.applicationId || ''
   }
   const [application, setApplication] = useState(storage.load('weekly-application') || defaultValue)
