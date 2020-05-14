@@ -1,11 +1,11 @@
-import React from 'react'
+import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
+import { navigate } from "gatsby"
+import React from 'react'
+
 import { Layout } from "../components/layout"
 import { SEO } from "../components/seo"
-import Button from "@material-ui/core/Button"
-import { navigate } from "gatsby"
-import storage from "../util/storage"
 
 const pageInfo = {
   successMessage: 'Your application has been successfully submitted. Here is your application ID',

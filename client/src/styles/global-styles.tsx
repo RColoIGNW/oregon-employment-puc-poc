@@ -1,10 +1,10 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components"
 
 const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    background: ${props => props.theme.colors.darkblue};
+    background: ${(props: any) => props.theme.colors.darkblue};
     color: white;
   }
   html {
@@ -12,4 +12,4 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-export { GlobalStyles };
+export { GlobalStyles }

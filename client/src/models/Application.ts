@@ -1,7 +1,7 @@
-import Applicant from './Applicant'
-import EmploymentRecord from './EmploymentRecord'
 import { AnswerModel } from './Answer'
+import Applicant from './Applicant'
 import { ApplicationStatus } from './ApplicationStatus'
+import EmploymentRecord from './EmploymentRecord'
 
 export default interface Application {
   id: string
@@ -14,5 +14,5 @@ export default interface Application {
   answers?: AnswerModel[]
   isCertified: boolean
   certifiedBy: string
-  submitted?: Date
+  dateApplied?: Date
 }
