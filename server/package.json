@@ -65,7 +65,7 @@
     "test:dev": "jest --watchAll",
     "test:ci": "npm run typegen && npm run test",
     "lint": "tslint --project tsconfig.json",
-    "prebuild": "npm run typegen",
+    "prebuild": "npm run schema",
     "build": "tsc",
     "tsc": "npm run build",
     "run": "node dist/server.js",
@@ -73,7 +73,7 @@
     "start": "npm run dev",
     "grant:admin": "export GOOGLE_APPLICATION_CREDENTIALS=./sa.json && ts-node ./scripts/grant-admin-role.ts",
     "debug:pdf": "node ./scripts/debug-pdf.js",
-    "typegen": "node ./scripts/typegen",
+    "schema": "node ./scripts/schema",
     "test:load": "artillery run ./scripts/load.yaml"
   }
 }
