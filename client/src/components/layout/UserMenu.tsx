@@ -1,7 +1,6 @@
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
-import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import AccountCircle from '@material-ui/icons/AccountCircle'
@@ -35,17 +34,14 @@ export const UserMenu = () => {
 
   return (
     <>
-      {user?.displayName}
-      <IconButton
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
+    <Button
+        endIcon={<AccountCircle />}
         onClick={handleMenu}
         color="inherit"
         data-testid={'account-menu-icon'}
       >
-        <AccountCircle />
-      </IconButton>
+         {user?.displayName}
+      </Button>
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}

@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import fbAdmin from 'firebase-admin'
 
 import ApplicationSchema from '../interfaces/application.interface'
+import { ApplicationStatus } from '../interfaces/application.interface'
 import firebase from '../util/firebase'
 import log from '../util/logger'
 
@@ -76,9 +77,7 @@ const deleteDocumentById = async (collectionName: string, req: Request, res: Res
       .doc(req.params.id)
       .delete()
 
-    return res.status(204).send({
-      success: true
-    })
+    return res.status(204).send({ success: true })
   } catch (error) {
     console.log(error)
     res.status(400).json({ error })
@@ -96,34 +95,26 @@ const updateDocumentById = async (collectionName: string, req: Request, res: Res
         lastModified: fbAdmin.firestore.Timestamp.now(),
       })
 
-    return res.status(204).send({
-      success: true
-    })
+    return res.status(204).send({ success: true })
   } catch (error) {
     log.error('failed to update doc', error)
     res.status(400).json({ error })
   }
 }
 
-export enum ApplicationStatus {
-  IN_PROGRESS = 'in progress',
-  SUBMITTED = 'submitted',
-  DENY = 'deny',
-  APPROVED = 'approved',
-  CANCELLED = 'cancelled'
-}
-
 const createDocument = async (collectionName: string, subCollectionName: string, req: Request, res: Response) => {
   try {
     const date = fbAdmin.firestore.Timestamp.now()
-    const requestBody: Partial<ApplicationSchema> = { 
-      ...req.body, 
-      lastModified: date,
-      status: ApplicationStatus.IN_PROGRESS,
-      createdDate: date,
-    }    
     const countRef = db.collection(`${collectionName}-count`).doc(subCollectionName)
     const applicationRef = db.collection(collectionName).doc()
+
+    const requestBody: Partial<ApplicationSchema> = {
+      ...req.body,
+      id: applicationRef.id,
+      lastModified: fbAdmin.firestore.Timestamp.now(),
+      status: ApplicationStatus.InProgress,
+      dateCreated: fbAdmin.firestore.Timestamp.now(),
+    }
 
     await db
       .runTransaction(async (t) => {
@@ -152,9 +143,9 @@ const submitDocument = async (collectionName: string, req: Request, res: Respons
     const date = fbAdmin.firestore.Timestamp.now()
     const requestBody = {
       ...req.body,
-      lastModified: date,
-      dateApplied: date,
-      status: ApplicationStatus.SUBMITTED
+      lastModified: fbAdmin.firestore.Timestamp.now(),
+      dateApplied: fbAdmin.firestore.Timestamp.now(),
+      status: ApplicationStatus.Submitted
     }
     const applicationRef = db.collection(collectionName).doc(req.params.id)
 
