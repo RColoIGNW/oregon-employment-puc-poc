@@ -1,36 +1,37 @@
-import Applicant from '../models/Applicant'
-import storage from '../util/storage'
+import Applicant from "../models/Applicant"
+import storage from "../util/storage"
 
 export default () => {
   const defaultValue: Applicant = {
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    ssn: '',
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    ssn: "",
     dob: undefined,
     address: {
-      street:'',
-      city: '',
-      state: '',
-      zipCode: '',
+      street: "",
+      city: "",
+      state: "",
+      zipCode: "",
     },
-    phone: '',
-    email: '',
+    phone: "",
+    email: "",
     gender: undefined,
     isHispanicLatino: undefined,
     contactMethod: undefined,
     races: [],
-    adminNote: ''
+    adminNote: "",
   }
 
-  let currentValue: Partial<Applicant>  = storage.load(storage.StorageKey.SectionA) || defaultValue
+  let currentValue: Partial<Applicant> =
+    storage.load(storage.StorageKey.SectionA) || defaultValue
 
-  //TODO: Implement
+  // TODO: Implement
   const handleSubmit = (): { applicant: Applicant, hasErrors: boolean } => {
-    //TODO: Add validations
+    // TODO: Add validations
     return {
       applicant: currentValue as Applicant,
-      hasErrors: false
+      hasErrors: false,
     }
   }
 
@@ -41,6 +42,6 @@ export default () => {
   return {
     currentValue,
     handleSubmit,
-    handleChange
+    handleChange,
   }
 }

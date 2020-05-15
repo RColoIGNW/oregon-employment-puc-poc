@@ -1,5 +1,5 @@
-import 'firebaseui/dist/firebaseui.css'
+import "firebaseui/dist/firebaseui.css"
 
-import * as firebaseui from 'firebaseui'
+import * as firebaseui from "firebaseui"
 
 export default firebaseui

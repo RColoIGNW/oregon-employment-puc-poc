@@ -1,31 +1,36 @@
-import AppBar from "@material-ui/core/AppBar";
+import AppBar from "@material-ui/core/AppBar"
 import Container from "@material-ui/core/Container"
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
+import Divider from "@material-ui/core/Divider"
+import Drawer from "@material-ui/core/Drawer"
 import Grid from "@material-ui/core/Grid"
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from '@material-ui/core/IconButton';
-import { Theme, createStyles, makeStyles, useTheme } from "@material-ui/core/styles";
+import Hidden from "@material-ui/core/Hidden"
+import IconButton from "@material-ui/core/IconButton"
+import {
+  Theme,
+  createStyles,
+  makeStyles,
+  useTheme,
+} from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
-import Typography from '@material-ui/core/Typography'
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import MenuIcon from '@material-ui/icons/Menu';
-import { graphql, navigate, useStaticQuery } from 'gatsby'
+import Typography from "@material-ui/core/Typography"
+import useMediaQuery from "@material-ui/core/useMediaQuery"
+import MenuIcon from "@material-ui/icons/Menu"
+import { graphql, navigate, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import React, { useContext } from "react"
 import { useTranslation } from "react-i18next"
 
 import useVersion from "../../hooks/useVersion"
-import { AuthContext } from '../../providers/AuthProvider'
-import Alerts from '../alerts'
-import { AlertProps } from '../alerts/Alerts'
-import Backdrop from '../backdrop'
-import { CSSDebugger } from '../css-debugger'
-import LanguageMenu from "./LanguageMenu";
-import MainMenu from "./MainMenu";
-import { UserMenu, UserMenuMobile } from './UserMenu';
+import { AuthContext } from "../../providers/AuthProvider"
+import Alerts from "../alerts"
+import { AlertProps } from "../alerts/Alerts"
+import Backdrop from "../backdrop"
+import { CSSDebugger } from "../css-debugger"
+import LanguageMenu from "./LanguageMenu"
+import MainMenu from "./MainMenu"
+import { UserMenu, UserMenuMobile } from "./UserMenu"
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,9 +44,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
-      cursor: 'pointer',
-      [theme.breakpoints.down('xs')]: {
-        fontSize: 'small',
+      cursor: "pointer",
+      [theme.breakpoints.down("xs")]: {
+        fontSize: "small",
       },
     },
     drawer: {
@@ -52,14 +57,17 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
     },
     image: {
-      cursor: 'pointer',
-      display: 'flex',
-      justifyContent: 'center'
-    }
-  }),
-);
+      cursor: "pointer",
+      display: "flex",
+      justifyContent: "center",
+    },
+  })
+)
 
-const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }) => {
+const Layout = (props: {
+  children: React.ReactNode
+  alert?: AlertProps | false
+}) => {
   useVersion()
   const data = useStaticQuery(graphql`
     query MyQuery {
@@ -79,108 +87,117 @@ const Layout = (props: { children: React.ReactNode, alert?: AlertProps | false }
   const { t } = useTranslation()
 
   const { user } = useContext(AuthContext)
-  const showDebugger = typeof window !== 'undefined' && !!window.location.href.includes('localhost')
+  const showDebugger =
+    typeof window !== "undefined" &&
+    !!window.location.href.includes("localhost")
   const classes = useStyles()
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [open, setOpen] = React.useState(false);
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"))
+  const [open, setOpen] = React.useState(false)
 
   const handleDrawerToggle = () => {
-    setOpen(!open);
-  };
+    setOpen(!open)
+  }
 
-  const onHomeClick = () => navigate('/')
+  const onHomeClick = () => navigate("/")
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: "flex" }}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          {isMobile && user?.token &&
+          {isMobile && user?.token && (
             <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
               className={classes.menuButton}
-              data-testid={'menu-icon'}
+              data-testid={"menu-icon"}
             >
               <MenuIcon />
             </IconButton>
-          }
-          <Hidden smDown>
+          )}
+          <Hidden smDown={true}>
             <div onClick={onHomeClick} className={classes.image}>
-              <Img loading="eager" fixed={data?.file?.childImageSharp?.fixed} placeholderStyle={{ visibility: "hidden" }} />
+              <Img
+                loading="eager"
+                fixed={data?.file?.childImageSharp?.fixed}
+                placeholderStyle={{ visibility: "hidden" }}
+              />
             </div>
           </Hidden>
-          <Typography variant={'h6'} className={classes.title} onClick={onHomeClick}>{t('layout.title')}</Typography>
-          <div style={{ flex: '1 1 auto' }} />
+          <Typography
+            variant={"h6"}
+            className={classes.title}
+            onClick={onHomeClick}
+          >
+            {t("layout.title")}
+          </Typography>
+          <div style={{ flex: "1 1 auto" }} />
           <LanguageMenu />
-          <Hidden mdDown>
-            {user?.token &&
-              <UserMenu />
-            }
-          </Hidden>
+          <Hidden mdDown={true}>{user?.token && <UserMenu />}</Hidden>
         </Toolbar>
       </AppBar>
 
-      {user?.token && isMobile &&
+      {user?.token && isMobile && (
         <Drawer
           className={classes.drawer}
           variant="temporary"
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+          anchor={theme.direction === "rtl" ? "right" : "left"}
           open={open}
           onClose={handleDrawerToggle}
           classes={{
             paper: classes.drawerPaper,
           }}
           ModalProps={{
-            keepMounted: true
+            keepMounted: true,
           }}
         >
           <UserMenuMobile />
           <Divider />
           <MainMenu />
         </Drawer>
-      }
+      )}
 
-      {user?.token && !isMobile &&
+      {user?.token && !isMobile && (
         <Drawer
           className={classes.drawer}
           classes={{
             paper: classes.drawerPaper,
           }}
           variant="permanent"
-          open
+          open={true}
         >
           <Toolbar />
           <MainMenu />
         </Drawer>
-      }
+      )}
       <Container>
-        {showDebugger &&
-          <CSSDebugger />
-        }
+        {showDebugger && <CSSDebugger />}
         <Backdrop />
         <Toolbar />
-        {!!alert &&
-          <Grid item style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '1em',
-          }}>
+        {!!alert && (
+          <Grid
+            item={true}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "1em",
+            }}
+          >
             <Alerts
               isOpen={true}
-              variant={alert?.variant || 'outlined'}
-              severity={alert?.severity || 'info'}
+              variant={alert?.variant || "outlined"}
+              severity={alert?.severity || "info"}
               message={alert?.message}
               {...alert}
             />
           </Grid>
-        }
+        )}
         <main>{children}</main>
       </Container>
     </div>
   )
 }
 
-export { Layout };
+export { Layout }

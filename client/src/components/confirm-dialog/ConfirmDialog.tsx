@@ -1,20 +1,20 @@
-import React from 'react'
-import { 
-  Dialog, 
-  DialogTitle, 
-  DialogContent, 
-  DialogContentText, 
-  DialogActions,
+import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  useMediaQuery,
   useTheme,
-  useMediaQuery
-} from '@material-ui/core'
+} from "@material-ui/core"
+import React from "react"
 
 const defaultInfo = {
-  title: 'Are you sure?',
-  description: '',
-  confirmActionText: 'Yes',
-  cancelActionText: 'No'
+  title: "Are you sure?",
+  description: "",
+  confirmActionText: "Yes",
+  cancelActionText: "No",
 }
 
 export interface ConfirmDialogProps {
@@ -26,10 +26,10 @@ export interface ConfirmDialogProps {
   onConfirm: () => void
   onCancel: () => void
 }
-const ConfirmDialog = (props: ConfirmDialogProps) => {  
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  
+const ConfirmDialog = (props: ConfirmDialogProps) => {
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"))
+
   const handleCancel = () => {
     props.onCancel && props.onCancel()
   }
@@ -38,10 +38,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
   }
 
   return (
-    <Dialog 
-      open={props.open} 
+    <Dialog
+      open={props.open}
       fullScreen={fullScreen}
-      onClose={handleCancel} 
+      onClose={handleCancel}
       aria-labelledby="form-dialog-title"
     >
       <DialogTitle id="form-dialog-title">
@@ -53,10 +53,10 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button variant={'contained'} color={'primary'} onClick={handleConfirm}>
+        <Button variant={"contained"} color={"primary"} onClick={handleConfirm}>
           {props.confirmActionText || defaultInfo.confirmActionText}
         </Button>
-        <Button variant={'contained'} onClick={handleCancel}>
+        <Button variant={"contained"} onClick={handleCancel}>
           {props.cancelActionText || defaultInfo.cancelActionText}
         </Button>
       </DialogActions>

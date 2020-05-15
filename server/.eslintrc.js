@@ -189,4 +189,4 @@ module.exports = {
     "use-isnan": 2,
     "valid-typeof": 0,
   },
-};
+}

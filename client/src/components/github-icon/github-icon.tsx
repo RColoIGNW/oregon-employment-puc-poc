@@ -1,10 +1,10 @@
-import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
-import styled from "styled-components";
-import Img from "gatsby-image";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
+import { graphql, useStaticQuery } from "gatsby"
+import Img from "gatsby-image"
+import React from "react"
+import styled from "styled-components"
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div``
 
 const GithubIcon: React.FC = () => {
   const data = useStaticQuery(graphql`
@@ -17,25 +17,24 @@ const GithubIcon: React.FC = () => {
         }
       }
     }
-  `);
+  `)
 
-  const imageData = data.icon.childImageSharp.fixed;
+  const imageData = data.icon.childImageSharp.fixed
   return (
     <Wrapper>
       <motion.a
         href="https://github.com/gojutin/gatsby-starter-typescript-deluxe"
         rel="noopener noreferrer"
         target="_blank"
-        // eslint-disable-next-line @typescript-eslint/tslint/config
         css={`
-          cursor: pointer;
+          cursor: pointer
         `}
         whileHover={{ opacity: 0.5 }}
       >
         <Img fixed={imageData} alt="GitHub Icon" />
       </motion.a>
     </Wrapper>
-  );
-};
+  )
+}
 
-export { GithubIcon };
+export { GithubIcon }

@@ -1,23 +1,28 @@
 const questions = {
   failedToAcceptOffer: "Did you fail to accept an offer of work last week?",
-  failedToAcceptOfferHelp: ["Did you fail to accept an offer of work last week?",
+  failedToAcceptOfferHelp: [
+    "Did you fail to accept an offer of work last week?",
     "Answer “Yes” only if you refused work or a referral to work during the week you are claiming",
     "You refused to work if you turned down any paid work be it full-time, part-time, permanent, or temporary during the week you are claiming.",
     "The work could have been with a former or current employer or a new employer for whom you never worked.",
     "You refused a referral to work if you turned down a referral by your WorkSource Oregon center, or if you took a referral from your WorkSource Oregon center but failed to contact the employer.",
   ],
   quitJob: "Did you quit a job last week?",
-  quitJobHelp: ["Did you quit a job last week?",
+  quitJobHelp: [
+    "Did you quit a job last week?",
     "Answer “Yes” only if you quit a job during the week you are claiming.",
-    "You quit a job if you told your employer that you do not want to work there anymore, or you stopped showing up for work."
+    "You quit a job if you told your employer that you do not want to work there anymore, or you stopped showing up for work.",
   ],
   firedOrSuspended: "Were you fired or suspended from a job last week?",
-  firedOrSuspendedHelp: ["Were you fired or suspended from a job last week?",
+  firedOrSuspendedHelp: [
+    "Were you fired or suspended from a job last week?",
     "Answer “Yes” only if you were fired or suspended from a job during the week you are now claiming. ",
-    "You were not fired if you were laid off due to a lack of work, so answer “No” if that happened."
+    "You were not fired if you were laid off due to a lack of work, so answer “No” if that happened.",
   ],
-  awayFromResidence: "Were you away from your primary residence for more than 3 days?",
-  awayFromResidenceHelp: ["Were you away from your permanent residence for more than 3 days last week?",
+  awayFromResidence:
+    "Were you away from your primary residence for more than 3 days?",
+  awayFromResidenceHelp: [
+    "Were you away from your permanent residence for more than 3 days last week?",
     "If you were away from your permanent residence for more than three days during a week claimed, you must answer “Yes”.",
     "If you leave the area of your permanent residence and still want to receive benefits, you must:",
     "Keep looking for work in the other area",
@@ -25,19 +30,25 @@ const questions = {
     "Be willing, ready and capable to take a job in the new area",
     "This requirement applies to everyone, even if you are on a temporary layoff with your regular employer or if you get all your work through your union hiring hall. Staying in contact with your union or employer does not meet the active work search requirements while you are out of your normal work area.",
     "Leaving town for a day or two does not usually stop your benefits unless you miss a chance to work.",
-    "If you are out of the area longer for vacation, personal business or anything except looking for work, you will not be eligible. I such situations, if you claim benefits we will ask you about your work-search activities. Be prepared with your job-contact information."
+    "If you are out of the area longer for vacation, personal business or anything except looking for work, you will not be eligible. I such situations, if you claim benefits we will ask you about your work-search activities. Be prepared with your job-contact information.",
   ],
-  ableToWork: "Were you physically and mentally able and willing to perform the work you sought last week?",
-  ableToWorkHelp: ["Were you both physically and mentally able to perform the work you sought last week?",
+  ableToWork:
+    "Were you physically and mentally able and willing to perform the work you sought last week?",
+  ableToWorkHelp: [
+    "Were you both physically and mentally able to perform the work you sought last week?",
     "You must be able to do the kind of work you seek.",
     "If you cannot work full time due to a permanent or long-term disability, you may still get benefits as long as you are able to do some work.",
-    "Many health problems will not affect your claim if you look for and accept all the work you can do."
+    "Many health problems will not affect your claim if you look for and accept all the work you can do.",
   ],
-  capableOfWork: "Each day last week were you able to work and capable of accepting and reporting for full-time, part-time, and temporary work?",
+  capableOfWork:
+    "Each day last week were you able to work and capable of accepting and reporting for full-time, part-time, and temporary work?",
   lookForWork: "Did you actively look for work last week?",
-  receivePay: "Did you work last week, or did you receive, or will you receive vacation or holiday pay for the week?",
-  ableToReportToWork: "Each day last week were you willing to work, and capable of accepting and reporting for full-time, part-time, and temporary work?",
-  ableToReportToWorkHelp: ["Each day last week were you willing to work, and capable of accepting and reporting for full-time, part-time, and temporary work?",
+  receivePay:
+    "Did you work last week, or did you receive, or will you receive vacation or holiday pay for the week?",
+  ableToReportToWork:
+    "Each day last week were you willing to work, and capable of accepting and reporting for full-time, part-time, and temporary work?",
+  ableToReportToWorkHelp: [
+    "Each day last week were you willing to work, and capable of accepting and reporting for full-time, part-time, and temporary work?",
     "You must be ready to accept and go to work.",
     "You must be willing and able to work all the usual hours of the day and days of the week for the work you can do.",
     "If you have children who require care while you work, you must have childcare lined up so you are ready to go to work or seek work.",
@@ -50,8 +61,10 @@ const questions = {
     "Or have other personal commitments, such as school, that keep you from taking a job.",
     "Special eligibility conditions apply to you if you were discharged or suspended for being absent or tardy from work as a result of the use of alcohol or unlawful use of any controlled substance. Participation in a drug or alcohol rehabilitation will then affect your benefit entitlement. ",
   ],
-  searchedForWork: "Did you actively look for look last week? (If yes mark the temporary unemployed box and the end of the work search screen)",
-  searchedForWorkHelp: ["Did you actively look for look last week? (If yes mark the temporary unemployed box and the end of the work search screen)",
+  searchedForWork:
+    "Did you actively look for look last week? (If yes mark the temporary unemployed box and the end of the work search screen)",
+  searchedForWorkHelp: [
+    "Did you actively look for look last week? (If yes mark the temporary unemployed box and the end of the work search screen)",
     "You are actively seeking work if you will return to your employer or are willing to look for work when state and local emergency declarations related to the coronavirus expire or are no longer in effect.",
     "If you are laid off AND have a definite date to return to FULL-TIME work for your employer, AND your definite date to return to work is WITHIN FOUR WEEKS from when you were laid off:",
     "You are actively seeking work if you stay in touch with your employer. You should mark “Yes” that you looked for work last week and check the appropriate box below.",
@@ -59,10 +72,12 @@ const questions = {
     "If you are a member in good standing with a union that does not allow you to seek non-union work, AND you are required by your union to get all your work for your usual occupation through your union:",
     "You are actively seeking work if you remain on your union's out-of-work list, stay in contact with you union, and are capable of accepting and reporting for work when dispatched by the union. You should mark “Yes” that you looked for work last week and check the appropriate box below.",
     "Otherwise, you are required to completed at least five work seeking activities each week you claim benefits. At least two of these activities must be contact with employers who might hire you. Other activities can include attending job placement meetings or searching for jobs online or in the newspaper. If you did not complete at least five work seeking activities last week, you should mark “No” that you did not actively look for work last week.",
-    "Also, please read the additional information about Actively Seeking Work located in your Services Handbook Table of Contents under “What You Must Do Each Week To Be Eligible For Benefits” section."
+    "Also, please read the additional information about Actively Seeking Work located in your Services Handbook Table of Contents under “What You Must Do Each Week To Be Eligible For Benefits” section.",
   ],
-  didYouWorkLastWeek: "Did you work last week, or did you receive, or will you receive vacation or holiday pay for the week?",
-  didYouWorkLastWeekHelp: ["Did you work last week, or did you receive, or will you receive vacation or holiday pay for the week?",
+  didYouWorkLastWeek:
+    "Did you work last week, or did you receive, or will you receive vacation or holiday pay for the week?",
+  didYouWorkLastWeekHelp: [
+    "Did you work last week, or did you receive, or will you receive vacation or holiday pay for the week?",
     "“Work” means you performed services for any employer and you expect to receive cash, credit, or room and board in return.",
     "You also need to report self-employment, work that you do as your own boss. If you have earning from commission sales or other types of payment, please contact your Unemployment Insurance Center for help to figure out how much money to report.",
     "Answer this question “Yes” if you received or will receive holiday or vacation pay but did not work. You must report your vacation or holiday pay as wages received.",
@@ -72,33 +87,40 @@ const questions = {
     "Round the total number of hours you worked to the nearest hour.",
     "If you worked less than one full hour in the week you are claiming, report at least one hour of work to prevent payment delay.",
     "Enter the total amount you earned during the week, including any vacation or holiday pay, before any deductions were made, even if you have not been paid.",
-    "Do not enter your hourly rate or round your earnings."
+    "Do not enter your hourly rate or round your earnings.",
   ],
-  unionMemberMessage: ["Being a union member in good standing may mean that you are not allowed to seek non-union work within your trade, per your union agreement.",
+  unionMemberMessage: [
+    "Being a union member in good standing may mean that you are not allowed to seek non-union work within your trade, per your union agreement.",
     "If that is the case, check this box if:",
     "You have stayed in contact with your union and you are on the out-of-work list.",
     "You have been capable of accepting and reporting for work if dispatched by your union.",
-    "False answers may result in overpaid benefits and additional penalties you must pay back."],
-  tempLayoffMessage: ["You are on a temporary layoff (TLO) if you meet the following conditions:",
+    "False answers may result in overpaid benefits and additional penalties you must pay back.",
+  ],
+  tempLayoffMessage: [
+    "You are on a temporary layoff (TLO) if you meet the following conditions:",
     "You have been laid off or had your hours reduced and expect to work with your same employer",
     "You will be returning to work that is full-time or that pays more than your weekly benefit amount.",
     "There are no more than four weeks between the week your became temporarily unemployed and the week you are returning to work.",
     "You have stayed in contact with your employer.",
-    "False answers may result in overpaid benefits and additional penalties you must pay back."],
-  workSearchMessage: "Please record your work search activities for last week.",
-  workSearchMessagept2: "You are required to actively seek work during each week you claim. Failure to provide your work search or failure to look for work may result in a delay or denial of your unemployment insurance benefits.",
-  helpDialog: ["For each week you claim benefits, you must be able to work, available to work all of the days and hours customary for your occupation, and actively  seeking full-time, part-time, permanent or temporary work",
-  "To be considered actively seeking work, you must complete at least five work-seeking activities each week you claim benefits. Work seeking activities include, but are not limited to: attending job placement meetings, updating a resume or searching job placement websites or newspaper listings.",
-  "Two of the five work seeking activities you complete each week must be direct contact with an employer who might hire someone with your skills and/or experience. Contact employers either in person, by phone, by mail or online to ask about and/or apply for jobs, depending on how the employer wants people to apply.",
-  "When you claim benefits, your report of work seeking activities must include the date and a description of each activity completed. When you report direct contact with an employer, include the date of contact, the company name, company location (employer phone number and address); or online job posting ID number, how you contacted the employer, the type of work or position applied for and the results",
-  "These requirements apply to each week you claim benefits unless you:",
-  "Are laid-off AND have a definite date to return to FULL-TIME work for your employer, AND your definite date to return to work is WITHIN FOUR WEEKS from when you were laid off. You are actively seeking work if you stay in touch with your employer. If you return to full-time work is delayed, you must call the UI Center and must begin seeking other work immediately.",
-  "Note: This exception does NOT apply if you work part-time on a continual basis with your employer.",
-  "Or",
-  "Are a union member in good standing with a union that does not allow you to seek non-union work, AND you are required by your union to get all your work for your usual occupation through your union. You are actively seeking work if you remain on your union's out-of-work list, stay in contact with you union, and are capable of accepting and reporting for work when dispatched by the union. You can also contact other union employers to seek other union work if your union allows. If your union allows you to seek non-union work in your trade, you must be actively seeking work as described above."
+    "False answers may result in overpaid benefits and additional penalties you must pay back.",
   ],
-  submitClaim: 'By pressing the SUBMIT button below, you will certify that the answers you provided are true and accurate.',
-  clickViewSummary: 'Click View Summary to review your claim for this week.'
+  workSearchMessage: "Please record your work search activities for last week.",
+  workSearchMessagept2:
+    "You are required to actively seek work during each week you claim. Failure to provide your work search or failure to look for work may result in a delay or denial of your unemployment insurance benefits.",
+  helpDialog: [
+    "For each week you claim benefits, you must be able to work, available to work all of the days and hours customary for your occupation, and actively  seeking full-time, part-time, permanent or temporary work",
+    "To be considered actively seeking work, you must complete at least five work-seeking activities each week you claim benefits. Work seeking activities include, but are not limited to: attending job placement meetings, updating a resume or searching job placement websites or newspaper listings.",
+    "Two of the five work seeking activities you complete each week must be direct contact with an employer who might hire someone with your skills and/or experience. Contact employers either in person, by phone, by mail or online to ask about and/or apply for jobs, depending on how the employer wants people to apply.",
+    "When you claim benefits, your report of work seeking activities must include the date and a description of each activity completed. When you report direct contact with an employer, include the date of contact, the company name, company location (employer phone number and address) or online job posting ID number, how you contacted the employer, the type of work or position applied for and the results",
+    "These requirements apply to each week you claim benefits unless you:",
+    "Are laid-off AND have a definite date to return to FULL-TIME work for your employer, AND your definite date to return to work is WITHIN FOUR WEEKS from when you were laid off. You are actively seeking work if you stay in touch with your employer. If you return to full-time work is delayed, you must call the UI Center and must begin seeking other work immediately.",
+    "Note: This exception does NOT apply if you work part-time on a continual basis with your employer.",
+    "Or",
+    "Are a union member in good standing with a union that does not allow you to seek non-union work, AND you are required by your union to get all your work for your usual occupation through your union. You are actively seeking work if you remain on your union's out-of-work list, stay in contact with you union, and are capable of accepting and reporting for work when dispatched by the union. You can also contact other union employers to seek other union work if your union allows. If your union allows you to seek non-union work in your trade, you must be actively seeking work as described above.",
+  ],
+  submitClaim:
+    "By pressing the SUBMIT button below, you will certify that the answers you provided are true and accurate.",
+  clickViewSummary: "Click View Summary to review your claim for this week.",
 }
 
 export default questions

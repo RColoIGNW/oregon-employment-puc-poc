@@ -1,16 +1,16 @@
-import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
-import React from 'react'
+import Grid from "@material-ui/core/Grid"
+import TextField from "@material-ui/core/TextField"
+import React from "react"
 
-import Address from '../models/Address'
-import ZipCodeTextField from './ZipCodeTextField'
-import StateSelect from './StateSelect'
+import Address from "../models/Address"
+import StateSelect from "./StateSelect"
+import ZipCodeTextField from "./ZipCodeTextField"
 
 const defaultValue: Address = {
-  street: '',
-  city: '',
-  state: '',
-  zipCode: ''
+  street: "",
+  city: "",
+  state: "",
+  zipCode: "",
 }
 
 interface AddressEditProps {
@@ -25,12 +25,12 @@ export default (props: AddressEditProps) => {
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    props.onChange({...address, [name]: value })
+    props.onChange({ ...address, [name]: value })
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
+    <Grid container={true} spacing={2}>
+      <Grid item={true} xs={12}>
         <TextField
           name="street"
           value={address.street}
@@ -38,10 +38,10 @@ export default (props: AddressEditProps) => {
           disabled={disabled}
           label="Street or P.O."
           variant="outlined"
-          fullWidth
+          fullWidth={true}
         />
       </Grid>
-      <Grid item xs={12} md={5}>
+      <Grid item={true} xs={12} md={5}>
         <TextField
           name="city"
           value={address.city}
@@ -49,10 +49,10 @@ export default (props: AddressEditProps) => {
           disabled={disabled}
           label="City"
           variant="outlined"
-          fullWidth
+          fullWidth={true}
         />
       </Grid>
-      <Grid item xs={6} md={3}>
+      <Grid item={true} xs={6} md={3}>
         <StateSelect
           name="state"
           value={address.state}
@@ -60,10 +60,10 @@ export default (props: AddressEditProps) => {
           disabled={disabled}
           label="State"
           variant="outlined"
-          fullWidth
+          fullWidth={true}
         />
       </Grid>
-      <Grid item xs={6} md={4}>
+      <Grid item={true} xs={6} md={4}>
         <ZipCodeTextField
           name="zipCode"
           value={address.zipCode}
@@ -71,7 +71,7 @@ export default (props: AddressEditProps) => {
           disabled={disabled}
           label="Zip Code"
           variant="outlined"
-          fullWidth
+          fullWidth={true}
         />
       </Grid>
     </Grid>

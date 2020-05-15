@@ -1,6 +1,6 @@
-export interface AnswerModel{
+export interface AnswerModel {
   questionCode?: string
-  selectedOption?: 'YES' | 'NO'
+  selectedOption?: "YES" | "NO"
   detailInfo?: string
   subQuestionsAnwers?: AnswerModel[]
 }

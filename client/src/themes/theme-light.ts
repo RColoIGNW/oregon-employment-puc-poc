@@ -1,4 +1,4 @@
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles'
+import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles"
 
 // A custom mainTheme for this app
 const theme = responsiveFontSizes(
@@ -9,16 +9,16 @@ const theme = responsiveFontSizes(
     },
     palette: {
       primary: {
-        main: '#0f506f',
+        main: "#0f506f",
       },
       secondary: {
-        main: '#007a61',
+        main: "#007a61",
       },
       error: {
-        main: '#f44336',
+        main: "#f44336",
       },
       background: {
-        default: '#f7f7f7',
+        default: "#f7f7f7",
       },
     },
   })

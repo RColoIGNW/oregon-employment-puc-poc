@@ -3,7 +3,7 @@ process.env.GOOGLE_APPLICATION_CREDENTIALS = './sa.json'
 
 import { PubSub } from '@google-cloud/pubsub'
 
-// Creates a client; cache this for further use
+// Creates a client cache this for further use
 const pubSubClient = new PubSub({
   projectId: 'oregon-pua-poc'
 })

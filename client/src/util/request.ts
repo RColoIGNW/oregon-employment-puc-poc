@@ -1,21 +1,21 @@
-import firebase from '../lib/firebase'
-import storage from './storage'
+import firebase from "../lib/firebase"
+import storage from "./storage"
 
 const log = console.log
 
-export type ResponseType = 'text' | 'blob'
+export type ResponseType = "text" | "blob"
 
 export interface RequestOptions extends RequestInit {
   requireJSON?: boolean
 }
 
 export const token = async () => {
-  if (storage.load('token')) {
-    return storage.load('token')
+  if (storage.load("token")) {
+    return storage.load("token")
   }
   const user = firebase.auth().currentUser
-  const userToken = user?.getIdToken() || ''
-  storage.save('token', userToken)
+  const userToken = user?.getIdToken() || ""
+  storage.save("token", userToken)
   return userToken
 }
 
@@ -31,7 +31,11 @@ export async function request(
   responseType?: ResponseType
 ): Promise<string>
 
-export async function request<T>(url: string, options?: RequestOptions, responseType = 'text') {
+export async function request<T>(
+  url: string,
+  options?: RequestOptions,
+  responseType = "text"
+) {
   log("request: fetching", url)
 
   const headers = new Headers()
@@ -45,7 +49,11 @@ export async function request<T>(url: string, options?: RequestOptions, response
     log("request: network error making request", err)
     throw err
   }
-  const result = await parseResponse<T>(response, options?.requireJSON, responseType as ResponseType)
+  const result = await parseResponse<T>(
+    response,
+    options?.requireJSON,
+    responseType as ResponseType
+  )
   log("request: result", result)
   return result
 }
@@ -61,7 +69,11 @@ export async function parseResponse(
   responseType?: ResponseType
 ): Promise<string>
 
-export async function parseResponse(res: Response, requireJSON?: boolean, responseType?: ResponseType) {
+export async function parseResponse(
+  res: Response,
+  requireJSON?: boolean,
+  responseType?: ResponseType
+) {
   const text = await res[responseType as ResponseType]()
   log("response status: ", res.status, text)
   if (res.status >= 300) {

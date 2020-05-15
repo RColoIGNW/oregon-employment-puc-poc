@@ -25,7 +25,7 @@ export const generatePdf = (collectionName: string, req: Request, res: Response)
         }
         res.setHeader('Content-Type', 'application/pdf')
         res.setHeader('Content-Length', output.length)
-        res.setHeader('Content-disposition', 'attachment; filename=application.pdf')
+        res.setHeader('Content-disposition', 'attachment filename=application.pdf')
         res.status(200).send(output)
       })
     })

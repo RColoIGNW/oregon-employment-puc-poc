@@ -1,108 +1,103 @@
-import Button from '@material-ui/core/Button'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { navigate } from 'gatsby'
-import React from 'react'
+import Button from "@material-ui/core/Button"
+import ExpansionPanel from "@material-ui/core/ExpansionPanel"
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails"
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary"
+import Grid from "@material-ui/core/Grid"
+import Paper from "@material-ui/core/Paper"
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles"
+import Typography from "@material-ui/core/Typography"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import { navigate } from "gatsby"
+import React from "react"
 import { useTranslation } from "react-i18next"
 
-import Alerts from '../components/alerts'
-import { Layout } from '../components/layout'
-import { SEO } from '../components/seo'
+import Alerts from "../components/alerts"
+import { Layout } from "../components/layout"
+import { SEO } from "../components/seo"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      flexDirection: "column",
+      justifyContent: "flex-start",
       backgroundColor: theme.palette.background.paper,
     },
     inline: {
-      display: 'inline',
+      display: "inline",
     },
     button: {
-      width: '15em',
-      [theme.breakpoints.down('xs')]: {
-        width: '10em'
-      }
+      width: "15em",
+      [theme.breakpoints.down("xs")]: {
+        width: "10em",
+      },
     },
     row: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '100%',
-      alignItems: 'center',
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "100%",
+      alignItems: "center",
     },
-  }),
+  })
 )
 
 export default function DashboardPage() {
   const classes = useStyles()
-  const {t} = useTranslation()
-  //const api = useApplicantFormApi()
-
-  // const handleNewApplication = async () => {
-  //   try {
-  //     const result = await api.createApplication() as any
-  //     navigate('application', {state: {applicationId: result.applicationId}})
-  //   } catch (e) {
-
-  //   }
-  // }
+  const { t } = useTranslation()
   const handleNavigate = (link: string) => navigate(link)
 
   const menuItems = [
     {
-      buttonLabel: t('dashboard.newClaim'),
-      description: t('dashboard.newClaimDescription'),
-      link: '/application',
+      buttonLabel: t("dashboard.newClaim"),
+      description: t("dashboard.newClaimDescription"),
+      link: "/application",
       handleClick: handleNavigate,
-      e2e: 'new-claim-link'
+      e2e: "new-claim-link",
     },
     {
-      buttonLabel: t('dashboard.weekClaim'),
-      description: t('dashboard.weekClaimDescription'),
-      link: '/weekly-claims',
+      buttonLabel: t("dashboard.weekClaim"),
+      description: t("dashboard.weekClaimDescription"),
+      link: "/weekly-claims",
       handleClick: handleNavigate,
-      e2e: 'weekly-claim-link'
+      e2e: "weekly-claim-link",
     },
     {
-      buttonLabel: t('dashboard.claimStatus'),
-      description: t('dashboard.claimStatusDescription'),
-      link: '/claim-status',
+      buttonLabel: t("dashboard.claimStatus"),
+      description: t("dashboard.claimStatusDescription"),
+      link: "/claim-status",
       handleClick: handleNavigate,
-      e2e: 'view-claims-link'
-    }
+      e2e: "view-claims-link",
+    },
   ]
 
   return (
     <Layout>
-      <SEO title={'Oregon Pandemic Unemployment Assistance'} />
-      <Grid container direction={'column'} spacing={3} style={{ marginTop: '2em' }}>
-        <Grid item>
+      <SEO title={"Oregon Pandemic Unemployment Assistance"} />
+      <Grid
+        container={true}
+        direction={"column"}
+        spacing={3}
+        style={{ marginTop: "2em" }}
+      >
+        <Grid item={true}>
           <Alerts
             isOpen={true}
-            variant={'outlined'}
-            severity={'info'}
-            message={t('dashboard.alert')}
+            variant={"outlined"}
+            severity={"info"}
+            message={t("dashboard.alert")}
           />
         </Grid>
 
-        <Grid item style={{ justifyContent: 'center', display: 'flex'}}>
-          <Typography variant={'h4'} color={'primary'}>
-            {t('dashboard.title')}
+        <Grid item={true} style={{ justifyContent: "center", display: "flex" }}>
+          <Typography variant={"h4"} color={"primary"}>
+            {t("dashboard.title")}
           </Typography>
         </Grid>
 
-        <Paper style={{margin: '1em'}}>
+        <Paper style={{ margin: "1em" }}>
           {menuItems.map((item, index) => (
             <ExpansionPanel key={index}>
               <ExpansionPanelSummary
@@ -111,23 +106,23 @@ export default function DashboardPage() {
                 aria-controls="additional-actions1-content"
                 id="additional-actions1-header"
               >
-                <Grid item className={classes.row}>
-                  <Grid item style={{display: 'flex'}}>
+                <Grid item={true} className={classes.row}>
+                  <Grid item={true} style={{ display: "flex" }}>
                     <Button
                       className={classes.button}
-                      color={'primary'}
-                      variant={'contained'}
-                      size={'medium'}
-                      fullWidth
+                      color={"primary"}
+                      variant={"contained"}
+                      size={"medium"}
+                      fullWidth={true}
                       onClick={() => item.handleClick(item.link)}
                       data-testid={item.e2e}
                     >
                       {item.buttonLabel}
                     </Button>
                   </Grid>
-                  <Grid item style={{right: 0, display: 'flex'}}>
-                    <Typography color={'primary'}>
-                      {t('dashboard.moreDetails')}
+                  <Grid item={true} style={{ right: 0, display: "flex" }}>
+                    <Typography color={"primary"}>
+                      {t("dashboard.moreDetails")}
                     </Typography>
                   </Grid>
                 </Grid>

@@ -77,19 +77,19 @@ The theme utilizes the [use-media](https://github.com/streamich/use-media) libra
 This starter is also preconfigured to work with the `css` prop:
 
 ```jsx
-import styled from "styled-components";
+import styled from "styled-components"
 
 const MyComponent = () => (
   <div>
     <h1
       css={`
-        color: #333;
+        color: #333
       `}
     >
       Hello World!
     </h1>
   </div>
-);
+)
 ```
 
 _Note: The `css` prop does not play nicely with the `jsx-no-multiline-js` ESLint rule. You may want to disable the rule if you plan on using the `css` prop. This can be done in the `.eslintrc.js` file._
@@ -97,17 +97,17 @@ _Note: The `css` prop does not play nicely with the `jsx-no-multiline-js` ESLint
 I personally do not use the `css` prop and prefer to define styled-components outside of the component definition. My general rule is if the component that is using a styled-component is the only component that uses it, I define the styled-component in the same file. Otherwise, I will move it out to a `components/common` directory.
 
 ```tsx
-import styled from "styled-components";
+import styled from "styled-components"
 
 const Heading = styled.h1`
-  color: #333;
-`;
+  color: #333
+`
 
 const MyComponent = () => (
   <div>
     <Heading>Hello World!</Heading>
   </div>
-);
+)
 ```
 
 ## CSS Debugger
@@ -118,7 +118,7 @@ This starter also includes a `CSSDebugger` component. This component allows you 
 
 The `CSSDebugger` component is used in the `layout.tsx` component.
 
-<img src="https://res.cloudinary.com/gojutin/image/upload/v1568660140/gatsby-starter-typescript-deluxe/css-debugger.gif" alt="GIF of css debugger" style="max-width: 100%;" />
+<img src="https://res.cloudinary.com/gojutin/image/upload/v1568660140/gatsby-starter-typescript-deluxe/css-debugger.gif" alt="GIF of css debugger" style="max-width: 100%" />
 
 ## Linting
 
@@ -168,7 +168,7 @@ npm run build
 
 ## Lighthouse Audit Score 💯
 
-<img src="https://res.cloudinary.com/gojutin/image/upload/v1568660306/gatsby-starter-typescript-deluxe/gatsby-starter-typescript-deluxe-lighthouse-audit.gif" style="max-width: 100%;" alt="Lighthouse Score" />
+<img src="https://res.cloudinary.com/gojutin/image/upload/v1568660306/gatsby-starter-typescript-deluxe/gatsby-starter-typescript-deluxe-lighthouse-audit.gif" style="max-width: 100%" alt="Lighthouse Score" />
 
 ## TODOS
 

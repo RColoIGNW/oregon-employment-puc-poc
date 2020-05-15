@@ -1,14 +1,14 @@
-import { AnswerModel } from "./Answer";
+import { AnswerModel } from "./Answer"
 
 export interface QuestionModel {
   code: string
   text: string
   showOptions: boolean
-  note?: string  
-  whenShowDetails: 'YES' | 'NO' | 'ALWAYS' | 'NEVER' 
-  whenShowSubQuestions: 'YES' | 'NO' | 'ALWAYS' | 'NEVER' 
+  note?: string
+  whenShowDetails: "YES" | "NO" | "ALWAYS" | "NEVER"
+  whenShowSubQuestions: "YES" | "NO" | "ALWAYS" | "NEVER"
   subQuestions?: QuestionModel[]
-  isDisabled?:  boolean
+  isDisabled?: boolean
   answer: AnswerModel
   errorMessage?: string
   detailErrorMessage?: string

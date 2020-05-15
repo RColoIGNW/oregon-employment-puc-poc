@@ -5,7 +5,7 @@ import WeeklySectionAQuestions from './WeeklySectionAQuestions'
 
 describe('Weekly Section A Questions', () => {
   it('should render the Weekly Section A Questions component', () => {
-    const props = {} as any;
+    const props = {} as any
     const {
       container,
       // debug,

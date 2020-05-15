@@ -1,11 +1,10 @@
-import React from 'react'
-import ForgotPasswordForm from '.'
+import React from "react"
+
+import ForgotPasswordForm from "."
 
 export default {
-  title: 'ForgotPasswordForm',
+  title: "ForgotPasswordForm",
   component: ForgotPasswordForm,
 }
 
-export const ForgotPasswordFormStyled = () => (
-  <ForgotPasswordForm />
-)
+export const ForgotPasswordFormStyled = () => <ForgotPasswordForm />

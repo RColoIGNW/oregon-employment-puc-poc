@@ -1,27 +1,31 @@
-import { navigate } from 'gatsby'
-import { useContext, useEffect, useState } from 'react'
+import { navigate } from "gatsby"
+import { useContext, useEffect, useState } from "react"
 
-import { steps } from  '../components/application/application'
-import Application from '../models/Application'
-import ApplicationModel from '../models/Application'
-import { SnackBarContext } from '../providers/SnackbarProvider'
-import storage from '../util/storage'
-import useApplicantFormApi from './useApplicantFormApi'
-import useSectionA from './useSectionA'
-import useSectionB from './useSectionB'
+import { steps } from "../components/application/application"
+import Application from "../models/Application"
+import ApplicationModel from "../models/Application"
+import { SnackBarContext } from "../providers/SnackbarProvider"
+import storage from "../util/storage"
+import useApplicantFormApi from "./useApplicantFormApi"
+import useSectionA from "./useSectionA"
+import useSectionB from "./useSectionB"
 
 const loadApplication = (_?: string): ApplicationModel => {
   return {} as ApplicationModel
-  //TODO: Load from Storage if not applicationId
+  // TODO: Load from Storage if not applicationId
   // TODO: Ask to user when applicationId and  storage version
   //   const storageApp = storage.load('application')
 }
 
 export default (props: { applicationId?: string, isDisabled?: boolean }) => {
-  const [activeStep, setActiveStep] = useState(parseInt(storage.load('activeStep')) || 0)
+  const [activeStep, setActiveStep] = useState(
+    parseInt(storage.load("activeStep")) || 0
+  )
   const snackbar = useContext(SnackBarContext)
   const api = useApplicantFormApi()
-  const [application, setApplication] = useState<ApplicationModel>(loadApplication())
+  const [application, setApplication] = useState<ApplicationModel>(
+    loadApplication()
+  )
   const { applicationId, isDisabled } = props || {}
   const disabled = !!isDisabled
 
@@ -41,7 +45,7 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
   const { handleSubmit: handleSectionBSubmit } = useSectionB()
 
   const saveActiveStep = (step: number) => {
-    storage.save('activeStep', step)
+    storage.save("activeStep", step)
     setActiveStep(step)
   }
 
@@ -59,13 +63,13 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
   }
 
   const handleNext = async () => {
-    let isStepValid: boolean = true
+    let isStepValid = true
     switch (activeStep) {
-      case 0: //A
+      case 0: // A
         const { hasErrors: sectionAHasErrors } = handleSectionASubmit()
         isStepValid = !sectionAHasErrors
         break
-      case 1: //B
+      case 1: // B
         const { hasErrors: sectionBHasErrors } = handleSectionBSubmit()
         isStepValid = !sectionBHasErrors
         break
@@ -95,25 +99,26 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
       try {
         await handleSave()
         if (activeStep === steps.length - 1) {
-          //Submit App
+          // Submit App
           submit && submit(application?.id)
         } else {
           saveActiveStep(activeStep + 1)
         }
-      }
-      catch (e) {
-      }
+      } catch (e) {}
     }
   }
 
   const create = async () => {
     try {
-      const userId: any = storage.load('uid')
+      const userId: any = storage.load("uid")
       const { id } = await api.createApplication()
       // const { applicationId: id } = await api.createApplication()
       setApplication({ ...application, id, userId } as Application)
     } catch (e) {
-      snackbar.showFeedback({ message: 'Failed to create a new application', severity: 'error' })
+      snackbar.showFeedback({
+        message: "Failed to create a new application",
+        severity: "error",
+      })
     }
   }
 
@@ -122,7 +127,10 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
       const application = await api.getApplication(applicationId)
       setApplication(application)
     } catch (e) {
-      snackbar.showFeedback({ message: 'Failed to load application', severity: 'error' })
+      snackbar.showFeedback({
+        message: "Failed to load application",
+        severity: "error",
+      })
     }
   }
 
@@ -131,23 +139,26 @@ export default (props: { applicationId?: string, isDisabled?: boolean }) => {
     return api.updateApplication(application)
   }
 
-  const localSave = (application:  Application) => {
-    storage.save('application', application)
+  const localSave = (application: Application) => {
+    storage.save("application", application)
   }
 
   const handleSave = async () => {
     if (application) {
       await save(application)
       localSave(application)
-      snackbar.showFeedback({ message: 'Progress Saved' })
+      snackbar.showFeedback({ message: "Progress Saved" })
     } else {
-      snackbar.showFeedback({ message: 'Failed to save progress', severity: 'error' })
+      snackbar.showFeedback({
+        message: "Failed to save progress",
+        severity: "error",
+      })
     }
   }
 
   const submit = async (applicationId: string) => {
     await api.submitApplication(applicationId)
-    return navigate('application-submitted',  { state: { applicationId }})
+    return navigate("application-submitted", { state: { applicationId } })
   }
 
   const discard = async (applicationId: string) => {
