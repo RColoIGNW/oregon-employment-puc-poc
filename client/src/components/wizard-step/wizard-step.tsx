@@ -1,22 +1,32 @@
-import React from 'react'
-import { Step, StepLabel, Typography, StepContent, Grid, Button, makeStyles, Theme, createStyles } from '@material-ui/core'
+import {
+  Button,
+  Grid,
+  Step,
+  StepContent,
+  StepLabel,
+  Theme,
+  Typography,
+  createStyles,
+  makeStyles,
+} from "@material-ui/core"
+import React from "react"
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({   
+  createStyles({
     button: {
       marginTop: theme.spacing(1),
       marginRight: theme.spacing(1),
-    }
-  }),
-);
+    },
+  })
+)
 
-//TODO: TRANSLATION 
+// TODO: TRANSLATION
 const text = {
-  back: 'Back',
-  next: 'Next',
+  back: "Back",
+  next: "Next",
 }
 interface WizardSpepProps {
-  title: string,
+  title: string
   showBack?: boolean
   disableBack?: boolean
   onBack: () => void
@@ -25,7 +35,7 @@ interface WizardSpepProps {
   onNext: () => void
 }
 const WizardStep = (props: React.PropsWithChildren<WizardSpepProps>) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   const showBack = props.showBack || true
   const disableBack = props.disableBack || false
@@ -37,24 +47,19 @@ const WizardStep = (props: React.PropsWithChildren<WizardSpepProps>) => {
   const disableNext = props.disableNext || false
   const handleNext = () => {
     props.onNext && props.onNext()
-  }  
+  }
 
   return (
     <Step>
       <StepLabel>
-        <Typography>
-          {props.title}
-        </Typography>
+        <Typography>{props.title}</Typography>
       </StepLabel>
       <StepContent>
         AAA
-        <Grid container direction={'column'} spacing={2}>
-          <Grid item>
-            {props.children}
-          </Grid>
-          <Grid item>
-            {
-              showBack &&
+        <Grid container={true} direction={"column"} spacing={2}>
+          <Grid item={true}>{props.children}</Grid>
+          <Grid item={true}>
+            {showBack && (
               <Button
                 disabled={disableBack}
                 onClick={handleBack}
@@ -62,9 +67,8 @@ const WizardStep = (props: React.PropsWithChildren<WizardSpepProps>) => {
               >
                 {text.back}
               </Button>
-            }
-            {
-              showNext &&
+            )}
+            {showNext && (
               <Button
                 variant="contained"
                 color="primary"
@@ -74,7 +78,7 @@ const WizardStep = (props: React.PropsWithChildren<WizardSpepProps>) => {
               >
                 {text.next}
               </Button>
-            }
+            )}
           </Grid>
         </Grid>
       </StepContent>

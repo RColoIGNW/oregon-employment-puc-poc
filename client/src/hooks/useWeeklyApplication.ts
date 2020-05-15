@@ -1,15 +1,17 @@
 import { navigate } from "gatsby"
 import { useContext, useEffect, useState } from "react"
 
-import { steps } from '../components/weekly-form/WeeklyForm'
+import { steps } from "../components/weekly-form/WeeklyForm"
 import weeklyQuestions from "../models/weeklyQuestions"
 import { SnackBarContext } from "../providers/SnackbarProvider"
-import storage from '../util/storage'
+import storage from "../util/storage"
 import useWeeklyFormApi from "./useWeeklyFormApi"
 
 export default (props: { applicationId: string, isDisabled?: boolean }) => {
   const api = useWeeklyFormApi()
-  const [activeStep, setActiveStep] = useState(parseInt(storage.load('weeklyActiveStep')) || 0)
+  const [activeStep, setActiveStep] = useState(
+    parseInt(storage.load("weeklyActiveStep")) || 0
+  )
   const snackbar = useContext(SnackBarContext)
   const defaultValue = {
     failedToAcceptOffer: null,
@@ -23,24 +25,25 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     tempLayoff: null,
     unionMember: null,
     workSearchRecords: [],
-    applicationId: props?.applicationId || ''
+    applicationId: props?.applicationId || "",
   }
-  const [application, setApplication] = useState(storage.load('weekly-application') || defaultValue)
+  const [application, setApplication] = useState(
+    storage.load("weekly-application") || defaultValue
+  )
   const { isDisabled } = props
   const disabled = !!isDisabled
 
   const load = () => {
-    //TODO: Check Application in Progress (check storage) ask Continue or discard?
+    // TODO: Check Application in Progress (check storage) ask Continue or discard?
     const retrieveApplication = async (applicationId: string) => {
       const application = await api.getApplication(applicationId) // TODO: create new method to get weeklyForm app
       handleChange(application)
     }
 
     const createApplication = async () => {
-      const app = {userId: localStorage.uid}
+      const app = { userId: localStorage.uid }
       const applicationId = await api.saveApplication(app as any) // TODO: create a new method to save weeklyForm app
       handleChange({ ...application, applicationId })
-
     }
 
     if (application?.applicationId) {
@@ -50,8 +53,6 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     }
   }
 
-
-
   useEffect(() => {
     return () => {
       resetState()
@@ -59,7 +60,7 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   }, [])
 
   const saveActiveStep = (step: number) => {
-    storage.save('weeklyActiveStep', step)
+    storage.save("weeklyActiveStep", step)
     setActiveStep(step)
   }
 
@@ -69,22 +70,24 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   }
 
   const handleSave = async () => {
-    if(application){
+    if (application) {
       const applicationId = await save(application)
       handleChange({ ...application, applicationId })
-      localSave({...application, applicationId })
-      snackbar.showFeedback({ message: 'Progress Saved' })
+      localSave({ ...application, applicationId })
+      snackbar.showFeedback({ message: "Progress Saved" })
     }
   }
 
   const handleSubmit = async () => {
     try {
-      //TODO: Show Progress
+      // TODO: Show Progress
 
       await submit(application)
-      navigate('confirm',  { state: { applicationId: application.applicationId }})
+      navigate("confirm", {
+        state: { applicationId: application.applicationId },
+      })
     } catch (e) {
-      //TODO: Show submit error
+      // TODO: Show submit error
     }
   }
 
@@ -93,53 +96,61 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
   }
 
   const handleNext = async () => {
-    let isStepValid: boolean = true
+    const isStepValid = true
 
     if (isStepValid) {
       try {
         await handleSave()
         if (activeStep === steps.length - 1) {
-          //Submit App
+          // Submit App
           handleSubmit()
         } else {
           saveActiveStep(activeStep + 1)
         }
-      }
-      catch(e) {
+      } catch (e) {
         console.error(e)
       }
     }
   }
 
   const handleChange = (weeklyApplication: weeklyQuestions) => {
-    localSave({...weeklyApplication})
-    setApplication({...weeklyApplication}) // debounce to fix lag
+    localSave({ ...weeklyApplication })
+    setApplication({ ...weeklyApplication }) // debounce to fix lag
   }
 
   const handleWorkSearchChange = (applicant: weeklyQuestions) => {
-    localSave({...applicant, workSearchRecords: applicant.workSearchRecords})
-    setApplication({...applicant, workSearchRecords: applicant.workSearchRecords})
-  }
-
-  const save = async (application: Partial<weeklyQuestions>): Promise<string> => {
-    return api.saveApplication(application).then((result: any) => {
-      setApplication((application: any) => ({
-        ...application,
-        applicationId: result.applicationId
-      } as any))
-      return result
+    localSave({ ...applicant, workSearchRecords: applicant.workSearchRecords })
+    setApplication({
+      ...applicant,
+      workSearchRecords: applicant.workSearchRecords,
     })
-    .catch(console.error)
   }
 
-  const localSave = (weeklyApplication:  weeklyQuestions) => {
-    storage.save('weekly-application', weeklyApplication)
+  const save = async (
+    application: Partial<weeklyQuestions>
+  ): Promise<string> => {
+    return api
+      .saveApplication(application)
+      .then((result: any) => {
+        setApplication(
+          (application: any) =>
+            ({
+              ...application,
+              applicationId: result.applicationId,
+            } as any)
+        )
+        return result
+      })
+      .catch(console.error)
+  }
+
+  const localSave = (weeklyApplication: weeklyQuestions) => {
+    storage.save("weekly-application", weeklyApplication)
   }
 
   const submit = (application: Partial<weeklyQuestions>) => {
     return api.submitApplication(application)
   }
-
 
   return {
     application,
@@ -154,6 +165,6 @@ export default (props: { applicationId: string, isDisabled?: boolean }) => {
     handleSave,
     activeStep,
     setActiveStep: saveActiveStep,
-    localSave
+    localSave,
   }
 }

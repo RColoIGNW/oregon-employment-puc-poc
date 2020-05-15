@@ -1,8 +1,10 @@
-import React from "react";
-import { SEO } from "../seo";
-import { render, cleanup } from "@testing-library/react";
-import * as Gatsby from "gatsby";
-const useStaticQuery = jest.spyOn(Gatsby, "useStaticQuery");
+import { cleanup, render } from "@testing-library/react"
+import * as Gatsby from "gatsby"
+import React from "react"
+
+import { SEO } from "../seo"
+
+const useStaticQuery = jest.spyOn(Gatsby, "useStaticQuery")
 
 beforeEach(() => {
   useStaticQuery.mockImplementationOnce(() => {
@@ -14,13 +16,13 @@ beforeEach(() => {
           author: "@test",
         },
       },
-    };
-  });
-});
+    }
+  })
+})
 
-afterEach(cleanup);
+afterEach(cleanup)
 
 it("matches snapshot", () => {
-  const { asFragment } = render(<SEO />);
-  expect(asFragment()).toMatchSnapshot();
-});
+  const { asFragment } = render(<SEO />)
+  expect(asFragment()).toMatchSnapshot()
+})

@@ -5,11 +5,11 @@
  */
 
 // You can delete this file if you're not using it
-// require('typeface-roboto');
+// require('typeface-roboto')
 export const onClientEntry = () => {
   window.addEventListener('load', () => {
-    document.body.className = document.body.className.replace(/\bno-js\b/, '');
-  });
+    document.body.className = document.body.className.replace(/\bno-js\b/, '')
+  })
 }
 
 export { default as wrapRootElement } from "./src/lib/wrapRootElement"

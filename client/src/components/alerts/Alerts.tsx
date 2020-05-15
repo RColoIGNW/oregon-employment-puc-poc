@@ -1,21 +1,14 @@
-import { Collapse } from '@material-ui/core'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import ErrorIcon from '@material-ui/icons/Error'
-import InfoIcon from '@material-ui/icons/Info'
-import WarningIcon from '@material-ui/icons/Warning'
-import { Alert, AlertTitle } from '@material-ui/lab'
-import React, { forwardRef } from 'react'
+import { Collapse } from "@material-ui/core"
+import CheckCircleIcon from "@material-ui/icons/CheckCircle"
+import ErrorIcon from "@material-ui/icons/Error"
+import InfoIcon from "@material-ui/icons/Info"
+import WarningIcon from "@material-ui/icons/Warning"
+import { Alert, AlertTitle } from "@material-ui/lab"
+import React, { forwardRef } from "react"
 
-export type AlertSeverity =
-  | 'error'
-  | 'warning'
-  | 'info'
-  | 'success'
+export type AlertSeverity = "error" | "warning" | "info" | "success"
 
-export type AlertVariant =
-  | 'filled'
-  | 'outlined'
-  | 'standard'
+export type AlertVariant = "filled" | "outlined" | "standard"
 
 export interface AlertProps {
   severity?: AlertSeverity
@@ -23,7 +16,7 @@ export interface AlertProps {
   title?: string | JSX.Element
   message?: string | JSX.Element
   isOpen?: boolean
-  icon?: JSX.Element,
+  icon?: JSX.Element
   onClose?: () => any
 }
 

@@ -1,11 +1,11 @@
-import { Grid, Typography } from '@material-ui/core'
-import React from 'react'
+import { Grid, Typography } from "@material-ui/core"
+import React from "react"
 
-import Dropzone from '../dropzone'
-import Application from '../../models/Application'
+import Application from "../../models/Application"
+import Dropzone from "../dropzone"
 
 const pageInfo = {
-  text: 'Upload Documents',
+  text: "Upload Documents",
 }
 
 interface SectionFProps {
@@ -14,15 +14,13 @@ interface SectionFProps {
 
 const SectionF = (props: SectionFProps) => {
   return (
-    <Grid container direction={'column'} spacing={2}>
-      <Grid item>
-        <Typography variant={'body2'}>
-          {pageInfo.text}
-        </Typography>
+    <Grid container={true} direction={"column"} spacing={2}>
+      <Grid item={true}>
+        <Typography variant={"body2"}>{pageInfo.text}</Typography>
       </Grid>
-      <Grid item>
-        <Grid container direction={'column'}>
-          <Grid item>
+      <Grid item={true}>
+        <Grid container={true} direction={"column"}>
+          <Grid item={true}>
             <Dropzone applicationId={props?.application?.id} />
           </Grid>
         </Grid>

@@ -1,14 +1,14 @@
-import styled from "styled-components";
-import { Link as GatsbyLink } from "gatsby";
+import { Link as GatsbyLink } from "gatsby"
+import styled from "styled-components"
 
 const Link = styled(GatsbyLink)`
-  margin-top: 20px;
-  display: block;
-  // color: white;
-  text-decoration: none;
+  margin-top: 20px
+  display: block
+  // color: white
+  text-decoration: none
   :hover {
-    text-decoration: underline;
+    text-decoration: underline
   }
-`;
+`
 
-export { Link };
+export { Link }

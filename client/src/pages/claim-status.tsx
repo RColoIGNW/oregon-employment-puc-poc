@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { navigate } from 'gatsby'
+import { Fab, Theme, createStyles, makeStyles, useMediaQuery, useTheme } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
-import { Fab, useTheme, useMediaQuery, makeStyles, Theme, createStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
+import { navigate } from 'gatsby'
+import React, { useContext, useEffect, useState } from 'react'
 
+import { AlertProps } from '../components/alerts/Alerts'
+import Claim from '../components/claim/claim'
+import ClaimsToolbar from '../components/claims-toolbar/ClaimsToolbar'
 import { Layout } from '../components/layout'
 import { SEO } from '../components/seo'
 import useClaimStatus from '../hooks/useClaimStatus'
 import Application from '../models/Application'
-import { AlertProps } from '../components/alerts/Alerts'
-import ClaimsToolbar from '../components/claims-toolbar/ClaimsToolbar'
-import Claim from '../components/claim/claim'
 import { SnackBarContext } from '../providers/SnackbarProvider'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -19,49 +19,49 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2,2),
     },
     createAction: {
-      position: 'fixed', 
+      position: 'fixed',
       bottom: theme.spacing(1),
       right: theme.spacing(1),
       zIndex: 100
-    },  
+    },
   }),
-);
+)
 
 const ClaimsStatusPage = () => {
   const classes = useStyles()
   const snackbar = useContext(SnackBarContext)
-  const { 
+  const {
     selectedList,
     filterList,
-    download, 
-    discard, 
+    download,
+    discard,
     unselectAll,
     select,
     unselect,
     search,
-    load, 
-  } = useClaimStatus() 
+    load,
+  } = useClaimStatus()
 
   const [alert, setAlert] = useState<AlertProps>()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  
+
   //#region Actions
   const handleCreate = () => {
     navigate('application')
   }
 
   const handleEdit = (applicationId: string) => {
-    navigate('application', { state: { applicationId } })    
+    navigate('application', { state: { applicationId } })
   }
 
-  const handleDiscard = async (applicationId: string) => {    
+  const handleDiscard = async (applicationId: string) => {
     try {
       await discard(applicationId)
       //TODO: update list
     } catch (error) {
       snackbar.showFeedback({message: 'Unable to discard the application', severity: 'error'})
-    } 
+    }
   }
 
   const handleDownload = async (applicationId: string) => {
@@ -71,7 +71,7 @@ const ClaimsStatusPage = () => {
       snackbar.showFeedback({ message: 'Download Complete' })
       window.open(fileURL, '_blank')
     } catch (error) {
-        
+
         snackbar.showFeedback({ message: 'Form Download Failed', severity: 'error' })
     }
   }
@@ -94,7 +94,7 @@ const ClaimsStatusPage = () => {
     unselectAll()
   }
 
-  const handleSelect = async (applicationId: string, isSelected: boolean) => {    
+  const handleSelect = async (applicationId: string, isSelected: boolean) => {
     if (isSelected){
       select(applicationId)
     } else {
@@ -107,7 +107,7 @@ const ClaimsStatusPage = () => {
   }
   //#endregion
 
-  //#region Effects 
+  //#region Effects
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -119,28 +119,27 @@ const ClaimsStatusPage = () => {
       }
     }
     fetchData()
-  }, [])  
+  }, [])
  //#endregion
 
   return (
-    // <Layout alert={!data?.length && { message:'You have not yet submitted any claims', title: 'Claim Status' }}>
-    <Layout>
-      <SEO title={'Claim Status'} />  
+    <Layout alert={alert || !filterList?.length && { message:'You have not yet submitted any claims', title: 'Claim Status' }}>
+      <SEO title={'Claim Status'} />
       {
-        isMobile &&  
-        <Fab 
-          color="primary" 
-          aria-label="add" 
-          className={classes.createAction}          
+        isMobile &&
+        <Fab
+          color="primary"
+          aria-label="add"
+          className={classes.createAction}
           onClick={handleCreate}
         >
           <AddIcon />
-        </Fab>  
+        </Fab>
       }
       <Grid container direction={'column'} spacing={2} style={{ marginTop: '1em' }}>
-        <Grid item>     
-          <ClaimsToolbar 
-            selectedAmount={selectedList.length} 
+        <Grid item>
+          <ClaimsToolbar
+            selectedAmount={selectedList.length}
             onCreate={handleCreate}
             onSearch={handleSearch}
             onEdit={handleSelectedEdit}
@@ -153,9 +152,9 @@ const ClaimsStatusPage = () => {
           <Grid container direction="row" spacing={1} style={{ marginTop: '1em' }} >
             { filterList.map((application: Application, index: number) =>
               <Grid item key={index} lg={4} md={4} sm={6} xs={12}>
-                <Claim 
-                  claimId={application.id}                   
-                  claimDate={application.submitted || application.lastModified || new Date()} 
+                <Claim
+                  claimId={application.id}
+                  claimDate={application.dateApplied || application.lastModified || new Date()}
                   claimStatus={application.status}
                   isSelected={selectedList.findIndex(a => application.id === a) !== -1}
                   onDownload={handleDownload}
@@ -166,7 +165,7 @@ const ClaimsStatusPage = () => {
               </Grid>
             )}
           </Grid>
-        </Grid>          
+        </Grid>
       </Grid>
     </Layout>
   )

@@ -4,7 +4,7 @@ process.env.GOOGLE_APPLICATION_CREDENTIALS = __dirname + '../sa.json'
 // Imports the Google Cloud client library
 import  { PubSub } from '@google-cloud/pubsub'
 
-// Creates a client; cache this for further use
+// Creates a client cache this for further use
 const pubSubClient = new PubSub()
 
 // sample-metadata:

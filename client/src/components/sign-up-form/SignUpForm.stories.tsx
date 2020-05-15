@@ -1,11 +1,10 @@
-import React from 'react'
-import SignUpForm from '.'
+import React from "react"
+
+import SignUpForm from "."
 
 export default {
-  title: 'SignUpForm',
+  title: "SignUpForm",
   component: SignUpForm,
 }
 
-export const SignUpFormStyled = () => (
-  <SignUpForm />
-)
+export const SignUpFormStyled = () => <SignUpForm {...{} as any} />

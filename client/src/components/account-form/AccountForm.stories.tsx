@@ -1,11 +1,10 @@
-import React from 'react'
-import AccountForm from '.'
+import React from "react"
+
+import AccountForm from "."
 
 export default {
-  title: 'AccountForm',
+  title: "AccountForm",
   component: AccountForm,
 }
 
-export const AccountFormStyled = () => (
-  <AccountForm />
-)
+export const AccountFormStyled = () => <AccountForm {...{} as any} />

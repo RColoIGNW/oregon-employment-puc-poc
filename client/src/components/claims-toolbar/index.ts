@@ -1,1 +1,1 @@
-export { default } from './ClaimsToolbar'
+export { default } from "./ClaimsToolbar"

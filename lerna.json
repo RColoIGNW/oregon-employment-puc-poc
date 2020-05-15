@@ -1,4 +1,4 @@
 {
-  "packages": ["packages/*", "client", "server"],
+  "packages": ["packages/*", "client", "server", "functions-publisher"],
   "version": "independent"
 }

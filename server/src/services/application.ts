@@ -86,7 +86,7 @@ const deleteDocumentById = async (collectionName: string, req: Request, res: Res
 
 const updateDocumentById = async (collectionName: string, req: Request, res: Response) => {
   try {
-    const { id, ...applicationInfo }: Partial<ApplicationSchema> = req.body;
+    const { id, ...applicationInfo }: Partial<ApplicationSchema> = req.body
     await db
       .collection(collectionName)
       .doc(req.params.id)
@@ -123,7 +123,7 @@ const createDocument = async (collectionName: string, subCollectionName: string,
         t[countDoc.data() ? "update" : "set"](countRef, {
           applicationCount: increment,
           lastModified: fbAdmin.firestore.Timestamp.now()
-        });
+        })
         t.set(applicationRef, requestBody)
         return Promise.resolve('Transaction Successful!')
       })
@@ -138,7 +138,7 @@ const createDocument = async (collectionName: string, subCollectionName: string,
 }
 
 const submitDocument = async (collectionName: string, req: Request, res: Response) => {
-  
+
   try {
     const date = fbAdmin.firestore.Timestamp.now()
     const requestBody = {

@@ -1,7 +1,8 @@
-import React from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Address from '../models/Address'
+import Grid from "@material-ui/core/Grid"
+import Typography from "@material-ui/core/Typography"
+import React from "react"
+
+import Address from "../models/Address"
 
 interface AddressDisplayProps {
   address: Address
@@ -10,12 +11,14 @@ interface AddressDisplayProps {
 export default (props: AddressDisplayProps) => {
   const { street, city, state, zipCode } = props.address
   return (
-    <Grid container direction="column">
-      <Grid item>
+    <Grid container={true} direction="column">
+      <Grid item={true}>
         <Typography style={{ textTransform: "uppercase" }}>{street}</Typography>
       </Grid>
-      <Grid item>
-        <Typography style={{ textTransform: "uppercase" }}>{`${city} ${state}  ${zipCode}`}</Typography>
+      <Grid item={true}>
+        <Typography
+          style={{ textTransform: "uppercase" }}
+        >{`${city} ${state}  ${zipCode}`}</Typography>
       </Grid>
     </Grid>
   )

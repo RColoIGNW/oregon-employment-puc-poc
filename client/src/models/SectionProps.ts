@@ -1,7 +1,7 @@
-import ApplicationModel from './Application'
+import ApplicationModel from "./Application"
 
 export interface SectionProps {
-  application: ApplicationModel,
+  application: ApplicationModel
   onChange: (application: ApplicationModel) => void
   isDisabled?: boolean
 }

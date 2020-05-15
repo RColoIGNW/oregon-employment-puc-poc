@@ -10,69 +10,69 @@ import {
   Theme,
   Typography,
   createStyles,
-  makeStyles
+  makeStyles,
 } from "@material-ui/core"
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useMediaQuery from "@material-ui/core/useMediaQuery"
 import React from "react"
 
+import { WeeklyFormProps } from "../../models/WeeklySectionProps"
 import theme from "../../themes/theme-light"
 import WeeklySectionAQuestions from "../weekly-sectionA/WeeklySectionAQuestions"
 import WeeklySectionBQuestions from "../weekly-sectionB/WeeklySectionBQuestions"
 import WeeklySectionC from "../weekly-sectionC/WeeklySectionC"
 import WeeklySectionDVerifyResponses from "../weekly-sectionD/WeeklySectionDVerifyResponses"
-import { WeeklyFormProps } from "../../models/WeeklySectionProps"
 
 export const pageInfo = {
-  title: 'Initial Application for Pandemic Unemployment Assistance',
+  title: "Initial Application for Pandemic Unemployment Assistance",
   sectionA: {
-    icon: 'A',
-    title: 'APPLICANT INFORMATION Part 1',
+    icon: "A",
+    title: "APPLICANT INFORMATION Part 1",
   },
   sectionB: {
-    icon: 'B',
-    title: 'APPLICANT INFORMATION Part 2',
+    icon: "B",
+    title: "APPLICANT INFORMATION Part 2",
   },
   sectionC: {
-    icon: 'C',
-    title: 'WORK SEARCH ACTIVITY',
+    icon: "C",
+    title: "WORK SEARCH ACTIVITY",
   },
   sectionD: {
-    icon: 'D',
-    title: 'VERIFY YOUR RESPONSES',
+    icon: "D",
+    title: "VERIFY YOUR RESPONSES",
   },
-  back: 'Back',
-  next: 'Next',
-  submit: 'Submit',
+  back: "Back",
+  next: "Next",
+  submit: "Submit",
 }
 
 export const steps = [
   {
-    key: 'A',
+    key: "A",
     icon: pageInfo.sectionA.icon,
     title: pageInfo.sectionA.title,
     isFirstStep: true,
-    component: WeeklySectionAQuestions
+    component: WeeklySectionAQuestions,
   },
   {
-    key: 'B',
+    key: "B",
     icon: pageInfo.sectionB.icon,
     title: pageInfo.sectionB.title,
     isFirstStep: false,
-    component: WeeklySectionBQuestions
+    component: WeeklySectionBQuestions,
   },
   {
-    key: 'C',
+    key: "C",
     icon: pageInfo.sectionC.icon,
     title: pageInfo.sectionC.title,
     isFirstStep: false,
-    component: WeeklySectionC
+    component: WeeklySectionC,
   },
   {
-    key: 'D',
+    key: "D",
     icon: pageInfo.sectionD.icon,
     title: pageInfo.sectionD.title,
     isFirstStep: false,
-    component: WeeklySectionDVerifyResponses
+    component: WeeklySectionDVerifyResponses,
   },
 ]
 
@@ -80,11 +80,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appStepper: {
       padding: theme.spacing(1),
-    }
-  }),
+    },
+  })
 )
 
-//#region Step Action Buttons
 interface StepActionsProp {
   isFirstStep?: boolean
   isLastStep?: boolean
@@ -96,25 +95,26 @@ const StepActions = (props: StepActionsProp) => {
   const disabledBack = !!props.isDisabled || props.isFirstStep || false
   const showSubmit = props.isLastStep || false
   return (
-    <Grid container direction={'row'} justify={'flex-end'} alignItems={'center'} spacing={2}>
-      <Grid item>
-        <Button
-          disabled={disabledBack}
-          onClick={props.onBack}
-        >
+    <Grid
+      container={true}
+      direction={"row"}
+      justify={"flex-end"}
+      alignItems={"center"}
+      spacing={2}
+    >
+      <Grid item={true}>
+        <Button disabled={disabledBack} onClick={props.onBack}>
           {pageInfo.back}
         </Button>
       </Grid>
-      <Grid item>
+      <Grid item={true}>
         <Button
           disabled={!!props.isDisabled}
           variant="contained"
           color="primary"
           onClick={props.onNext}
         >
-          {
-            (showSubmit) ? pageInfo.submit : pageInfo.next
-          }
+          {showSubmit ? pageInfo.submit : pageInfo.next}
         </Button>
       </Grid>
     </Grid>
@@ -123,7 +123,7 @@ const StepActions = (props: StepActionsProp) => {
 
 export default function WeeklyForm(props: WeeklyFormProps) {
   const classes = useStyles()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const {
     application,
     isDisabled: disabled,
@@ -140,55 +140,75 @@ export default function WeeklyForm(props: WeeklyFormProps) {
 
   if (application) {
     return (
-      <Grid container direction="column" spacing={2}>
-        <Grid item style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '2em'
-        }}>
-          <Typography variant={'h5'}>
-            {pageInfo.title}
-          </Typography>
+      <Grid container={true} direction="column" spacing={2}>
+        <Grid
+          item={true}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "2em",
+          }}
+        >
+          <Typography variant={"h5"}>{pageInfo.title}</Typography>
         </Grid>
-        <Grid item >
-          <Stepper activeStep={activeStep} orientation="vertical" className={classes.appStepper}>
-            {!isMobile && steps.map(((step, index) => {
-              const Section = step.component
-              return (
-                <Step key={step.key}>
-                  <StepLabel
-                    style={{ cursor: 'pointer' }}
-                    StepIconProps={{ icon: step.icon }}
-                    onClick={() => {
-                      setActiveStep(index)
-                      handleSave()
-                    }}
-                  >
-                    {step.title}
-                  </StepLabel>
-                  <StepContent>
-                    <Grid container direction={'column'} spacing={2}>
-                      <Grid item>
-                        <Section handleChange={handleChange} handleWorkSearchChange={handleWorkSearchChange} application={application} />
+        <Grid item={true}>
+          <Stepper
+            activeStep={activeStep}
+            orientation="vertical"
+            className={classes.appStepper}
+          >
+            {!isMobile &&
+              steps.map((step, index) => {
+                const Section = step.component
+                return (
+                  <Step key={step.key}>
+                    <StepLabel
+                      style={{ cursor: "pointer" }}
+                      StepIconProps={{ icon: step.icon }}
+                      onClick={() => {
+                        setActiveStep(index)
+                        handleSave()
+                      }}
+                    >
+                      {step.title}
+                    </StepLabel>
+                    <StepContent>
+                      <Grid container={true} direction={"column"} spacing={2}>
+                        <Grid item={true}>
+                          <Section
+                            handleChange={handleChange}
+                            handleWorkSearchChange={handleWorkSearchChange}
+                            application={application}
+                          />
+                        </Grid>
+                        <Grid item={true}>
+                          <StepActions
+                            isDisabled={disabled}
+                            isFirstStep={!!step.isFirstStep}
+                            onBack={handleBack}
+                            onNext={handleNext}
+                            isLastStep={activeStep === steps.length - 1}
+                          />
+                        </Grid>
                       </Grid>
-                      <Grid item>
-                        <StepActions isDisabled={disabled} isFirstStep={!!step.isFirstStep} onBack={handleBack} onNext={handleNext} isLastStep={activeStep === steps.length - 1}/>
-                      </Grid>
-                    </Grid>
-                  </StepContent>
-                </Step>
-              )
-            }))}
+                    </StepContent>
+                  </Step>
+                )
+              })}
           </Stepper>
 
-          {isMobile &&
+          {isMobile && (
             <div>
-              <Paper square elevation={0}>
+              <Paper square={true} elevation={0}>
                 <Typography>{steps[activeStep].title}</Typography>
               </Paper>
-              <Grid container direction={'column'} spacing={2}>
-                <Grid item>
-                  <ActiveSection handleChange={handleChange} handleWorkSearchChange={handleWorkSearchChange} application={application} />
+              <Grid container={true} direction={"column"} spacing={2}>
+                <Grid item={true}>
+                  <ActiveSection
+                    handleChange={handleChange}
+                    handleWorkSearchChange={handleWorkSearchChange}
+                    application={application}
+                  />
                 </Grid>
               </Grid>
               <MobileStepper
@@ -197,22 +217,34 @@ export default function WeeklyForm(props: WeeklyFormProps) {
                 variant="text"
                 activeStep={activeStep}
                 nextButton={
-                  <Button disabled={disabled} size="medium" variant="contained" color="primary" onClick={handleNext}>
-                    {activeStep === steps.length - 1 ? pageInfo.submit : pageInfo.next}
+                  <Button
+                    disabled={disabled}
+                    size="medium"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                  >
+                    {activeStep === steps.length - 1
+                      ? pageInfo.submit
+                      : pageInfo.next}
                   </Button>
                 }
                 backButton={
-                  <Button disabled={disabled || activeStep === 0} size="medium" onClick={handleBack} >
+                  <Button
+                    disabled={disabled || activeStep === 0}
+                    size="medium"
+                    onClick={handleBack}
+                  >
                     Back
-                </Button>
+                  </Button>
                 }
               />
             </div>
-          }
+          )}
         </Grid>
       </Grid>
     )
   }
 
-  return (<div>Loading...</div>)
+  return <div>Loading...</div>
 }

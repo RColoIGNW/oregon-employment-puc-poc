@@ -13,7 +13,7 @@ const config = {
 const output_path = __dirname + "/../src/interfaces/application-schema.json"
 
 const schema = tsj.createGenerator(config).createSchema(config.type)
-const schemaString = JSON.stringify(schema, null, 2);
+const schemaString = JSON.stringify(schema, null, 2)
 fs.writeFile(output_path, schemaString, (err) => {
     if (err) throw err
 })
